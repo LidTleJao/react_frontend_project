@@ -1,0 +1,9 @@
+.editprofileuser-cont {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 140vh;
+  overflow: hidden;
+}
