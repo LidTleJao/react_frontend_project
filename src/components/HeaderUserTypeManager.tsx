@@ -63,6 +63,10 @@ function HeaderUserTypeManager() {
   function navigateToAddConcertDataPage() {
     navigate("/AddConcertData");
   }
+  function navigateToAddPacketPage() {
+    // console.log("Navigating to AddHotel page");
+    navigate("/SelectData");
+  }
   function navigateToProfilePage() {
     navigate("/Profile");
   }
@@ -236,7 +240,7 @@ function HeaderUserTypeManager() {
                   คอนเสิรต์
                 </Typography>
               </MenuItem>
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={navigateToAddPacketPage}>
                 <Typography
                   gutterBottom
                   sx={{
