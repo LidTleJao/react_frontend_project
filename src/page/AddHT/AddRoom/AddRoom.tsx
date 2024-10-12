@@ -344,23 +344,6 @@ function AddRoomPage() {
                               navigateToAddRoomP2Page();
                             }
                           }
-                          // console.log(Room_Hotel_ID);
-                          // console.log(Room_Type);
-                          // console.log(Room_View_Type);
-                          // console.log(Number(Price));
-                          // console.log(Number_of_guests);
-                          // console.log(Room_Status);
-
-                          // const resroom =  await roomHotelService.AddRoom(
-                          //   Room_Hotel_ID,
-                          //   Price,
-                          //   Number_of_guests,
-                          //   Room_Type,
-                          //   Room_View_Type,
-                          //   Room_Status,
-                          // );
-                          // console.log(resroom.data);
-                          // console.log(resroom.status);
                         }
                         setLoad(false);
                       } catch (error) {

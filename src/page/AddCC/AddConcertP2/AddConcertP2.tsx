@@ -532,25 +532,6 @@ function AddConcertP2Page() {
                       console.log(province);
                       console.log(detail_concert);
                       navigateToAddConcertP3Page();
-                      // const resconcert = await concertService.AddConcert(
-                      //   user?.uid,
-                      //   concert_type,
-                      //   poster,
-                      //   image,
-                      //   show_schedule_concert,
-                      //   name_concert,
-                      //   lineup,
-                      //   address_concert,
-                      //   province,
-                      //   detail_concert,
-                      // );
-                      // console.log(resconcert.data);
-                      // console.log(resconcert.status);
-                      // if(resconcert.status === 201){
-                      //   window.alert(
-                      //     "ข้อมูลของคอนเสิร์ต ได้ลงทะเบียนแล้ว!!!"
-                      //   );
-                      // }
                     }
                     setLoad(false);
                   } catch (error) {

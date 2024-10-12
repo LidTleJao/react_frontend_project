@@ -33,6 +33,12 @@ export class ConcertService {
     return response;
   }
 
+  async getConcertTicket(cid: string){
+    const url = `${HOST}/concertTicket/${cid}`;
+    const response = await axios.get(url);
+    return response;
+  }
+
   async AddConcert(
     uid: string,
     concert_type_ID: number,

@@ -2,8 +2,14 @@ import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import HeaderUserTypeManager2 from "../../../../components/HeadUserTypeManager2";
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import ListAltIcon from '@mui/icons-material/ListAlt';
+import { useNavigate } from "react-router-dom";
 
 function MenuHotelDealPage() {
+  const navigate = useNavigate();
+
+  function navigateToAddHotelDealDataPage() {
+    navigate("/AddHotelDealData");
+  }
   return (
     <>
       <HeaderUserTypeManager2 />
@@ -34,7 +40,7 @@ function MenuHotelDealPage() {
           >
             <Card>
               <CardActionArea
-                // onClick={navigateToMenuHotelDealPage}
+                onClick={navigateToAddHotelDealDataPage}
               >
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   <ListAltIcon sx={{ fontSize: "150px" }} />
