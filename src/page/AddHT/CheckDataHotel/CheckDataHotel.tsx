@@ -7,10 +7,13 @@ import {
   Divider,
   FormControl,
   Grid,
+  ImageList,
+  ImageListItem,
   // ImageList,
   // ImageListItem,
   InputLabel,
   Link,
+  MenuItem,
   // MenuItem,
   Paper,
   Select,
@@ -27,61 +30,58 @@ import HeaderUserTypeManager2 from "../../../components/HeadUserTypeManager2";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
-// import { HotelService } from "../../../service/hotelService";
-// import { RoomHotelService } from "../../../service/roomHotelService";
-// import { 
-//   useEffect,
-//    useState } from "react";
-// import { HotelGetByIDRes } from "../../../model/Response/Hotel/HotelGetByIDRes";
-// import { RoomGetByHotelIDRes } from "../../../model/Response/Hotel/RoomGetByHotelIDRes";
-// import { HotelURLGetByHotelIDRes } from "../../../model/Response/Hotel/HotelUrlGetByHotelIDRes";
-// import { HotelImageGetByHotelIDRes } from "../../../model/Response/Hotel/HotelImageGetByHotelIDRes";
-// import { HotelGetByHIDRes } from "../../../model/Response/Hotel/HotelGetByHIDRes";
-
+import { HotelService } from "../../../service/hotelService";
+import { RoomHotelService } from "../../../service/roomHotelService";
+import { useEffect, useState } from "react";
+import { HotelGetByIDRes } from "../../../model/Response/Hotel/HotelGetByIDRes";
+import { RoomGetByHotelIDRes } from "../../../model/Response/Hotel/RoomGetByHotelIDRes";
+import { HotelURLGetByHotelIDRes } from "../../../model/Response/Hotel/HotelUrlGetByHotelIDRes";
+import { HotelImageGetByHotelIDRes } from "../../../model/Response/Hotel/HotelImageGetByHotelIDRes";
+import { HotelGetByHIDRes } from "../../../model/Response/Hotel/HotelGetByHIDRes";
 
 function CheckDataHotelPage() {
-  // const hotelService = new HotelService();
-  // const roomHotelService = new RoomHotelService();
-  // const [hotelAlls, setHotelAll] = useState<HotelGetByIDRes[]>([]);
-  // const [hotel, setHotel] = useState<HotelGetByHIDRes[]>([]);
-  // const [hotelUrl, setHotelUrl] = useState<HotelURLGetByHotelIDRes[]>([]);
-  // const [hotelImage, setHotelImage] = useState<HotelImageGetByHotelIDRes[]>([]);
-  // const [rooms, setRoom] = useState<RoomGetByHotelIDRes[]>([]);
+  const hotelService = new HotelService();
+  const roomHotelService = new RoomHotelService();
+  const [hotelAlls, setHotelAll] = useState<HotelGetByIDRes[]>([]);
+  const [hotel, setHotel] = useState<HotelGetByHIDRes[]>([]);
+  const [hotelUrl, setHotelUrl] = useState<HotelURLGetByHotelIDRes[]>([]);
+  const [hotelImage, setHotelImage] = useState<HotelImageGetByHotelIDRes[]>([]);
+  const [rooms, setRoom] = useState<RoomGetByHotelIDRes[]>([]);
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const navigate = useNavigate();
-  // const [Hotel_ID, setHotel_ID] = useState("");
+  const [Hotel_ID, setHotel_ID] = useState("");
 
-  // useEffect(() => {
-  //   const loadDataAsync = async () => {
-  //     const res = await hotelService.getHotelByUid(user?.uid);
-  //     const data: HotelGetByIDRes[] = res.data;
-  //     setHotelAll(data);
+  useEffect(() => {
+    const loadDataAsync = async () => {
+      const res = await hotelService.getHotelByUid(user?.uid);
+      const data: HotelGetByIDRes[] = res.data;
+      setHotelAll(data);
 
-  //     // const resRoom = await roomHotelService.getRoomByHotelID()
-  //   };
-  //   loadDataAsync();
-  // },[]);
+      // const resRoom = await roomHotelService.getRoomByHotelID()
+    };
+    loadDataAsync();
+  }, []);
 
-  // useEffect(() => {
-  //   const loadDataHotelAsync = async () => {
-  //     const resHotel = await hotelService.getShowHotelByHid(Hotel_ID);
-  //     const data: HotelGetByHIDRes[] = resHotel.data;
-  //     setHotel(data);
+  useEffect(() => {
+    const loadDataHotelAsync = async () => {
+      const resHotel = await hotelService.getShowHotelByHid(Hotel_ID);
+      const data: HotelGetByHIDRes[] = resHotel.data;
+      setHotel(data);
 
-  //     const resUrl = await hotelService.getHotelUrlByHid(Hotel_ID);
-  //     const dataUrl: HotelURLGetByHotelIDRes[] =  resUrl.data;
-  //     setHotelUrl(dataUrl);
+      const resUrl = await hotelService.getHotelUrlByHid(Hotel_ID);
+      const dataUrl: HotelURLGetByHotelIDRes[] = resUrl.data;
+      setHotelUrl(dataUrl);
 
-  //     const resImage = await hotelService.getHotelImageByHid(Hotel_ID);
-  //     const dataImage: HotelImageGetByHotelIDRes[] = resImage.data;
-  //     setHotelImage(dataImage);
+      const resImage = await hotelService.getHotelImageByHid(Hotel_ID);
+      const dataImage: HotelImageGetByHotelIDRes[] = resImage.data;
+      setHotelImage(dataImage);
 
-  //     const resRoom = await roomHotelService.getRoomByHotelID(Hotel_ID);
-  //     const dataRoom: RoomGetByHotelIDRes[] = resRoom.data;
-  //     setRoom(dataRoom);
-  //   }
-  //   loadDataHotelAsync();
-  // },[]);
+      const resRoom = await roomHotelService.getRoomByHotelID(Hotel_ID);
+      const dataRoom: RoomGetByHotelIDRes[] = resRoom.data;
+      setRoom(dataRoom);
+    };
+    loadDataHotelAsync();
+  }, [Hotel_ID]);
 
   function navigateToEditDataHotelPage() {
     navigate("/EditDataHotel");
@@ -130,16 +130,16 @@ function CheckDataHotelPage() {
               <Select
                 labelId="demo-simple-select-autowidth-label"
                 id="demo-simple-select-autowidth"
-                // value={age}
-                // onChange={(e) => setHotel_ID(String(e.target.value))}
-                sx={{ borderRadius: 20 }}
+                value={Hotel_ID}
+                onChange={(e) => setHotel_ID(e.target.value)}
+                sx={{ borderRadius: 20, overflow: "auto" }}
                 autoWidth
               >
-                {/* {hotelAlls.map((hotel, index) => (
-                    <MenuItem value={hotel.HID}>
-                      {1 + index} - {hotel.name}
-                    </MenuItem>
-                  ))} */}
+                {hotelAlls.map((hotel, index) => (
+                  <MenuItem key={hotel.HID} value={hotel.HID}>
+                    {1 + index} - {hotel.name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </div>
@@ -150,24 +150,17 @@ function CheckDataHotelPage() {
               marginTop: "10px",
             }}
           >
-            
             <Box
               sx={{
                 width: 1250,
-                height: 900,
+                maxHeight: 900,
                 borderRadius: 3,
-                // bgcolor: "#D9D9D9",
                 border: 2,
                 display: "flex",
                 justifyContent: "start",
                 flexDirection: "column",
               }}
             >
-              {/* {hotel.map((hotel, index) =>(
-              <>
-              
-              </>
-            ))} */}
               <div
                 style={{
                   display: "flex",
@@ -188,7 +181,9 @@ function CheckDataHotelPage() {
                   }}
                   variant="h5"
                 >
-                  {/* {hotel} */}
+                  {hotel.map((hotelselect) => (
+                    <>{hotelselect.name}</>
+                  ))}
                 </Typography>
                 <div style={{ display: "flex", marginRight: "10px" }}>
                   <Card sx={{ height: 55, border: 1 }}>
@@ -241,7 +236,10 @@ function CheckDataHotelPage() {
                     }}
                     // variant="h6"
                   >
-                    ที่อยู่
+                    {/* ที่อยู่ */}
+                    {hotel.map((hotelselect) => (
+                      <>{hotelselect.address}</>
+                    ))}
                   </Typography>
                 </div>
               </div>
@@ -265,20 +263,7 @@ function CheckDataHotelPage() {
                     // flexDirection: "column",
                   }}
                 >
-                  {/* <Card
-                    sx={{
-                      maxWidth: 500,
-                      // height:150
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      height="100%"
-                      alt="green iguana"
-                      image="src\img\webteemi.png"
-                    />
-                  </Card> */}
-                  {/* <ImageList
+                  <ImageList
                     sx={{
                       maxWidth: 500,
                       height: 455,
@@ -287,31 +272,24 @@ function CheckDataHotelPage() {
                       marginLeft: "5px",
                       borderRadius: 3,
                     }}
-                    variant="woven"
+                    // variant="woven"
                     cols={3}
                     gap={6}
-                    rowHeight={"auto"}
+                    // rowHeight={"auto"}
+
+                    rowHeight={200}
                   >
                     {hotelImage.map((item) => (
-                      // <ImageListItem key={item.img}>
-                      //   <img
-                      //     srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                      //     src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                      //     alt={item.title}
-                      //     loading="lazy"
-                      //   />
-                      // </ImageListItem>
-
                       <ImageListItem key={item?.url_image}>
                         <img
-                          srcSet={`${item?.url_image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                          src={`${item?.url_image}?w=248&fit=crop&auto=format`}
-                          alt={`${item?.HIMGID}`}
+                          srcSet={`${item?.url_image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                          src={`${item?.url_image}?w=164&h=164&fit=crop&auto=format`}
+                          alt={item?.HIMGID.toString()}
                           loading="lazy"
                         />
                       </ImageListItem>
                     ))}
-                  </ImageList> */}
+                  </ImageList>
                 </Box>
               </div>
               <div
@@ -333,7 +311,10 @@ function CheckDataHotelPage() {
                   }}
                   variant="h5"
                 >
-                  ชนิดโรงแรม :
+                  ชนิดโรงแรม :{" "}
+                  {hotel.map((hotelselect) => (
+                    <>{hotelselect.typename_hotel}</>
+                  ))}
                 </Typography>
               </div>
               <div
@@ -376,29 +357,9 @@ function CheckDataHotelPage() {
                     }}
                     // variant="h5"
                   >
-                    Our hotel boasts a prime location in the very heart of the
-                    city, offering guests an unbeatable blend of convenience and
-                    comfort. Situated just steps away from some of the city’s
-                    most iconic landmarks, you’ll find yourself immersed in the
-                    vibrant energy of the urban landscape. Whether you're
-                    exploring historic sites, attending a conference, or
-                    enjoying a leisurely vacation, our central position makes it
-                    easy to navigate the city. The surrounding neighborhood is a
-                    bustling hub of activity, with an eclectic mix of
-                    restaurants, cafes, and boutiques just around the corner.
-                    Whether you're in the mood for fine dining, a casual coffee,
-                    or a shopping spree, you’ll find plenty of options to suit
-                    your tastes and preferences. For those traveling by public
-                    transportation, the hotel is ideally located near major bus
-                    and subway lines, providing quick and easy access to all
-                    parts of the city. If you're driving, we offer convenient
-                    access to major highways, and there is ample parking
-                    available nearby for our guests. After a day of exploring or
-                    meetings, retreat to the tranquility of our hotel, where
-                    modern amenities and comfortable accommodations await. Our
-                    commitment to service ensures that your stay is as pleasant
-                    and stress-free as possible, making our hotel the perfect
-                    choice for both business and leisure travelers.
+                    {hotel.map((hotelselect) => (
+                      <>{hotelselect.detail}</>
+                    ))}
                   </Typography>
                 </div>
               </div>
@@ -415,7 +376,8 @@ function CheckDataHotelPage() {
             <Box
               sx={{
                 width: 550,
-                height: 300,
+                // height: 300,
+                maxHeight: 300,
                 borderRadius: 3,
                 // bgcolor: "#D9D9D9",
                 border: 2,
@@ -450,9 +412,10 @@ function CheckDataHotelPage() {
                   sx={{
                     display: "flex",
                     width: 500,
-                    height: 230,
+                    // height: 230,
                     maxHeight: 230,
                     borderRadius: 3,
+                    marginBottom: 1,
                     // bgcolor: "#D9D9D9",
                     border: 1,
                     overflow: "auto",
@@ -464,74 +427,27 @@ function CheckDataHotelPage() {
                       display: "flex",
                       marginTop: "10px",
                       marginLeft: "10px",
+                      marginBottom: 2,
                     }}
                   >
                     <Grid container spacing={2}>
-                      <Grid item>
-                        <Link
-                          sx={{
-                            color: "#3A3A3A",
-                            "&:hover": {
-                              color: "#3A3A3A",
-                            },
-                          }}
-                          underline="hover"
-                        >
-                          Booking.com
-                        </Link>
-                      </Grid>
-                      <Grid item>
-                        <Link
-                          sx={{
-                            color: "#3A3A3A",
-                            "&:hover": {
-                              color: "#3A3A3A",
-                            },
-                          }}
-                          underline="hover"
-                        >
-                          Agoda.com
-                        </Link>
-                      </Grid>
-                      <Grid item>
-                        <Link
-                          sx={{
-                            color: "#3A3A3A",
-                            "&:hover": {
-                              color: "#3A3A3A",
-                            },
-                          }}
-                          underline="hover"
-                        >
-                          Trip.com
-                        </Link>
-                      </Grid>
-                      <Grid item>
-                        <Link
-                          sx={{
-                            color: "#3A3A3A",
-                            "&:hover": {
-                              color: "#3A3A3A",
-                            },
-                          }}
-                          underline="hover"
-                        >
-                          TripAdvisor.com
-                        </Link>
-                      </Grid>
-                      <Grid item>
-                        <Link
-                          sx={{
-                            color: "#3A3A3A",
-                            "&:hover": {
-                              color: "#3A3A3A",
-                            },
-                          }}
-                          underline="hover"
-                        >
-                          Traveloka.com
-                        </Link>
-                      </Grid>
+                      {hotelUrl.map((hotelselect) => (
+                        <>
+                          <Grid item>
+                            <Link
+                              sx={{
+                                color: "#3A3A3A",
+                                "&:hover": {
+                                  color: "#3A3A3A",
+                                },
+                              }}
+                              underline="hover"
+                            >
+                              {hotelselect.url}
+                            </Link>
+                          </Grid>
+                        </>
+                      ))}
                     </Grid>
                   </div>
                 </Box>
@@ -566,6 +482,7 @@ function CheckDataHotelPage() {
                   gutterBottom
                   sx={{
                     display: "flex",
+                    marginTop: "5px",
                     fontWeight: "bold",
                     color: "black",
                     fontFamily: "Mitr, sans-serif",
@@ -579,14 +496,13 @@ function CheckDataHotelPage() {
               <div
                 style={{
                   display: "flex",
-                  marginTop: "10px",
+                  // marginTop: "10px",
                   marginLeft: "10px",
                 }}
               >
                 <div
                   style={{
                     display: "flex",
-                    // marginTop: "10px",
                     marginLeft: "10px",
                   }}
                 >
@@ -608,45 +524,59 @@ function CheckDataHotelPage() {
                           <TableCell>วิวของห้อง</TableCell>
                           <TableCell>ราคาห้องต่อคืน</TableCell>
                           <TableCell>จำนวนคนเข้าพัก</TableCell>
+                          <TableCell>จำนวนห้อง</TableCell>
                           <TableCell>สถานะของห้อง</TableCell>
                           <TableCell>แก้ไขข้อมูลห้อง</TableCell>
                           <TableCell>ลบข้อมูลห้อง</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        <TableRow>
-                          <TableCell>Twin Bedded Room</TableCell>
-                          <TableCell>วิวเมือง</TableCell>
-                          <TableCell>1750</TableCell>
-                          <TableCell>2</TableCell>
-                          <TableCell>ว่าง</TableCell>
-                          <TableCell>
-                            <Button
-                              variant="contained"
-                              style={{ backgroundColor: "#343434" }}
-                              sx={{
-                                // width: "100px",
-                                borderRadius: "10px",
-                              }}
-                              startIcon={<EditIcon />}
-                            >
-                              รายละเอียดของห้อง
-                            </Button>
-                          </TableCell>
-                          <TableCell>
-                            <Button
-                              variant="contained"
-                              style={{ backgroundColor: "red" }}
-                              sx={{
-                                // width: "100px",
-                                borderRadius: "10px",
-                              }}
-                              startIcon={<DeleteIcon />}
-                            >
-                              ลบข้อมูลห้อง
-                            </Button>
-                          </TableCell>
-                        </TableRow>
+                        {rooms.map((hotelselect) => (
+                          <>
+                            <TableRow>
+                              <TableCell>{hotelselect.type_room}</TableCell>
+                              <TableCell>
+                                {hotelselect.type_view_name_room}
+                              </TableCell>
+                              <TableCell>{hotelselect.price}</TableCell>
+                              <TableCell>
+                                {hotelselect.Number_of_guests}
+                              </TableCell>
+                              <TableCell>
+                                {hotelselect.Number_of_rooms}
+                              </TableCell>
+                              <TableCell>
+                                {hotelselect.status_name_room}
+                              </TableCell>
+                              <TableCell>
+                                <Button
+                                  variant="contained"
+                                  style={{ backgroundColor: "#343434" }}
+                                  sx={{
+                                    // width: "100px",
+                                    borderRadius: "10px",
+                                  }}
+                                  startIcon={<EditIcon />}
+                                >
+                                  รายละเอียดของห้อง
+                                </Button>
+                              </TableCell>
+                              <TableCell>
+                                <Button
+                                  variant="contained"
+                                  style={{ backgroundColor: "red" }}
+                                  sx={{
+                                    // width: "100px",
+                                    borderRadius: "10px",
+                                  }}
+                                  startIcon={<DeleteIcon />}
+                                >
+                                  ลบข้อมูลห้อง
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          </>
+                        ))}
                       </TableBody>
                     </Table>
                   </TableContainer>

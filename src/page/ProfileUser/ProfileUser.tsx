@@ -1,24 +1,8 @@
-import {
-  Box,
-  Card,
-  CardActionArea,
-  CardMedia,
-  Typography,
-} from "@mui/material";
 import HeaderUserTypeGeneral2 from "../../components/HeadUserTypeGeneral2";
 import HeaderUserTypeManager2 from "../../components/HeadUserTypeManager2";
 
 function ProfileUserPage() {
   const user = JSON.parse(localStorage.getItem("objUser")!);
-  // Helper function to decode base64 to image URL
-  // const base64ToImageURL = (base64: string) => {
-  //   if (!base64) return undefined;
-  //   // Add the appropriate MIME type
-  //   const mimeType = base64.startsWith('iVBORw0KGgo') ? 'image/png' : 'image/jpeg';
-  //   console.log(`data:${mimeType};base64,${base64}`);
-  //   console.log(user?.image_user);
-  //   return `data:${mimeType};base64,${base64}`;
-  // };
   return (
     <>
       {(user?.type_user === 2 && (
@@ -31,461 +15,94 @@ function ProfileUserPage() {
             <HeaderUserTypeGeneral2 />
           </>
         ))}
-      <div className="profileuser-cont">
+      <div className="w-screen h-screen flex justify-center items-center">
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <Typography
-              gutterBottom
-              sx={{
-                display: "flex",
-                fontWeight: "bold",
-                color: "black",
-                fontFamily: "Mitr, sans-serif",
-                fontStyle: "normal",
-              }}
-              variant="h4"
-            >
-              โปรไฟล์ของฉัน
-            </Typography>
-          </div>
-          <Box
-            sx={{
-              width: 650,
-              height: 670,
-              borderRadius: 3,
-              bgcolor: "#D9D9D9",
-              border: 2,
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: "15px",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: 180,
-                    height: 170,
-                    borderRadius: 3,
-                    bgcolor: "white",
-                    border: 2,
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Card sx={{ maxWidth: 180, borderRadius: 3 }}>
-                    <CardActionArea>
-                      <CardMedia
-                        sx={{ maxHeight: 170, maxWidth: 170 }}
-                        component="img"
-                        height="300"
-                        image={user?.image_user}
-                        // image={base64ToImageURL(user?.image_user)}
-                        
-                      />
-                    </CardActionArea>
-                  </Card>
-                </Box>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: "20px",
-                  marginRight: "100px",
-                }}
-              >
-                <div style={{ marginRight: "50px" }}>
-                  <Typography
-                    gutterBottom
-                    sx={{
-                      display: "flex",
-                      fontWeight: "bold",
-                      color: "black",
-                      fontFamily: "Mitr, sans-serif",
-                      fontStyle: "normal",
-                      marginTop: "5px",
-                    }}
-                    variant="h6"
-                  >
-                    ชื่อ-นามสกุล:
-                  </Typography>
-                </div>
+          <h1 className="text-black text-3xl text-center pb-4">
+            โปรไฟล์ของฉัน
+          </h1>
 
-                <Box
-                  sx={{
-                    borderRadius: 3,
-                    bgcolor: "white",
-                    border: 2,
-                    display: "flex",
-                  }}
-                >
-                  <div
-                    style={{
-                      paddingLeft: "5px",
-                      paddingRight: "5px",
-                      paddingTop: "5px",
-                    }}
-                  >
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        display: "flex",
-                        fontWeight: "bold",
-                        color: "black",
-                        fontFamily: "Mitr, sans-serif",
-                        fontStyle: "normal",
-                      }}
-                      variant="h6"
-                    >
-                      {user?.name_user}
-                    </Typography>
+          <div className="w-auto p-10 bg-sky-200 rounded-2xl">
+            <div className="flex flex-col">
+              <div className="flex flex-row justify-between items-center">
+                <img
+                  src={user?.image_user}
+                  width={150}
+                  height={150}
+                  className="rounded-lg"
+                />
+                <div className="flex flex-row ">
+                  <div className="flex pl-10 flex-col ">
+                    <label>ชื่อ-นามสกุล</label>
+                    <input
+                      type="text"
+                      value={user?.name_user}
+                      className=" pl-2 pr-2 rounded-lg  bg-white"
+                      disabled
+                    />
                   </div>
-                </Box>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: "20px",
-                  marginRight: "100px",
-                }}
-              >
-                <div style={{ marginRight: "50px" }}>
-                  <Typography
-                    gutterBottom
-                    sx={{
-                      display: "flex",
-                      fontWeight: "bold",
-                      color: "black",
-                      fontFamily: "Mitr, sans-serif",
-                      fontStyle: "normal",
-                      marginTop: "5px",
-                    }}
-                    variant="h6"
-                  >
-                  ชื่อเล่น:
-                  </Typography>
+                  <div className="flex pl-10 flex-col">
+                    <label> ชื่อเล่น</label>
+                    <input
+                      type="text"
+                      value={user?.nick_user}
+                      className=" pl-2 pr-2 rounded-lg  bg-white"
+                      disabled
+                    />
+                  </div>
                 </div>
-
-                <Box
-                  sx={{
-                    borderRadius: 3,
-                    bgcolor: "white",
-                    border: 2,
-                    display: "flex",
-                  }}
-                >
-                  <div
-                    style={{
-                      paddingLeft: "5px",
-                      paddingRight: "5px",
-                      paddingTop: "5px",
-                    }}
-                  >
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        display: "flex",
-                        fontWeight: "bold",
-                        color: "black",
-                        fontFamily: "Mitr, sans-serif",
-                        fontStyle: "normal",
-                      }}
-                      variant="h6"
-                    >
-                      {user?.nick_user}
-                    </Typography>
-                  </div>
-                </Box>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: "20px",
-                  marginRight: "100px",
-                }}
-              >
-                <div style={{ marginRight: "50px" }}>
-                  <Typography
-                    gutterBottom
-                    sx={{
-                      display: "flex",
-                      fontWeight: "bold",
-                      color: "black",
-                      fontFamily: "Mitr, sans-serif",
-                      fontStyle: "normal",
-                      marginTop: "5px",
-                    }}
-                    variant="h6"
-                  >
-                    จังหวัด:
-                  </Typography>
+              <div className="flex flex-row justify-around">
+                <div className="flex flex-col pt-2">
+                  <label>จังหวัด</label>
+                  <input
+                    type="text"
+                    value={user?.province}
+                    className=" pl-2 pr-2 rounded-lg  bg-white"
+                    disabled
+                  />
                 </div>
-
-                <Box
-                  sx={{
-                    borderRadius: 3,
-                    bgcolor: "white",
-                    border: 2,
-                    display: "flex",
-                  }}
-                >
-                  <div
-                    style={{
-                      paddingLeft: "5px",
-                      paddingRight: "5px",
-                      paddingTop: "5px",
-                    }}
-                  >
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        display: "flex",
-                        fontWeight: "bold",
-                        color: "black",
-                        fontFamily: "Mitr, sans-serif",
-                        fontStyle: "normal",
-                      }}
-                      variant="h6"
-                    >
-                      {user?.province}
-                    </Typography>
-                  </div>
-                </Box>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: "20px",
-                  marginRight: "100px",
-                }}
-              >
-                <div style={{ marginRight: "50px" }}>
-                  <Typography
-                    gutterBottom
-                    sx={{
-                      display: "flex",
-                      fontWeight: "bold",
-                      color: "black",
-                      fontFamily: "Mitr, sans-serif",
-                      fontStyle: "normal",
-                      marginTop: "5px",
-                    }}
-                    variant="h6"
-                  >
-                    เบอร์โทร:
-                  </Typography>
+                <div className="flex flex-col pt-2">
+                  <label>เบอร์โทร</label>
+                  <input
+                    type="text"
+                    value={user?.phone}
+                    className=" pl-2 pr-2 rounded-lg  bg-white"
+                    disabled
+                  />
                 </div>
-
-                <Box
-                  sx={{
-                    borderRadius: 3,
-                    bgcolor: "white",
-                    border: 2,
-                    display: "flex",
-                  }}
-                >
-                  <div
-                    style={{
-                      paddingLeft: "5px",
-                      paddingRight: "5px",
-                      paddingTop: "5px",
-                    }}
-                  >
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        display: "flex",
-                        fontWeight: "bold",
-                        color: "black",
-                        fontFamily: "Mitr, sans-serif",
-                        fontStyle: "normal",
-                      }}
-                      variant="h6"
-                    >
-                      {user?.phone}
-                    </Typography>
-                  </div>
-                </Box>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: "20px",
-                  marginRight: "100px",
-                }}
-              >
-                <div style={{ marginRight: "50px" }}>
-                  <Typography
-                    gutterBottom
-                    sx={{
-                      display: "flex",
-                      fontWeight: "bold",
-                      color: "black",
-                      fontFamily: "Mitr, sans-serif",
-                      fontStyle: "normal",
-                      marginTop: "5px",
-                    }}
-                    variant="h6"
-                  >
-                    Facebook:
-                  </Typography>
+                <div className="flex flex-col pt-2">
+                  <label>Facebook</label>
+                  <input
+                    type="text"
+                    value={user?.facebook}
+                    className=" pl-2 pr-2 rounded-lg  bg-white"
+                    disabled
+                  />
                 </div>
-
-                <Box
-                  sx={{
-                    borderRadius: 3,
-                    bgcolor: "white",
-                    border: 2,
-                    display: "flex",
-                  }}
-                >
-                  <div
-                    style={{
-                      paddingLeft: "5px",
-                      paddingRight: "5px",
-                      paddingTop: "5px",
-                    }}
-                  >
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        display: "flex",
-                        fontWeight: "bold",
-                        color: "black",
-                        fontFamily: "Mitr, sans-serif",
-                        fontStyle: "normal",
-                      }}
-                      variant="h6"
-                    >
-                      {user?.facebook}
-                    </Typography>
-                  </div>
-                </Box>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: "20px",
-                  marginRight: "100px",
-                }}
-              >
-                <div style={{ marginRight: "50px" }}>
-                  <Typography
-                    gutterBottom
-                    sx={{
-                      display: "flex",
-                      fontWeight: "bold",
-                      color: "black",
-                      fontFamily: "Mitr, sans-serif",
-                      fontStyle: "normal",
-                      marginTop: "5px",
-                    }}
-                    variant="h6"
-                  >
-                    LineID:
-                  </Typography>
+              <div className="flex flex-row justify-start ">
+                <div className="flex flex-col pt-2 pl-1">
+                  <label>Line</label>
+                  <input
+                    type="text"
+                    value={user?.lineID}
+                    className=" pl-2 pr-2 rounded-lg  bg-white"
+                    disabled
+                  />
                 </div>
-
-                <Box
-                  sx={{
-                    borderRadius: 3,
-                    bgcolor: "white",
-                    border: 2,
-                    display: "flex",
-                  }}
-                >
-                  <div
-                    style={{
-                      paddingLeft: "5px",
-                      paddingRight: "5px",
-                      paddingTop: "5px",
-                    }}
-                  >
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        display: "flex",
-                        fontWeight: "bold",
-                        color: "black",
-                        fontFamily: "Mitr, sans-serif",
-                        fontStyle: "normal",
-                      }}
-                      variant="h6"
-                    >
-                      {user?.lineID}
-                    </Typography>
-                  </div>
-                </Box>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: "20px",
-                  marginRight: "100px",
-                }}
-              >
-                <div style={{ marginRight: "50px" }}>
-                  <Typography
-                    gutterBottom
-                    sx={{
-                      display: "flex",
-                      fontWeight: "bold",
-                      color: "black",
-                      fontFamily: "Mitr, sans-serif",
-                      fontStyle: "normal",
-                      marginTop: "5px",
-                    }}
-                    variant="h6"
-                  >
-                    ประเภทผู้ใช้งาน:
-                  </Typography>
+                <div className="flex flex-col pt-2 pl-3">
+                  <label>ประเภท</label>
+                  <input
+                    type="text"
+                    value={user?.typename_user}
+                    className=" pl-2 pr-2 rounded-lg bg-white"
+                    disabled
+                  />
                 </div>
-
-                <Box
-                  sx={{
-                    borderRadius: 3,
-                    bgcolor: "white",
-                    border: 2,
-                    display: "flex",
-                  }}
-                >
-                  <div
-                    style={{
-                      paddingLeft: "5px",
-                      paddingRight: "5px",
-                      paddingTop: "5px",
-                    }}
-                  >
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        display: "flex",
-                        fontWeight: "bold",
-                        color: "black",
-                        fontFamily: "Mitr, sans-serif",
-                        fontStyle: "normal",
-                      }}
-                      variant="h6"
-                    >
-                      {user?.typename_user}
-                    </Typography>
-                  </div>
-                </Box>
               </div>
+              
             </div>
-          </Box>
+          </div>
         </div>
       </div>
     </>

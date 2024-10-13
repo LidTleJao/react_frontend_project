@@ -22,6 +22,7 @@ import "./page/AddCC/AddConcertP3/AddConcertP3.css";
 import "./page/AddCC/AddConcertP4/AddConcertP4.css";
 import "./page/AddCC/AddTicket/AddTicket.css";
 import "./page/AddCC/AddTicketP2/AddTicketP2.css";
+import "./page/AddCC/CheckDataConcert/CheckDataConcert.css";
 import "./page/AddPK/SelectData/SelectData.css";
 import "./page/AddPK/Hotel/MenuHotelDeals/MenuHotelDeals.css";
 import "./page/AddPK/Concert/MenuConcertDeals/MenuConcertDeals.css";
@@ -55,6 +56,7 @@ import MenuHotelDealPage from "./page/AddPK/Hotel/MenuHotelDeals/MenuHotelDeals"
 import MenuConcertDealPage from "./page/AddPK/Concert/MenuConcertDeals/MenuConcertDeals";
 import AddHotelDealDataPage from "./page/AddPK/Hotel/AddHotelDealData/AddHotelDealData";
 import AddConcertDealDataPage from "./page/AddPK/Concert/AddConcertDealData/AddConcertDealData";
+import CheckDataConcertPage from "./page/AddCC/CheckDataConcert/CheckDataConcert";
 
 function App() {
   const routers = createBrowserRouter([
@@ -74,6 +76,7 @@ function App() {
     { path: "/AddRoom", element: <AddRoomPage /> },
     { path: "/AddRoomP2", element: <AddRoomP2Page /> },
     { path: "/CheckDataHotel", element: <CheckDataHotelPage /> },
+    { path: "/CheckDataConcert", element: <CheckDataConcertPage /> },
     { path: "/AddConcertData", element: <AddConcertDataPage /> },
     { path: "/AddConcert", element: <AddConcertPage /> },
     { path: "/AddConcertP2", element: <AddConcertP2Page /> },

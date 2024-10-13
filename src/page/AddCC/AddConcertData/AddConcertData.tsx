@@ -17,6 +17,9 @@ function AddConcertDataPage() {
   function navigateToAddTicketPage() {
     navigate("/AddTicket");
   }
+  function navigateToCheckDataConcertPage() {
+    navigate("/CheckDataConcert");
+  }
 
   return (
     <>
@@ -94,7 +97,8 @@ function AddConcertDataPage() {
             </div>
             <div style={{ display: "flex", marginLeft: "150px" }}>
               <Card>
-                <CardActionArea>
+                <CardActionArea
+                onClick={navigateToCheckDataConcertPage}>
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     <FactCheckIcon sx={{ fontSize: "150px" }} />
                   </div>
