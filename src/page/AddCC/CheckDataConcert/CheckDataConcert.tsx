@@ -5,8 +5,6 @@ import {
   CardMedia,
   FormControl,
   Grid,
-  ImageList,
-  ImageListItem,
   InputLabel,
   Link,
   MenuItem,
