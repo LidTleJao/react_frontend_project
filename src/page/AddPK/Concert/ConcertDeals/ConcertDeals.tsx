@@ -2,6 +2,11 @@ import {
   Box,
   Button,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
   InputLabel,
   MenuItem,
@@ -28,11 +33,15 @@ import { ConcertDealsService } from "../../../../service/concertDealService";
 import { ConcertDealsGetByUserRes } from "../../../../model/Response/Packet/Concert/ConcertDealsGetByUserRes";
 import { ConcertDealsGetByCDIDRes } from "../../../../model/Response/Packet/Concert/ConcertDealsGetByCDIDRes";
 import { HotelDealsGetAllRes } from "../../../../model/Response/Packet/Hotel/HotelDealsGetAllRes";
+import { DealsService } from "../../../../service/dealsService";
+import { PacketService } from "../../../../service/packetService";
 
 function ConcertDealPage() {
   const navigate = useNavigate();
   const hoteldeals = new HotelDealsService();
   const concertDealService = new ConcertDealsService();
+  const dealsService = new DealsService();
+  const packetService = new PacketService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [ConcertDealByUser, setConcertDealByUser] = useState<
     ConcertDealsGetByUserRes[]
@@ -44,6 +53,7 @@ function ConcertDealPage() {
   const [concertdeal_ID, setConcertdeal_ID] = useState("");
   const [selectedValueRadio, setSelectedValueRadio] = useState("");
   const [isLoad, setLoad] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const loadDataAsync = async () => {
@@ -75,6 +85,43 @@ function ConcertDealPage() {
     };
     loadDataAsync();
   }, []);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+    console.log(concertdeal_ID);
+    console.log(selectedValueRadio);
+  };
+
+  const handleCloseByCancel = () => {
+    setOpen(false);
+  };
+
+  const handleCloseByContinue = async () => {
+    try {
+      const resdeal = await dealsService.AddDeal(
+        selectedValueRadio,
+        concertdeal_ID
+      );
+      console.log(resdeal.status);
+      const last_idx: string = resdeal.data.last_idx;
+      if (resdeal.status == 201) {
+        const respacket = await packetService.AddPacket(last_idx);
+        if (respacket.status == 201) {
+          window.alert("ข้อมูลของแพ็คเกจ ได้ลงทะเบียนแล้ว!!!");
+          navigateToMenuConcertDealPage();
+          setOpen(false);
+        } else {
+          window.alert("เกิดข้อผิดพลาด โปรดเลือกข้อมูลใหม่");
+        }
+      } else {
+        window.alert("เกิดข้อผิดพลาด โปรดเลือกข้อมูลใหม่");
+      }
+    } catch (error) {
+      setOpen(false);
+      console.log(error);
+    }
+    setOpen(false);
+  };
 
   function navigateToMenuConcertDealPage() {
     navigate("/MenuConcertDeal");
@@ -374,7 +421,11 @@ function ConcertDealPage() {
                     onClick={async () => {
                       try {
                         setLoad(true);
-
+                        if (concertdeal_ID && selectedValueRadio != "") {
+                          handleClickOpen();
+                        } else {
+                          window.alert("ข้อมูลไม่ถูกต้อง โปรดเลือกข้อมูลใหม่");
+                        }
                         setLoad(false);
                       } catch (error) {
                         setLoad(false);
@@ -387,6 +438,29 @@ function ConcertDealPage() {
                 )}
               </div>
             </div>
+            <Dialog
+              open={open}
+              onClose={handleCloseByCancel}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {"ต้องการดำเนินการจับคู่ ?"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  ข้อเสนอของโรงแรมและข้อเสนอของคอนนเสิร์ต
+                  จะถูกดำเนินการสร้างแพ็คเกจทันที
+                  โปรดตรวจข้อมูลข้อเสนอที่เลือกให้ถูกต้องอีกครั้ง !!!
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseByCancel}>ยกเลิก</Button>
+                <Button onClick={handleCloseByContinue} autoFocus>
+                  ตกลง
+                </Button>
+              </DialogActions>
+            </Dialog>
             <div
               style={{
                 display: "flex",
@@ -411,7 +485,7 @@ function ConcertDealPage() {
                 >
                   {ConcertDealByCDID.map((concertdeal) => (
                     <TableRow>
-                      <TableCell >
+                      <TableCell>
                         ชื่อคอนเสิร์ต: {concertdeal.name_concert}
                       </TableCell>
                       <TableCell>

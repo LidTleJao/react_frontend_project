@@ -33,11 +33,15 @@ import { ConcertDealsGetAllRes } from "../../../../model/Response/Packet/Concert
 import { HotelDealsService } from "../../../../service/hotelDealService";
 import { HotelDealsGetByUserRes } from "../../../../model/Response/Packet/Hotel/HotelDealsGetByUserRes";
 import { HotelDealsGetByHDIDRes } from "../../../../model/Response/Packet/Hotel/HotelDealsGetByHDIDRes";
+import { DealsService } from "../../../../service/dealsService";
+import { PacketService } from "../../../../service/packetService";
 
 function HotelDealPage() {
   const navigate = useNavigate();
   const concertdeals = new ConcertDealsService();
   const hotelDealService = new HotelDealsService();
+  const dealsService = new DealsService();
+  const packetService = new PacketService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [HotelDealByUser, setHotelDealByUser] = useState<
     HotelDealsGetByUserRes[]
@@ -84,9 +88,38 @@ function HotelDealPage() {
 
   const handleClickOpen = () => {
     setOpen(true);
+    console.log(hoteldeal_ID);
+    console.log(selectedValueRadio);
   };
 
-  const handleClose = () => {
+  const handleCloseByCancel = () => {
+    setOpen(false);
+  };
+
+  const handleCloseByContinue = async () => {
+    try {
+      const resdeal = await dealsService.AddDeal(
+        hoteldeal_ID,
+        selectedValueRadio
+      );
+      console.log(resdeal.status);
+      const last_idx: string = resdeal.data.last_idx;
+      if (resdeal.status == 201) {
+        const respacket = await packetService.AddPacket(last_idx);
+        if (respacket.status == 201) {
+          window.alert("ข้อมูลของแพ็คเกจ ได้ลงทะเบียนแล้ว!!!");
+          navigateToMenuHotelDealPage();
+          setOpen(false);
+        } else {
+          window.alert("เกิดข้อผิดพลาด โปรดเลือกข้อมูลใหม่");
+        }
+      } else {
+        window.alert("เกิดข้อผิดพลาด โปรดเลือกข้อมูลใหม่");
+      }
+    } catch (error) {
+      setOpen(false);
+      console.log(error);
+    }
     setOpen(false);
   };
 
@@ -357,7 +390,11 @@ function HotelDealPage() {
                     onClick={async () => {
                       try {
                         setLoad(true);
-                        handleClickOpen();
+                        if (hoteldeal_ID && selectedValueRadio != "") {
+                          handleClickOpen();
+                        } else {
+                          window.alert("ข้อมูลไม่ถูกต้อง โปรดเลือกข้อมูลใหม่");
+                        }
                         setLoad(false);
                       } catch (error) {
                         setLoad(false);
@@ -372,7 +409,7 @@ function HotelDealPage() {
             </div>
             <Dialog
               open={open}
-              onClose={handleClose}
+              onClose={handleCloseByCancel}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
             >
@@ -381,13 +418,14 @@ function HotelDealPage() {
               </DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                  ข้อเสนอของโรงแรมและข้อเสนอของคอนนเสิร์ต จะถูกดำเนินการสร้างแพ็คเกจทันที
+                  ข้อเสนอของโรงแรมและข้อเสนอของคอนนเสิร์ต
+                  จะถูกดำเนินการสร้างแพ็คเกจทันที
                   โปรดตรวจข้อมูลข้อเสนอที่เลือกให้ถูกต้องอีกครั้ง !!!
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleClose}>ยกเลิก</Button>
-                <Button onClick={handleClose} autoFocus>
+                <Button onClick={handleCloseByCancel}>ยกเลิก</Button>
+                <Button onClick={handleCloseByContinue} autoFocus>
                   ตกลง
                 </Button>
               </DialogActions>
