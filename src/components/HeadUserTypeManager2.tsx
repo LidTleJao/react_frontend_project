@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+// import NotificationsIcon from "@mui/icons-material/Notifications";
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import React from "react";
@@ -279,7 +279,7 @@ function HeaderUserTypeManager2() {
                 </Typography>
               </MenuItem>
             </Menu>
-            <IconButton
+            {/* <IconButton
               sx={{
                 background: "linear-gradient(45deg, #085078, #85D8CE)",
                 color: "white",
@@ -290,7 +290,7 @@ function HeaderUserTypeManager2() {
               }}
             >
               <NotificationsIcon />
-            </IconButton>
+            </IconButton> */}
             <Tooltip title="Account settings">
               <IconButton
                 onClick={handleAccountClick}

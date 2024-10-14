@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+// import NotificationsIcon from "@mui/icons-material/Notifications";
 import React from "react";
 import { useNavigate} from "react-router-dom";
 import { Logout } from "@mui/icons-material";
@@ -259,7 +259,7 @@ function HeaderUserTypeManager() {
                 </Typography>
               </MenuItem>
             </Menu>
-            <IconButton
+            {/* <IconButton
               sx={{
                 background: "linear-gradient(45deg, #085078, #85D8CE)",
                 color: "white",
@@ -270,7 +270,7 @@ function HeaderUserTypeManager() {
               }}
             >
               <NotificationsIcon />
-            </IconButton>
+            </IconButton> */}
             <Tooltip title="Account settings">
               <IconButton
                 onClick={handleAccountClick}

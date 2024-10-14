@@ -11,7 +11,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+// import NotificationsIcon from "@mui/icons-material/Notifications";
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import React from "react";
@@ -167,7 +167,7 @@ function HeaderUserTypeGeneral2() {
             style={{ display: "flex", marginRight: 55, flexDirection: "row" }}
           >
             
-            <IconButton
+            {/* <IconButton
               sx={{
                 background: "linear-gradient(45deg, #085078, #85D8CE)",
                 color: "white",
@@ -178,7 +178,7 @@ function HeaderUserTypeGeneral2() {
               }}
             >
               <NotificationsIcon />
-            </IconButton>
+            </IconButton> */}
             <Tooltip title="Account settings">
               <IconButton
                 onClick={handleAccountClick}
