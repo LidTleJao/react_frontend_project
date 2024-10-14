@@ -369,8 +369,8 @@ function CheckDataHotelPage() {
             style={{
               display: "flex",
               marginTop: "20px",
-              marginLeft: "110px",
-              justifyContent: "start",
+              marginRight:"700px",
+              justifyContent: "center",
             }}
           >
             <Box
@@ -455,7 +455,11 @@ function CheckDataHotelPage() {
             </Box>
           </div>
           <div
-            style={{ display: "flex", marginTop: "20px", marginLeft: "110px" }}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "20px",
+            }}
           >
             <Box
               sx={{
