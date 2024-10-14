@@ -155,6 +155,7 @@ function HotelDealPage() {
           <div
             style={{
               display: "flex",
+              justifyContent:"center",
               flexDirection: "row",
               marginLeft: "80px",
             }}

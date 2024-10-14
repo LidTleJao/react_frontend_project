@@ -156,6 +156,7 @@ function ConcertDealPage() {
             style={{
               display: "flex",
               flexDirection: "row",
+              justifyContent:"center",
               marginLeft: "80px",
             }}
           >
