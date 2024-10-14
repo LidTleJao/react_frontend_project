@@ -1,14 +1,17 @@
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import HeaderUserTypeManager2 from "../../../../components/HeadUserTypeManager2";
-import Diversity3Icon from '@mui/icons-material/Diversity3';
-import ListAltIcon from '@mui/icons-material/ListAlt';
+import Diversity3Icon from "@mui/icons-material/Diversity3";
+import ListAltIcon from "@mui/icons-material/ListAlt";
 import { useNavigate } from "react-router-dom";
 
 function MenuConcertDealPage() {
   const navigate = useNavigate();
-    function navigateToAddConcertDealDataPage() {
-        navigate("/AddConcertDealData");
-      }
+  function navigateToAddConcertDealDataPage() {
+    navigate("/AddConcertDealData");
+  }
+  function navigateToConcertDealPage() {
+    navigate("/ConcertDeal");
+  }
   return (
     <>
       <HeaderUserTypeManager2 />
@@ -38,9 +41,7 @@ function MenuConcertDealPage() {
             }}
           >
             <Card>
-              <CardActionArea
-                onClick={navigateToAddConcertDealDataPage}
-              >
+              <CardActionArea onClick={navigateToAddConcertDealDataPage}>
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   <ListAltIcon sx={{ fontSize: "150px" }} />
                 </div>
@@ -58,7 +59,7 @@ function MenuConcertDealPage() {
             <div style={{ display: "flex", marginLeft: "150px" }}>
               <Card>
                 <CardActionArea
-                //   onClick={navigateToAddHotelPage}
+                  onClick={navigateToConcertDealPage}
                 >
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     <Diversity3Icon sx={{ fontSize: "150px" }} />

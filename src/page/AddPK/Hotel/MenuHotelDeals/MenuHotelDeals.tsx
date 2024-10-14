@@ -10,6 +10,9 @@ function MenuHotelDealPage() {
   function navigateToAddHotelDealDataPage() {
     navigate("/AddHotelDealData");
   }
+  function navigateToHotelDealPage() {
+    navigate("/HotelDeal");
+  }
   return (
     <>
       <HeaderUserTypeManager2 />
@@ -59,7 +62,7 @@ function MenuHotelDealPage() {
             <div style={{ display: "flex", marginLeft: "150px" }}>
               <Card>
                 <CardActionArea
-                //   onClick={navigateToAddHotelPage}
+                  onClick={navigateToHotelDealPage}
                 >
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     <Diversity3Icon sx={{ fontSize: "150px" }} />

@@ -3,7 +3,26 @@ import axios from "axios";
 const HOST: string = "http://localhost:3000/concertdeals";
 
 export class ConcertDealsService {
-  async AddHotelDealData(
+
+  async getAllConcertDeals(){
+    const url = `${HOST}/allConcertDeal`;
+    const response = await axios.get(url);
+    return response;
+  }
+
+  async getConcertDealByUser(uid: string) {
+    const url = `${HOST}/ConcertDealByUser/${uid}`;
+    const response = await axios.get(url);
+    return response;
+  }
+
+  async getConcertDealByCDID(cdid: string) {
+    const url = `${HOST}/ConcertDealByCDID/${cdid}`;
+    const response = await axios.get(url);
+    return response;
+  }
+
+  async AddConcertDealData(
     ticket_ID: string,
     number_of_tickets: string,
     price: string,

@@ -3,6 +3,24 @@ import axios from "axios";
 const HOST: string = "http://localhost:3000/hoteldeals";
 
 export class HotelDealsService {
+  async getAllHotelDeals() {
+    const url = `${HOST}/allHotelDeal`;
+    const response = await axios.get(url);
+    return response;
+  }
+
+  async getHotelDealByUser(uid: string) {
+    const url = `${HOST}/HotelDealByUser/${uid}`;
+    const response = await axios.get(url);
+    return response;
+  }
+
+  async getHotelDealByHDID(hdid: string) {
+    const url = `${HOST}/HotelDealByHDID/${hdid}`;
+    const response = await axios.get(url);
+    return response;
+  }
+
   async AddHotelDealData(
     room_ID: string,
     number_of_rooms: string,

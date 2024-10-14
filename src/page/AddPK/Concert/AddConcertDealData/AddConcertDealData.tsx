@@ -447,7 +447,7 @@ function AddConcertDealDataPage() {
                           console.log(formatDate(parsedDate2));
 
                           const resconcertdeal =
-                            await concertDealService.AddHotelDealData(
+                            await concertDealService.AddConcertDealData(
                               Ticket_Type,
                               Number_of_tickets,
                               Price,
