@@ -156,7 +156,7 @@ function ConcertDealPage() {
             style={{
               display: "flex",
               flexDirection: "row",
-              justifyContent:"center",
+              justifyContent: "center",
               marginLeft: "80px",
             }}
           >
@@ -414,7 +414,7 @@ function ConcertDealPage() {
                   <Button
                     variant="contained"
                     sx={{
-                      width: "110px",
+                      width: "120px",
                       borderRadius: "10px",
                     }}
                     startIcon={<ChevronRightIcon />}
@@ -434,7 +434,7 @@ function ConcertDealPage() {
                       }
                     }}
                   >
-                    ถัดไป
+                    ส่งคำร้อง
                   </Button>
                 )}
               </div>

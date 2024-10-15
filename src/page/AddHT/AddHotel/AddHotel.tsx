@@ -227,15 +227,25 @@ function AddHotelPage() {
                     onClick={async () => {
                       try {
                         setLoad(true);
-                        // const res = await hotelService.getHotelByUid(
-                        //   user?.uid
-                        // );
-                        // console.log(res.status);
-                        navigateToAddHotelP2Page();
+                        if (hotelName == "") {
+                          window.alert("ชื่อโรงแรมไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
+                        } else {
+                          if (province == "") {
+                            window.alert("ข้อมูลจังหวัดไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
+                          } else {
+                            if (address == "") {
+                              window.alert("ที่อยู่โรงแรมไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
+                            } else {
+                              if (description == "") {
+                                window.alert("รายละเอียดโรงแรมไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
+                              } else {
+                                navigateToAddHotelP2Page();
+                              }
+                            }
+                          }
+                        }
+                        
                         setLoad(false);
-                        // if (res.status === 200) {
-                        //   console.log(res.data);
-                        // }
                       } catch (error) {
                         setLoad(false);
                         console.log(error);

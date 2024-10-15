@@ -22,9 +22,7 @@ import { useNavigate } from "react-router-dom";
 function EditProfileUserPage() {
   const navigate = useNavigate();
   const userService = new UserService();
-  const [user] = useState(
-    JSON.parse(localStorage.getItem("objUser")!)
-  );
+  const [user] = useState(JSON.parse(localStorage.getItem("objUser")!));
   const [imagePreview, setImagePreview] = useState(user?.image_user || "");
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -133,10 +131,12 @@ function EditProfileUserPage() {
                       justifyContent: "center",
                     }}
                   >
-                    <Card sx={{maxHeight: 180,maxWidth: 180, borderRadius: 3 }}>
+                    <Card
+                      sx={{ maxHeight: 180, maxWidth: 180, borderRadius: 3 }}
+                    >
                       <CardActionArea>
                         <CardMedia
-                          sx={{ display:"flex", justifyContent:"center" }}
+                          sx={{ display: "flex", justifyContent: "center" }}
                           component="img"
                           // height="300"
                           image={imagePreview}
@@ -508,7 +508,6 @@ function EditProfileUserPage() {
                         sx={{ width: "100px", borderRadius: "10px" }}
                         onClick={async () => {
                           try {
-
                             if (
                               selectedFile &&
                               name_userRef.current?.value &&
@@ -519,15 +518,6 @@ function EditProfileUserPage() {
                               lineIDRef.current?.value
                             ) {
                               setLoad(true);
-                              // console.log(selectedFile);
-                              // console.log(name_userRef.current?.value);
-                              // console.log(nick_userRef.current?.value);
-                              // console.log(facebookRef.current?.value);
-                              // console.log(provinceRef.current?.value);
-                              // console.log(phoneRef.current?.value);
-                              // console.log(facebookRef.current?.value);
-                              // console.log(lineIDRef.current?.value);
-
                               const res = await userService.update(
                                 user?.uid,
                                 selectedFile,
@@ -541,24 +531,13 @@ function EditProfileUserPage() {
                               console.log(res.status);
                               setLoad(false);
                               if (res.status === 200) {
-                                // const userUpdate = {
-                                //   uid: user.uid,
-                                //   name_user: name_userRef.current?.value,
-                                //   nick_user: nick_userRef.current?.value,
-                                //   province: provinceRef.current?.value,
-                                //   phone: phoneRef.current?.value,
-                                //   facebook: facebookRef.current?.value,
-                                //   lineID: lineIDRef.current?.value,
-                                //   typename_user: user.typename_user
-                                // };
-                                // localStorage.setItem(
-                                //   "objUser",
-                                //   JSON.stringify(userUpdate)
-                                // );
-                                window.alert("แก้ไขข้อมูลเสร็จสิ้น!!!");
+                                window.alert(
+                                  "แก้ไขข้อมูลเสร็จสิ้น!!! ถ้าต้องการตรวจสอบข้อมูล โปรดเข้าสู่ระบบอีกครั้ง"
+                                );
                                 console.log(res.data);
-                                navigate("/Profile");
                               }
+                            } else {
+                              window.alert("โปรดทำการแก้ไขข้อมูลอีกครั้ง");
                             }
                           } catch (error) {
                             setLoad(false);

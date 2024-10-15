@@ -383,7 +383,7 @@ function HotelDealPage() {
                   <Button
                     variant="contained"
                     sx={{
-                      width: "110px",
+                      width: "120px",
                       borderRadius: "10px",
                     }}
                     startIcon={<ChevronRightIcon />}
@@ -403,7 +403,7 @@ function HotelDealPage() {
                       }
                     }}
                   >
-                    ถัดไป
+                    ส่งคำร้อง
                   </Button>
                 )}
               </div>

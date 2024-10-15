@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const HOST: string = "http://localhost:3000/concert";
+const HOST: string = "https://node-backend-project-tnxp.onrender.com/concert";
+// const HOST: string = "http://localhost:3000/concert";
 
 export class ConcertService {
   async getAll() {

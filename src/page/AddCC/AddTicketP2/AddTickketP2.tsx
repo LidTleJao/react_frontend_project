@@ -52,7 +52,6 @@ function AddTicketP2Page() {
     navigate("/AddTicket");
   }
   function navigateToAddConcertDataPage() {
-    window.alert("ข้อมูลของตั๋วคอนเสิร์ต ได้ลงทะเบียนแล้ว!!!");
     navigate("/AddConcertData");
   }
   return (
@@ -196,10 +195,13 @@ function AddTicketP2Page() {
                               show,
                               ticket_type,
                               ticket_zone,
-                              price,
+                              price
                             );
                             console.log(resconcert.status);
                           }
+                          window.alert(
+                            "ข้อมูลของตั๋วคอนเสิร์ต ได้ลงทะเบียนแล้ว!!!"
+                          );
                           navigateToAddConcertDataPage();
                         }
                         setLoad(false);

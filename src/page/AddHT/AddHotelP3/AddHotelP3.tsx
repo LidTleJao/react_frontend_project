@@ -332,53 +332,55 @@ function AddHotelP3Page() {
                     onClick={async () => {
                       try {
                         setLoad(true);
-                        const res: any = await hotelService.AddHotel(
-                          user?.uid,
-                          hotelType,
-                          hotelName,
-                          province,
-                          address,
-                          description
-                        );
-                        // console.log(res.data);
-                        // console.log(res.status);
-                        const last_idx: string = res.data.last_idx;
-                        console.log(last_idx);
-                        if (res.status === 201) {
-                          if (getUrl1) {
-                            const resurl1 = await hotelService.AddHotelUrl(
-                              last_idx,
-                              getUrl1
-                            );
-                            console.log(resurl1.status);
+                        if (images.length != 0) {
+                          const res: any = await hotelService.AddHotel(
+                            user?.uid,
+                            hotelType,
+                            hotelName,
+                            province,
+                            address,
+                            description
+                          );
+                          const last_idx: string = res.data.last_idx;
+                          console.log(last_idx);
+                          if (res.status === 201) {
+                            if (getUrl1) {
+                              const resurl1 = await hotelService.AddHotelUrl(
+                                last_idx,
+                                getUrl1
+                              );
+                              console.log(resurl1.status);
+                            }
+                            if (getUrl2) {
+                              const resurl2 = await hotelService.AddHotelUrl(
+                                last_idx,
+                                getUrl2
+                              );
+                              console.log(resurl2.status);
+                            }
+                            if (getUrl3) {
+                              const resurl3 = await hotelService.AddHotelUrl(
+                                last_idx,
+                                getUrl3
+                              );
+                              console.log(resurl3.status);
+                            }
                           }
-                          if (getUrl2) {
-                            const resurl2 = await hotelService.AddHotelUrl(
-                              last_idx,
-                              getUrl2
-                            );
-                            console.log(resurl2.status);
+                          for (let index = 0; index < images.length; index++) {
+                            console.log(images[index]);
+                            if (images[index]) {
+                              const resimage = await hotelService.AddHotelImage(
+                                last_idx,
+                                images[index]
+                              );
+                              console.log(resimage.status);
+                            }
                           }
-                          if (getUrl3) {
-                            const resurl3 = await hotelService.AddHotelUrl(
-                              last_idx,
-                              getUrl3
-                            );
-                            console.log(resurl3.status);
-                          }
+                          navigateToAddHotelDataPage();
+                        } else {
+                          window.alert("โปรดเพิ่มข้อมูลรูปภาพด้วย!!!");
                         }
-                        for (let index = 0; index < images.length; index++) {
-                          console.log(images[index]);
-                          if (images[index]) {
-                            const resimage = await hotelService.AddHotelImage(
-                              last_idx,
-                              images[index]
-                            );
-                            console.log(resimage.status);
-                          }
-                        }
-                        
-                        navigateToAddHotelDataPage();
+
                         setLoad(false);
                       } catch (error) {
                         setLoad(false);

@@ -236,21 +236,36 @@ function AddTicketPage() {
                     onClick={async () => {
                       try {
                         setLoad(true);
-                        if (
-                          price === "" ||
-                          (Number(price) <= 1 && !price.includes("-"))
-                        ) {
-                          window.alert("ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
+                        if (ticket_concert_ID == "") {
+                          window.alert(
+                            "ข้อมูลคอนเสิร์ตไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
+                          );
                         } else {
-                          if (ticket_concert_ID == "" || ticket_zone == "") {
+                          if (ticket_zone == "") {
                             window.alert(
-                              "ข้อมูลไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
+                              "ข้อมูลโซนที่นั่งไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
                             );
                           } else {
-                            // console.log(price)
-                            navigateToAddTicketP2Page();
+                            if (
+                              price === "" ||
+                              (Number(price) < 1 && !price.includes("-"))
+                            ) {
+                              window.alert("ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
+                            } else {
+                              if (
+                                ticket_concert_ID == "" ||
+                                ticket_zone == ""
+                              ) {
+                                window.alert(
+                                  "ข้อมูลไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
+                                );
+                              } else {
+                                navigateToAddTicketP2Page();
+                              }
+                            }
                           }
                         }
+
                         setLoad(false);
                       } catch (error) {
                         setLoad(false);

@@ -454,34 +454,68 @@ function AddHotelDealDataPage() {
                           console.log(formatDate(parsedDate1));
                           console.log(formatDate(parsedDate2));
 
-                          const reshoteldeal =
-                            await hotelDealService.AddHotelDealData(
-                              Room_Type,
-                              Number_of_rooms,
-                              Price,
-                              formatDate(parsedDate1),
-                              formatDate(parsedDate2)
-                            );
-                          if (reshoteldeal.status == 201) {
-                            window.alert("ข้อมูลของข้อเสนอ ได้ลงทะเบียนแล้ว!!!");
-                            navigateToMenuHotelDealPage();
-                          } else {
+                          if (Room_Hotel_ID == "") {
                             window.alert(
-                              "ข้อมูลไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                              "ข้อมูลโรงแรมไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
                             );
+                          } else {
+                            if (Room_Type == "") {
+                              window.alert(
+                                "ข้อมูลห้องโรงแรมไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                              );
+                            } else {
+                              if (
+                                Price === "" ||
+                                (Number(Price) < 1 && !Price.includes("-"))
+                              ) {
+                                window.alert(
+                                  "ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
+                                );
+                              } else {
+                                if (
+                                  Number_of_rooms === "" ||
+                                  (Number(Number_of_rooms) == 0 &&
+                                    !Number_of_rooms.includes("-"))
+                                ) {
+                                  window.alert(
+                                    "จำนวนห้องไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
+                                  );
+                                } else {
+                                  const reshoteldeal =
+                                    await hotelDealService.AddHotelDealData(
+                                      Room_Type,
+                                      Number_of_rooms,
+                                      Price,
+                                      formatDate(parsedDate1),
+                                      formatDate(parsedDate2)
+                                    );
+                                  if (reshoteldeal.status == 201) {
+                                    window.alert(
+                                      "ข้อมูลของข้อเสนอ ได้ลงทะเบียนแล้ว!!!"
+                                    );
+                                    navigateToMenuHotelDealPage();
+                                  }
+                                }
+                              }
+                            }
                           }
                         } else {
-                          window.alert("ข้อมูลไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่");
+                          window.alert(
+                            "ข้อมูลวันที่ไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                          );
                         }
 
                         setLoad(false);
                       } catch (error) {
                         setLoad(false);
+                        window.alert(
+                          "ข้อมูลห้องไม่ถูกต้อง ต้องมีจำนวนน้อยกว่าหรือเท่ากับจำนวนห้องที่ลงทะเบียน โปรดเพิ่มข้อมูลใหม่"
+                        );
                         console.log(error);
                       }
                     }}
                   >
-                    ถัดไป
+                    เพิ่มข้อมูลข้อเสนอ
                   </Button>
                 )}
               </div>

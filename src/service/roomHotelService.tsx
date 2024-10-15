@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const HOST: string = "http://localhost:3000/room";
+const HOST: string = "https://node-backend-project-tnxp.onrender.com/room";
+// const HOST: string = "http://localhost:3000/room";
 
 export class RoomHotelService {
   async getAll() {

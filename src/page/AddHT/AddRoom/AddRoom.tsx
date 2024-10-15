@@ -63,7 +63,7 @@ function AddRoomPage() {
   function handlePrice(event: ChangeEvent<HTMLInputElement>) {
     const value = event.target.value;
 
-    if (value === "" || (Number(value) >= 0 && !value.includes("-"))) {
+    if (value === "" || (Number(value) > 0 && !value.includes("-"))) {
       setPrice(value);
     } else {
       window.alert("ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
@@ -325,7 +325,7 @@ function AddRoomPage() {
 
                         if (
                           Price === "" ||
-                          (Number(Price) <= 1 && !Price.includes("-"))
+                          (Number(Price) < 1 && !Price.includes("-"))
                         ) {
                           window.alert("ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
                         } else {
@@ -334,7 +334,7 @@ function AddRoomPage() {
                             (Number(Number_of_rooms) == 0 &&
                               !Number_of_rooms.includes("-"))
                           ) {
-                            window.alert("ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
+                            window.alert("จำนวนห้องไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
                           } else {
                             if (Room_Hotel_ID === "") {
                               window.alert(

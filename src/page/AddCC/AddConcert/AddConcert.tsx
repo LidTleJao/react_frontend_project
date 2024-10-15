@@ -71,7 +71,7 @@ function AddConcertPage() {
               }}
               variant="h4"
             >
-              เพิ่มคอนเสิรต์
+              เพิ่มคอนเสิร์ต
             </Typography>
           </div>
           <Box
@@ -89,7 +89,7 @@ function AddConcertPage() {
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
               <TextField
-                placeholder="ชื่อคอนเสิรต์"
+                placeholder="ชื่อคอนเสิร์ต"
                 type="name"
                 sx={{ mt: 3, width: "25pc" }}
                 value={name_concert}
@@ -260,23 +260,50 @@ function AddConcertPage() {
                     onClick={async () => {
                       try {
                         setLoad(true);
-                        if (
-                          name_concert == "" ||
-                          lineup == "" ||
-                          show_schedule_concert == "" ||
-                          address_concert == "" ||
-                          detail_concert == ""
-                        ) {
-                          window.alert("ข้อมูลไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่");
+                        if (name_concert == "") {
+                          window.alert(
+                            "ชื่อคอนเสิร์ตไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                          );
                         } else {
-                          console.log(name_concert);
-                          console.log(lineup);
-                          console.log(concert_type);
-                          console.log(show_schedule_concert);
-                          console.log(address_concert);
-                          console.log(province);
-                          console.log(detail_concert);
-                          navigateToAddConcertP2Page();
+                          if (lineup == "") {
+                            window.alert(
+                              "ไลน์อัพไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                            );
+                          } else {
+                            if (show_schedule_concert == "") {
+                              window.alert(
+                                "วันที่ไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                              );
+                            } else {
+                              if (address_concert == "") {
+                                window.alert(
+                                  "ที่อยู่ไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                                );
+                              } else {
+                                if (province == "") {
+                                  window.alert(
+                                    "จังหวัดไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                                  );
+                                } else {
+                                  if (detail_concert == "") {
+                                    window.alert(
+                                      "รายละเอียดไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                                    );
+                                  } else {
+                                    console.log(name_concert);
+                                    console.log(lineup);
+                                    console.log(concert_type);
+                                    console.log(show_schedule_concert);
+                                    console.log(address_concert);
+                                    console.log(province);
+                                    console.log(detail_concert);
+                                    navigateToAddConcertP2Page();
+                                  }
+                                }
+                              }
+                            }
+                          }
+                          
                         }
                         setLoad(false);
                       } catch (error) {

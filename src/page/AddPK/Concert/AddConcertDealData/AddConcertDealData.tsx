@@ -56,8 +56,8 @@ function AddConcertDealDataPage() {
     loadDataAsync();
   }, []);
 
-  useEffect(() =>{
-    const loadDataAsync =  async () => {
+  useEffect(() => {
+    const loadDataAsync = async () => {
       setLoadSelectTicket(true);
       const resticket = await concertService.getConcertTicket(Concert_ID);
       const data: GetConcertTicketByCIDRes[] = resticket.data;
@@ -65,7 +65,7 @@ function AddConcertDealDataPage() {
       setLoadSelectTicket(false);
     };
     loadDataAsync();
-  },[Concert_ID]);
+  }, [Concert_ID]);
 
   function navigateToMenuConcertDealPage() {
     navigate("/MenuConcertDeal");
@@ -161,7 +161,7 @@ function AddConcertDealDataPage() {
                       try {
                         setConcert_ID(e.target.value);
                       } catch (error) {
-                        setLoadSelectTicket(false);
+                        // setLoadSelectTicket(false);
                         console.log(error);
                       }
                     }}
@@ -187,63 +187,46 @@ function AddConcertDealDataPage() {
                   marginTop: "20px",
                 }}
               >
-                {isLoadSelectTicket ? (
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginLeft:"230px"
+                <Typography
+                  gutterBottom
+                  sx={{
+                    display: "flex",
+                    fontWeight: "bold",
+                    color: "black",
+                    fontFamily: "Mitr, sans-serif",
+                    fontStyle: "normal",
+                  }}
+                  variant="h6"
+                >
+                  ชนิดตั๋ว :
+                </Typography>
+                <FormControl sx={{ width: "20pc" }}>
+                  <InputLabel
+                    id="demo-select-small-label"
+                    sx={{ marginTop: "-10px" }}
+                  >
+                    ชนิดตั๋ว
+                  </InputLabel>
+                  <Select
+                    labelId="demo-select-small-label"
+                    id="demo-select-small"
+                    label="ชนิดตั๋ว"
+                    value={Ticket_Type}
+                    onChange={(e) => setTicket_Type(e.target.value)}
+                    sx={{
+                      borderRadius: 20,
+                      bgcolor: "white",
+                      height: "40px",
                     }}
                   >
-                    <CircularProgress
-                      style={{ marginRight: "20px", color: "black" }}
-                    />
-                  </div>
-                ) : (
-                  <>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        display: "flex",
-                        fontWeight: "bold",
-                        color: "black",
-                        fontFamily: "Mitr, sans-serif",
-                        fontStyle: "normal",
-                      }}
-                      variant="h6"
-                    >
-                      ชนิดตั๋ว :
-                    </Typography>
-                    <FormControl sx={{ width: "20pc" }}>
-                      <InputLabel
-                        id="demo-select-small-label"
-                        sx={{ marginTop: "-10px" }}
-                      >
-                        ชนิดตั๋ว
-                      </InputLabel>
-                      <Select
-                        labelId="demo-select-small-label"
-                        id="demo-select-small"
-                        label="ชนิดตั๋ว"
-                        value={Ticket_Type}
-                        onChange={(e) => setTicket_Type(e.target.value)}
-                        sx={{
-                          borderRadius: 20,
-                          bgcolor: "white",
-                          height: "40px",
-                        }}
-                      >
-                        {ticket.map((tickets, index) => (
-                          <MenuItem key={tickets.CTID} value={tickets.CTID}>
-                            {1 + index} - {tickets.name_type_ticket} - ชื่อโซนที่นั่ง{" "}
-                            {tickets.ticket_zone}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </>
-                )}
+                    {ticket.map((tickets, index) => (
+                      <MenuItem key={tickets.CTID} value={tickets.CTID}>
+                        {1 + index} - {tickets.name_type_ticket} -
+                        ชื่อโซนที่นั่ง {tickets.ticket_zone}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </div>
               <div
                 style={{
@@ -398,7 +381,7 @@ function AddConcertDealDataPage() {
                     variant="contained"
                     style={{ backgroundColor: "#3B7AF4" }}
                     sx={{
-                      width: "100px",
+                      width: "170px",
                       borderRadius: "10px",
                     }}
                     startIcon={<ChevronRightIcon />}
@@ -446,24 +429,55 @@ function AddConcertDealDataPage() {
                           console.log(formatDate(parsedDate1));
                           console.log(formatDate(parsedDate2));
 
-                          const resconcertdeal =
-                            await concertDealService.AddConcertDealData(
-                              Ticket_Type,
-                              Number_of_tickets,
-                              Price,
-                              formatDate(parsedDate1),
-                              formatDate(parsedDate2)
+                          if (Concert_ID == "") {
+                            window.alert(
+                              "ข้อมูลคอนเสิร์ตไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
                             );
-                            if (resconcertdeal.status == 201) {
-                              window.alert("ข้อมูลของข้อเสนอ ได้ลงทะเบียนแล้ว!!!");
-                              navigateToMenuConcertDealPage();
-                            } else {
+                          } else {
+                            if (Ticket_Type == "") {
                               window.alert(
-                                "ข้อมูลไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                                "ข้อมูลตั๋วไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
                               );
+                            } else {
+                              if (
+                                Price === "" ||
+                                (Number(Price) < 1 && !Price.includes("-"))
+                              ) {
+                                window.alert(
+                                  "ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
+                                );
+                              } else {
+                                if (
+                                  Number_of_tickets === "" ||
+                                  (Number(Number_of_tickets) == 0 &&
+                                    !Number_of_tickets.includes("-"))
+                                ) {
+                                  window.alert(
+                                    "จำนวนตั๋วไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
+                                  );
+                                } else {
+                                  const resconcertdeal =
+                                    await concertDealService.AddConcertDealData(
+                                      Ticket_Type,
+                                      Number_of_tickets,
+                                      Price,
+                                      formatDate(parsedDate1),
+                                      formatDate(parsedDate2)
+                                    );
+                                  if (resconcertdeal.status == 201) {
+                                    window.alert(
+                                      "ข้อมูลของข้อเสนอ ได้ลงทะเบียนแล้ว!!!"
+                                    );
+                                    navigateToMenuConcertDealPage();
+                                  }
+                                }
+                              }
                             }
+                          }
                         } else {
-                          window.alert("ข้อมูลไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่");
+                          window.alert(
+                            "ข้อมูลวันที่ไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                          );
                         }
                         setLoad(false);
                       } catch (error) {
@@ -472,7 +486,7 @@ function AddConcertDealDataPage() {
                       }
                     }}
                   >
-                    ถัดไป
+                    เพิ่มข้อมูลข้อเสนอ
                   </Button>
                 )}
               </div>

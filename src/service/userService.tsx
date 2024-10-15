@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const HOST: string = "http://localhost:3000/user";
+const HOST: string = "https://node-backend-project-tnxp.onrender.com/user";
+// const HOST: string = "http://localhost:3000/user";
 
 export class UserService {
   async getAll() {

@@ -39,9 +39,6 @@ function AddRoomP2Page() {
     navigate("/AddRoom");
   }
   function navigateToAddHotelDataPage() {
-    window.alert(
-      "ข้อมูลของห้อง ได้ลงทะเบียนแล้ว!!!"
-    );
     navigate("/AddHotelData");
   }
 
@@ -305,31 +302,41 @@ function AddRoomP2Page() {
                     onClick={async () => {
                       try {
                         setLoad(true);
-                        const resroom = await roomHotelService.AddRoom(
-                          Room_Hotel_ID,
-                          Price,
-                          Number_of_guests,
-                          Number_of_rooms,
-                          Room_Type,
-                          Room_View_Type,
-                          Room_Status
-                        );
-                        const last_idx: string = resroom.data.last_idx;
-                        console.log(last_idx);
-                        if (resroom.status === 201) {
-                          for (let index = 0; index < images.length; index++) {
-                            console.log(images[index]);
-                            if (images[index]) {
-                              const resimage =
-                                await roomHotelService.AddRoomImage(
-                                  last_idx,
-                                  images[index]
-                                );
-                              console.log(resimage.status);
+                        if (images.length != 0) {
+                          const resroom = await roomHotelService.AddRoom(
+                            Room_Hotel_ID,
+                            Price,
+                            Number_of_guests,
+                            Number_of_rooms,
+                            Room_Type,
+                            Room_View_Type,
+                            Room_Status
+                          );
+                          const last_idx: string = resroom.data.last_idx;
+                          console.log(last_idx);
+                          if (resroom.status === 201) {
+                            for (
+                              let index = 0;
+                              index < images.length;
+                              index++
+                            ) {
+                              console.log(images[index]);
+                              if (images[index]) {
+                                const resimage =
+                                  await roomHotelService.AddRoomImage(
+                                    last_idx,
+                                    images[index]
+                                  );
+                                console.log(resimage.status);
+                              }
                             }
+                            window.alert("ข้อมูลของห้อง ได้ลงทะเบียนแล้ว!!!");
                           }
+                          navigateToAddHotelDataPage();
+                        } else {
+                          window.alert("โปรดเพิ่มข้อมูลรูปภาพด้วย!!!");
                         }
-                        navigateToAddHotelDataPage();
+
                         setLoad(false);
                       } catch (error) {
                         setLoad(false);
