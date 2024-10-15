@@ -34,7 +34,7 @@ export class ConcertService {
     return response;
   }
 
-  async getConcertTicket(cid: string){
+  async getConcertTicket(cid: string) {
     const url = `${HOST}/concertTicket/${cid}`;
     const response = await axios.get(url);
     return response;
@@ -79,6 +79,37 @@ export class ConcertService {
     }
   }
 
+  async update(
+    cid: string,
+    concert_type_ID: string,
+    show_schedule_concert: string,
+    lineup: string,
+    address_concert: string,
+    detail_concert: string
+  ) {
+    const url = `${HOST}/updateConcert/${cid}`;
+
+    const formData = new FormData();
+    formData.append("concert_type_ID", concert_type_ID);
+    formData.append("show_schedule_concert", show_schedule_concert);
+    formData.append("lineup", lineup);
+    formData.append("address_concert", address_concert);
+    formData.append("detail_concert", detail_concert);
+
+    try {
+      // ส่งข้อมูลผ่าน axios
+      const response = await axios.post(url, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error("Error updating user profile:", error);
+      throw error; // ขึ้นอยู่กับว่าคุณต้องการจัดการข้อผิดพลาดอย่างไร
+    }
+  }
+
   async AddConcertUrl(concert_ID: string, urlAdd: string) {
     const url = `${HOST}/addurl/${concert_ID}`;
 
@@ -109,11 +140,11 @@ export class ConcertService {
     show_ID: number,
     type_ticket_ID: number,
     ticket_zone: string,
-    price: string,
-  ){
+    price: string
+  ) {
     const url = `${HOST}/addticket/${concert_ID}`;
 
-    const  body = {
+    const body = {
       show_ID: show_ID,
       type_ticket_ID: type_ticket_ID,
       ticket_zone: ticket_zone,

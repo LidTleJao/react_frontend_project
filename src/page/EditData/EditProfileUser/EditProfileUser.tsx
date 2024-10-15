@@ -17,10 +17,8 @@ import HeaderUserTypeManager2 from "../../../components/HeadUserTypeManager2";
 import { useRef, useState } from "react";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { UserService } from "../../../service/userService";
-import { useNavigate } from "react-router-dom";
 
 function EditProfileUserPage() {
-  const navigate = useNavigate();
   const userService = new UserService();
   const [user] = useState(JSON.parse(localStorage.getItem("objUser")!));
   const [imagePreview, setImagePreview] = useState(user?.image_user || "");

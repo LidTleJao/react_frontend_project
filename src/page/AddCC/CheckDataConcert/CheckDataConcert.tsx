@@ -220,10 +220,11 @@ function CheckDataConcertPage() {
                     sx={{
                       width: 750,
                       height: 830,
-                      maxHeight: 3000,
+                      maxHeight: 830,
                       borderRadius: 3,
                       border: 2,
                       display: "flex",
+                      overflow: "auto",
                       justifyContent: "start",
                       flexDirection: "column",
                     }}
@@ -244,6 +245,8 @@ function CheckDataConcertPage() {
                             sx={{
                               display: "flex",
                               fontWeight: "bold",
+                              overflow:"auto",
+                              maxHeight:100,
                               color: "black",
                               fontFamily: "Mitr, sans-serif",
                               fontStyle: "normal",
@@ -371,6 +374,20 @@ function CheckDataConcertPage() {
                           ))}
                         </div>
                         <div className="flex flex-row pl-5 mt-5 items-center">
+                          <h1 className="text-2xl font-medium pr-3">
+                            รายละเอียดของคอนเสิรต์ :
+                          </h1>
+
+                          {concert.map((concertselect) => (
+                            <TextField
+                              className="w-[400px]"
+                              label="รายละเอียดของคอนเสิรต์"
+                              variant="outlined"
+                              defaultValue={concertselect?.detail_concert}
+                            />
+                          ))}
+                        </div>
+                        <div className="flex flex-row pl-5 mt-5 items-center">
                           <Card
                             sx={{
                               maxWidth: 30,
@@ -393,7 +410,7 @@ function CheckDataConcertPage() {
                               rows={4} // กำหนดจำนวนแถวที่จะแสดง
                               defaultValue={concertselect?.address_concert}
                               variant="outlined" // หรือจะใช้ "filled" หรือ "standard" ตามต้องการ
-                              className="w-[465px]"
+                              className="w-[405px]"
                             />
                           ))}
                         </div>
@@ -523,6 +540,51 @@ function CheckDataConcertPage() {
                             marginTop: "10px",
                           }}
                         >
+                          <Typography
+                            gutterBottom
+                            sx={{
+                              display: "flex",
+                              // fontWeight: "bold",
+                              color: "black",
+                              fontFamily: "Mitr, sans-serif",
+                              fontStyle: "normal",
+                            }}
+                            variant="h5"
+                          >
+                            รายละเอียดของคอนเสิรต์:
+                          </Typography>
+                          {concert.map((concertselect) => (
+                            <Typography
+                              gutterBottom
+                              sx={{
+                                display: "flex",
+                                maxWidth:450,
+                                maxHeight:150,
+                                overflow:"auto",
+                                color: "black",
+                                marginLeft: "10px",
+                                fontFamily: "Mitr, sans-serif",
+                                fontStyle: "normal",
+                              }}
+                              variant="h5"
+                            >
+                              {concertselect?.detail_concert}
+                              {/* ที่อยู่คอนเสิร์ต Pre-sale วันจันทร์ที่ 19 มิถุนายน
+                              2566 เวลา 10:00 เปิดจำหน่ายวันอังคารที่ 20
+                              มิถุนายน 2566 เวลา 10:00 วันศุกร์ที่ 30 มิถุนายน
+                              2566, 10:00 น. บัตรมีจำนวนจำกัด ณ สถานที่สนามกีฬา
+                              มภร มหาสารคาม */}
+                            </Typography>
+                          ))}
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            marginLeft: "20px",
+                            marginTop: "10px",
+                          }}
+                        >
                           <Card
                             sx={{
                               maxWidth: 30,
@@ -559,10 +621,6 @@ function CheckDataConcertPage() {
                                 variant="h5"
                               >
                                 {concertselect?.address_concert}
-                                {/* ที่อยู่คอนเสิร์ต Pre-sale วันจันทร์ที่ 19 มิถุนายน
-                            2566 เวลา 10:00 เปิดจำหน่ายวันอังคารที่ 20 มิถุนายน
-                            2566 เวลา 10:00 วันศุกร์ที่ 30 มิถุนายน 2566, 10:00
-                            น. บัตรมีจำนวนจำกัด ณ สถานที่สนามกีฬา มภร มหาสารคาม */}
                               </Typography>
                             ))}
                           </div>
@@ -582,14 +640,13 @@ function CheckDataConcertPage() {
                         sx={{
                           width: 350,
                           maxWidth: 350,
-                          // height: 300,
                           maxHeight: 900,
-
                           borderRadius: 3,
                           border: 2,
                           display: "flex",
                           justifyContent: "start",
                           flexDirection: "column",
+                          mb: 2,
                           padding: 1,
                         }}
                       >
@@ -767,13 +824,13 @@ function CheckDataConcertPage() {
                         <Box
                           sx={{
                             width: 350,
-                            // height: 200,
                             maxHeight: 900,
                             borderRadius: 3,
                             border: 2,
                             display: "flex",
                             justifyContent: "start",
                             flexDirection: "column",
+                            mb: 2,
                             padding: 2,
                           }}
                         >

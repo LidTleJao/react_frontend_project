@@ -45,7 +45,6 @@ function AddConcertDealDataPage() {
   const [Price, setPrice] = useState("");
   const [Number_of_tickets, setNumber_of_tickets] = useState("");
   const [isLoad, setLoad] = useState(false);
-  const [isLoadSelectTicket, setLoadSelectTicket] = useState(false);
 
   useEffect(() => {
     const loadDataAsync = async () => {
@@ -58,11 +57,9 @@ function AddConcertDealDataPage() {
 
   useEffect(() => {
     const loadDataAsync = async () => {
-      setLoadSelectTicket(true);
       const resticket = await concertService.getConcertTicket(Concert_ID);
       const data: GetConcertTicketByCIDRes[] = resticket.data;
       setTicket(data);
-      setLoadSelectTicket(false);
     };
     loadDataAsync();
   }, [Concert_ID]);
