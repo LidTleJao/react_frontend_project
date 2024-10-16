@@ -24,17 +24,50 @@ function ConcertPage() {
   const concertService = new ConcertService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [concertAll, setConcertAll] = useState<GetAllConcertRes[]>([]);
+  const [filteredData, setFilteredData] = useState<GetAllConcertRes[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchName, setSearchName] = useState("");
+  const [searchType, setSearchType] = useState("");
+  const [searchDate, setSearchDate] = useState("");
 
   useEffect(() => {
     const loadDataAsync = async () => {
       const resconcert = await concertService.getAll();
       const data: GetAllConcertRes[] = resconcert.data;
       setConcertAll(data);
+      setFilteredData(data);
     };
     loadDataAsync();
   }, []);
+  const handleSearch = () => {
+    if (searchQuery.trim() !== "") {
+      // กรองข้อมูลจาก searchData ที่ตรงกับ province
+      console.log(searchQuery);
 
-  
+      const filtered = concertAll.filter((concert) =>
+        concert.province.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredData(filtered);
+      console.log("ผลการค้นหา:", filtered);
+    } else {
+      setFilteredData(concertAll);
+    }
+  };
+  const handleSearchAdv = ()=>{
+    const searchDateObj = searchDate ? new Date(searchDate) : null;
+    const filtered = concertAll.filter((concert) => {
+      const concertDate = new Date(concert.show_schedule_concert);
+      return (
+        (searchName === '' || concert.name_concert.toLowerCase().includes(searchName.toLowerCase())) &&
+        (searchType === 'none' || searchType === '' || concert.name_type_concert.toLowerCase() === searchType.toLowerCase()) &&
+        (searchDateObj === null || concertDate.toDateString() === searchDateObj.toDateString())
+      );
+    });
+
+    setFilteredData(filtered);
+  }
+  console.log(filteredData);
+
   return (
     <>
       {(user?.type_user === 2 && (
@@ -110,7 +143,7 @@ function ConcertPage() {
                   placeholder="ชื่อศิลปิน"
                   type="name"
                   sx={{ width: "19.5pc" }}
-                  //   onChange={(e) => setBirthday(e.target.value)}
+                  onChange={(e) => setSearchName(e.target.value)}
                   InputProps={{
                     sx: {
                       borderRadius: "20px",
@@ -145,11 +178,18 @@ function ConcertPage() {
                   <Select
                     labelId="demo-select-small-label"
                     id="demo-select-small"
-                    // placeholder="จังหวัด"
-                    // value={city}
-                    // label="จังหวัด"
-                    // type="city"
-                    // onChange={(e) => setCity(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === "1") {
+                        setSearchType("Solo Concert");
+                      } else if (value === "2") {
+                        setSearchType("Music Festival");
+                      } else if (value === "3") {
+                        setSearchType("Charity Concert");
+                      } else {
+                        setSearchType("none"); // สำหรับ None
+                      }
+                    }}
                     sx={{
                       borderRadius: 20,
                       bgcolor: "white",
@@ -159,13 +199,13 @@ function ConcertPage() {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value={1}>
+                    <MenuItem value="1">
                       คอนเสิร์ตเดี่ยว (Solo Concert)
                     </MenuItem>
-                    <MenuItem value={2}>
+                    <MenuItem value="2">
                       คอนเสิร์ตรวมศิลปิน (Music Festival/All-Star Concert)
                     </MenuItem>
-                    <MenuItem value={3}>
+                    <MenuItem value="3">
                       คอนเสิร์ตการกุศล (Charity Concert)
                     </MenuItem>
                   </Select>
@@ -190,7 +230,7 @@ function ConcertPage() {
                   type="Date"
                   sx={{ width: "20pc" }}
                   // value={show_schedule_concert}
-                  // onChange={(e) => setShow_schedule_concert(e.target.value)}
+                  onChange={(e) => setSearchDate(e.target.value)}
                   InputProps={{
                     sx: {
                       borderRadius: "20px",
@@ -200,6 +240,20 @@ function ConcertPage() {
                     startAdornment: <></>,
                   }}
                 />
+                <Button
+                  variant="contained"
+                  sx={{
+                    mt: 2,
+                    borderRadius: 20,
+                    bgcolor: "#4E6A97", // เปลี่ยนสีปุ่มได้ตามต้องการ
+                    color: "white",
+                    height: "40px",
+                    width: "150px",
+                  }}
+                  onClick={handleSearchAdv} // ฟังก์ชันสำหรับการค้นหา
+                >
+                  ค้นหา
+                </Button>
               </div>
             </Box>
             <div>
@@ -245,22 +299,20 @@ function ConcertPage() {
                     <TextField
                       placeholder="ค้นหาพื้นที่ใกล้เคียง"
                       type="search"
+                      value={searchQuery} // ค่าที่พิมพ์จะแสดงใน TextField
+                      onChange={(e) => setSearchQuery(e.target.value)} // เก็บค่าที่พิมพ์ลงใน state
                       sx={{ m: 1, width: "35pc" }}
-                      //   onChange={(e) => setName(e.target.value)}
                       InputProps={{
                         sx: {
                           borderRadius: "20px",
                           bgcolor: "white",
                           height: "35px",
                         },
-                        startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
                       }}
                     />
                     <IconButton
-                      sx={{
-                        width: "50px",
-                        color: "black",
-                      }}
+                      sx={{ width: "50px", color: "black" }}
+                      onClick={handleSearch} // เรียกฟังก์ชั่นเมื่อกดปุ่มค้นหา
                     >
                       <SearchIcon />
                     </IconButton>
@@ -269,34 +321,44 @@ function ConcertPage() {
               </div>
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginRight: "250px",
-                  marginTop: "50px",
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
+                  gap: "20px",
+                  marginTop: "16px",
+                  marginLeft: "50px",
+                  marginBottom: "20px",
                 }}
               >
-                <Card sx={{ maxWidth: 345, background: "#4E6A97", border: 2 }}>
-                  <CardMedia
-                    component="img"
-                    alt="green iguana"
-                    height="140"
-                    image="src\img\webteemi.png"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Lizard
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Lizards are a widespread group of squamate reptiles, with
-                      over 6,000 species, ranging across all continents except
-                      Antarctica
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">Share</Button>
-                    <Button size="small">Learn More</Button>
-                  </CardActions>
-                </Card>
+                {filteredData.length > 0 ? (
+                  filteredData.map((concert) => (
+                    <Card
+                      key={concert.CID}
+                      sx={{ maxWidth: 345, background: "#4E6A97", border: 2 }}
+                    >
+                      <CardMedia
+                        component="img"
+                        alt={concert.name_concert}
+                        height="140"
+                        image="src\\img\\webteemi.png"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {concert.name_concert}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {concert.detail_concert}
+                        </Typography>
+                      </CardContent>
+                      <CardActions>
+                        <Button size="small">Learn More</Button>
+                      </CardActions>
+                    </Card>
+                  ))
+                ) : (
+                  <div className="pt-40 ml-40">
+                    <p>ไม่มีข้อมูล</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

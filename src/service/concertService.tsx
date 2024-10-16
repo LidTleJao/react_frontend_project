@@ -89,24 +89,45 @@ export class ConcertService {
   ) {
     const url = `${HOST}/updateConcert/${cid}`;
 
-    const formData = new FormData();
-    formData.append("concert_type_ID", concert_type_ID.toString());
-    formData.append("show_schedule_concert", show_schedule_concert);
-    formData.append("lineup", lineup);
-    formData.append("address_concert", address_concert);
-    formData.append("detail_concert", detail_concert);
+    const payload = {
+      concert_type_ID,
+      show_schedule_concert,
+      lineup,
+      address_concert,
+      detail_concert,
+    };
 
     try {
-      // ส่งข้อมูลผ่าน axios
-      const response = await axios.post(url, formData, {
+      const response = await axios.post(url, payload, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       });
       return response;
     } catch (error) {
-      console.error("Error updating user profile:", error);
-      throw error; // ขึ้นอยู่กับว่าคุณต้องการจัดการข้อผิดพลาดอย่างไร
+      console.error("Error updating concert:", error);
+      throw error;
+    }
+  }
+
+  async updateConcertChannel(concert_ID: string, CCID: string, urlAdd: string) {
+    const url = `${HOST}/updateConcertChannel/${concert_ID}`;
+
+    const payload = {
+      CCID:CCID,
+      channel:urlAdd,
+    };
+
+    try {
+      const response = await axios.post(url, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error("Error updating concert:", error);
+      throw error;
     }
   }
 
@@ -114,7 +135,7 @@ export class ConcertService {
     const url = `${HOST}/addurl/${concert_ID}`;
 
     const body = {
-      url: urlAdd,
+      channel: urlAdd,
     };
     const response = await axios.post(url, body);
     return response;

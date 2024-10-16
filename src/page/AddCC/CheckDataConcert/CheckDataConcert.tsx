@@ -23,7 +23,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import HeaderUserTypeManager2 from "../../../components/HeadUserTypeManager2";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { GetConcertByUserIDRes } from "../../../model/Response/Concert/GetConcertByUserIDRes";
@@ -89,6 +89,22 @@ function CheckDataConcertPage() {
     };
     loadDataAsync();
   }, [concert_ID]);
+
+  // State สำหรับเก็บข้อมูล URL ของ concertChannel
+  const [urls, setUrls] = useState(
+    concertChannel?.map((concert) => concert?.channel || "") || ["", "", ""]
+  );
+  const getCCID = concertChannel.map((concert) => concert.CCID || "");
+
+  // ฟังก์ชันที่ใช้ในการเปลี่ยนค่าใน state เมื่อมีการเปลี่ยนแปลงใน TextField
+  const handleUrlChange = (
+    index: number,
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const newUrls = [...urls];
+    newUrls[index] = event.target.value; // อัปเดตค่าของช่องที่มีการเปลี่ยนแปลง
+    setUrls(newUrls);
+  };
 
   return (
     <>
@@ -382,26 +398,31 @@ function CheckDataConcertPage() {
                           </h1>
                           {concert.map((concertselect) => (
                             <Select
-                            labelId="demo-select-small-label"
-                            id="demo-select-small"
-                            value={concert_type}
-                            label="ประเภทของคอนเสิร์ต"
-                            defaultValue={concertselect.concert_type_ID}
-                            onChange={(e) => setConcert_type(Number(e.target.value))}
-                            sx={{
-                              borderRadius: 20,
-                              bgcolor: "white",
-                              height: "40px",
-                            }}
-                          >
-                            <MenuItem value={1}>คอนเสิร์ตเดี่ยว (Solo Concert)</MenuItem>
-                            <MenuItem value={2}>
-                              คอนเสิร์ตรวมศิลปิน (Music Festival/All-Star Concert)
-                            </MenuItem>
-                            <MenuItem value={3}>
-                              คอนเสิร์ตการกุศล (Charity Concert)
-                            </MenuItem>
-                          </Select>
+                              labelId="demo-select-small-label"
+                              id="demo-select-small"
+                              value={concert_type}
+                              label="ประเภทของคอนเสิร์ต"
+                              defaultValue={concertselect.concert_type_ID}
+                              onChange={(e) =>
+                                setConcert_type(Number(e.target.value))
+                              }
+                              sx={{
+                                borderRadius: 20,
+                                bgcolor: "white",
+                                height: "40px",
+                              }}
+                            >
+                              <MenuItem value={1}>
+                                คอนเสิร์ตเดี่ยว (Solo Concert)
+                              </MenuItem>
+                              <MenuItem value={2}>
+                                คอนเสิร์ตรวมศิลปิน (Music Festival/All-Star
+                                Concert)
+                              </MenuItem>
+                              <MenuItem value={3}>
+                                คอนเสิร์ตการกุศล (Charity Concert)
+                              </MenuItem>
+                            </Select>
                             // <TextField
                             //   id="outlined-select-currency"
                             //   className="w-[465px]"
@@ -452,19 +473,6 @@ function CheckDataConcertPage() {
                                 ),
                               }}
                             />
-                            // <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            //   <DemoContainer
-                            //     components={["DatePicker", "DatePicker"]}
-                            //   >
-                            //     <DatePicker
-                            //       label="วันที่การแสดง"
-                            //       value={dayjs(
-                            //         concertselect?.datetime_add_concert
-                            //       )}
-                            //       // onChange={(newValue) => setValue(newValue)}
-                            //     />
-                            //   </DemoContainer>
-                            // </LocalizationProvider>
                           ))}
                         </div>
                         <div className="flex flex-row pl-5 mt-5 items-center">
@@ -979,7 +987,38 @@ function CheckDataConcertPage() {
                                           }}
                                         >
                                           <SaveIcon
-                                            onClick={() => setEditing3(false)}
+                                            onClick={async () => {
+                                              try {
+                                                for (
+                                                  let index = 0;
+                                                  index < urls.length;
+                                                  index++
+                                                ) {
+                                                  console.log(urls[index]);
+                                                  console.log(getCCID[index]);
+                                                  // const addUrl = urls[index];
+                                                  const ccid = getCCID[index];
+
+                                                  const resconcert =
+                                                    await concertService.updateConcertChannel(
+                                                      concert_ID,
+                                                      ccid.toString(),
+                                                      urls[index],
+                                                    );
+                                                  console.log(
+                                                    resconcert.status
+                                                  );
+                                                }
+                                                window.alert(
+                                                  "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                                );
+
+                                                setEditing3(false);
+                                              } catch (error) {
+                                                setEditing3(false);
+                                                console.log(error);
+                                              }
+                                            }}
                                             sx={{
                                               fontSize: "40px",
                                               color: "skyblue",
@@ -1032,22 +1071,229 @@ function CheckDataConcertPage() {
                                     flexDirection: "column",
                                   }}
                                 >
-                                  {concertChannel.map((concertselect) => (
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        marginBottom: 10,
-                                      }}
-                                    >
-                                      <TextField
-                                        className="w-[200px] mb-5"
-                                        label="Url"
-                                        variant="outlined"
-                                        defaultValue={concertselect?.url}
-                                      />
-                                    </div>
-                                  ))}
+                                  {concertChannel &&
+                                  concertChannel.length > 0 ? (
+                                    <>
+                                      {/* ถ้ามีข้อมูลใน concertChannel แสดงข้อมูลที่มี และสร้าง TextField ที่ขาดให้ครบ 3 */}
+                                      {concertChannel.map(
+                                        (concertselect, index) => (
+                                          <div
+                                            key={index}
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                              marginBottom: 10,
+                                            }}
+                                          >
+                                            <TextField
+                                              placeholder={
+                                                concertselect.channel
+                                              }
+                                              className="w-[200px] mb-5"
+                                              label="Url"
+                                              variant="outlined"
+                                              value={urls[index] || ""}
+                                              onChange={(e) =>
+                                                handleUrlChange(index, e)
+                                              }
+                                            />
+                                          </div>
+                                        )
+                                      )}
+                                      {/* เติม TextField ให้ครบ 3 ถ้าข้อมูลไม่ถึง */}
+                                      {[
+                                        ...Array(3 - concertChannel.length),
+                                      ].map((_, idx) => (
+                                        <div
+                                          key={concertChannel.length + idx}
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            marginBottom: 10,
+                                          }}
+                                        >
+                                          <TextField
+                                            className="w-[200px] mb-5"
+                                            label="Url"
+                                            variant="outlined"
+                                            value={
+                                              urls[
+                                                concertChannel.length + idx
+                                              ] || ""
+                                            }
+                                            onChange={(e) =>
+                                              handleUrlChange(
+                                                concertChannel.length + idx,
+                                                e
+                                              )
+                                            }
+                                          />
+                                        </div>
+                                      ))}
+                                    </>
+                                  ) : (
+                                    <>
+                                      {/* ถ้าไม่มีข้อมูลใน concertChannel ให้สร้าง TextField 3 ช่อง */}
+                                      {[...Array(3)].map((_, idx) => (
+                                        <div
+                                          key={idx}
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            marginBottom: 10,
+                                          }}
+                                        >
+                                          <TextField
+                                            className="w-[200px] mb-5"
+                                            label="Url"
+                                            variant="outlined"
+                                            value={urls[idx] || ""}
+                                            onChange={(e) =>
+                                              handleUrlChange(idx, e)
+                                            }
+                                          />
+                                        </div>
+                                      ))}
+                                    </>
+                                  )}
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                                {/* แสดงข้อมูลแบบลิงก์เมื่อไม่ได้อยู่ในโหมดแก้ไข */}
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                  }}
+                                >
+                                  <Grid
+                                    container
+                                    spacing={2}
+                                    sx={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                    overflow: "auto",
+                                      maxHeight: 250,
+                                      maxWidth: 350,
+                                    }}
+                                  >
+                                    {concertChannel.map(
+                                      (concertselect, index) => (
+                                        <Grid item key={index}>
+                                          <Link
+                                          href={concertselect?.channel}
+                                            sx={{
+                                              color: "#3A3A3A",
+                                              "&:hover": {
+                                                color: "#3A3A3A",
+                                              },
+                                            }}
+                                            underline="hover"
+                                          >
+                                            - {concertselect?.channel}
+                                          </Link>
+                                        </Grid>
+                                      )
+                                    )}
+                                  </Grid>
+                                </div>
+                              </>
+                            )}
+                            {/* {editing3 ? (
+                              <>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                  }}
+                                >
+                                  {concertChannel &&
+                                  concertChannel.length > 0 ? (
+                                    <>
+                                      ถ้ามีข้อมูลใน concertChannel แสดงข้อมูลที่มี และสร้าง TextField ที่ขาดให้ครบ 3
+                                      {concertChannel.map(
+                                        (concertselect, index) =>
+                                          concertselect.CCID ? (
+                                            <div
+                                              key={index}
+                                              style={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                marginBottom: 10,
+                                              }}
+                                            >
+                                              <TextField
+                                                className="w-[200px] mb-5"
+                                                label="Url"
+                                                variant="outlined"
+                                                value={urls[index] || ""}
+                                                onChange={(e) =>
+                                                  handleUrlChange(index, e)
+                                                }
+                                                defaultValue={
+                                                  concertselect?.channel
+                                                }
+                                              />
+                                            </div>
+                                          ) : (
+                                            <div
+                                              key={index}
+                                              style={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                marginBottom: 10,
+                                              }}
+                                            >
+                                              <TextField
+                                                className="w-[200px] mb-5"
+                                                label="Url"
+                                                variant="outlined"
+                                              />
+                                            </div>
+                                          )
+                                      )}
+                                      เติม TextField ให้ครบ 3
+                                      {[
+                                        ...Array(3 - concertChannel.length),
+                                      ].map((_, idx) => (
+                                        <div
+                                          key={concertChannel.length + idx}
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            marginBottom: 10,
+                                          }}
+                                        >
+                                          <TextField
+                                            className="w-[200px] mb-5"
+                                            label="Url"
+                                            variant="outlined"
+                                          />
+                                        </div>
+                                      ))}
+                                    </>
+                                  ) : (
+                                    <>
+                                      ถ้าไม่มีข้อมูลใน concertChannel ให้สร้าง TextField 3 ช่อง
+                                      {[...Array(3)].map((_, idx) => (
+                                        <div
+                                          key={idx}
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            marginBottom: 10,
+                                          }}
+                                        >
+                                          <TextField
+                                            className="w-[200px] mb-5"
+                                            label="Url"
+                                            variant="outlined"
+                                          />
+                                        </div>
+                                      ))}
+                                    </>
+                                  )}
                                 </div>
                               </>
                             ) : (
@@ -1055,7 +1301,7 @@ function CheckDataConcertPage() {
                                 <div
                                   style={{
                                     display: "flex",
-                                    // flexDirection: "column",
+                                    flexDirection: "column",
                                   }}
                                 >
                                   <Grid
@@ -1069,25 +1315,27 @@ function CheckDataConcertPage() {
                                       maxWidth: 350,
                                     }}
                                   >
-                                    {concertChannel.map((concertselect) => (
-                                      <Grid item>
-                                        <Link
-                                          sx={{
-                                            color: "#3A3A3A",
-                                            "&:hover": {
+                                    {concertChannel.map(
+                                      (concertselect, index) => (
+                                        <Grid item key={index}>
+                                          <Link
+                                            sx={{
                                               color: "#3A3A3A",
-                                            },
-                                          }}
-                                          underline="hover"
-                                        >
-                                          {concertselect?.url}
-                                        </Link>
-                                      </Grid>
-                                    ))}
+                                              "&:hover": {
+                                                color: "#3A3A3A",
+                                              },
+                                            }}
+                                            underline="hover"
+                                          >
+                                            {concertselect?.channel}
+                                          </Link>
+                                        </Grid>
+                                      )
+                                    )}
                                   </Grid>
                                 </div>
                               </>
-                            )}
+                            )} */}
                           </div>
                         </Box>
                       </div>
