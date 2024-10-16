@@ -114,8 +114,8 @@ export class ConcertService {
     const url = `${HOST}/updateConcertChannel/${concert_ID}`;
 
     const payload = {
-      CCID:CCID,
-      channel:urlAdd,
+      CCID: CCID,
+      channel: urlAdd,
     };
 
     try {
@@ -126,7 +126,34 @@ export class ConcertService {
       });
       return response;
     } catch (error) {
-      console.error("Error updating concert:", error);
+      console.error("Error updating concertChannel:", error);
+      throw error;
+    }
+  }
+
+  async updateConcertShowtime(
+    concert_ID: string,
+    CSTID: string,
+    show_concert: string,
+    time_show_concert: string
+  ) {
+    const url = `${HOST}/updateConcertShow/${concert_ID}`;
+
+    const body = {
+      CSTID: CSTID,
+      show_concert: show_concert,
+      time_show_concert: time_show_concert,
+    };
+
+    try {
+      const response = await axios.post(url, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error("Error updating concertShowTime:", error);
       throw error;
     }
   }
