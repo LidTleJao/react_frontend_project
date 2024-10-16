@@ -134,7 +134,9 @@ export class ConcertService {
   async AddConcertUrl(concert_ID: string, urlAdd: string) {
     const url = `${HOST}/addurl/${concert_ID}`;
 
-    const body = { urlAdd };
+    const body = {
+      channel: urlAdd,
+    };
     const response = await axios.post(url, body);
     return response;
   }
