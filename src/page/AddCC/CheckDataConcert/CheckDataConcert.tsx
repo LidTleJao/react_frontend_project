@@ -56,9 +56,6 @@ function CheckDataConcertPage() {
   const lineupRef = useRef<HTMLInputElement>();
   const address_concertRef = useRef<HTMLInputElement>();
   const detail_concertRef = useRef<HTMLInputElement>();
-  const urlAdd1Ref = useRef<HTMLInputElement>();
-  const urlAdd2Ref = useRef<HTMLInputElement>();
-  const urlAdd3Ref = useRef<HTMLInputElement>();
   const [editing1, setEditing1] = useState(false);
   const [editing2, setEditing2] = useState(false);
   const [editing3, setEditing3] = useState(false);
@@ -1011,9 +1008,7 @@ function CheckDataConcertPage() {
                                       {editing3 ? (
                                         <>
                                           <HighlightOffIcon
-                                            onClick={async () => {
-                                              setEditing3(false);
-                                            }}
+                                            onClick={() => setEditing3(false)}
                                             sx={{
                                               fontSize: "40px",
                                               color: "red",
@@ -1042,29 +1037,53 @@ function CheckDataConcertPage() {
                                     flexDirection: "column",
                                   }}
                                 >
-                                  {/* {concertChannel.map((concertselect) => (
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        marginBottom: 10,
-                                      }}
-                                    >
-                                      <TextField
-                                        className="w-[200px] mb-5"
-                                        label="Url"
-                                        variant="outlined"
-                                        defaultValue={concertselect?.url}
-                                      />
-                                    </div>
-                                  ))} */}
                                   {concertChannel &&
                                   concertChannel.length > 0 ? (
-                                    concertChannel.map((concertselect, index) =>
-                                      concertselect.CCID ? (
-                                        // ถ้ามี CCID ให้แสดงข้อมูลของ CCID ที่มีอยู่
+                                    <>
+                                      {/* ถ้ามีข้อมูลใน concertChannel แสดงข้อมูลที่มี และสร้าง TextField ที่ขาดให้ครบ 3 */}
+                                      {concertChannel.map(
+                                        (concertselect, index) =>
+                                          concertselect.CCID ? (
+                                            <div
+                                              key={index}
+                                              style={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                marginBottom: 10,
+                                              }}
+                                            >
+                                              <TextField
+                                                className="w-[200px] mb-5"
+                                                label="Url"
+                                                variant="outlined"
+                                                defaultValue={
+                                                  concertselect?.channel
+                                                }
+                                              />
+                                            </div>
+                                          ) : (
+                                            <div
+                                              key={index}
+                                              style={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                marginBottom: 10,
+                                              }}
+                                            >
+                                              <TextField
+                                                className="w-[200px] mb-5"
+                                                label="Url"
+                                                variant="outlined"
+                                              />
+                                            </div>
+                                          )
+                                      )}
+                                      {/* เติม TextField ให้ครบ 3 */}
+                                      {[
+                                        ...Array(3 - concertChannel.length),
+                                      ].map((_, idx) => (
                                         <div
-                                          key={index}
+                                          key={concertChannel.length + idx}
                                           style={{
                                             display: "flex",
                                             flexDirection: "row",
@@ -1075,104 +1094,29 @@ function CheckDataConcertPage() {
                                             className="w-[200px] mb-5"
                                             label="Url"
                                             variant="outlined"
-                                            defaultValue={concertselect?.url}
                                           />
                                         </div>
-                                      ) : (
-                                        // ถ้าไม่มี CCID ให้สร้าง TextField เปล่าขึ้นมา
-                                        <>
-                                          // ถ้าไม่มี CCID ให้สร้าง TextField
-                                          เปล่าขึ้นมา
-                                          <div
-                                            key={index}
-                                            style={{
-                                              display: "flex",
-                                              flexDirection: "row",
-                                              marginBottom: 10,
-                                            }}
-                                          >
-                                            <TextField
-                                              className="w-[200px] mb-5"
-                                              label="Url"
-                                              variant="outlined"
-                                            />
-                                          </div>
-                                          <div
-                                            key={index}
-                                            style={{
-                                              display: "flex",
-                                              flexDirection: "row",
-                                              marginBottom: 10,
-                                            }}
-                                          >
-                                            <TextField
-                                              className="w-[200px] mb-5"
-                                              label="Url"
-                                              variant="outlined"
-                                            />
-                                          </div>
-                                          <div
-                                            key={index}
-                                            style={{
-                                              display: "flex",
-                                              flexDirection: "row",
-                                              marginBottom: 10,
-                                            }}
-                                          >
-                                            <TextField
-                                              className="w-[200px] mb-5"
-                                              label="Url"
-                                              variant="outlined"
-                                            />
-                                          </div>
-                                        </>
-                                      )
-                                    )
+                                      ))}
+                                    </>
                                   ) : (
-                                    // ถ้า concertChannel ไม่มีข้อมูล ให้สร้าง TextField ขึ้นมา 1 อัน
                                     <>
-                                      <div
-                                        style={{
-                                          display: "flex",
-                                          flexDirection: "row",
-                                          marginBottom: 10,
-                                        }}
-                                      >
-                                        <TextField
-                                          className="w-[200px] mb-5"
-                                          label="Url"
-                                          variant="outlined"
-                                          inputRef={urlAdd1Ref}
-                                        />
-                                      </div>
-                                      <div
-                                        style={{
-                                          display: "flex",
-                                          flexDirection: "row",
-                                          marginBottom: 10,
-                                        }}
-                                      >
-                                        <TextField
-                                          className="w-[200px] mb-5"
-                                          label="Url"
-                                          variant="outlined"
-                                          inputRef={urlAdd2Ref}
-                                        />
-                                      </div>
-                                      <div
-                                        style={{
-                                          display: "flex",
-                                          flexDirection: "row",
-                                          marginBottom: 10,
-                                        }}
-                                      >
-                                        <TextField
-                                          className="w-[200px] mb-5"
-                                          label="Url"
-                                          variant="outlined"
-                                          inputRef={urlAdd3Ref}
-                                        />
-                                      </div>
+                                      {/* ถ้าไม่มีข้อมูลใน concertChannel ให้สร้าง TextField 3 ช่อง */}
+                                      {[...Array(3)].map((_, idx) => (
+                                        <div
+                                          key={idx}
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            marginBottom: 10,
+                                          }}
+                                        >
+                                          <TextField
+                                            className="w-[200px] mb-5"
+                                            label="Url"
+                                            variant="outlined"
+                                          />
+                                        </div>
+                                      ))}
                                     </>
                                   )}
                                 </div>
@@ -1182,7 +1126,7 @@ function CheckDataConcertPage() {
                                 <div
                                   style={{
                                     display: "flex",
-                                    // flexDirection: "column",
+                                    flexDirection: "column",
                                   }}
                                 >
                                   <Grid
@@ -1196,21 +1140,23 @@ function CheckDataConcertPage() {
                                       maxWidth: 350,
                                     }}
                                   >
-                                    {concertChannel.map((concertselect) => (
-                                      <Grid item>
-                                        <Link
-                                          sx={{
-                                            color: "#3A3A3A",
-                                            "&:hover": {
+                                    {concertChannel.map(
+                                      (concertselect, index) => (
+                                        <Grid item key={index}>
+                                          <Link
+                                            sx={{
                                               color: "#3A3A3A",
-                                            },
-                                          }}
-                                          underline="hover"
-                                        >
-                                          {concertselect?.url}
-                                        </Link>
-                                      </Grid>
-                                    ))}
+                                              "&:hover": {
+                                                color: "#3A3A3A",
+                                              },
+                                            }}
+                                            underline="hover"
+                                          >
+                                            {concertselect?.channel}
+                                          </Link>
+                                        </Grid>
+                                      )
+                                    )}
                                   </Grid>
                                 </div>
                               </>
