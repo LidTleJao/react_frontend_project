@@ -54,7 +54,7 @@ function AddTicketPage() {
   function handlePrice(event: ChangeEvent<HTMLInputElement>) {
     const value = event.target.value;
 
-    if (value === "" || (Number(value) >= 0 && !value.includes("-"))) {
+    if (value === "" || (Number(value) > 0 && !value.includes("-"))) {
       setPrice(value);
     } else {
       window.alert("ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");

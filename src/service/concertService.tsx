@@ -158,6 +158,35 @@ export class ConcertService {
     }
   }
 
+  async updateConcertTicket(
+    CTID: string,
+    concert_ID: string,
+    type_ticket_ID: string,
+    ticket_zone: string,
+    price: string
+  ) {
+    const url = `${HOST}/updateConcertTicket/${concert_ID}`;
+
+    const body = {
+      CTID: CTID,
+      type_ticket_ID: type_ticket_ID,
+      ticket_zone: ticket_zone,
+      price: price,
+    };
+
+    try {
+      const response = await axios.post(url, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error("Error updating concertTicket:", error);
+      throw error;
+    }
+  }
+
   async AddConcertUrl(concert_ID: string, urlAdd: string) {
     const url = `${HOST}/addurl/${concert_ID}`;
 

@@ -67,6 +67,10 @@ function CheckDataConcertPage() {
   const lineupRef = useRef<HTMLInputElement>();
   const address_concertRef = useRef<HTMLInputElement>();
   const detail_concertRef = useRef<HTMLInputElement>();
+  const [ticket_ID, setTicket_ID] = useState("");
+  const [ticket_zone, setTicket_zone] = useState("");
+  const [ticket_type, setTicket_Type] = useState(1);
+  const [price, setprice] = useState("");
   const [editing1, setEditing1] = useState(false);
   const [editing2, setEditing2] = useState(false);
   const [editing3, setEditing3] = useState(false);
@@ -78,6 +82,26 @@ function CheckDataConcertPage() {
   const [gettime3, setGetTime3] = useState("");
   const [getshow, setGetShow] = useState<Array<Dayjs | null>>([null]); // Array for dates
   const [gettime, setGetTime] = useState<string[]>([""]); // Array for times
+
+  function handleGetTicketID(getTicketID: number) {
+    setTicket_ID(getTicketID.toString());
+    setEditing4(true);
+  }
+
+  function handleGetOutTicketID() {
+    setTicket_ID("");
+    setEditing4(false);
+  }
+
+  function handlePrice(event: ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value;
+
+    if (value === "" || (Number(value) > 0 && !value.includes("-"))) {
+      setprice(value);
+    } else {
+      window.alert("ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
+    }
+  }
 
   // Function to handle date change
   const handleDateChange = (newValue: Dayjs | null, index: number) => {
@@ -1575,6 +1599,10 @@ function CheckDataConcertPage() {
                                     <TextField
                                       label="โซนที่นั่ง"
                                       defaultValue={concertselect?.ticket_zone}
+                                      value={ticket_zone}
+                                      onChange={(e) =>
+                                        setTicket_zone(e.target.value)
+                                      }
                                       variant="outlined"
                                       className="w-[100px]"
                                     />
@@ -1582,6 +1610,8 @@ function CheckDataConcertPage() {
                                   <TableCell>
                                     <TextField
                                       label="	ราคาตั๋ว"
+                                      type="number"
+                                      onChange={handlePrice}
                                       defaultValue={concertselect?.price}
                                       variant="outlined"
                                       className="w-[100px]"
@@ -1592,9 +1622,14 @@ function CheckDataConcertPage() {
                                       id="outlined-select-currency"
                                       className="w-[200px]"
                                       select
-                                      value={concertselect.type_ticket_ID}
+                                      value={ticket_type}
+                                      onChange={(e) =>
+                                        setTicket_Type(Number(e.target.value))
+                                      }
+                                      defaultValue={
+                                        concertselect.type_ticket_ID
+                                      }
                                       label="	ชนิดตั๋ว"
-                                      // defaultValue="EUR"
                                     >
                                       <MenuItem value={1}>
                                         ตั๋วเข้าชมทั่วไป (General Admission /
@@ -1622,31 +1657,10 @@ function CheckDataConcertPage() {
                                     </TextField>
                                   </TableCell>
                                   <TableCell>
-                                    <LocalizationProvider
-                                      dateAdapter={AdapterDayjs}
-                                    >
-                                      <DemoContainer
-                                        components={["DatePicker"]}
-                                      >
-                                        <DatePicker
-                                          label="วันที่"
-                                          value={dayjs(
-                                            concertselect?.show_concert
-                                          )}
-                                          // onChange={(newValue) => setValue(newValue)}
-                                        />
-                                      </DemoContainer>
-                                    </LocalizationProvider>
+                                    {concertselect?.show_concert.toString()}
                                   </TableCell>
                                   <TableCell>
-                                    <TextField
-                                      sx={{ marginTop: 1 }}
-                                      type="time"
-                                      defaultValue={
-                                        concertselect?.time_show_concert
-                                      }
-                                      variant="outlined"
-                                    />
+                                    {concertselect?.time_show_concert}
                                   </TableCell>
                                   <TableCell>
                                     <Button
@@ -1657,7 +1671,48 @@ function CheckDataConcertPage() {
                                         borderRadius: "10px",
                                       }}
                                       startIcon={<SaveIcon />}
-                                      onClick={() => setEditing4(true)}
+                                      onClick={async () => {
+                                        try {
+                                          if (ticket_zone.trim() === "") {
+                                            window.alert(
+                                              "โซนที่นั่งไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
+                                            );
+                                          } else {
+                                            if (
+                                              price === "" ||
+                                              (Number(price) < 1 &&
+                                                !price.includes("-"))
+                                            ) {
+                                              window.alert(
+                                                "ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
+                                              );
+                                            } else {
+                                              const resconcert =
+                                                await concertService.updateConcertTicket(
+                                                  ticket_ID,
+                                                  concert_ID,
+                                                  ticket_type.toString(),
+                                                  ticket_zone,
+                                                  price
+                                                );
+                                              if (resconcert.status === 200) {
+                                                window.alert(
+                                                  "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                                );
+                                                console.log(resconcert.data);
+                                                setEditing4(false);
+                                              } else {
+                                                window.alert(
+                                                  "โปรดทำการแก้ไขข้อมูลอีกครั้ง"
+                                                );
+                                              }
+                                            }
+                                          }
+                                        } catch (error) {
+                                          setEditing4(false);
+                                          console.log(error);
+                                        }
+                                      }}
                                     >
                                       บันทึกข้อมูล
                                     </Button>
@@ -1675,7 +1730,7 @@ function CheckDataConcertPage() {
                                           sx={{ color: "white" }}
                                         />
                                       }
-                                      onClick={() => setEditing4(false)}
+                                      onClick={() => handleGetOutTicketID()}
                                     >
                                       ยกเลิกการแก้ไข
                                     </Button>
@@ -1720,7 +1775,9 @@ function CheckDataConcertPage() {
                                         borderRadius: "10px",
                                       }}
                                       startIcon={<EditIcon />}
-                                      onClick={() => setEditing4(true)}
+                                      onClick={() =>
+                                        handleGetTicketID(concertselect?.CTID)
+                                      }
                                     >
                                       แก้ไขข้อมูลของตั๋ว
                                     </Button>
