@@ -34,22 +34,7 @@ function ConcertPage() {
     loadDataAsync();
   }, []);
 
-  {concertAll.map((concerts)=>(
-    console.log("CID: " + concerts.CID),
-    console.log("user_ID: " + concerts.user_ID),
-    console.log("concert_type_ID: " + concerts.concert_type_ID),
-    console.log("name_type_concert: " + concerts.name_type_concert),
-    console.log("poster_concert: " + concerts.poster_concert),
-    console.log("performance_chart: " + concerts.performance_chart),
-    console.log("show_schedule_concert: " + concerts.show_schedule_concert),
-    console.log("name_concert: " + concerts.name_concert),
-    console.log("lineup: " + concerts.lineup),
-    console.log("address_concert: " + concerts.address_concert),
-    console.log("province: " + concerts.province),
-    console.log("detail_concert: " + concerts.detail_concert),
-    console.log("datetime_add_concert: " + concerts.datetime_add_concert),
-    console.log("///////////////////////////")
-  ))}
+ 
   return (
     <>
       {(user?.type_user === 2 && (
