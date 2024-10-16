@@ -34,22 +34,7 @@ function ConcertPage() {
     loadDataAsync();
   }, []);
 
-  {concertAll.map((concerts)=>(
-    console.log("CID: " + concerts.CID),
-    console.log("user_ID: " + concerts.user_ID),
-    console.log("concert_type_ID: " + concerts.concert_type_ID),
-    console.log("name_type_concert: " + concerts.name_type_concert),
-    console.log("poster_concert: " + concerts.poster_concert),
-    console.log("performance_chart: " + concerts.performance_chart),
-    console.log("show_schedule_concert: " + concerts.show_schedule_concert),
-    console.log("name_concert: " + concerts.name_concert),
-    console.log("lineup: " + concerts.lineup),
-    console.log("address_concert: " + concerts.address_concert),
-    console.log("province: " + concerts.province),
-    console.log("detail_concert: " + concerts.detail_concert),
-    console.log("datetime_add_concert: " + concerts.datetime_add_concert),
-    console.log("///////////////////////////")
-  ))}
+  
   return (
     <>
       {(user?.type_user === 2 && (
@@ -215,50 +200,6 @@ function ConcertPage() {
                     startAdornment: <></>,
                   }}
                 />
-              </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
-                <Typography
-                  gutterBottom
-                  sx={{
-                    display: "flex",
-                    fontWeight: "bold",
-                    color: "black",
-                    fontFamily: "Mitr, sans-serif",
-                    fontStyle: "normal",
-                  }}
-                  variant="h5"
-                >
-                  ชนิดการแสดง :
-                </Typography>
-                <FormControl sx={{ width: 315 }}>
-                  <InputLabel
-                    id="demo-select-small-label"
-                    sx={{ marginTop: "-5px" }}
-                  >
-                    ชนิดการแสดง
-                  </InputLabel>
-                  <Select
-                    labelId="demo-select-small-label"
-                    id="demo-select-small"
-                    // placeholder="จังหวัด"
-                    // value={city}
-                    // label="จังหวัด"
-                    // type="city"
-                    // onChange={(e) => setCity(e.target.value)}
-                    sx={{
-                      borderRadius: 20,
-                      bgcolor: "white",
-                      height: "40px",
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>คอนเสิรต์</MenuItem>
-                    <MenuItem value={20}>การแสดง</MenuItem>
-                    <MenuItem value={30}>ดนตรี</MenuItem>
-                  </Select>
-                </FormControl>
               </div>
             </Box>
             <div>
