@@ -79,9 +79,9 @@ export class ConcertService {
     }
   }
 
-  async update(
+  async updateConcert(
     cid: string,
-    concert_type_ID: string,
+    concert_type_ID: number,
     show_schedule_concert: string,
     lineup: string,
     address_concert: string,
@@ -90,7 +90,7 @@ export class ConcertService {
     const url = `${HOST}/updateConcert/${cid}`;
 
     const formData = new FormData();
-    formData.append("concert_type_ID", concert_type_ID);
+    formData.append("concert_type_ID", concert_type_ID.toString());
     formData.append("show_schedule_concert", show_schedule_concert);
     formData.append("lineup", lineup);
     formData.append("address_concert", address_concert);

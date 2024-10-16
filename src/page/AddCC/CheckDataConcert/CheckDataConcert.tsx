@@ -23,7 +23,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import HeaderUserTypeManager2 from "../../../components/HeadUserTypeManager2";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { GetConcertByUserIDRes } from "../../../model/Response/Concert/GetConcertByUserIDRes";
@@ -51,6 +51,11 @@ function CheckDataConcertPage() {
   >([]);
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [concert_ID, setConcert_ID] = useState("");
+  const [concert_type, setConcert_type] = useState(1);
+  const [show_schedule_concert, setShow_schedule_concert] = useState("");
+  const lineupRef = useRef<HTMLInputElement>();
+  const address_concertRef = useRef<HTMLInputElement>();
+  const detail_concertRef = useRef<HTMLInputElement>();
   const [editing1, setEditing1] = useState(false);
   const [editing2, setEditing2] = useState(false);
   const [editing3, setEditing3] = useState(false);
@@ -245,8 +250,8 @@ function CheckDataConcertPage() {
                             sx={{
                               display: "flex",
                               fontWeight: "bold",
-                              overflow:"auto",
-                              maxHeight:100,
+                              overflow: "auto",
+                              maxHeight: 100,
                               color: "black",
                               fontFamily: "Mitr, sans-serif",
                               fontStyle: "normal",
@@ -270,7 +275,48 @@ function CheckDataConcertPage() {
                                       }}
                                     >
                                       <SaveIcon
-                                        onClick={() => setEditing1(false)}
+                                        onClick={async () => {
+                                          try {
+                                            if (
+                                              concert_ID &&
+                                              concert_type &&
+                                              show_schedule_concert &&
+                                              lineupRef.current?.value &&
+                                              address_concertRef.current
+                                                ?.value &&
+                                              detail_concertRef.current?.value
+                                            ) {
+                                              console.log(concert_ID);
+                                              console.log(concert_type);
+                                              const resconcert =
+                                                await concertService.updateConcert(
+                                                  concert_ID,
+                                                  concert_type,
+                                                  show_schedule_concert,
+                                                  lineupRef.current!.value,
+                                                  address_concertRef.current!
+                                                    .value,
+                                                  detail_concertRef.current!
+                                                    .value
+                                                );
+                                              console.log(resconcert.status);
+                                              if (resconcert.status === 200) {
+                                                window.alert(
+                                                  "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                                );
+                                                console.log(resconcert.data);
+                                              }
+                                            } else {
+                                              window.alert(
+                                                "โปรดทำการแก้ไขข้อมูลอีกครั้ง"
+                                              );
+                                            }
+                                            // setEditing1(false);
+                                          } catch (error) {
+                                            setEditing1(false);
+                                            console.log(error);
+                                          }
+                                        }}
                                         sx={{
                                           fontSize: "40px",
                                           color: "skyblue",
@@ -319,9 +365,13 @@ function CheckDataConcertPage() {
                           </h1>
                           {concert.map((concertselect) => (
                             <TextField
+                              placeholder={concertselect?.lineup}
                               className="w-[600px]"
                               label="LineUp"
                               variant="outlined"
+                              inputRef={lineupRef}
+                              // value={lineup}
+                              // onChange={(e) => setLineup(e.target.value)}
                               defaultValue={concertselect?.lineup}
                             />
                           ))}
@@ -331,25 +381,49 @@ function CheckDataConcertPage() {
                             ชนิดประเภทการแสดง :
                           </h1>
                           {concert.map((concertselect) => (
-                            <TextField
-                              id="outlined-select-currency"
-                              className="w-[465px]"
-                              select
-                              defaultValue={concertselect.concert_type_ID}
-                              label="ชนิดประเภทการแสดง"
-                              // defaultValue="EUR"
-                            >
-                              <MenuItem value={1}>
-                                คอนเสิร์ตเดี่ยว (Solo Concert)
-                              </MenuItem>
-                              <MenuItem value={2}>
-                                คอนเสิร์ตรวมศิลปิน (Music Festival/All-Star
-                                Concert)
-                              </MenuItem>
-                              <MenuItem value={3}>
-                                คอนเสิร์ตการกุศล (Charity Concert)
-                              </MenuItem>
-                            </TextField>
+                            <Select
+                            labelId="demo-select-small-label"
+                            id="demo-select-small"
+                            value={concert_type}
+                            label="ประเภทของคอนเสิร์ต"
+                            defaultValue={concertselect.concert_type_ID}
+                            onChange={(e) => setConcert_type(Number(e.target.value))}
+                            sx={{
+                              borderRadius: 20,
+                              bgcolor: "white",
+                              height: "40px",
+                            }}
+                          >
+                            <MenuItem value={1}>คอนเสิร์ตเดี่ยว (Solo Concert)</MenuItem>
+                            <MenuItem value={2}>
+                              คอนเสิร์ตรวมศิลปิน (Music Festival/All-Star Concert)
+                            </MenuItem>
+                            <MenuItem value={3}>
+                              คอนเสิร์ตการกุศล (Charity Concert)
+                            </MenuItem>
+                          </Select>
+                            // <TextField
+                            //   id="outlined-select-currency"
+                            //   className="w-[465px]"
+                            //   select
+                            //   value={concert_type}
+                            //   onChange={(e) =>
+                            //     setConcert_type(Number(e.target.value))
+                            //   }
+                            //   defaultValue={concertselect.concert_type_ID}
+                            //   label="ชนิดประเภทการแสดง"
+                            // >
+                            //   <MenuItem value={1}>
+                            //     คอนเสิร์ตเดี่ยว (Solo Concert)
+                            //   </MenuItem>
+                            //   <MenuItem value={2}>
+                            //     คอนเสิร์ตรวมศิลปิน (Music Festival/All-Star
+                            //     Concert)
+                            //   </MenuItem>
+                            //   <MenuItem value={3}>
+                            //     คอนเสิร์ตการกุศล (Charity Concert)
+                            //   </MenuItem>
+                            // </TextField>
                           ))}
                         </div>
                         <div className="flex flex-row pl-5 mt-5 items-center">
@@ -358,19 +432,39 @@ function CheckDataConcertPage() {
                           </h1>
 
                           {concert.map((concertselect) => (
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                              <DemoContainer
-                                components={["DatePicker", "DatePicker"]}
-                              >
-                                <DatePicker
-                                  label="วันที่การแสดง"
-                                  value={dayjs(
-                                    concertselect?.datetime_add_concert
-                                  )}
-                                  // onChange={(newValue) => setValue(newValue)}
-                                />
-                              </DemoContainer>
-                            </LocalizationProvider>
+                            <TextField
+                              placeholder={concertselect.show_schedule_concert.toString()}
+                              type="Date"
+                              sx={{ mt: 2, width: "10pc" }}
+                              value={show_schedule_concert}
+                              defaultValue={concertselect.show_schedule_concert.toString()}
+                              onChange={(e) =>
+                                setShow_schedule_concert(e.target.value)
+                              }
+                              InputProps={{
+                                sx: {
+                                  borderRadius: "20px",
+                                  bgcolor: "white",
+                                  height: "35px",
+                                },
+                                startAdornment: (
+                                  <>{/* <h3>Prapanpong</h3> */}</>
+                                ),
+                              }}
+                            />
+                            // <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            //   <DemoContainer
+                            //     components={["DatePicker", "DatePicker"]}
+                            //   >
+                            //     <DatePicker
+                            //       label="วันที่การแสดง"
+                            //       value={dayjs(
+                            //         concertselect?.datetime_add_concert
+                            //       )}
+                            //       // onChange={(newValue) => setValue(newValue)}
+                            //     />
+                            //   </DemoContainer>
+                            // </LocalizationProvider>
                           ))}
                         </div>
                         <div className="flex flex-row pl-5 mt-5 items-center">
@@ -380,10 +474,12 @@ function CheckDataConcertPage() {
 
                           {concert.map((concertselect) => (
                             <TextField
+                              placeholder={concertselect?.detail_concert}
+                              defaultValue={concertselect?.detail_concert}
                               className="w-[400px]"
                               label="รายละเอียดของคอนเสิรต์"
                               variant="outlined"
-                              defaultValue={concertselect?.detail_concert}
+                              inputRef={detail_concertRef}
                             />
                           ))}
                         </div>
@@ -402,13 +498,14 @@ function CheckDataConcertPage() {
                               image="src\img\placeholder.png"
                             />
                           </Card>
-
                           {concert.map((concertselect) => (
                             <TextField
                               label="Address Concert"
+                              placeholder={concertselect?.address_concert}
                               multiline
                               rows={4} // กำหนดจำนวนแถวที่จะแสดง
                               defaultValue={concertselect?.address_concert}
+                              inputRef={address_concertRef}
                               variant="outlined" // หรือจะใช้ "filled" หรือ "standard" ตามต้องการ
                               className="w-[405px]"
                             />
@@ -558,9 +655,9 @@ function CheckDataConcertPage() {
                               gutterBottom
                               sx={{
                                 display: "flex",
-                                maxWidth:450,
-                                maxHeight:150,
-                                overflow:"auto",
+                                maxWidth: 450,
+                                maxHeight: 150,
+                                overflow: "auto",
                                 color: "black",
                                 marginLeft: "10px",
                                 fontFamily: "Mitr, sans-serif",
