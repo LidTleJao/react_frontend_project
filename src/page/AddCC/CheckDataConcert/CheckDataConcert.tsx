@@ -44,7 +44,6 @@ import {
 import Calendar from "@mui/icons-material/Event";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
-import axios from "axios";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -54,7 +53,6 @@ function CheckDataConcertPage() {
   const concertService = new ConcertService();
   const [concertAll, setConcertAll] = useState<GetConcertByUserIDRes[]>([]);
   const [concert, setConcert] = useState<GetConcertByCIDRes[]>([]);
-  // const [val, setVal] = useState(0);
   const [concertChannel, setConcertChannel] = useState<
     GetConcertChannelByCIDRes[]
   >([]);
@@ -90,17 +88,13 @@ function CheckDataConcertPage() {
 
   // Function to handle time change
   const handleTimeChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     index: number
   ) => {
     const updatedTimes = [...gettime];
     updatedTimes[index] = event.target.value;
     setGetTime(updatedTimes);
   };
-
-  console.log(getshow);
-
-  console.log(gettime);
 
   useEffect(() => {
     const loadDataAsync = async () => {
