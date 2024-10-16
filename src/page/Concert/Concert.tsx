@@ -1,23 +1,68 @@
-import { Typography, FormControl, InputLabel, Select, MenuItem, TextField, IconButton, Card, CardMedia, CardContent, CardActions, Button } from "@mui/material";
+import {
+  Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  TextField,
+  IconButton,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Button,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import HeaderUserTypeManager2 from "../../components/HeadUserTypeManager2";
 import HeaderUserTypeGeneral2 from "../../components/HeadUserTypeGeneral2";
+import { ConcertService } from "../../service/concertService";
+import { useEffect, useState } from "react";
+import { GetAllConcertRes } from "../../model/Response/Concert/GetAllConcertRes";
 
 function ConcertPage() {
+  const concertService = new ConcertService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
-    return (
-        <>
-        {user?.type_user === 2 && (
+  const [concertAll, setConcertAll] = useState<GetAllConcertRes[]>([]);
+
+  useEffect(() => {
+    const loadDataAsync = async () => {
+      const resconcert = await concertService.getAll();
+      const data: GetAllConcertRes[] = resconcert.data;
+      setConcertAll(data);
+    };
+    loadDataAsync();
+  }, []);
+
+  {concertAll.map((concerts)=>(
+    console.log("CID: " + concerts.CID),
+    console.log("user_ID: " + concerts.user_ID),
+    console.log("concert_type_ID: " + concerts.concert_type_ID),
+    console.log("name_type_concert: " + concerts.name_type_concert),
+    console.log("poster_concert: " + concerts.poster_concert),
+    console.log("performance_chart: " + concerts.performance_chart),
+    console.log("show_schedule_concert: " + concerts.show_schedule_concert),
+    console.log("name_concert: " + concerts.name_concert),
+    console.log("lineup: " + concerts.lineup),
+    console.log("address_concert: " + concerts.address_concert),
+    console.log("province: " + concerts.province),
+    console.log("detail_concert: " + concerts.detail_concert),
+    console.log("datetime_add_concert: " + concerts.datetime_add_concert),
+    console.log("///////////////////////////")
+  ))}
+  return (
+    <>
+      {(user?.type_user === 2 && (
         <>
           <HeaderUserTypeManager2 />
         </>
-      ) || user?.type_user === 1 && (
-        <>
-          <HeaderUserTypeGeneral2 />
-        </>
-      )}
-        <div className="concert-cont">
+      )) ||
+        (user?.type_user === 1 && (
+          <>
+            <HeaderUserTypeGeneral2 />
+          </>
+        ))}
+      <div className="concert-cont">
         <div
           style={{
             display: "flex",
@@ -77,19 +122,19 @@ function ConcertPage() {
                   ชื่อศิลปิน :
                 </Typography>
                 <TextField
-                      placeholder="ชื่อศิลปิน"
-                      type="name"
-                      sx={{ width: "19.5pc" }}
-                    //   onChange={(e) => setBirthday(e.target.value)}
-                      InputProps={{
-                        sx: {
-                          borderRadius: "20px",
-                          bgcolor: "white",
-                          height: "35px",
-                        },
-                        startAdornment: <></>,
-                      }}
-                    />
+                  placeholder="ชื่อศิลปิน"
+                  type="name"
+                  sx={{ width: "19.5pc" }}
+                  //   onChange={(e) => setBirthday(e.target.value)}
+                  InputProps={{
+                    sx: {
+                      borderRadius: "20px",
+                      bgcolor: "white",
+                      height: "35px",
+                    },
+                    startAdornment: <></>,
+                  }}
+                />
               </div>
               <div style={{ marginLeft: "10px", marginTop: "10px" }}>
                 <Typography
@@ -129,15 +174,15 @@ function ConcertPage() {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value={1}>คอนเสิร์ตเดี่ยว (Solo Concert)</MenuItem>
-                    <MenuItem value={2}>คอนเสิร์ตรวมศิลปิน (Music Festival/All-Star Concert)</MenuItem>
-                    <MenuItem value={3}>คอนเสิร์ตการกุศล (Charity Concert)</MenuItem>
-                    <MenuItem value={4}>คอนเสิร์ตเปิดหมวก (Busking/Street Performance)</MenuItem>
-                    <MenuItem value={5}>คอนเสิร์ตตามเทศกาล (Festival Concert)</MenuItem>
-                    <MenuItem value={6}>คอนเสิร์ตแบบอะคูสติก (Acoustic Concert):</MenuItem>
-                    <MenuItem value={7}>คอนเสิร์ตเวทีใหญ่ (Arena/Stadium Concert)</MenuItem>
-                    <MenuItem value={8}>คอนเสิร์ตตามแนวเพลง (Genre-Specific Concert)</MenuItem>
-                    <MenuItem value={9}>คอนเสิร์ตทางศาสนา (Religious Concert)</MenuItem>
+                    <MenuItem value={1}>
+                      คอนเสิร์ตเดี่ยว (Solo Concert)
+                    </MenuItem>
+                    <MenuItem value={2}>
+                      คอนเสิร์ตรวมศิลปิน (Music Festival/All-Star Concert)
+                    </MenuItem>
+                    <MenuItem value={3}>
+                      คอนเสิร์ตการกุศล (Charity Concert)
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -155,35 +200,21 @@ function ConcertPage() {
                 >
                   วันที่แสดง :
                 </Typography>
-                <FormControl sx={{ width: 315 }}>
-                  <InputLabel
-                    id="demo-select-small-label"
-                    sx={{ marginTop: "-5px" }}
-                  >
-                    วันที่
-                  </InputLabel>
-                  <Select
-                    labelId="demo-select-small-label"
-                    id="demo-select-small"
-                    // placeholder="จังหวัด"
-                    // value={city}
-                    // label="จังหวัด"
-                    // type="city"
-                    // onChange={(e) => setCity(e.target.value)}
-                    sx={{
-                      borderRadius: 20,
+                <TextField
+                  placeholder="วันที่ทำการแสดง"
+                  type="Date"
+                  sx={{ width: "20pc" }}
+                  // value={show_schedule_concert}
+                  // onChange={(e) => setShow_schedule_concert(e.target.value)}
+                  InputProps={{
+                    sx: {
+                      borderRadius: "20px",
                       bgcolor: "white",
-                      height: "40px",
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={1}>
-                    
-                    </MenuItem>
-                  </Select>
-                </FormControl>
+                      height: "35px",
+                    },
+                    startAdornment: <></>,
+                  }}
+                />
               </div>
               <div style={{ marginLeft: "10px", marginTop: "10px" }}>
                 <Typography
@@ -295,8 +326,15 @@ function ConcertPage() {
                   </div>
                 </Box>
               </div>
-              <div style={{display:"flex",justifyContent:"center",marginRight:"250px",marginTop:"50px"}}>
-                <Card sx={{ maxWidth: 345, background: "#4E6A97",border:2 }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginRight: "250px",
+                  marginTop: "50px",
+                }}
+              >
+                <Card sx={{ maxWidth: 345, background: "#4E6A97", border: 2 }}>
                   <CardMedia
                     component="img"
                     alt="green iguana"
@@ -323,7 +361,7 @@ function ConcertPage() {
           </div>
         </div>
       </div>
-        </>
-    );
+    </>
+  );
 }
 export default ConcertPage;
