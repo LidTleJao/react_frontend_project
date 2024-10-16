@@ -24,7 +24,7 @@ function AddHotelP2Page() {
   const [getUrl2, setGetUrl2] = useState("");
   const [getUrl3, setGetUrl3] = useState("");
 
-  console.log(hotelName, hotelType, province, address, description);
+  // console.log(hotelName, hotelType, province, address, description);
 
   function navigateToAddHotelPage() {
     navigate("/AddHotel");

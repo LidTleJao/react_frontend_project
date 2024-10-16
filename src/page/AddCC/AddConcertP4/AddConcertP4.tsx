@@ -57,6 +57,7 @@ function AddConcertP4Page() {
   const handleSelectChange = (event: any) => {
     setSelectedValue(event.target.value);
   };
+  console.log(getUrl1);
   function navigateToAddConcertP3Page() {
     navigate("/AddConcertP3", {
       state: {
@@ -365,7 +366,7 @@ function AddConcertP4Page() {
                             );
                             const last_idx: string = resconcert.data.last_idx;
                             // console.log(last_idx);
-                            if (resconcert.status == 201) {
+                            if (resconcert.status == 201 ) {
                               if (getUrl1) {
                                 const resurl1 =
                                   await concertService.AddConcertUrl(

@@ -139,7 +139,7 @@ function AddConcertP3Page() {
                         bgcolor: "white",
                         height: "35px",
                       },
-                      startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                      startAdornment: <></>,
                     }}
                   />
                 </div>
@@ -177,7 +177,7 @@ function AddConcertP3Page() {
                         bgcolor: "white",
                         height: "35px",
                       },
-                      startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                      startAdornment: <></>,
                     }}
                   />
                 </div>
@@ -214,7 +214,7 @@ function AddConcertP3Page() {
                         bgcolor: "white",
                         height: "35px",
                       },
-                      startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                      startAdornment: <></>,
                     }}
                   />
                 </div>
