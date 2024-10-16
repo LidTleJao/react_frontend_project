@@ -56,6 +56,9 @@ function CheckDataConcertPage() {
   const lineupRef = useRef<HTMLInputElement>();
   const address_concertRef = useRef<HTMLInputElement>();
   const detail_concertRef = useRef<HTMLInputElement>();
+  const urlAdd1Ref = useRef<HTMLInputElement>();
+  const urlAdd2Ref = useRef<HTMLInputElement>();
+  const urlAdd3Ref = useRef<HTMLInputElement>();
   const [editing1, setEditing1] = useState(false);
   const [editing2, setEditing2] = useState(false);
   const [editing3, setEditing3] = useState(false);
@@ -382,26 +385,31 @@ function CheckDataConcertPage() {
                           </h1>
                           {concert.map((concertselect) => (
                             <Select
-                            labelId="demo-select-small-label"
-                            id="demo-select-small"
-                            value={concert_type}
-                            label="ประเภทของคอนเสิร์ต"
-                            defaultValue={concertselect.concert_type_ID}
-                            onChange={(e) => setConcert_type(Number(e.target.value))}
-                            sx={{
-                              borderRadius: 20,
-                              bgcolor: "white",
-                              height: "40px",
-                            }}
-                          >
-                            <MenuItem value={1}>คอนเสิร์ตเดี่ยว (Solo Concert)</MenuItem>
-                            <MenuItem value={2}>
-                              คอนเสิร์ตรวมศิลปิน (Music Festival/All-Star Concert)
-                            </MenuItem>
-                            <MenuItem value={3}>
-                              คอนเสิร์ตการกุศล (Charity Concert)
-                            </MenuItem>
-                          </Select>
+                              labelId="demo-select-small-label"
+                              id="demo-select-small"
+                              value={concert_type}
+                              label="ประเภทของคอนเสิร์ต"
+                              defaultValue={concertselect.concert_type_ID}
+                              onChange={(e) =>
+                                setConcert_type(Number(e.target.value))
+                              }
+                              sx={{
+                                borderRadius: 20,
+                                bgcolor: "white",
+                                height: "40px",
+                              }}
+                            >
+                              <MenuItem value={1}>
+                                คอนเสิร์ตเดี่ยว (Solo Concert)
+                              </MenuItem>
+                              <MenuItem value={2}>
+                                คอนเสิร์ตรวมศิลปิน (Music Festival/All-Star
+                                Concert)
+                              </MenuItem>
+                              <MenuItem value={3}>
+                                คอนเสิร์ตการกุศล (Charity Concert)
+                              </MenuItem>
+                            </Select>
                             // <TextField
                             //   id="outlined-select-currency"
                             //   className="w-[465px]"
@@ -1003,7 +1011,9 @@ function CheckDataConcertPage() {
                                       {editing3 ? (
                                         <>
                                           <HighlightOffIcon
-                                            onClick={() => setEditing3(false)}
+                                            onClick={async () => {
+                                              setEditing3(false);
+                                            }}
                                             sx={{
                                               fontSize: "40px",
                                               color: "red",
@@ -1032,7 +1042,7 @@ function CheckDataConcertPage() {
                                     flexDirection: "column",
                                   }}
                                 >
-                                  {concertChannel.map((concertselect) => (
+                                  {/* {concertChannel.map((concertselect) => (
                                     <div
                                       style={{
                                         display: "flex",
@@ -1047,7 +1057,124 @@ function CheckDataConcertPage() {
                                         defaultValue={concertselect?.url}
                                       />
                                     </div>
-                                  ))}
+                                  ))} */}
+                                  {concertChannel &&
+                                  concertChannel.length > 0 ? (
+                                    concertChannel.map((concertselect, index) =>
+                                      concertselect.CCID ? (
+                                        // ถ้ามี CCID ให้แสดงข้อมูลของ CCID ที่มีอยู่
+                                        <div
+                                          key={index}
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            marginBottom: 10,
+                                          }}
+                                        >
+                                          <TextField
+                                            className="w-[200px] mb-5"
+                                            label="Url"
+                                            variant="outlined"
+                                            defaultValue={concertselect?.url}
+                                          />
+                                        </div>
+                                      ) : (
+                                        // ถ้าไม่มี CCID ให้สร้าง TextField เปล่าขึ้นมา
+                                        <>
+                                          // ถ้าไม่มี CCID ให้สร้าง TextField
+                                          เปล่าขึ้นมา
+                                          <div
+                                            key={index}
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                              marginBottom: 10,
+                                            }}
+                                          >
+                                            <TextField
+                                              className="w-[200px] mb-5"
+                                              label="Url"
+                                              variant="outlined"
+                                            />
+                                          </div>
+                                          <div
+                                            key={index}
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                              marginBottom: 10,
+                                            }}
+                                          >
+                                            <TextField
+                                              className="w-[200px] mb-5"
+                                              label="Url"
+                                              variant="outlined"
+                                            />
+                                          </div>
+                                          <div
+                                            key={index}
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                              marginBottom: 10,
+                                            }}
+                                          >
+                                            <TextField
+                                              className="w-[200px] mb-5"
+                                              label="Url"
+                                              variant="outlined"
+                                            />
+                                          </div>
+                                        </>
+                                      )
+                                    )
+                                  ) : (
+                                    // ถ้า concertChannel ไม่มีข้อมูล ให้สร้าง TextField ขึ้นมา 1 อัน
+                                    <>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "row",
+                                          marginBottom: 10,
+                                        }}
+                                      >
+                                        <TextField
+                                          className="w-[200px] mb-5"
+                                          label="Url"
+                                          variant="outlined"
+                                          inputRef={urlAdd1Ref}
+                                        />
+                                      </div>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "row",
+                                          marginBottom: 10,
+                                        }}
+                                      >
+                                        <TextField
+                                          className="w-[200px] mb-5"
+                                          label="Url"
+                                          variant="outlined"
+                                          inputRef={urlAdd2Ref}
+                                        />
+                                      </div>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "row",
+                                          marginBottom: 10,
+                                        }}
+                                      >
+                                        <TextField
+                                          className="w-[200px] mb-5"
+                                          label="Url"
+                                          variant="outlined"
+                                          inputRef={urlAdd3Ref}
+                                        />
+                                      </div>
+                                    </>
+                                  )}
                                 </div>
                               </>
                             ) : (
