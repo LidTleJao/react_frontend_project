@@ -44,6 +44,7 @@ import {
 import Calendar from "@mui/icons-material/Event";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import axios from "axios";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -97,10 +98,9 @@ function CheckDataConcertPage() {
     setGetTime(updatedTimes);
   };
 
-  // console.log(getshow);
-  
-  // console.log(gettime);
-  
+  console.log(getshow);
+
+  console.log(gettime);
 
   useEffect(() => {
     const loadDataAsync = async () => {
@@ -134,7 +134,7 @@ function CheckDataConcertPage() {
 
   const cstidCount = concertShow.map((concertselect) => concertselect.CSTID);
 
-  console.log(cstidCount.length);
+  // console.log(cstidCount.length);
 
   // State สำหรับเก็บข้อมูล URL ของ concertChannel
   const [urls, setUrls] = useState(
@@ -830,12 +830,196 @@ function CheckDataConcertPage() {
                                           onClick={async () => {
                                             try {
                                               if (cstidCount.length === 1) {
-                                                setEditing2(false);
+                                                // console.log(getshow3);
+                                                if (
+                                                  getshow3 == null ||
+                                                  gettime3 == ""
+                                                ) {
+                                                  window.alert(
+                                                    "ข้อมูลวันที่หรือเวลาไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                                                  );
+                                                } else {
+                                                  if (
+                                                    getshow3[0] &&
+                                                    getshow3[1] &&
+                                                    gettime3 !== ""
+                                                  ) {
+                                                    const getarrayshow1 =
+                                                      getshow3[0]
+                                                        ?.get("D")
+                                                        .valueOf() || 0;
+                                                    const getarrayshow2 =
+                                                      getshow3[0]
+                                                        ?.get("M")
+                                                        .valueOf() || 0;
+                                                    const getarrayshow3 =
+                                                      getshow3[0]
+                                                        ?.get("y")
+                                                        .valueOf() || 0;
+                                                    const getstr1 = `${getarrayshow3}-${
+                                                      getarrayshow2 + 1
+                                                    }-${getarrayshow1}`;
+
+                                                    const getarrayshow4 =
+                                                      getshow3[1]
+                                                        ?.get("D")
+                                                        .valueOf() || 0;
+                                                    const getarrayshow5 =
+                                                      getshow3[1]
+                                                        ?.get("M")
+                                                        .valueOf() || 0;
+                                                    const getarrayshow6 =
+                                                      getshow3[1]
+                                                        ?.get("y")
+                                                        .valueOf() || 0;
+                                                    const getstr2 = `${getarrayshow6}-${
+                                                      getarrayshow5 + 1
+                                                    }-${getarrayshow4}`;
+
+                                                    const getstr3 = `${getstr1} - ${getstr2}`;
+
+                                                    console.log(getstr3);
+                                                    console.log(cstidCount[0]);
+                                                    console.log(gettime3);
+
+                                                    const resconcert =
+                                                      await concertService.updateConcertShowtime(
+                                                        concert_ID,
+                                                        cstidCount[0].toString(),
+                                                        getstr3,
+                                                        gettime3
+                                                      );
+                                                    if (
+                                                      resconcert.status === 200
+                                                    ) {
+                                                      window.alert(
+                                                        "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                                      );
+                                                    }
+                                                  } else {
+                                                    window.alert(
+                                                      "ข้อมูลไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                                                    );
+                                                  }
+                                                  setEditing2(false);
+                                                }
                                               } else {
-                                                setEditing2(false);
+                                                // ตรวจสอบว่าทั้ง getshow และ gettime มีจำนวนเท่ากับ 2
+                                                if (
+                                                  getshow.length === 2 &&
+                                                  gettime.length === 2
+                                                ) {
+                                                  for (
+                                                    let i = 0;
+                                                    i < getshow.length;
+                                                    i++
+                                                  ) {
+                                                    // ตรวจสอบว่าค่า getshow[i] ไม่ใช่ null และ gettime[i] ไม่ใช่ค่าว่าง
+                                                    if (
+                                                      getshow[i] !== null &&
+                                                      gettime[i].trim() !== ""
+                                                    ) {
+                                                      let getstr = "";
+                                                      const getarrayshow1 =
+                                                        getshow[i]
+                                                          ?.get("D")
+                                                          .valueOf() || 0;
+                                                      const getarrayshow2 =
+                                                        getshow[i]
+                                                          ?.get("M")
+                                                          .valueOf() || 0;
+                                                      const getarrayshow3 =
+                                                        getshow[i]
+                                                          ?.get("y")
+                                                          .valueOf() || 0;
+                                                      getstr = `${getarrayshow3}-${
+                                                        getarrayshow2 + 1
+                                                      }-${getarrayshow1}`;
+
+                                                      // แปลงวันที่จาก string ให้เป็น Date
+                                                      const parsedDate =
+                                                        new Date(getstr);
+
+                                                      // ฟังก์ชันสำหรับฟอร์แมทวันที่
+                                                      const formatDate = (
+                                                        date: Date
+                                                      ): string => {
+                                                        const year =
+                                                          date.getFullYear();
+                                                        const month = String(
+                                                          date.getMonth() + 1
+                                                        ).padStart(2, "0"); // เดือนเริ่มที่ 0, ต้อง +1
+                                                        const day = String(
+                                                          date.getDate()
+                                                        ).padStart(2, "0"); // เพิ่ม 0 ข้างหน้า ถ้าวันหรือเดือนมีแค่หลักเดียว
+                                                        return `${year}-${month}-${day}`;
+                                                      };
+
+                                                      // แสดงค่าที่แปลงแล้วใน console
+                                                      console.log(
+                                                        formatDate(parsedDate)
+                                                      );
+                                                      console.log(gettime[i]);
+
+                                                      // เรียกใช้งานฟังก์ชันเพื่ออัปเดตข้อมูล
+                                                      try {
+                                                        const resconcert =
+                                                          await concertService.updateConcertShowtime(
+                                                            concert_ID,
+                                                            cstidCount[
+                                                              i
+                                                            ].toString(),
+                                                            formatDate(
+                                                              parsedDate
+                                                            ),
+                                                            gettime[i]
+                                                          );
+
+                                                        // ตรวจสอบสถานะของ response
+                                                        if (
+                                                          resconcert.status ===
+                                                          200
+                                                        ) {
+                                                          console.log(
+                                                            resconcert.data
+                                                          );
+                                                          window.alert(
+                                                            "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                                          );
+                                                        } else {
+                                                          throw new Error(
+                                                            "ไม่สามารถแก้ไขข้อมูลได้"
+                                                          );
+                                                        }
+                                                      } catch (error) {
+                                                        console.error(
+                                                          "Error updating concert:",
+                                                          error
+                                                        );
+                                                        window.alert(
+                                                          "เกิดข้อผิดพลาดในการแก้ไขข้อมูล"
+                                                        );
+                                                      }
+                                                    } else {
+                                                      window.alert(
+                                                        "โปรดทำการแก้ไขข้อมูลอีกครั้ง"
+                                                      );
+                                                      break; // ออกจากลูปหากพบข้อผิดพลาด
+                                                    }
+                                                  }
+                                                } else {
+                                                  // ถ้า getshow หรือ gettime ไม่เท่ากับ 2 ให้แสดงข้อความเตือน
+                                                  window.alert(
+                                                    "ข้อมูลไม่ครบถ้วน โปรดตรวจสอบอีกครั้ง"
+                                                  );
+                                                }
                                               }
+
                                               setEditing2(false);
                                             } catch (error) {
+                                              // window.alert(
+                                              //   "โปรดทำการแก้ไขข้อมูลอีกครั้ง"
+                                              // );
                                               setEditing2(false);
                                               console.log(error);
                                             }
@@ -912,6 +1096,7 @@ function CheckDataConcertPage() {
                                                 },
                                               },
                                             }}
+                                            disablePast
                                           />
                                         </LocalizationProvider>
                                         <TextField
