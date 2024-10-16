@@ -994,16 +994,16 @@ function CheckDataConcertPage() {
                                                   index < urls.length;
                                                   index++
                                                 ) {
-                                                  // console.log(urls[index]);
-                                                  // console.log(getCCID[index]);
-                                                  const addUrl = urls[index];
+                                                  console.log(urls[index]);
+                                                  console.log(getCCID[index]);
+                                                  // const addUrl = urls[index];
                                                   const ccid = getCCID[index];
 
                                                   const resconcert =
                                                     await concertService.updateConcertChannel(
                                                       concert_ID,
                                                       ccid.toString(),
-                                                      addUrl
+                                                      urls[index],
                                                     );
                                                   console.log(
                                                     resconcert.status
@@ -1182,6 +1182,7 @@ function CheckDataConcertPage() {
                                       (concertselect, index) => (
                                         <Grid item key={index}>
                                           <Link
+                                          href={concertselect?.channel}
                                             sx={{
                                               color: "#3A3A3A",
                                               "&:hover": {

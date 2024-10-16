@@ -114,8 +114,8 @@ export class ConcertService {
     const url = `${HOST}/updateConcertChannel/${concert_ID}`;
 
     const payload = {
-      CCID,
-      urlAdd,
+      CCID:CCID,
+      channel:urlAdd,
     };
 
     try {
