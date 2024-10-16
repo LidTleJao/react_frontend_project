@@ -1,4 +1,5 @@
 export interface HotelDealsGetAllRes {
+    roomCount: number;
     HDID:                number;
     room_ID:             number;
     name:                string;

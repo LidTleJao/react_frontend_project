@@ -55,6 +55,14 @@ function ConcertDealPage() {
   const [isLoad, setLoad] = useState(false);
   const [open, setOpen] = useState(false);
 
+  // เพิ่มสถานะสำหรับฟิลด์ค้นหา
+  const [filteredHotelDeals, setFilteredHotelDeals] = useState<HotelDealsGetAllRes[]>([]);
+  const [searchName, setSearchName] = useState("");
+  const [searchRoomType, setSearchRoomType] = useState<number | string>("");
+  const [searchViewType, setSearchViewType] = useState<number | string>("");
+  const [searchRoomCount, setSearchRoomCount] = useState<number | string>("");
+  const [searchPrice, setSearchPrice] = useState<number | string>("");
+
   useEffect(() => {
     const loadDataAsync = async () => {
       const resconcert = await concertDealService.getConcertDealByUser(
@@ -85,6 +93,18 @@ function ConcertDealPage() {
     };
     loadDataAsync();
   }, []);
+
+  useEffect(() => {
+    const loadDataAsync = async () => {
+      const reshoteldeal = await hoteldeals.getAllHotelDeals();
+      const data: HotelDealsGetAllRes[] = reshoteldeal.data;
+      console.log("Hotel Deals Data:", data); 
+      setHotelDealAll(data);
+      setFilteredHotelDeals(data); 
+    };
+    loadDataAsync();
+  }, []);
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -123,9 +143,38 @@ function ConcertDealPage() {
     setOpen(false);
   };
 
+  const filterHotelDeals = () => {
+    const isSearching =
+      searchName !== "" ||
+      searchRoomType !== "" ||
+      searchViewType !== "" ||
+      searchRoomCount !== "" ||
+      searchPrice !== "";
+
+    if (!isSearching) {
+      setFilteredHotelDeals(hotelDealAll);
+      return;
+    }
+
+    const results = hotelDealAll.filter((deal) => {
+      const isNameMatch = searchName === "" || deal.name.includes(searchName);
+      const isRoomTypeMatch = searchRoomType === "" || deal.room_type_ID === Number(searchRoomType);
+      const isViewTypeMatch = searchViewType === "" || deal.room_view_type_ID === Number(searchViewType);
+      const isRoomCountMatch = searchRoomCount === "" || deal.number_of_rooms === Number(searchRoomCount);
+      const isPriceMatch = searchPrice === "" || deal.price === Number(searchPrice);
+
+      return isNameMatch && isRoomTypeMatch && isViewTypeMatch && isRoomCountMatch && isPriceMatch;
+    });
+
+    console.log("Filtered Hotel Deals:", results);
+    setFilteredHotelDeals(results);
+  };
+
+
   function navigateToMenuConcertDealPage() {
     navigate("/MenuConcertDeal");
   }
+
   return (
     <>
       <HeaderUserTypeManager2 />
@@ -229,8 +278,8 @@ function ConcertDealPage() {
                         placeholder="ชื่อโรงแรม"
                         type="text"
                         sx={{ width: "20pc" }}
-                        //   onChange={(e) => setName(e.target.value)}
-                        // onChange={handlePrice}
+                        value={searchName}
+                        onChange={(e) => setSearchName(e.target.value)}
                         InputProps={{
                           sx: {
                             borderRadius: "20px",
@@ -245,75 +294,39 @@ function ConcertDealPage() {
                     </div>
                     <div style={{ display: "flex", marginTop: "20px" }}>
                       <FormControl sx={{ width: "20pc" }}>
-                        <InputLabel
-                          id="demo-select-small-label"
-                          sx={{ marginTop: "-5px" }}
-                        >
-                          ชนิดห้อง
-                        </InputLabel>
+                        <InputLabel id="room-type-label" sx={{ marginTop: "-5px" }}>ชนิดห้อง</InputLabel>
                         <Select
-                          labelId="demo-select-small-label"
-                          id="demo-select-small"
+                          labelId="room-type-label"
+                          id="room-type-select"
                           label="ชนิดห้อง"
-                          // defaultValue={1}
-                          //   value={ticket_type}
-                          //   onChange={(e) => setTicket_type(Number(e.target.value))}
-                          sx={{
-                            borderRadius: 20,
-                            border: 1,
-                            borderColor: "black",
-                            bgcolor: "white",
-                            height: "40px",
-                          }}
+                          value={searchRoomType}
+                          onChange={(e) => setSearchRoomType(e.target.value)}
+                          sx={{ borderRadius: 20, border: 1, borderColor: "black", bgcolor: "white", height: "40px" }}
                         >
-                          <MenuItem value={1}>
-                            ห้องธรรมดา (Standard Room)
-                          </MenuItem>
-                          <MenuItem value={2}>
-                            ห้องดีลักซ์ (Deluxe Room)
-                          </MenuItem>
-                          <MenuItem value={3}>
-                            ห้องเอกซ์คลูซีฟ (Executive Room)
-                          </MenuItem>
-                          <MenuItem value={4}>
-                            ห้องที่มีประตูเชื่อมต่อกัน (Connecting Rooms)
-                          </MenuItem>
-                          <MenuItem value={5}>ห้องสวีท (Suite)</MenuItem>
-                          <MenuItem value={6}>
-                            ห้องสุพีเรียร์ (Superior Room)
-                          </MenuItem>
-                          <MenuItem value={7}>
-                            ห้องพักพิเศษสำหรับผู้พิการ (Accessible Room)
-                          </MenuItem>
+                          <MenuItem value="1">ห้องธรรมดา (Standard Room)</MenuItem>
+                          <MenuItem value="2">ห้องดีลักซ์ (Deluxe Room)</MenuItem>
+                          <MenuItem value="3">ห้องเอกซ์คลูซีฟ (Executive Room)</MenuItem>
+                          <MenuItem value="4">ห้องที่มีประตูเชื่อมต่อกัน (Connecting Rooms)</MenuItem>
+                          <MenuItem value="5">ห้องสวีท (Suite)</MenuItem>
+                          <MenuItem value="6">ห้องสุพีเรียร์ (Superior Room)</MenuItem>
+                          <MenuItem value="7">ห้องพักพิเศษสำหรับผู้พิการ (Accessible Room)</MenuItem>
                         </Select>
                       </FormControl>
                     </div>
                     <div style={{ display: "flex", marginTop: "20px" }}>
                       <FormControl sx={{ width: "20pc" }}>
-                        <InputLabel
-                          id="demo-select-small-label"
-                          sx={{ marginTop: "-5px" }}
-                        >
-                          ชนิดวิว
-                        </InputLabel>
+                        <InputLabel id="view-type-label" sx={{ marginTop: "-5px" }}>ชนิดวิว</InputLabel>
                         <Select
-                          labelId="demo-select-small-label"
-                          id="demo-select-small"
+                          labelId="view-type-label"
+                          id="view-type-select"
                           label="ชนิดวิว"
-                          // defaultValue={1}
-                          //   value={ticket_type}
-                          //   onChange={(e) => setTicket_type(Number(e.target.value))}
-                          sx={{
-                            borderRadius: 20,
-                            border: 1,
-                            borderColor: "black",
-                            bgcolor: "white",
-                            height: "40px",
-                          }}
+                          value={searchViewType}
+                          onChange={(e) => setSearchViewType(e.target.value)}
+                          sx={{ borderRadius: 20, border: 1, borderColor: "black", bgcolor: "white", height: "40px" }}
                         >
-                          <MenuItem value={1}>ทะเล</MenuItem>
-                          <MenuItem value={2}>ภูเขา</MenuItem>
-                          <MenuItem value={3}>เมือง</MenuItem>
+                          <MenuItem value="1">ทะเล</MenuItem>
+                          <MenuItem value="2">ภูเขา</MenuItem>
+                          <MenuItem value="3">เมือง</MenuItem>
                         </Select>
                       </FormControl>
                     </div>
@@ -322,16 +335,9 @@ function ConcertDealPage() {
                         placeholder="จำนวนห้อง"
                         type="number"
                         sx={{ width: "20pc" }}
-                        //   onChange={(e) => setName(e.target.value)}
-                        // onChange={handlePrice}
+                        onChange={(e) => setSearchRoomCount(Number(e.target.value))}
                         InputProps={{
-                          sx: {
-                            borderRadius: "20px",
-                            border: 1,
-                            borderColor: "black",
-                            bgcolor: "white",
-                            height: "35px",
-                          },
+                          sx: { borderRadius: "20px", border: 1, borderColor: "black", bgcolor: "white", height: "35px" },
                           startAdornment: <></>,
                         }}
                       />
@@ -341,36 +347,20 @@ function ConcertDealPage() {
                         placeholder="ราคาห้อง"
                         type="number"
                         sx={{ width: "20pc" }}
-                        //   onChange={(e) => setName(e.target.value)}
-                        // onChange={handlePrice}
+                        onChange={(e) => setSearchPrice(Number(e.target.value))}
                         InputProps={{
-                          sx: {
-                            borderRadius: "20px",
-                            border: 1,
-                            borderColor: "black",
-                            bgcolor: "white",
-                            height: "35px",
-                          },
+                          sx: { borderRadius: "20px", border: 1, borderColor: "black", bgcolor: "white", height: "35px" },
                           startAdornment: <></>,
                         }}
                       />
                     </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        marginTop: "20px",
-                        justifyContent: "end",
-                      }}
-                    >
+                    <div style={{ display: "flex", marginTop: "20px", justifyContent: "end" }}>
                       <Button
                         variant="contained"
                         style={{ backgroundColor: "#343434" }}
-                        sx={{
-                          width: "110px",
-                          borderRadius: "10px",
-                        }}
+                        sx={{ width: "110px", borderRadius: "10px" }}
                         startIcon={<SearchIcon />}
-                        // onClick={navigateToAddConcertDataPage}
+                        onClick={filterHotelDeals}
                       >
                         ค้นหา
                       </Button>
@@ -571,37 +561,22 @@ function ConcertDealPage() {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {hotelDealAll.map((hoteldeals) => (
-                            <TableRow>
+                          {filteredHotelDeals.map((hoteldeals) => (
+                            <TableRow key={hoteldeals.HDID}>
                               <TableCell>{hoteldeals.name}</TableCell>
                               <TableCell>{hoteldeals.type_room}</TableCell>
-                              <TableCell>
-                                {hoteldeals.type_view_name_room}
-                              </TableCell>
-                              <TableCell>
-                                {hoteldeals.number_of_rooms}
-                              </TableCell>
+                              <TableCell>{hoteldeals.type_view_name_room}</TableCell>
+                              <TableCell>{hoteldeals.number_of_rooms}</TableCell>
                               <TableCell>{hoteldeals.price}</TableCell>
-                              <TableCell>
-                                {hoteldeals.e_datetime.toString()}
-                              </TableCell>
+                              <TableCell>{hoteldeals.e_datetime.toString()}</TableCell>
                               <TableCell>{hoteldeals.name_status}</TableCell>
                               <TableCell>
                                 <Radio
-                                  checked={
-                                    selectedValueRadio ===
-                                    hoteldeals.HDID.toString()
-                                  }
-                                  onChange={() =>
-                                    setSelectedValueRadio(
-                                      hoteldeals.HDID.toString()
-                                    )
-                                  }
+                                  checked={selectedValueRadio === hoteldeals.HDID.toString()}
+                                  onChange={() => setSelectedValueRadio(hoteldeals.HDID.toString())}
                                   value={hoteldeals.HDID.toString()}
                                   name="radio-buttons"
-                                  inputProps={{
-                                    "aria-label": hoteldeals.HDID.toString(),
-                                  }}
+                                  inputProps={{ "aria-label": hoteldeals.HDID.toString() }}
                                 />
                               </TableCell>
                             </TableRow>
