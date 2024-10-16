@@ -1173,8 +1173,8 @@ function CheckDataConcertPage() {
                                     sx={{
                                       display: "flex",
                                       flexDirection: "column",
-                                      overflow: "auto",
-                                      maxHeight: 150,
+                                    overflow: "auto",
+                                      maxHeight: 250,
                                       maxWidth: 350,
                                     }}
                                   >
@@ -1191,7 +1191,7 @@ function CheckDataConcertPage() {
                                             }}
                                             underline="hover"
                                           >
-                                            {concertselect?.channel}
+                                            - {concertselect?.channel}
                                           </Link>
                                         </Grid>
                                       )
