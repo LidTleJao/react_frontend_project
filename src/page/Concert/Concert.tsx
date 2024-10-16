@@ -19,8 +19,10 @@ import HeaderUserTypeGeneral2 from "../../components/HeadUserTypeGeneral2";
 import { ConcertService } from "../../service/concertService";
 import { useEffect, useState } from "react";
 import { GetAllConcertRes } from "../../model/Response/Concert/GetAllConcertRes";
+import { useNavigate } from "react-router-dom";
 
 function ConcertPage() {
+  const navigate = useNavigate();
   const concertService = new ConcertService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [concertAll, setConcertAll] = useState<GetAllConcertRes[]>([]);
@@ -29,6 +31,7 @@ function ConcertPage() {
   const [searchName, setSearchName] = useState("");
   const [searchType, setSearchType] = useState("");
   const [searchDate, setSearchDate] = useState("");
+  const [concertID, setConcertID] = useState("");
 
   useEffect(() => {
     const loadDataAsync = async () => {
@@ -53,20 +56,33 @@ function ConcertPage() {
       setFilteredData(concertAll);
     }
   };
-  const handleSearchAdv = ()=>{
+  const handleSearchAdv = () => {
     const searchDateObj = searchDate ? new Date(searchDate) : null;
     const filtered = concertAll.filter((concert) => {
       const concertDate = new Date(concert.show_schedule_concert);
       return (
-        (searchName === '' || concert.name_concert.toLowerCase().includes(searchName.toLowerCase())) &&
-        (searchType === 'none' || searchType === '' || concert.name_type_concert.toLowerCase() === searchType.toLowerCase()) &&
-        (searchDateObj === null || concertDate.toDateString() === searchDateObj.toDateString())
+        (searchName === "" ||
+          concert.name_concert
+            .toLowerCase()
+            .includes(searchName.toLowerCase())) &&
+        (searchType === "none" ||
+          searchType === "" ||
+          concert.name_type_concert.toLowerCase() ===
+            searchType.toLowerCase()) &&
+        (searchDateObj === null ||
+          concertDate.toDateString() === searchDateObj.toDateString())
       );
     });
 
     setFilteredData(filtered);
-  }
+  };
   console.log(filteredData);
+
+  function navigateToConcertDetailPage(cid: string) {
+    setConcertID(cid);
+    console.log(concertID);
+    navigate(`/ConcertDetail/${cid}`);
+  }
 
   return (
     <>
@@ -240,20 +256,27 @@ function ConcertPage() {
                     startAdornment: <></>,
                   }}
                 />
-                <Button
-                  variant="contained"
-                  sx={{
-                    mt: 2,
-                    borderRadius: 20,
-                    bgcolor: "#4E6A97", // เปลี่ยนสีปุ่มได้ตามต้องการ
-                    color: "white",
-                    height: "40px",
-                    width: "150px",
+                <div
+                  style={{
+                    display: "flex",
+                    marginTop: "50px",
+                    justifyContent: "center",
                   }}
-                  onClick={handleSearchAdv} // ฟังก์ชันสำหรับการค้นหา
                 >
-                  ค้นหา
-                </Button>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      borderRadius: 20,
+                      bgcolor: "#4E6A97", // เปลี่ยนสีปุ่มได้ตามต้องการ
+                      color: "white",
+                      height: "40px",
+                      width: "150px",
+                    }}
+                    onClick={handleSearchAdv} // ฟังก์ชันสำหรับการค้นหา
+                  >
+                    ค้นหา
+                  </Button>
+                </div>
               </div>
             </Box>
             <div>
@@ -322,10 +345,10 @@ function ConcertPage() {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
                   gap: "20px",
                   marginTop: "16px",
-                  marginLeft: "50px",
+                  marginLeft: "150px",
                   marginBottom: "20px",
                 }}
               >
@@ -339,18 +362,68 @@ function ConcertPage() {
                         component="img"
                         alt={concert.name_concert}
                         height="140"
-                        image="src\\img\\webteemi.png"
+                        sx={{ maxHeight: 140 }}
+                        image={concert.poster_concert}
                       />
                       <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          {concert.name_concert}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {concert.detail_concert}
-                        </Typography>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            overflow: "auto",
+                            bgcolor: "white",
+                            borderRadius: 2,
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginLeft: "10px",
+                            }}
+                          >
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="div"
+                              color="black"
+                            >
+                              {concert.name_concert}
+                            </Typography>
+                            <Typography variant="body1" color="black">
+                              รายละเอียด: {concert.detail_concert}
+                            </Typography>
+                            <Typography variant="body1" color="black">
+                              วันที่การแสดง:{" "}
+                              {concert.show_schedule_concert.toString()}
+                            </Typography>
+                          </div>
+                        </Box>
                       </CardContent>
-                      <CardActions>
-                        <Button size="small">Learn More</Button>
+                      <CardActions
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography
+                          variant="body1"
+                          color="white"
+                          sx={{ marginLeft: "10px" }}
+                        >
+                          ที่อยู่คอนเสิร์ต: {concert.address_concert} {concert.CID}
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          style={{ backgroundColor: "#343434" }}
+                          sx={{
+                            width: "110px",
+                            borderRadius: "10px",
+                          }}
+                          onClick={() => navigate(`/ConcertDetail/${concert.CID}`)}
+                        >
+                          รายละเอียด
+                        </Button>
                       </CardActions>
                     </Card>
                   ))
