@@ -45,7 +45,7 @@ function ConcertPage() {
   const handleSearch = () => {
     if (searchQuery.trim() !== "") {
       // กรองข้อมูลจาก searchData ที่ตรงกับ province
-      console.log(searchQuery);
+      // console.log(searchQuery);
 
       const filtered = concertAll.filter((concert) =>
         concert.province.toLowerCase().includes(searchQuery.toLowerCase())
