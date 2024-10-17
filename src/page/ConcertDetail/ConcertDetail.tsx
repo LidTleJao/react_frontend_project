@@ -20,33 +20,30 @@ function ConcertDetailPage() {
     GetConcertTicketByCIDRes[]
   >([]);
   // const {concertID} = location.state;
-  const { id } = useParams();
-  console.log(id);
-  
+  const  {cid}  = useParams(); // สมมติว่าเส้นทางเป็น "/concert/:cid"
+
+  console.log(cid);
+
   const [concertChannel, setConcertChannel] = useState<
     GetConcertChannelByCIDRes[]
   >([]);
   useEffect(() => {
+    if (!cid) return; // ป้องกันการเรียก API หาก cid ไม่มี
     const loadDataAsync = async () => {
-      const resconcert = await concertService.getConcert(id!);
-      const dataconcert: GetConcertByCIDRes[] = resconcert.data;
-      setConcert(dataconcert);
-      console.log(resconcert.data);
+      const resconcert = await concertService.getConcert(cid);
+      setConcert(resconcert.data);
 
-      const resconchan = await concertService.getConcertChannel(id!);
-      const datachannel: GetConcertChannelByCIDRes[] = resconchan.data;
-      setConcertChannel(datachannel);
+      const resconchan = await concertService.getConcertChannel(cid);
+      setConcertChannel(resconchan.data);
 
-      const resconshow = await concertService.getConcertShow(id!);
-      const datashow: GetConcertShowByCIDRes[] = resconshow.data;
-      setConcertShow(datashow);
+      const resconshow = await concertService.getConcertShow(cid);
+      setConcertShow(resconshow.data);
 
-      const resconticket = await concertService.getConcertTicket(id!);
-      const dataticket: GetConcertTicketByCIDRes[] = resconticket.data;
-      setConcertTicket(dataticket);
+      const resconticket = await concertService.getConcertTicket(cid);
+      setConcertTicket(resconticket.data);
     };
     loadDataAsync();
-  }, []);
+  }, [cid]);
 
   return (
     <>
