@@ -8,11 +8,10 @@ import { ConcertService } from "../../service/concertService";
 import { GetConcertTicketByCIDRes } from "../../model/Response/Concert/GetConcertTicketByCIDRes";
 import { GetConcertShowByCIDRes } from "../../model/Response/Concert/GetConcertShowByCIDRes";
 import { GetConcertChannelByCIDRes } from "../../model/Response/Concert/GetConcertChannelByCIDRes";
-import { useLocation, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { GetConcertByCIDRes } from "../../model/Response/Concert/GetConcertByCIDRes";
 function ConcertDetailPage() {
   const user = JSON.parse(localStorage.getItem("objUser")!);
-  const location = useLocation();
   const concertService = new ConcertService();
   const [concert, setConcert] = useState<GetConcertByCIDRes[]>([]);
   const [concertShow, setConcertShow] = useState<GetConcertShowByCIDRes[]>([]);
@@ -44,6 +43,9 @@ function ConcertDetailPage() {
     };
     loadDataAsync();
   }, [cid]);
+
+  console.log(concertChannel);
+  
 
   return (
     <>
