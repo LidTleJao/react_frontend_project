@@ -57,6 +57,13 @@ function HotelDealPage() {
   const [isLoad, setLoad] = useState(false);
   const [open, setOpen] = useState(false);
 
+  // เพิ่มสถานะสำหรับฟิลด์ค้นหา
+  const [filteredConcertDeals, setFilteredConcertDeals] = useState<ConcertDealsGetAllRes[]>([]);
+  const [searchName, setSearchName] = useState("");
+  const [searchTicketType, setSearchTicketType] = useState<number | string>("");
+  const [searchTicketCount, setSearchTicketCount] = useState<number | string>("");
+  const [searchPrice, setSearchPrice] = useState<number | string>("");
+
   useEffect(() => {
     const loadDataAsync = async () => {
       const reshotel = await hotelDealService.getHotelDealByUser(user?.uid);
@@ -81,10 +88,13 @@ function HotelDealPage() {
     const loadDataAsync = async () => {
       const resconcertdeal = await concertdeals.getAllConcertDeals();
       const data: ConcertDealsGetAllRes[] = resconcertdeal.data;
+      console.log("Concert Deals Data:", data);
       setConcertDealAll(data);
+      setFilteredConcertDeals(data);
     };
     loadDataAsync();
   }, []);
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -123,6 +133,31 @@ function HotelDealPage() {
     setOpen(false);
   };
 
+  const filterConcertDeals = () => {
+    const isSearching =
+      searchName !== "" ||
+      searchTicketType !== "" ||
+      searchTicketCount !== "" ||
+      searchPrice !== "";
+
+    if (!isSearching) {
+      setFilteredConcertDeals(concertDealAll);
+      return;
+    }
+
+    const results = concertDealAll.filter((deal) => {
+      const isNameMatch = searchName === "" || deal.name_concert.includes(searchName);
+      const isTicketTypeMatch = searchTicketType === "" || deal.type_ticket_ID === Number(searchTicketType);
+      const isTicketCountMatch = searchTicketCount === "" || deal.number_of_tickets === Number(searchTicketCount);
+      const isPriceMatch = searchPrice === "" || deal.price === Number(searchPrice);
+
+      return isNameMatch && isTicketTypeMatch && isTicketCountMatch && isPriceMatch;
+    });
+
+    console.log("Filtered Concert Deals:", results);
+    setFilteredConcertDeals(results);
+  };
+
   function navigateToMenuHotelDealPage() {
     navigate("/MenuHotelDeal");
   }
@@ -155,7 +190,7 @@ function HotelDealPage() {
           <div
             style={{
               display: "flex",
-              justifyContent:"center",
+              justifyContent: "center",
               flexDirection: "row",
               marginLeft: "80px",
             }}
@@ -227,8 +262,8 @@ function HotelDealPage() {
                         placeholder="ชื่อคอนเสิร์ต"
                         type="text"
                         sx={{ width: "20pc" }}
-                        //   onChange={(e) => setName(e.target.value)}
-                        // onChange={handlePrice}
+                        value={searchName}
+                        onChange={(e) => setSearchName(e.target.value)}
                         InputProps={{
                           sx: {
                             borderRadius: "20px",
@@ -253,9 +288,8 @@ function HotelDealPage() {
                           labelId="demo-select-small-label"
                           id="demo-select-small"
                           label="ชนิดตั๋ว"
-                          // defaultValue={1}
-                          //   value={ticket_type}
-                          //   onChange={(e) => setTicket_type(Number(e.target.value))}
+                          value={searchTicketType}
+                          onChange={(e) => setSearchTicketType(e.target.value)}
                           sx={{
                             borderRadius: 20,
                             border: 1,
@@ -291,8 +325,8 @@ function HotelDealPage() {
                         placeholder="จำนวนตั๋ว"
                         type="number"
                         sx={{ width: "20pc" }}
-                        //   onChange={(e) => setName(e.target.value)}
-                        // onChange={handlePrice}
+                        value={searchTicketCount}
+                        onChange={(e) => setSearchTicketCount(Number(e.target.value))}
                         InputProps={{
                           sx: {
                             borderRadius: "20px",
@@ -310,8 +344,8 @@ function HotelDealPage() {
                         placeholder="ราคาตั๋ว"
                         type="number"
                         sx={{ width: "20pc" }}
-                        //   onChange={(e) => setName(e.target.value)}
-                        // onChange={handlePrice}
+                        value={searchPrice}
+                        onChange={(e) => setSearchPrice(Number(e.target.value))}
                         InputProps={{
                           sx: {
                             borderRadius: "20px",
@@ -324,24 +358,29 @@ function HotelDealPage() {
                         }}
                       />
                     </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        marginTop: "20px",
-                        justifyContent: "end",
-                      }}
-                    >
+                    <div style={{ display: "flex", marginTop: "20px", justifyContent: "space-between" }}>
                       <Button
                         variant="contained"
                         style={{ backgroundColor: "#343434" }}
-                        sx={{
-                          width: "110px",
-                          borderRadius: "10px",
-                        }}
+                        sx={{ width: "110px", borderRadius: "10px" }}
                         startIcon={<SearchIcon />}
-                        // onClick={navigateToAddConcertDataPage}
+                        onClick={filterConcertDeals}
                       >
                         ค้นหา
+                      </Button>
+
+                      <Button
+                        variant="contained"
+                        color="warning"
+                        sx={{ width: "110px", borderRadius: "10px" }}
+                        onClick={() => {
+                          setSearchName("");
+                          setSearchTicketType("");
+                          setSearchTicketCount("");
+                          setSearchPrice("");
+                        }}
+                      >
+                        ล้างค่า
                       </Button>
                     </div>
                   </div>
@@ -536,36 +575,21 @@ function HotelDealPage() {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {concertDealAll.map((concertdeal) => (
+                          {filteredConcertDeals.map((concertdeal) => (
                             <TableRow>
                               <TableCell>{concertdeal.name_concert}</TableCell>
-                              <TableCell>
-                                {concertdeal.name_type_ticket}
-                              </TableCell>
-                              <TableCell>
-                                {concertdeal.number_of_tickets}
-                              </TableCell>
+                              <TableCell>{concertdeal.name_type_ticket}</TableCell>
+                              <TableCell>{concertdeal.number_of_tickets}</TableCell>
                               <TableCell>{concertdeal.price}</TableCell>
-                              <TableCell>
-                                {concertdeal.e_datetime.toString()}
-                              </TableCell>
+                              <TableCell>{concertdeal.e_datetime.toString()}</TableCell>
                               <TableCell>{concertdeal.name_status}</TableCell>
                               <TableCell>
                                 <Radio
-                                  checked={
-                                    selectedValueRadio ===
-                                    concertdeal.CDID.toString()
-                                  }
-                                  onChange={() =>
-                                    setSelectedValueRadio(
-                                      concertdeal.CDID.toString()
-                                    )
-                                  }
+                                  checked={selectedValueRadio === concertdeal.CDID.toString()}
+                                  onChange={() => setSelectedValueRadio(concertdeal.CDID.toString())}
                                   value={concertdeal.CDID.toString()}
                                   name="radio-buttons"
-                                  inputProps={{
-                                    "aria-label": concertdeal.CDID.toString(),
-                                  }}
+                                  inputProps={{"aria-label": concertdeal.CDID.toString(),}}
                                 />
                               </TableCell>
                             </TableRow>

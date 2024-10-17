@@ -98,9 +98,9 @@ function ConcertDealPage() {
     const loadDataAsync = async () => {
       const reshoteldeal = await hoteldeals.getAllHotelDeals();
       const data: HotelDealsGetAllRes[] = reshoteldeal.data;
-      console.log("Hotel Deals Data:", data); 
+      console.log("Hotel Deals Data:", data);
       setHotelDealAll(data);
-      setFilteredHotelDeals(data); 
+      setFilteredHotelDeals(data);
     };
     loadDataAsync();
   }, []);
@@ -245,7 +245,6 @@ function ConcertDealPage() {
                     height: 420,
                     maxHeight: 420,
                     borderRadius: 3,
-                    // bgcolor: "#D9D9D9",
                     border: 2,
                     display: "flex",
                     justifyContent: "center",
@@ -273,6 +272,7 @@ function ConcertDealPage() {
                         การค้นหา
                       </Typography>
                     </div>
+
                     <div style={{ display: "flex", marginTop: "20px" }}>
                       <TextField
                         placeholder="ชื่อโรงแรม"
@@ -292,17 +292,27 @@ function ConcertDealPage() {
                         }}
                       />
                     </div>
+
                     <div style={{ display: "flex", marginTop: "20px" }}>
                       <FormControl sx={{ width: "20pc" }}>
-                        <InputLabel id="room-type-label" sx={{ marginTop: "-5px" }}>ชนิดห้อง</InputLabel>
+                        <InputLabel id="room-type-label" sx={{ marginTop: "-5px" }}>
+                          ชนิดห้อง
+                        </InputLabel>
                         <Select
                           labelId="room-type-label"
                           id="room-type-select"
                           label="ชนิดห้อง"
                           value={searchRoomType}
                           onChange={(e) => setSearchRoomType(e.target.value)}
-                          sx={{ borderRadius: 20, border: 1, borderColor: "black", bgcolor: "white", height: "40px" }}
+                          sx={{
+                            borderRadius: 20,
+                            border: 1,
+                            borderColor: "black",
+                            bgcolor: "white",
+                            height: "40px",
+                          }}
                         >
+                          <MenuItem value="">ล้างค่า</MenuItem>
                           <MenuItem value="1">ห้องธรรมดา (Standard Room)</MenuItem>
                           <MenuItem value="2">ห้องดีลักซ์ (Deluxe Room)</MenuItem>
                           <MenuItem value="3">ห้องเอกซ์คลูซีฟ (Executive Room)</MenuItem>
@@ -313,48 +323,75 @@ function ConcertDealPage() {
                         </Select>
                       </FormControl>
                     </div>
+
                     <div style={{ display: "flex", marginTop: "20px" }}>
                       <FormControl sx={{ width: "20pc" }}>
-                        <InputLabel id="view-type-label" sx={{ marginTop: "-5px" }}>ชนิดวิว</InputLabel>
+                        <InputLabel id="view-type-label" sx={{ marginTop: "-5px" }}>
+                          ชนิดวิว
+                        </InputLabel>
                         <Select
                           labelId="view-type-label"
                           id="view-type-select"
                           label="ชนิดวิว"
                           value={searchViewType}
                           onChange={(e) => setSearchViewType(e.target.value)}
-                          sx={{ borderRadius: 20, border: 1, borderColor: "black", bgcolor: "white", height: "40px" }}
+                          sx={{
+                            borderRadius: 20,
+                            border: 1,
+                            borderColor: "black",
+                            bgcolor: "white",
+                            height: "40px",
+                          }}
                         >
+                          <MenuItem value="">ล้างค่า</MenuItem>
                           <MenuItem value="1">ทะเล</MenuItem>
                           <MenuItem value="2">ภูเขา</MenuItem>
                           <MenuItem value="3">เมือง</MenuItem>
                         </Select>
                       </FormControl>
                     </div>
+
                     <div style={{ display: "flex", marginTop: "20px" }}>
                       <TextField
                         placeholder="จำนวนห้อง"
                         type="number"
                         sx={{ width: "20pc" }}
+                        value={searchRoomCount || ""}
                         onChange={(e) => setSearchRoomCount(Number(e.target.value))}
                         InputProps={{
-                          sx: { borderRadius: "20px", border: 1, borderColor: "black", bgcolor: "white", height: "35px" },
+                          sx: {
+                            borderRadius: "20px",
+                            border: 1,
+                            borderColor: "black",
+                            bgcolor: "white",
+                            height: "35px",
+                          },
                           startAdornment: <></>,
                         }}
                       />
                     </div>
+
                     <div style={{ display: "flex", marginTop: "20px" }}>
                       <TextField
                         placeholder="ราคาห้อง"
                         type="number"
                         sx={{ width: "20pc" }}
+                        value={searchPrice || ""}
                         onChange={(e) => setSearchPrice(Number(e.target.value))}
                         InputProps={{
-                          sx: { borderRadius: "20px", border: 1, borderColor: "black", bgcolor: "white", height: "35px" },
+                          sx: {
+                            borderRadius: "20px",
+                            border: 1,
+                            borderColor: "black",
+                            bgcolor: "white",
+                            height: "35px",
+                          },
                           startAdornment: <></>,
                         }}
                       />
                     </div>
-                    <div style={{ display: "flex", marginTop: "20px", justifyContent: "end" }}>
+
+                    <div style={{ display: "flex", marginTop: "20px", justifyContent: "space-between" }}>
                       <Button
                         variant="contained"
                         style={{ backgroundColor: "#343434" }}
@@ -364,10 +401,26 @@ function ConcertDealPage() {
                       >
                         ค้นหา
                       </Button>
+
+                      <Button
+                        variant="contained"
+                        color="warning"
+                        sx={{ width: "110px", borderRadius: "10px" }}
+                        onClick={() => {
+                          setSearchName("");
+                          setSearchRoomType("");
+                          setSearchViewType("");
+                          setSearchRoomCount("");
+                          setSearchPrice("");
+                        }}
+                      >
+                        ล้างค่า
+                      </Button>
                     </div>
                   </div>
                 </Box>
               </div>
+
               <div
                 style={{
                   display: "flex",
