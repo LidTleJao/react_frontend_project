@@ -420,7 +420,7 @@ function ConcertPage() {
                             width: "110px",
                             borderRadius: "10px",
                           }}
-                          onClick={() => navigate(`/ConcertDetail/${concert.CID}`)}
+                          onClick={() => navigateToConcertDetailPage(concert.CID.toString())}
                         >
                           รายละเอียด
                         </Button>
