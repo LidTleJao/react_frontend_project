@@ -22,8 +22,10 @@ import { RoomHotelService } from "../../service/roomHotelService";
 import { RoomGetAllRes } from "../../model/Response/Hotel/RoomGetAllRes";
 import { HotelGetAllRes } from "../../model/Response/Hotel/HotelGetAllRes";
 import { HotelImageGetByHotelIDRes } from "../../model/Response/Hotel/HotelImageGetByHotelIDRes";
+import { useNavigate } from "react-router-dom";
 
 function HotelPage() {
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const hotelService = new HotelService();
   const roomService = new RoomHotelService();
@@ -34,7 +36,7 @@ function HotelPage() {
   const [roomAll, setRoomAll] = useState<RoomGetAllRes[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState<HotelGetAllRes[]>([]);
-  const [hotel_IDs, setHotel_IDs] = useState<number[]>([]);
+ 
   const [searchTypeHotel, setSearchTypeHotel] = useState("");
   const [searchTypeRoom, setSearchTypeRoom] = useState("");
   const [searchTypePrice, setSearchTypePrice] = useState("");
@@ -57,7 +59,7 @@ function HotelPage() {
         setRoomAll(rooms);
 
         const hotelIDs = hotels.map((hotel) => hotel.HID);
-        setHotel_IDs(hotelIDs);
+
         setFilteredData(hotels);
         await loadImage(hotelIDs);
       } catch (error) {
@@ -737,7 +739,7 @@ function HotelPage() {
                               width: "110px",
                               borderRadius: "10px",
                             }}
-                            // onClick={() => navigateToConcertDetailPage(concert.CID.toString())}
+                            onClick={() => navigate(`/HotelDetail/${concert.HID}`)}
                           >
                             รายละเอียด
                           </Button>

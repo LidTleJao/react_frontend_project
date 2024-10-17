@@ -62,6 +62,7 @@ import CheckDataConcertPage from "./page/AddCC/CheckDataConcert/CheckDataConcert
 import HotelDealPage from "./page/AddPK/Hotel/HotelDeals/HotelDeals";
 import ConcertDealPage from "./page/AddPK/Concert/ConcertDeals/ConcertDeals";
 import ConcertDetailPage from "./page/ConcertDetail/ConcertDetail";
+import HotelDetailPage from "./page/Hotel/HotelDetail";
 
 function App() {
   const routers = createBrowserRouter([
@@ -97,6 +98,7 @@ function App() {
     { path: "/MenuConcertDeal", element: <MenuConcertDealPage /> },
     { path: "/AddConcertDealData", element: <AddConcertDealDataPage /> },
     { path: "/ConcertDeal", element: <ConcertDealPage /> },
+    { path: "/HotelDetail/:hid", element: <HotelDetailPage /> },
   ]);
 
   return (
