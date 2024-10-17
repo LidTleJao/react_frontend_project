@@ -5,6 +5,7 @@ export interface HotelGetByHIDRes {
     hotel_type_ID:     number;
     typename_hotel:    string;
     name:              string;
+    province: string;
     address:           string;
     detail:            string;
     latitude:          number;

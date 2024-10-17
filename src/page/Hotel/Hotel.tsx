@@ -18,22 +18,22 @@ import SearchIcon from "@mui/icons-material/Search";
 import HeaderUserTypeGeneral2 from "../../components/HeadUserTypeGeneral2";
 import { HotelService } from "../../service/hotelService";
 import { useEffect, useState } from "react";
-import { HotelDealsGetAllRes } from "../../model/Response/Packet/Hotel/HotelDealsGetAllRes";
 import { RoomHotelService } from "../../service/roomHotelService";
 import { RoomGetAllRes } from "../../model/Response/Hotel/RoomGetAllRes";
+import { HotelGetAllRes } from "../../model/Response/Hotel/HotelGetAllRes";
 
 function HotelPage() {
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const hotelService = new HotelService();
   const roomService = new RoomHotelService();
-  const [hotelAll, setHotelAll] = useState<HotelDealsGetAllRes[]>([]);
+  const [hotelAll, setHotelAll] = useState<HotelGetAllRes[]>([]);
   const [roomAll, setRoomAll] = useState<RoomGetAllRes[]>([]);
   // const [hotel_ID, setHotel_ID] = useState("");
 
   useEffect(()=>{
     const loadDataAsync = async () =>{
       const reshotel = await hotelService.getAll();
-      const data: HotelDealsGetAllRes[] = reshotel.data;
+      const data: HotelGetAllRes[] = reshotel.data;
       setHotelAll(data);
     };
     loadDataAsync();
