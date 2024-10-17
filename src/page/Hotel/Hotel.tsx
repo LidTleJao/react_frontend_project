@@ -16,9 +16,42 @@ import { Box } from "@mui/system";
 import HeaderUserTypeManager2 from "../../components/HeadUserTypeManager2";
 import SearchIcon from "@mui/icons-material/Search";
 import HeaderUserTypeGeneral2 from "../../components/HeadUserTypeGeneral2";
+import { HotelService } from "../../service/hotelService";
+import { useEffect, useState } from "react";
+import { HotelDealsGetAllRes } from "../../model/Response/Packet/Hotel/HotelDealsGetAllRes";
+import { RoomHotelService } from "../../service/roomHotelService";
+import { RoomGetAllRes } from "../../model/Response/Hotel/RoomGetAllRes";
 
 function HotelPage() {
   const user = JSON.parse(localStorage.getItem("objUser")!);
+  const hotelService = new HotelService();
+  const roomService = new RoomHotelService();
+  const [hotelAll, setHotelAll] = useState<HotelDealsGetAllRes[]>([]);
+  const [roomAll, setRoomAll] = useState<RoomGetAllRes[]>([]);
+  // const [hotel_ID, setHotel_ID] = useState("");
+
+  useEffect(()=>{
+    const loadDataAsync = async () =>{
+      const reshotel = await hotelService.getAll();
+      const data: HotelDealsGetAllRes[] = reshotel.data;
+      setHotelAll(data);
+    };
+    loadDataAsync();
+  },[]);
+
+  useEffect(()=>{
+    const loadDataAsync = async () =>{
+      const resroom = await roomService.getAll();
+      const data: RoomGetAllRes[] = resroom.data;
+      setRoomAll(data);
+    };
+    loadDataAsync();
+  },[]);
+
+  console.log(hotelAll);
+  console.log(roomAll);
+  
+  
   return (
     <>
       {(user?.type_user === 2 && (
