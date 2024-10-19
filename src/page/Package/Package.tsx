@@ -13,7 +13,7 @@ function PackagePage() {
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [packetAll, setPacketAll] = useState<PacketGetAllRes[]>([]);
   const [packet, setPacket] = useState<PacketGetPIDRes[]>([]);
-  const [packet_ID, setPacket_ID] = useState("");
+  const [packet_ID, setPacket_ID] = useState(4);
 
   useEffect(()=>{
     const loadDataAsync = async () =>{
@@ -26,8 +26,8 @@ function PackagePage() {
 
   useEffect(()=>{
     const loadDataAsync = async () =>{
-      setPacket_ID("4");
-      const respacket = await packetService.getPacketByPID(packet_ID);
+      setPacket_ID(4);
+      const respacket = await packetService.getPacketByPID(packet_ID.toString());
       const data: PacketGetAllRes[] = respacket.data;
       setPacket(data);
     };
