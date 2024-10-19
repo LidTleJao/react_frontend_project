@@ -161,7 +161,7 @@ function ConcertDealPage() {
       const isRoomTypeMatch = searchRoomType === "" || deal.room_type_ID === Number(searchRoomType);
       const isViewTypeMatch = searchViewType === "" || deal.room_view_type_ID === Number(searchViewType);
       const isRoomCountMatch = searchRoomCount === "" || deal.number_of_rooms === Number(searchRoomCount);
-      const isPriceMatch = searchPrice === "" || deal.price === Number(searchPrice);
+      const isPriceMatch = searchPrice === "" || deal.hotel_deal_price === Number(searchPrice);
 
       return isNameMatch && isRoomTypeMatch && isViewTypeMatch && isRoomCountMatch && isPriceMatch;
     });
@@ -535,7 +535,7 @@ function ConcertDealPage() {
                       <TableCell>
                         ชนิดตั๋ว: {concertdeal.name_type_ticket}
                       </TableCell>
-                      <TableCell>ราคาตั๋ว: {concertdeal.price}</TableCell>
+                      <TableCell>ราคาตั๋ว: {concertdeal.concert_deal_price}</TableCell>
                       <TableCell>
                         จำนวนตั๋ว: {concertdeal.number_of_tickets}
                       </TableCell>
@@ -620,7 +620,7 @@ function ConcertDealPage() {
                               <TableCell>{hoteldeals.type_room}</TableCell>
                               <TableCell>{hoteldeals.type_view_name_room}</TableCell>
                               <TableCell>{hoteldeals.number_of_rooms}</TableCell>
-                              <TableCell>{hoteldeals.price}</TableCell>
+                              <TableCell>{hoteldeals.hotel_deal_price}</TableCell>
                               <TableCell>{hoteldeals.e_datetime.toString()}</TableCell>
                               <TableCell>{hoteldeals.name_status}</TableCell>
                               <TableCell>

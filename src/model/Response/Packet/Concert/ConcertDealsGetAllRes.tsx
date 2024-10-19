@@ -7,7 +7,7 @@ export interface ConcertDealsGetAllRes {
     status_ID:         number;
     name_status:       string;
     number_of_tickets: number;
-    price:             number;
+    concert_deal_price:             number;
     s_datetime:        Date;
     e_datetime:        Date;
 }
