@@ -3,9 +3,41 @@ import { Box } from "@mui/system";
 import HeaderUserTypeManager2 from "../../components/HeadUserTypeManager2";
 import SearchIcon from "@mui/icons-material/Search";
 import HeaderUserTypeGeneral2 from "../../components/HeadUserTypeGeneral2";
+import { useEffect, useState } from "react";
+import { PacketGetAllRes } from "../../model/Response/Packet/Packet/PacketGetAllRes";
+import { PacketGetPIDRes } from "../../model/Response/Packet/Packet/PacketGetByPIDRes";
+import { PacketService } from "../../service/packetService";
 
 function PackagePage() {
+  const packetService = new PacketService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
+  const [packetAll, setPacketAll] = useState<PacketGetAllRes[]>([]);
+  const [packet, setPacket] = useState<PacketGetPIDRes[]>([]);
+  const [packet_ID, setPacket_ID] = useState("");
+
+  useEffect(()=>{
+    const loadDataAsync = async () =>{
+      const respacket = await packetService.getAll();
+      const data: PacketGetAllRes[] = respacket.data;
+      setPacketAll(data);
+    };
+    loadDataAsync();
+  },[]);
+
+  useEffect(()=>{
+    const loadDataAsync = async () =>{
+      setPacket_ID("4");
+      const respacket = await packetService.getPacketByPID(packet_ID);
+      const data: PacketGetAllRes[] = respacket.data;
+      setPacket(data);
+    };
+    loadDataAsync();
+  },[packet_ID]);
+
+  console.log(packetAll);
+  console.log(packet);
+  
+  
   return (
     <>
       {user?.type_user === 2 && (
