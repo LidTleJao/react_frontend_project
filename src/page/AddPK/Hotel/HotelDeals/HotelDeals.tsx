@@ -495,6 +495,7 @@ function HotelDealPage() {
                   {HotelDealByHDID.map((hoteldeal) => (
                     <TableRow>
                       <TableCell>ชื่อโรงแรม: {hoteldeal.name}</TableCell>
+                      <TableCell>จังหวัด: {hoteldeal.province}</TableCell>
                       <TableCell>ชนิดห้อง: {hoteldeal.type_room}</TableCell>
                       <TableCell>
                         ชนิดวิว: {hoteldeal.type_view_name_room}
@@ -555,6 +556,9 @@ function HotelDealPage() {
                               ชื่อคอนเสิร์ต
                             </TableCell>
                             <TableCell sx={{ fontWeight: "bold" }}>
+                              จังหวัด
+                            </TableCell>
+                            <TableCell sx={{ fontWeight: "bold" }}>
                               ชนิดตั๋ว
                             </TableCell>
                             <TableCell sx={{ fontWeight: "bold" }}>
@@ -578,6 +582,7 @@ function HotelDealPage() {
                           {filteredConcertDeals.map((concertdeal) => (
                             <TableRow>
                               <TableCell>{concertdeal.name_concert}</TableCell>
+                              <TableCell>{concertdeal.province}</TableCell>
                               <TableCell>{concertdeal.name_type_ticket}</TableCell>
                               <TableCell>{concertdeal.number_of_tickets}</TableCell>
                               <TableCell>{concertdeal.concert_deal_price}</TableCell>
