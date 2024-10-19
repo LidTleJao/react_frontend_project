@@ -718,10 +718,10 @@ function HotelPage() {
                                 {concert.name}
                               </Typography>
                               <Typography variant="body1" color="black">
-                                {/* รายละเอียด: {concert.detail_concert} */}
+                                รายละเอียด: {concert.detail}
                               </Typography>
                               <Typography variant="body1" color="black">
-                                วันที่การแสดง:{" "}
+                                {/* วันที่การแสดง:{" "} */}
                                 {/* {concert.show_schedule_concert.toString()} */}
                               </Typography>
                             </div>
@@ -738,7 +738,7 @@ function HotelPage() {
                             color="white"
                             sx={{ marginLeft: "10px" }}
                           >
-                            {/* ที่อยู่คอนเสิร์ต: {concert.address_concert} {concert.CID} */}
+                            ที่อยู่โรงแรม: {concert.province}
                           </Typography>
                           <Button
                             variant="contained"
