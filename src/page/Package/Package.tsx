@@ -1,4 +1,17 @@
-import { Typography, TextField, FormControl, InputLabel, Select, MenuItem, IconButton, Card, CardMedia, CardContent, CardActions, Button } from "@mui/material";
+import {
+  Typography,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  IconButton,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Button,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import HeaderUserTypeManager2 from "../../components/HeadUserTypeManager2";
 import SearchIcon from "@mui/icons-material/Search";
@@ -15,40 +28,42 @@ function PackagePage() {
   const [packet, setPacket] = useState<PacketGetPIDRes[]>([]);
   const [packet_ID, setPacket_ID] = useState(4);
 
-  useEffect(()=>{
-    const loadDataAsync = async () =>{
+  useEffect(() => {
+    const loadDataAsync = async () => {
       const respacket = await packetService.getAll();
       const data: PacketGetAllRes[] = respacket.data;
       setPacketAll(data);
     };
     loadDataAsync();
-  },[]);
+  }, []);
 
-  useEffect(()=>{
-    const loadDataAsync = async () =>{
+  useEffect(() => {
+    const loadDataAsync = async () => {
       setPacket_ID(4);
-      const respacket = await packetService.getPacketByPID(packet_ID.toString());
+      const respacket = await packetService.getPacketByPID(
+        packet_ID.toString()
+      );
       const data: PacketGetAllRes[] = respacket.data;
       setPacket(data);
     };
     loadDataAsync();
-  },[packet_ID]);
+  }, [packet_ID]);
 
   console.log(packetAll);
   console.log(packet);
-  
-  
+
   return (
     <>
-      {user?.type_user === 2 && (
+      {(user?.type_user === 2 && (
         <>
           <HeaderUserTypeManager2 />
         </>
-      ) || user?.type_user === 1 && (
-        <>
-          <HeaderUserTypeGeneral2 />
-        </>
-      )}
+      )) ||
+        (user?.type_user === 1 && (
+          <>
+            <HeaderUserTypeGeneral2 />
+          </>
+        ))}
       <div className="concert-cont">
         <div
           style={{
@@ -69,7 +84,7 @@ function PackagePage() {
               sx={{
                 width: 350,
                 height: 570,
-                marginTop:"50px",
+                marginTop: "50px",
                 borderRadius: 3,
                 bgcolor: "#D9D9D9",
                 border: 2,
@@ -99,7 +114,7 @@ function PackagePage() {
                   ค้นหาข้อมูลแพ็คเกจ
                 </Typography>
               </div>
-              <div style={{ marginLeft: "10px", marginTop: "20px" }}>
+              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
                 <Typography
                   gutterBottom
                   sx={{
@@ -111,14 +126,14 @@ function PackagePage() {
                   }}
                   variant="h5"
                 >
-                  วันที่แสดง :
+                  ชนิดห้อง :
                 </Typography>
                 <FormControl sx={{ width: 315 }}>
                   <InputLabel
                     id="demo-select-small-label"
                     sx={{ marginTop: "-5px" }}
                   >
-                    วันที่
+                    ชนิดห้อง
                   </InputLabel>
                   <Select
                     labelId="demo-select-small-label"
@@ -127,7 +142,26 @@ function PackagePage() {
                     // value={city}
                     // label="จังหวัด"
                     // type="city"
-                    // onChange={(e) => setCity(e.target.value)}
+                    // onChange={(e) => {
+                    //   const value = e.target.value;
+                    //   if (value === 1) {
+                    //     setSearchTypeRoom("Standard Room");
+                    //   } else if (value === 2) {
+                    //     setSearchTypeRoom("Deluxe Room");
+                    //   } else if (value === 3) {
+                    //     setSearchTypeRoom("Executive Room");
+                    //   } else if (value === 4) {
+                    //     setSearchTypeRoom("Connecting Rooms");
+                    //   } else if (value === 5) {
+                    //     setSearchTypeRoom("Suite");
+                    //   } else if (value === 6) {
+                    //     setSearchTypeRoom("Superior Room");
+                    //   } else if (value === 7) {
+                    //     setSearchTypeRoom("Accessible Room");
+                    //   } else {
+                    //     setSearchTypeRoom("none"); // สำหรับ None
+                    //   }
+                    // }}
                     sx={{
                       borderRadius: 20,
                       bgcolor: "white",
@@ -137,8 +171,20 @@ function PackagePage() {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value={1}>
-                    
+                    <MenuItem value={1}>ห้องธรรมดา (Standard Room)</MenuItem>
+                    <MenuItem value={2}>ห้องดีลักซ์ (Deluxe Room)</MenuItem>
+                    <MenuItem value={3}>
+                      ห้องเอกซ์คลูซีฟ (Executive Room)
+                    </MenuItem>
+                    <MenuItem value={4}>
+                      ห้องที่มีประตูเชื่อมต่อกัน (Connecting Rooms)
+                    </MenuItem>
+                    <MenuItem value={5}>ห้องสวีท (Suite)</MenuItem>
+                    <MenuItem value={6}>
+                      ห้องสุพีเรียร์ (Superior Room)
+                    </MenuItem>
+                    <MenuItem value={7}>
+                      ห้องพักพิเศษสำหรับผู้พิการ (Accessible Room)
                     </MenuItem>
                   </Select>
                 </FormControl>
@@ -155,14 +201,14 @@ function PackagePage() {
                   }}
                   variant="h5"
                 >
-                  ราคาแพ็คเกจ :
+                  ชนิดวิวของห้อง :
                 </Typography>
                 <FormControl sx={{ width: 315 }}>
                   <InputLabel
                     id="demo-select-small-label"
                     sx={{ marginTop: "-5px" }}
                   >
-                    ราคา
+                    ชนิดวิวห้อง
                   </InputLabel>
                   <Select
                     labelId="demo-select-small-label"
@@ -171,7 +217,18 @@ function PackagePage() {
                     // value={city}
                     // label="จังหวัด"
                     // type="city"
-                    // onChange={(e) => setCity(e.target.value)}
+                    // onChange={(e) => {
+                    //   const value = e.target.value;
+                    //   if (value === 1) {
+                    //     setSearchTypeView("ทะเล");
+                    //   } else if (value === 2) {
+                    //     setSearchTypeView("ภูเขา");
+                    //   } else if (value === 3) {
+                    //     setSearchTypeView("เมือง");
+                    //   } else {
+                    //     setSearchTypeView("none"); // สำหรับ None
+                    //   }
+                    // }}
                     sx={{
                       borderRadius: 20,
                       bgcolor: "white",
@@ -181,15 +238,9 @@ function PackagePage() {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value={1}>
-                      2500-5000
-                    </MenuItem>
-                    <MenuItem value={2}>
-                      5000-7500
-                    </MenuItem>
-                    <MenuItem value={3}>
-                      7500-10000
-                    </MenuItem>
+                    <MenuItem value={1}>ทะเล</MenuItem>
+                    <MenuItem value={2}>ภูเขา</MenuItem>
+                    <MenuItem value={3}>เมือง</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -231,7 +282,25 @@ function PackagePage() {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value={1}></MenuItem>
+                    <MenuItem value={1}>
+                      ตั๋วเข้าชมทั่วไป (General Admission / GA)
+                    </MenuItem>
+                    <MenuItem value={2}>ตั๋ววีไอพี (VIP Ticket)</MenuItem>
+                    <MenuItem value={3}>
+                      ตั๋วหน้าเวที (Front Row / Pit Ticket)
+                    </MenuItem>
+                    <MenuItem value={4}>
+                      ตั๋วโซนพิเศษ (Premium Zone Ticket)
+                    </MenuItem>
+                    <MenuItem value={5}>
+                      ตั๋วที่นั่งสำรอง (Reserved Seating)
+                    </MenuItem>
+                    <MenuItem value={6}>
+                      ตั๋วเข้าชมก่อน (Early Entry Ticket)
+                    </MenuItem>
+                    <MenuItem value={7}>
+                      ตั๋วเข้าชมคอนเสิร์ตออนไลน์ (Virtual Concert Ticket)
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -251,7 +320,7 @@ function PackagePage() {
                 </Typography>
                 <TextField
                   placeholder="จำนวนตั๋ว"
-                  type="name"
+                  type="number"
                   sx={{ width: "19.5pc" }}
                   //   onChange={(e) => setBirthday(e.target.value)}
                   InputProps={{
@@ -338,7 +407,7 @@ function PackagePage() {
                   marginTop: "50px",
                 }}
               >
-                <Card sx={{ maxWidth: 345, background: "#D9D9D9",border:2 }}>
+                <Card sx={{ maxWidth: 345, background: "#D9D9D9", border: 2 }}>
                   <CardMedia
                     component="img"
                     alt="green iguana"
