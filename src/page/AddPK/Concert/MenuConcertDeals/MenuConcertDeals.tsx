@@ -2,6 +2,7 @@ import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import HeaderUserTypeManager2 from "../../../../components/HeadUserTypeManager2";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import ListAltIcon from "@mui/icons-material/ListAlt";
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 import { useNavigate } from "react-router-dom";
 
 function MenuConcertDealPage() {
@@ -56,6 +57,26 @@ function MenuConcertDealPage() {
                 </CardContent>
               </CardActionArea>
             </Card>
+            <div style={{ display: "flex", marginLeft: "100px" }}>
+              <Card>
+                <CardActionArea
+                  // onClick={navigateToHotelDealPage}
+                >
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <FactCheckIcon sx={{ fontSize: "150px" }} />
+                  </div>
+                  <CardContent>
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      sx={{ display: "flex", justifyContent: "center" }}
+                    >
+                      ตรวจสอบข้อมูลข้อเสนอ
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </div>
             <div style={{ display: "flex", marginLeft: "150px" }}>
               <Card>
                 <CardActionArea
