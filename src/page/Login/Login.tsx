@@ -5,7 +5,7 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/Head";
 import { useRef, useState } from "react";
 import { UserService } from "../../service/userService";
@@ -60,9 +60,23 @@ function LoginPage() {
               display: "flex",
               flexDirection: "column",
               marginLeft: "400px",
-              marginTop: "50px",
+              marginTop: "80px",
             }}
           >
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Typography
+                gutterBottom
+                sx={{
+                  display: "flex",
+                  color: "black",
+                  fontFamily: "Mitr, sans-serif",
+                  fontStyle: "normal",
+                }}
+                variant="h5"
+              >
+                ยินดีต้อนรับ เข้าสู่ระบบ
+              </Typography>
+            </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <TextField
                 // id="outlined-start-adornment"
@@ -97,46 +111,12 @@ function LoginPage() {
                 }}
               />
             </div>
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <div style={{ marginTop: "30px", marginLeft: "10px" }}>
-                <hr style={{ width: 120 }} />
-              </div>
-              <div style={{ marginTop: "20px", marginLeft: "50px" }}>
-                <Typography
-                  gutterBottom
-                  sx={{
-                    fontFamily: "Mitr, sans-serif",
-                  }}
-                  variant="h6"
-                >
-                  หรือ
-                </Typography>
-              </div>
-              <div style={{ marginLeft: "55px", marginTop: "30px" }}>
-                <hr style={{ width: 120 }} />
-              </div>
-            </div>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              {/* <Button>เข้าสู่ระบบด้วย Google</Button> */}
-              <Button
-                variant="outlined"
-                color="info"
-                sx={{ width: 380, borderRadius: "10px", color: "gray" }}
-                // onClick={handleGoogleSignIn}
-              >
-                เข้าสู่ระบบด้วย Google
-                <img
-                  src="src\img\google.png"
-                  style={{ marginLeft: "10px", height: "20px", width: "20px" }}
-                />
-              </Button>
-            </div>
             <div
               style={{
                 marginLeft: "10px",
                 display: "flex",
                 justifyContent: "start",
-                marginTop: "20px",
+                marginTop: "50px",
               }}
             >
               {isLoad ? (
@@ -199,7 +179,7 @@ function LoginPage() {
                                 facebook: login[0].facebook,
                                 lineID: login[0].lineID,
                                 type_user: login[0].type_user,
-                                typename_user: login[0].typename_user
+                                typename_user: login[0].typename_user,
                               };
                               localStorage.setItem(
                                 "objUser",
@@ -237,19 +217,6 @@ function LoginPage() {
                 >
                   Register
                 </Button>
-              </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                marginTop: "15px",
-              }}
-            >
-              <p>คุณลืมรหัสผ่าน?</p>
-              <div style={{ marginLeft: "20px" }}>
-                <Link to={""}>ลืมรหัสผ่าน</Link>
               </div>
             </div>
           </div>

@@ -153,10 +153,10 @@ function ConcertPage() {
                   }}
                   variant="h5"
                 >
-                  ชื่อศิลปิน :
+                  ชื่อคอนเสิร์ต :
                 </Typography>
                 <TextField
-                  placeholder="ชื่อศิลปิน"
+                  placeholder="ชื่อคอนเสิร์ต"
                   type="name"
                   sx={{ width: "19.5pc" }}
                   onChange={(e) => setSearchName(e.target.value)}
