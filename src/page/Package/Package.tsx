@@ -37,6 +37,7 @@ function PackagePage() {
               sx={{
                 width: 350,
                 height: 570,
+                marginTop:"50px",
                 borderRadius: 3,
                 bgcolor: "#D9D9D9",
                 border: 2,
@@ -52,17 +53,21 @@ function PackagePage() {
                   justifyContent: "center",
                 }}
               >
-                <Box
+                <Typography
+                  gutterBottom
                   sx={{
-                    width: 300,
-                    height: 170,
-                    borderRadius: 3,
-                    bgcolor: "#D9D9D9",
-                    border: 2,
+                    display: "flex",
+                    fontWeight: "bold",
+                    color: "black",
+                    fontFamily: "Mitr, sans-serif",
+                    fontStyle: "normal",
                   }}
-                ></Box>
+                  variant="h5"
+                >
+                  ค้นหาข้อมูลแพ็คเกจ
+                </Typography>
               </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
+              <div style={{ marginLeft: "10px", marginTop: "20px" }}>
                 <Typography
                   gutterBottom
                   sx={{

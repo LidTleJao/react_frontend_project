@@ -36,7 +36,7 @@ function HotelPage() {
   const [roomAll, setRoomAll] = useState<RoomGetAllRes[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState<HotelGetAllRes[]>([]);
- 
+
   const [searchTypeHotel, setSearchTypeHotel] = useState("");
   const [searchTypeRoom, setSearchTypeRoom] = useState("");
   const [searchTypePrice, setSearchTypePrice] = useState("");
@@ -154,8 +154,6 @@ function HotelPage() {
     console.log(filtered_room);
     console.log("sssssssssssssssssssssssssssssssssss");
 
-    
-
     // ตั้งค่าให้ state
     setFilteredData(hotelImages);
   };
@@ -202,14 +200,18 @@ function HotelPage() {
           >
             <Box
               sx={{
+                display:"flex",
+                marginTop:"50px",
                 width: 350,
-                height: 800,
+                // height: 400,
+                maxHeight: 700,
                 borderRadius: 3,
                 bgcolor: "#D9D9D9",
+                marginBottom: 10,
                 border: 2,
               }}
-              display={"flex"}
-              justifyContent={"start"}
+              // display={"flex"}
+              // justifyContent={"start"}
               flexDirection={"column"}
             >
               <div
@@ -219,17 +221,21 @@ function HotelPage() {
                   justifyContent: "center",
                 }}
               >
-                <Box
+                <Typography
+                  gutterBottom
                   sx={{
-                    width: 300,
-                    height: 170,
-                    borderRadius: 3,
-                    bgcolor: "#D9D9D9",
-                    border: 2,
+                    display: "flex",
+                    fontWeight: "bold",
+                    color: "black",
+                    fontFamily: "Mitr, sans-serif",
+                    fontStyle: "normal",
                   }}
-                ></Box>
+                  variant="h5"
+                >
+                  ค้นหาข้อมูลโรงแรม
+                </Typography>
               </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
+              <div style={{ marginLeft: "10px", marginTop: "20px" }}>
                 <Typography
                   gutterBottom
                   sx={{
@@ -570,20 +576,22 @@ function HotelPage() {
                     <MenuItem value={1}>ว่าง</MenuItem>
                     {/* <MenuItem value={2}>ไม่ว่าง</MenuItem> */}
                   </Select>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      borderRadius: 20,
-                      bgcolor: "#4E6A97", // เปลี่ยนสีปุ่มได้ตามต้องการ
-                      color: "white",
-                      height: "40px",
-                      width: "150px",
-                      marginTop: "20px",
-                    }}
-                    onClick={handleSearchAdv} // ฟังก์ชันสำหรับการค้นหา
-                  >
-                    ค้นหา
-                  </Button>
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        borderRadius: 20,
+                        bgcolor: "#4E6A97", // เปลี่ยนสีปุ่มได้ตามต้องการ
+                        color: "white",
+                        height: "40px",
+                        width: "150px",
+                        marginTop: "20px",
+                      }}
+                      onClick={handleSearchAdv} // ฟังก์ชันสำหรับการค้นหา
+                    >
+                      ค้นหา
+                    </Button>
+                  </div>
                 </FormControl>
               </div>
             </Box>
@@ -739,7 +747,9 @@ function HotelPage() {
                               width: "110px",
                               borderRadius: "10px",
                             }}
-                            onClick={() => navigate(`/HotelDetail/${concert.HID}`)}
+                            onClick={() =>
+                              navigate(`/HotelDetail/${concert.HID}`)
+                            }
                           >
                             รายละเอียด
                           </Button>

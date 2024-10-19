@@ -14,20 +14,20 @@ import HeaderUserTypeGeneral from "../../components/HeaderUserTypeGeneral";
 import HeaderUserTypeManager from "../../components/HeaderUserTypeManager";
 
 function HomePage() {
-
   const user = JSON.parse(localStorage.getItem("objUser")!);
 
   return (
     <>
-      {user?.type_user === 2 && (
+      {(user?.type_user === 2 && (
         <>
           <HeaderUserTypeManager />
         </>
-      ) || user?.type_user === 1 && (
-        <>
-          <HeaderUserTypeGeneral />
-        </>
-      )}
+      )) ||
+        (user?.type_user === 1 && (
+          <>
+            <HeaderUserTypeGeneral />
+          </>
+        ))}
       <div className="home-cont">
         <div
           style={{
@@ -40,11 +40,11 @@ function HomePage() {
             style={{
               display: "flex",
               flexDirection: "row",
-              justifyContent: "start",
+              justifyContent: "center",
               marginTop: 100,
             }}
           >
-            <Box
+            {/* <Box
               sx={{
                 width: 350,
                 height: 170,
@@ -52,8 +52,15 @@ function HomePage() {
                 bgcolor: "#D9D9D9",
                 border: 2,
               }}
-            ></Box>
-            <div>
+            ></Box> */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems:"center",
+                justifyContent: "center",
+              }}
+            >
               <Typography
                 gutterBottom
                 sx={{
@@ -65,7 +72,7 @@ function HomePage() {
                 }}
                 variant="h3"
                 marginTop={"15px"}
-                marginLeft={"250px"}
+                // marginLeft={"250px"}
               >
                 Welcome to Teemi
               </Typography>
@@ -73,7 +80,7 @@ function HomePage() {
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  marginLeft: "150px",
+                  // marginLeft: "150px",
                 }}
               >
                 <Box

@@ -114,8 +114,11 @@ function ConcertPage() {
           >
             <Box
               sx={{
+                display:"flex",
+                marginTop:"50px",
                 width: 350,
-                height: 570,
+                // height: 400,
+                maxHeight:400,
                 borderRadius: 3,
                 bgcolor: "#D9D9D9",
                 border: 2,
@@ -131,17 +134,21 @@ function ConcertPage() {
                   justifyContent: "center",
                 }}
               >
-                <Box
+                <Typography
+                  gutterBottom
                   sx={{
-                    width: 300,
-                    height: 170,
-                    borderRadius: 3,
-                    bgcolor: "#D9D9D9",
-                    border: 2,
+                    display: "flex",
+                    fontWeight: "bold",
+                    color: "black",
+                    fontFamily: "Mitr, sans-serif",
+                    fontStyle: "normal",
                   }}
-                ></Box>
+                  variant="h5"
+                >
+                  ค้นหาข้อมูลคอนเสิร์ต
+                </Typography>
               </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
+              <div style={{ marginLeft: "10px", marginTop: "20px" }}>
                 <Typography
                   gutterBottom
                   sx={{
@@ -259,7 +266,7 @@ function ConcertPage() {
                 <div
                   style={{
                     display: "flex",
-                    marginTop: "50px",
+                    marginTop: "20px",
                     justifyContent: "center",
                   }}
                 >
