@@ -1,3 +1,4 @@
+
 import {
   CardMedia,
   TextField,
@@ -23,9 +24,45 @@ function LoginPage() {
     navigate("/register");
   }
 
-  // function navigateToHomePage() {
-  //   navigate("/home");
-  // }
+  async function handleLogin() {
+    try {
+      if (gmailRef.current?.value && passwordRef.current?.value) {
+        setLoad(true);
+        const res = await userservice.login(
+          gmailRef.current!.value,
+          passwordRef.current!.value
+        );
+        setLoad(false);
+        const login: UserPostRes[] = res.data;
+        if (res.status === 200) {
+          if (login[0].type_user === 1 || login[0].type_user === 2) {
+            console.log(res.data);
+            localStorage.removeItem("objUser");
+            const user = {
+              uid: login[0].UID,
+              image_user: login[0].image_user,
+              name_user: login[0].name_user,
+              nick_user: login[0].nickname_user,
+              province: login[0].province,
+              gmail_user: login[0].gmail_user,
+              password_user: login[0].password_user,
+              phone: login[0].phone,
+              facebook: login[0].facebook,
+              lineID: login[0].lineID,
+              type_user: login[0].type_user,
+              typename_user: login[0].typename_user,
+            };
+            localStorage.setItem("objUser", JSON.stringify(user));
+            navigate("/Home");
+          }
+        }
+      }
+    } catch (error) {
+      window.alert("อีเมลหรือรหัสผ่านไม่ถูกต้อง โปรดตรวจสอบข้อมูลใหม่");
+      setLoad(false);
+      console.log(error);
+    }
+  }
 
   return (
     <>
@@ -41,7 +78,6 @@ function LoginPage() {
           <div
             style={{
               display: "flex",
-              // marginTop: "155px",
             }}
           >
             <CardMedia
@@ -79,18 +115,18 @@ function LoginPage() {
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <TextField
-                // id="outlined-start-adornment"
                 label="email"
                 type="email"
-                // value={email}
                 placeholder="อีเมล"
                 inputRef={gmailRef}
                 sx={{ m: 1, width: "45ch" }}
-                // onChange={(e) => setEmail(e.target.value)}
                 InputProps={{
                   sx: { borderRadius: "10px" },
-                  // onChange={}
-                  startAdornment: <></>,
+                }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleLogin(); // เรียกฟังก์ชันล็อกอินเมื่อกด Enter
+                  }
                 }}
               />
             </div>
@@ -99,15 +135,16 @@ function LoginPage() {
                 placeholder="รหัสผ่าน"
                 label="password"
                 inputRef={passwordRef}
-                // value={password}
                 sx={{ mt: 3, width: "45ch" }}
                 type="password"
                 autoComplete="current-password"
-                // onChange={(e) => setPassword(e.target.value)}
                 InputProps={{
                   sx: { borderRadius: "10px" },
-
-                  startAdornment: <></>,
+                }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleLogin(); // เรียกฟังก์ชันล็อกอินเมื่อกด Enter
+                  }
                 }}
               />
             </div>
@@ -142,59 +179,7 @@ function LoginPage() {
                     variant="contained"
                     color="primary"
                     sx={{ width: "120px", borderRadius: "10px" }}
-                    // onClick={navigateToHomePage}
-                    onClick={async () => {
-                      try {
-                        if (
-                          gmailRef.current?.value &&
-                          passwordRef.current?.value
-                        ) {
-                          setLoad(true);
-                          const res = await userservice.login(
-                            gmailRef.current!.value,
-                            passwordRef.current!.value
-                          );
-                          // console.log(gmailRef.current?.value);
-                          // console.log(passwordRef.current?.value);
-                          setLoad(false);
-                          const login: UserPostRes[] = res.data;
-                          if (res.status === 200) {
-                            if (
-                              login[0].type_user === 1 ||
-                              login[0].type_user === 2
-                            ) {
-                              console.log(res.data);
-                              // user
-                              // เก็บข้อมูลผู้ใช้ใน localStorage เมื่อแก้ไขข้อมูล
-                              localStorage.removeItem("objUser");
-                              const user = {
-                                uid: login[0].UID,
-                                image_user: login[0].image_user,
-                                name_user: login[0].name_user,
-                                nick_user: login[0].nickname_user,
-                                province: login[0].province,
-                                gmail_user: login[0].gmail_user,
-                                password_user: login[0].password_user,
-                                phone: login[0].phone,
-                                facebook: login[0].facebook,
-                                lineID: login[0].lineID,
-                                type_user: login[0].type_user,
-                                typename_user: login[0].typename_user,
-                              };
-                              localStorage.setItem(
-                                "objUser",
-                                JSON.stringify(user)
-                              );
-                              navigate("/Home");
-                            }
-                          }
-                        }
-                      } catch (error) {
-                        window.alert("อีเมลหรือรหัสผ่านไม่ถูกต้อง โปรดตรวจสอบข้อมูลใหม่");
-                        setLoad(false);
-                        console.log(error);
-                      }
-                    }}
+                    onClick={handleLogin} // กดปุ่มนี้เพื่อเรียกฟังก์ชันล็อกอิน
                   >
                     Login
                   </Button>
