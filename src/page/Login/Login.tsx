@@ -128,7 +128,7 @@ function LoginPage() {
                   }}
                 >
                   <CircularProgress
-                    style={{ marginRight: "20px", color: "black" }}
+                    style={{ marginLeft: "40px", color: "black" }}
                   />
                 </div>
               ) : (
@@ -190,6 +190,7 @@ function LoginPage() {
                           }
                         }
                       } catch (error) {
+                        window.alert("อีเมลหรือรหัสผ่านไม่ถูกต้อง โปรดตรวจสอบข้อมูลใหม่");
                         setLoad(false);
                         console.log(error);
                       }

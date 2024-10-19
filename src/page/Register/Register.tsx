@@ -287,7 +287,7 @@ function RegisterPage() {
                         }}
                       >
                         <CircularProgress
-                          style={{ marginLeft: "40px", color: "black" }}
+                          style={{ marginRight: "40px", color: "black" }}
                         />
                       </div>
                     ) : (
@@ -358,7 +358,7 @@ function RegisterPage() {
                             } catch (error) {
                               setLoad(false);
                               window.alert(
-                                "ข้อมูลไม่ถูกต้อง โปรดตรวจสอบข้อมูลใหม่"
+                                "ข้อมูลอีเมลมีแล้ว โปรดตรวจสอบข้อมูลใหม่อีกครั้ง"
                               );
                               console.log(error);
                             }
