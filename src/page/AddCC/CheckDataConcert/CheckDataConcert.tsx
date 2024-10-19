@@ -1247,12 +1247,12 @@ function CheckDataConcertPage() {
                                 }}
                                 variant="h4"
                               >
-                                รอบการแสดง
+                                ช่องทางการติดต่อ
                               </Typography>
                               <div
                                 style={{
                                   display: "flex",
-                                  marginRight: "10px",
+                                  // marginRight: "5px",
                                   marginTop: "5px",
                                 }}
                               >

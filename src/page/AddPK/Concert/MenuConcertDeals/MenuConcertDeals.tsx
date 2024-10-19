@@ -13,6 +13,9 @@ function MenuConcertDealPage() {
   function navigateToConcertDealPage() {
     navigate("/ConcertDeal");
   }
+  function navigateToChcekConcertDealPage() {
+    navigate("/CheckConcertDeal");
+  }
   return (
     <>
       <HeaderUserTypeManager2 />
@@ -60,7 +63,7 @@ function MenuConcertDealPage() {
             <div style={{ display: "flex", marginLeft: "100px" }}>
               <Card>
                 <CardActionArea
-                  // onClick={navigateToHotelDealPage}
+                  onClick={navigateToChcekConcertDealPage}
                 >
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     <FactCheckIcon sx={{ fontSize: "150px" }} />
