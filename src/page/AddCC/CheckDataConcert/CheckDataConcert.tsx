@@ -545,7 +545,7 @@ function CheckDataConcertPage() {
                             <CardMedia
                               component="img"
                               alt="green iguana"
-                              image="src\img\placeholder.png"
+                              image="https://firebasestorage.googleapis.com/v0/b/teemi-backend-projectcs.appspot.com/o/Logo%2Fplaceholder.png?alt=media&token=7928f28b-1307-49b6-ae06-36cb8123e5d5"
                             />
                           </Card>
                           {concert.map((concertselect) => (
