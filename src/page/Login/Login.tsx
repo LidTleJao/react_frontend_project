@@ -52,7 +52,7 @@ function LoginPage() {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-              image="src/img/webteemi.png"
+              image="https://firebasestorage.googleapis.com/v0/b/teemi-backend-projectcs.appspot.com/o/Logo%2Fwebteemi.png?alt=media&token=530da670-02e1-42e6-ae4c-67a96b423e51"
             />
           </div>
           <div

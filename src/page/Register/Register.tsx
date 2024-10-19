@@ -61,7 +61,7 @@ function RegisterPage() {
                 justifyContent: "center",
                 alignItems: "center",
               }}
-              image="src/img/webteemi.png"
+              image="https://firebasestorage.googleapis.com/v0/b/teemi-backend-projectcs.appspot.com/o/Logo%2Fwebteemi.png?alt=media&token=530da670-02e1-42e6-ae4c-67a96b423e51"
             />
           </div>
           <div
@@ -175,11 +175,9 @@ function RegisterPage() {
                       <Select
                         labelId="demo-select-small-label"
                         id="demo-select-small"
-                        // placeholder="จังหวัด"
-                        // value={city}
                         label="จังหวัด"
                         inputRef={provinceRef}
-                        type="city"
+                        defaultValue={"ขอนแก่น"}
                         // onChange={(e) => setCity(e.target.value)}
                         sx={{
                           borderRadius: 20,
@@ -187,9 +185,6 @@ function RegisterPage() {
                           height: "40px",
                         }}
                       >
-                        {/* <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem> */}
                         <MenuItem value={"ขอนแก่น"}>ขอนแก่น</MenuItem>
                         <MenuItem value={"กาฬสินธุ์"}>กาฬสินธุ์</MenuItem>
                         <MenuItem value={"มหาสารคาม"}>มหาสารคาม</MenuItem>
@@ -208,15 +203,13 @@ function RegisterPage() {
                         labelId="demo-select-small-label"
                         id="demo-select-small"
                         inputRef={type_userRef}
+                        defaultValue={1}
                         sx={{
                           borderRadius: 20,
                           bgcolor: "white",
                           height: "40px",
                         }}
                       >
-                        <MenuItem value={""}>
-                          <em>None</em>
-                        </MenuItem>
                         <MenuItem value={1}>ผู้ใช้ทั่วไป</MenuItem>
                         <MenuItem value={2}>ผู้ประกอบการ</MenuItem>
                       </Select>
@@ -294,7 +287,7 @@ function RegisterPage() {
                         }}
                       >
                         <CircularProgress
-                          style={{ marginRight: "20px", color: "black" }}
+                          style={{ marginLeft: "40px", color: "black" }}
                         />
                       </div>
                     ) : (
@@ -321,45 +314,52 @@ function RegisterPage() {
                                     `โปรดตรวจสอบอีเมลว่าถูกต้องหรือไม่`
                                   );
                                 } else {
-                                    if (
-                                      nameRef.current?.value &&
-                                      nicknameRef.current?.value &&
-                                      facebookRef.current?.value &&
-                                      provinceRef.current?.value &&
-                                      phoneRef.current?.value &&
-                                      type_userRef.current?.value &&
-                                      emailRef.current?.value.includes("@") &&
-                                      passRef.current?.value
-                                    ) {
-                                      setLoad(true);
-                                      const res = await userservice.register(
-                                        nameRef.current!.value,
-                                        nicknameRef.current!.value,
-                                        facebookRef.current!.value,
-                                        phoneRef.current!.value,
-                                        provinceRef.current!.value,
-                                        emailRef.current!.value,
-                                        passRef.current!.value,
-                                        parseInt(type_userRef.current!.value)
-                                      );
-                                      console.log(nameRef.current?.value);
-                                      console.log(nicknameRef.current?.value);
-                                      console.log(facebookRef.current?.value);
-                                      console.log(provinceRef.current?.value);
-                                      console.log(phoneRef.current?.value);
-                                      console.log(type_userRef.current?.value);
-                                      console.log(emailRef.current?.value);
-                                      console.log(passRef.current?.value);
-                                      setLoad(false);
-                                      if (res.status === 201) {
-                                        console.log(res.data);
-                                        navigate("/");
-                                      }
+                                  if (
+                                    nameRef.current?.value &&
+                                    nicknameRef.current?.value &&
+                                    facebookRef.current?.value &&
+                                    provinceRef.current?.value &&
+                                    phoneRef.current?.value &&
+                                    type_userRef.current?.value &&
+                                    emailRef.current?.value.includes("@") &&
+                                    passRef.current?.value
+                                  ) {
+                                    setLoad(true);
+                                    const res = await userservice.register(
+                                      nameRef.current!.value,
+                                      nicknameRef.current!.value,
+                                      facebookRef.current!.value,
+                                      phoneRef.current!.value,
+                                      provinceRef.current!.value,
+                                      emailRef.current!.value,
+                                      passRef.current!.value,
+                                      parseInt(type_userRef.current!.value)
+                                    );
+                                    console.log(nameRef.current?.value);
+                                    console.log(nicknameRef.current?.value);
+                                    console.log(facebookRef.current?.value);
+                                    console.log(provinceRef.current?.value);
+                                    console.log(phoneRef.current?.value);
+                                    console.log(type_userRef.current?.value);
+                                    console.log(emailRef.current?.value);
+                                    console.log(passRef.current?.value);
+                                    setLoad(false);
+                                    if (res.status === 201) {
+                                      console.log(res.data);
+                                      navigate("/");
                                     }
+                                  } else {
+                                    window.alert(
+                                      `โปรดตรวจสอบว่ากรอกข้อมูลครบถ้วนหรือไม่`
+                                    );
+                                  }
                                 }
                               }
                             } catch (error) {
                               setLoad(false);
+                              window.alert(
+                                "ข้อมูลไม่ถูกต้อง โปรดตรวจสอบข้อมูลใหม่"
+                              );
                               console.log(error);
                             }
                           }}
