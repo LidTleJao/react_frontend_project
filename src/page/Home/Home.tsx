@@ -5,29 +5,88 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  IconButton,
-  TextField,
   Typography,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import HeaderUserTypeGeneral from "../../components/HeaderUserTypeGeneral";
 import HeaderUserTypeManager from "../../components/HeaderUserTypeManager";
+import { useEffect, useState } from "react";
+import { HotelGetAllRes } from "../../model/Response/Hotel/HotelGetAllRes";
+import { useNavigate } from "react-router-dom";
+import { HotelService } from "../../service/hotelService";
+import { GetAllConcertRes } from "../../model/Response/Concert/GetAllConcertRes";
+import { ConcertService } from "../../service/concertService";
+import { HotelImageGetByHotelIDRes } from "../../model/Response/Hotel/HotelImageGetByHotelIDRes";
 
 function HomePage() {
+  const navigate = useNavigate();
+  const hotelService = new HotelService();
+  const concertService = new ConcertService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
+  const [hotelAll, setHotelAll] = useState<HotelGetAllRes[]>([]);
+  const [hotelImageByHID, sethotelImageByHID] = useState<
+    HotelImageGetByHotelIDRes[]
+  >([]);
+  const [concertAll, setConcertAll] = useState<GetAllConcertRes[]>([]);
+  const [concertID, setConcertID] = useState("");
+  const [hotelID, setHotelID] = useState("");
+
+  useEffect(() => {
+    const loadDataAsync = async () => {
+      try {
+        const reshotel = await hotelService.getAll();
+        const data: HotelGetAllRes[] = reshotel.data;
+        setHotelAll(data);
+
+        const hotelID = data.map((hotel) => hotel.HID);
+        await loadImage(hotelID);
+      } catch (error) {
+        console.error("Error loading hotels or rooms:", error);
+      }
+    };
+    loadDataAsync();
+  }, []);
+
+  useEffect(() => {
+    const loadDataAsync = async () => {
+      const resconcert = await concertService.getAll();
+      const data: GetAllConcertRes[] = resconcert.data;
+      setConcertAll(data);
+    };
+    loadDataAsync();
+  }, []);
+
+  const loadImage = async (numbers: number[]) => {
+    try {
+      const imagePromises = numbers.map(async (number) => {
+        const reshotel = await hotelService.getHotelImageByHid(
+          number.toString()
+        );
+        const data: HotelImageGetByHotelIDRes[] = reshotel.data;
+        return data.length > 0 ? data[0] : null;
+      });
+
+      const allImages = await Promise.all(imagePromises);
+      sethotelImageByHID(allImages.filter((image) => image !== null));
+    } catch (error) {
+      console.error("Error loading hotel images:", error);
+    }
+  };
+
+  function navigateToConcertDetailPage(cid: string) {
+    setConcertID(cid);
+    navigate(`/ConcertDetail/${concertID}`);
+  }
+
+  function navigateToHotelDetailPage(hid: string) {
+    setHotelID(hid);
+    navigate(`/HotelDetail/${hotelID}`);
+  }
 
   return (
     <>
-      {(user?.type_user === 2 && (
-        <>
-          <HeaderUserTypeManager />
-        </>
-      )) ||
-        (user?.type_user === 1 && (
-          <>
-            <HeaderUserTypeGeneral />
-          </>
-        ))}
+      {(user?.type_user === 2 && <HeaderUserTypeManager />) ||
+        (user?.type_user === 1 && <HeaderUserTypeGeneral />)}
+
       <div className="home-cont">
         <div
           style={{
@@ -48,7 +107,7 @@ function HomePage() {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems:"center",
+                alignItems: "center",
                 justifyContent: "center",
               }}
             >
@@ -63,61 +122,42 @@ function HomePage() {
                 }}
                 variant="h3"
                 marginTop={"15px"}
-                // marginLeft={"250px"}
               >
                 Welcome to Teemi
               </Typography>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  // marginLeft: "150px",
-                }}
-              >
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <Box
                   sx={{
-                    width: 650,
-                    height: 60,
+                    width: 550,
+                    height: 80,
                     borderRadius: 3,
-                    bgcolor: "#D9D9D9",
                     border: 2,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  <div
-                    style={{
+                  <Typography
+                    gutterBottom
+                    sx={{
                       display: "flex",
-                      justifyContent: "start",
-                      marginTop: "5px",
-                      marginLeft: "10px",
+                      justifyContent: "center",
+                      fontWeight: "bold",
+                      color: "black",
+                      fontFamily: "Mitr, sans-serif",
+                      fontStyle: "normal",
                     }}
+                    variant="h4"
+                    marginTop={"10px"}
                   >
-                    <TextField
-                      placeholder="ค้นหาพื้นที่ใกล้เคียง"
-                      type="search"
-                      sx={{ m: 1, width: "35pc" }}
-                      //   onChange={(e) => setName(e.target.value)}
-                      InputProps={{
-                        sx: {
-                          borderRadius: "20px",
-                          bgcolor: "white",
-                          height: "35px",
-                        },
-                        startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
-                      }}
-                    />
-                    <IconButton
-                      sx={{
-                        width: "50px",
-                        color: "black",
-                      }}
-                    >
-                      <SearchIcon />
-                    </IconButton>
-                  </div>
+                    โรงแรมและคอนเสิร์ตที่แนะนำ
+                  </Typography>
                 </Box>
               </div>
             </div>
           </div>
+
+          {/* Concert Section */}
           <div
             style={{
               display: "flex",
@@ -144,39 +184,94 @@ function HomePage() {
                 }}
                 variant="h3"
                 marginTop={"25px"}
-                // marginLeft={"250px"}
               >
                 Concert
               </Typography>
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column",
                   justifyContent: "center",
-                  // marginLeft:"160px"
                 }}
               >
-                <Card sx={{ maxWidth: 345, background: "#4E6A97", border: 2 }}>
-                  <CardMedia
-                    component="img"
-                    alt="green iguana"
-                    height="140"
-                    image="src\img\webteemi.png"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Lizard
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Lizards are a widespread group of squamate reptiles, with
-                      over 6,000 species, ranging across all continents except
-                      Antarctica
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">Share</Button>
-                    <Button size="small">Learn More</Button>
-                  </CardActions>
-                </Card>
+                {concertAll.slice(0, 1).map((concert) => (
+                  <Card
+                    sx={{
+                      maxWidth: 345,
+                      width: 345,
+                      maxHeight: 320,
+                      height: 320,
+                      background: "#4E6A97",
+                      border: 2,
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      alt={concert.name_concert}
+                      height="140"
+                      sx={{ maxHeight: 140 }}
+                      image={concert.poster_concert}
+                    />
+                    <CardContent>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          overflow: "auto",
+                          height: 90,
+                          maxHeight: 90,
+                          bgcolor: "white",
+                          borderRadius: 2,
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            marginLeft: "10px",
+                          }}
+                        >
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="div"
+                            color="black"
+                          >
+                            {concert.name_concert}
+                          </Typography>
+                          <Typography variant="body1" color="black">
+                            รายละเอียด: {concert.detail_concert}
+                          </Typography>
+                          <Typography variant="body1" color="black">
+                            วันที่การแสดง:{" "}
+                            {concert.show_schedule_concert.toString()}
+                          </Typography>
+                        </div>
+                      </Box>
+                    </CardContent>
+                    <CardActions
+                      sx={{ display: "flex", justifyContent: "space-between" }}
+                    >
+                      <Typography
+                        variant="body1"
+                        color="white"
+                        sx={{ marginLeft: "10px" }}
+                      >
+                        ที่อยู่คอนเสิร์ต: {concert.province}
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        style={{ backgroundColor: "#343434" }}
+                        sx={{ width: "110px", borderRadius: "10px" }}
+                        onClick={() =>
+                          navigateToConcertDetailPage(concert.CID.toString())
+                        }
+                      >
+                        รายละเอียด
+                      </Button>
+                    </CardActions>
+                  </Card>
+                ))}
               </div>
             </div>
             <div
@@ -199,7 +294,6 @@ function HomePage() {
                 }}
                 variant="h3"
                 marginTop={"25px"}
-                // marginLeft={"250px"}
               >
                 Hotel
               </Typography>
@@ -207,86 +301,82 @@ function HomePage() {
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  // marginLeft:"160px"
+                  flexDirection: "column",
                 }}
               >
-                <Card sx={{ maxWidth: 345, background: "#A3A3AB", border: 2 }}>
-                  <CardMedia
-                    component="img"
-                    alt="green iguana"
-                    height="140"
-                    image="src\img\webteemi.png"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Lizard
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Lizards are a widespread group of squamate reptiles, with
-                      over 6,000 species, ranging across all continents except
-                      Antarctica
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">Share</Button>
-                    <Button size="small">Learn More</Button>
-                  </CardActions>
-                </Card>
-              </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                marginLeft: "150px",
-              }}
-            >
-              <Typography
-                gutterBottom
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontWeight: "bold",
-                  color: "black",
-                  fontFamily: "Mitr, sans-serif",
-                  fontStyle: "normal",
-                }}
-                variant="h3"
-                marginTop={"25px"}
-                // marginLeft={"250px"}
-              >
-                Package
-              </Typography>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  // marginLeft:"160px"
-                }}
-              >
-                <Card sx={{ maxWidth: 345, background: "#D9D9D9", border: 2 }}>
-                  <CardMedia
-                    component="img"
-                    alt="green iguana"
-                    height="140"
-                    image="src\img\webteemi.png"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Lizard
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Lizards are a widespread group of squamate reptiles, with
-                      over 6,000 species, ranging across all continents except
-                      Antarctica
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">Share</Button>
-                    <Button size="small">Learn More</Button>
-                  </CardActions>
-                </Card>
+                {hotelAll.slice(0, 1).map((hotel) => (
+                  <Card
+                    sx={{
+                      maxWidth: 345,
+                      width: 345,
+                      maxHeight: 320,
+                      height: 320,
+                      background: "#A3A3AB",
+                      border: 2,
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      // alt={hotel.name_hotel}
+                      height="140"
+                      sx={{ maxHeight: 140 }}
+                      image={
+                        hotelImageByHID.length > 0
+                          ? hotelImageByHID[0]?.url_image
+                          : "src/img/webteemi.png"
+                      }
+                    />
+                    <CardContent>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          height: 90,
+                          maxHeight: 90,
+                          overflow: "auto",
+                          bgcolor: "white",
+                          borderRadius: 2,
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            marginLeft: "10px",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <Typography gutterBottom variant="h5" component="div">
+                            {hotel.name}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            รายละเอียด: {hotel.detail}
+                          </Typography>
+                        </div>
+                      </Box>
+                    </CardContent>
+                    <CardActions
+                      sx={{ display: "flex", justifyContent: "space-between" }}
+                    >
+                      <Typography
+                        variant="body1"
+                        color="black"
+                        sx={{ marginLeft: "10px" }}
+                      >
+                        ที่อยู่โรงแรม: {hotel.province}
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        style={{ backgroundColor: "#343434" }}
+                        sx={{ width: "110px", borderRadius: "10px" }}
+                        onClick={() =>
+                          navigateToHotelDetailPage(hotel.HID.toString())
+                        }
+                      >
+                        รายละเอียด
+                      </Button>
+                    </CardActions>
+                  </Card>
+                ))}
               </div>
             </div>
           </div>

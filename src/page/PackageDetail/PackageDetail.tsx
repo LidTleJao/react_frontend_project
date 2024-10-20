@@ -3,7 +3,7 @@ import HeaderUserTypeGeneral2 from "../../components/HeadUserTypeGeneral2";
 import HeaderUserTypeManager2 from "../../components/HeadUserTypeManager2";
 import { PacketGetPIDRes } from "../../model/Response/Packet/Packet/PacketGetByPIDRes";
 import { PacketService } from "../../service/packetService";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PlaceIcon from "@mui/icons-material/Place";
 import { Box, styled } from "@mui/system";
 import {
@@ -15,9 +15,13 @@ import {
   TableBody,
   TableCell,
   tableCellClasses,
+  Button,
 } from "@mui/material";
 import dayjs from "dayjs";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+
 function PackageDetailPage() {
+  const navigate = useNavigate();
   const { pid } = useParams();
   const packetService = new PacketService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
@@ -41,6 +45,11 @@ function PackageDetailPage() {
       fontSize: 16,
     },
   }));
+
+  function navigateToPackagePage() {
+    navigate("/Package");
+  }
+
   return (
     <>
       {(user?.type_user === 2 && (
@@ -54,7 +63,21 @@ function PackageDetailPage() {
           </>
         ))}
       <div className="concert-cont pt-40">
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center">
+          <div style={{ display: "flex", marginBottom: 5 }}>
+            <Button
+              variant="contained"
+              style={{ backgroundColor: "#343434" }}
+              sx={{
+                width: "110px",
+                borderRadius: "10px",
+              }}
+              startIcon={<KeyboardArrowLeftIcon />}
+              onClick={navigateToPackagePage}
+            >
+              กลับหน้า
+            </Button>
+          </div>
           {packetselect.map((packet) => (
             <div className="bg-sky-200 p-6 rounded-2xl mt-1">
               <div className=" flex flex-row justify-between">
@@ -133,8 +156,7 @@ function PackageDetailPage() {
                               align="center"
                               sx={{ border: "1px solid black" }}
                             >
-                              {" 10"}
-                              {/* {packet.number_of_tickets} */}
+                              {packet.Number_of_guests}
                             </TableCell>
                             <TableCell
                               align="center"
@@ -148,12 +170,20 @@ function PackageDetailPage() {
                     </TableContainer>
                   </div>
                 </div>
-                <h1 className="text-2xl text-black ml-2 font-semibold mt-4">concert : {packet.name_concert}</h1>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <h1 className="text-2xl text-black ml-2 font-semibold mt-4">
+                      concert : {packet.name_concert}
+                    </h1>
+                  </div>
+                <h1 className="text-2xl text-black ml-2 font-semibold mt-4">
+                  concert : {packet.name_concert}
+                </h1>
                 <Box
                   sx={{
                     display: "flex",
                     flexDirection: "row",
                     justifyContent: "start",
+                    overflow: "auto",
                     marginTop: 1,
                     marginLeft: 1,
                   }}
@@ -172,6 +202,9 @@ function PackageDetailPage() {
                         ไลน์อัพ : {packet.lineup}
                       </h1>
                       <h1 className="text-lg text-gray-500">
+                        รายละเอียด : {packet.detail_concert}
+                      </h1>
+                      <h1 className="text-lg text-gray-500">
                         วันที่แสดง : {packet.show_schedule_concert.toString()}
                       </h1>
                       <div className="flex flex-row">
@@ -180,7 +213,6 @@ function PackageDetailPage() {
                           {packet.number_of_tickets}
                         </h1>
                       </div>
-                    
                       <div className="flex flex-row justify-between ">
                         <h1 className="text-lg text-gray-500">ราคาบัตร :</h1>
 
@@ -195,7 +227,9 @@ function PackageDetailPage() {
                         </h1>
 
                         <h1 className="text-lg text-gray-500 justify-start pl-3 max-w-lg">
-                          {dayjs(packet.s_deadline_package).format("YYYY-MM-DD")}
+                          {dayjs(packet.s_deadline_package).format(
+                            "YYYY-MM-DD"
+                          )}
                         </h1>
                       </div>
                       <div className="flex flex-row justify-start ">

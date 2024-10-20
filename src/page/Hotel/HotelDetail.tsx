@@ -1,10 +1,11 @@
 // import { Button } from "@mui/material";
-import {  styled } from "@mui/system";
+import { styled } from "@mui/system";
 import PlaceIcon from "@mui/icons-material/Place";
 import HeaderUserTypeManager2 from "../../components/HeadUserTypeManager2";
 import HeaderUserTypeGeneral2 from "../../components/HeadUserTypeGeneral2";
 import { useEffect, useState } from "react";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 // import { RoomGetAllRes } from "../../model/Response/Hotel/RoomGetAllRes";
 // import { HotelGetAllRes } from "../../model/Response/Hotel/HotelGetAllRes";
 import { HotelService } from "../../service/hotelService";
@@ -13,9 +14,10 @@ import { HotelGetByHIDRes } from "../../model/Response/Hotel/HotelGetByHIDRes";
 import { HotelImageGetByHotelIDRes } from "../../model/Response/Hotel/HotelImageGetByHotelIDRes";
 import { RoomGetByHotelIDRes } from "../../model/Response/Hotel/RoomGetByHotelIDRes";
 import { HotelURLGetByHotelIDRes } from "../../model/Response/Hotel/HotelUrlGetByHotelIDRes";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import {
+  Button,
   Paper,
   Table,
   TableBody,
@@ -33,7 +35,7 @@ function HotelDetailPage() {
   const [hotelUrl, setHotelUrl] = useState<HotelURLGetByHotelIDRes[]>([]);
   const [hotelImage, setHotelImage] = useState<HotelImageGetByHotelIDRes[]>([]);
   const [rooms, setRoom] = useState<RoomGetByHotelIDRes[]>([]);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // const [hotel_ID, setHotel_ID] = useState("");
@@ -82,6 +84,10 @@ function HotelDetailPage() {
     setCurrentIndex(newIndex);
   };
 
+  function navigateToHotelPage() {
+    navigate("/Hotel");
+  }
+
   return (
     <>
       {(user?.type_user === 2 && (
@@ -94,8 +100,23 @@ function HotelDetailPage() {
             <HeaderUserTypeGeneral2 />
           </>
         ))}
+
       <div className="concert-cont pt-40">
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center ">
+          <div style={{display:"flex",marginBottom:5}}>
+            <Button
+              variant="contained"
+              style={{ backgroundColor: "#343434" }}
+              sx={{
+                width: "110px",
+                borderRadius: "10px",
+              }}
+              startIcon={<KeyboardArrowLeftIcon />}
+              onClick={navigateToHotelPage}
+            >
+              กลับหน้า
+            </Button>
+          </div>
           {hotel.map((hotel) => (
             <div className="bg-sky-200 p-6 rounded-2xl mt-1">
               <div className=" flex flex-row justify-between">
@@ -161,7 +182,7 @@ function HotelDetailPage() {
                         to={h.url}
                         className="text-lg text-gray-500 hover:text-gray-700"
                       >
-                        {h.url} 
+                        {h.url}
                       </Link>
                     ))}
                     <TableContainer component={Paper} className="mt-2">
@@ -247,7 +268,6 @@ function HotelDetailPage() {
                         </TableBody>
                       </Table>
                     </TableContainer>
-              
                   </div>
                 </div>
               </div>
