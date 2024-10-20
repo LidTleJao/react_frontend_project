@@ -25,6 +25,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import HeaderUserTypeManager2 from "../../../components/HeadUserTypeManager2";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { GetConcertByUserIDRes } from "../../../model/Response/Concert/GetConcertByUserIDRes";
 import { ConcertService } from "../../../service/concertService";
 import { Box } from "@mui/system";
@@ -1565,7 +1566,9 @@ function CheckDataConcertPage() {
                               <TableCell>วันที่การแสดง</TableCell>
                               <TableCell>เวลา</TableCell>
                               <TableCell>บันทึกข้อมูลห้อง</TableCell>
-                              <TableCell>แก้ไขข้อมูลของตั๋ว</TableCell>
+                              <TableCell>แก้ไขข้อมูลห้อง</TableCell>
+
+                              <TableCell>ลบข้อมูลห้อง</TableCell>
                             </TableRow>
                           </TableHead>
                         </>
@@ -1576,7 +1579,9 @@ function CheckDataConcertPage() {
                           <TableCell>ชนิดตั๋ว</TableCell>
                           <TableCell>วันที่การแสดง</TableCell>
                           <TableCell>เวลา</TableCell>
-                          <TableCell>แก้ไขข้อมูลของตั๋ว</TableCell>
+                          <TableCell>แก้ไขข้อมูลห้อง</TableCell>
+
+                          <TableCell>ลบข้อมูลห้อง</TableCell>
                         </>
                       )}
                       <TableBody>
@@ -1725,6 +1730,19 @@ function CheckDataConcertPage() {
                                       ยกเลิกการแก้ไข
                                     </Button>
                                   </TableCell>
+                                  <TableCell>
+                                    <Button
+                                      variant="contained"
+                                      style={{ backgroundColor: "red" }}
+                                      sx={{
+                                        width: "200px",
+                                        borderRadius: "10px",
+                                      }}
+                                      startIcon={<DeleteIcon />}
+                                    >
+                                      ลบข้อมูลตั๋ว
+                                    </Button>
+                                  </TableCell>
                                 </TableRow>
                               </>
                             ) : (
@@ -1757,6 +1775,19 @@ function CheckDataConcertPage() {
                                       }
                                     >
                                       แก้ไขข้อมูลของตั๋ว
+                                    </Button>
+                                  </TableCell>
+                                  <TableCell>
+                                    <Button
+                                      variant="contained"
+                                      style={{ backgroundColor: "red" }}
+                                      sx={{
+                                        // width: "100px",
+                                        borderRadius: "10px",
+                                      }}
+                                      startIcon={<DeleteIcon />}
+                                    >
+                                      ลบข้อมูลตั๋ว
                                     </Button>
                                   </TableCell>
                                 </TableRow>
