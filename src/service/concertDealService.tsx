@@ -17,8 +17,20 @@ export class ConcertDealsService {
     return response;
   }
 
-  async getConcertDealAllByUser(uid: string) {
-    const url = `${HOST}/ConcertDealAllByUser/${uid}`;
+  async getConcertDealType1ByUser(uid: string) {
+    const url = `${HOST}/ConcertDealType1ByUser/${uid}`;
+    const response = await axios.get(url);
+    return response;
+  }
+
+  async getConcertDealType2ByUser(uid: string) {
+    const url = `${HOST}/ConcertDealType2ByUser/${uid}`;
+    const response = await axios.get(url);
+    return response;
+  }
+
+  async getConcertDealType3ByUser(uid: string) {
+    const url = `${HOST}/ConcertDealType3ByUser/${uid}`;
     const response = await axios.get(url);
     return response;
   }
