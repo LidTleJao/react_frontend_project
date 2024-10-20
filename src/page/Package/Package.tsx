@@ -25,32 +25,72 @@ function PackagePage() {
   const packetService = new PacketService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [packetAll, setPacketAll] = useState<PacketGetAllRes[]>([]);
-  const [packet, setPacket] = useState<PacketGetPIDRes[]>([]);
-  const [packet_ID, setPacket_ID] = useState(4);
-
+  const [filteredData, setFilteredData] = useState<PacketGetAllRes[]>([]);
+  // const [packet, setPacket] = useState<PacketGetPIDRes[]>([]);
+  // const [packet_ID, setPacket_ID] = useState(4);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchTypeRoom, setSearchTypeRoom] = useState("");
+  const [searchTypeView, setSearchTypeView] = useState("");
+  const [searchTypeTicket, setSearchTypeTicket] = useState("");
+  const [searchAboutTicket, setSearchAboutTicket] = useState("");
   useEffect(() => {
     const loadDataAsync = async () => {
       const respacket = await packetService.getAll();
       const data: PacketGetAllRes[] = respacket.data;
       setPacketAll(data);
+      setFilteredData(data);
     };
     loadDataAsync();
   }, []);
+  const handleSearch = () => {
+    if (searchQuery.trim() !== "") {
+      // กรองข้อมูลจาก searchData ที่ตรงกับ province
+      // console.log(searchQuery);
 
-  useEffect(() => {
-    const loadDataAsync = async () => {
-      setPacket_ID(4);
-      const respacket = await packetService.getPacketByPID(
-        packet_ID.toString()
+      const filtered = packetAll.filter((concert) =>
+        concert.province.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      const data: PacketGetAllRes[] = respacket.data;
-      setPacket(data);
-    };
-    loadDataAsync();
-  }, [packet_ID]);
+      setFilteredData(filtered);
+      console.log("ผลการค้นหา:", filtered);
+    } else {
+      setFilteredData(packetAll);
+    }
+  };
+  const handleSearchAdv = () => {
+    const filtered = packetAll.filter((concert) => {
+      return (
+        (searchTypeRoom === "none" ||
+          searchTypeRoom === "" ||
+          concert.type_room.toLowerCase() === searchTypeRoom.toLowerCase()) &&
+        (searchTypeView === "none" ||
+          searchTypeView === "" ||
+          concert.type_view_name_room.toLowerCase() ===
+            searchTypeView.toLowerCase()) &&
+        (searchTypeTicket === "none" ||
+          searchTypeTicket === "" ||
+          concert.name_type_ticket.toLowerCase() ===
+            searchTypeTicket.toLowerCase()) &&
+        (searchAboutTicket === "none" ||
+          searchAboutTicket === "" ||
+          concert.number_of_tickets === parseInt(searchAboutTicket, 10))
+      );
+    });
+    setFilteredData(filtered);
+  };
+  // useEffect(() => {
+  //   const loadDataAsync = async () => {
+  //     setPacket_ID(4);
+  //     const respacket = await packetService.getPacketByPID(
+  //       packet_ID.toString()
+  //     );
+  //     const data: PacketGetAllRes[] = respacket.data;
+  //     setPacket(data);
+  //   };
+  //   loadDataAsync();
+  // }, [packet_ID]);
 
   console.log(packetAll);
-  console.log(packet);
+  // console.log(packet);
 
   return (
     <>
@@ -162,6 +202,26 @@ function PackagePage() {
                     //     setSearchTypeRoom("none"); // สำหรับ None
                     //   }
                     // }}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === 1) {
+                        setSearchTypeRoom("Standard Room");
+                      } else if (value === 2) {
+                        setSearchTypeRoom("Deluxe Room");
+                      } else if (value === 3) {
+                        setSearchTypeRoom("Executive Room");
+                      } else if (value === 4) {
+                        setSearchTypeRoom("Connecting Rooms");
+                      } else if (value === 5) {
+                        setSearchTypeRoom("Suite");
+                      } else if (value === 6) {
+                        setSearchTypeRoom("Superior Room");
+                      } else if (value === 7) {
+                        setSearchTypeRoom("Accessible Room");
+                      } else {
+                        setSearchTypeRoom("none"); // สำหรับ None
+                      }
+                    }}
                     sx={{
                       borderRadius: 20,
                       bgcolor: "white",
@@ -213,22 +273,18 @@ function PackagePage() {
                   <Select
                     labelId="demo-select-small-label"
                     id="demo-select-small"
-                    // placeholder="จังหวัด"
-                    // value={city}
-                    // label="จังหวัด"
-                    // type="city"
-                    // onChange={(e) => {
-                    //   const value = e.target.value;
-                    //   if (value === 1) {
-                    //     setSearchTypeView("ทะเล");
-                    //   } else if (value === 2) {
-                    //     setSearchTypeView("ภูเขา");
-                    //   } else if (value === 3) {
-                    //     setSearchTypeView("เมือง");
-                    //   } else {
-                    //     setSearchTypeView("none"); // สำหรับ None
-                    //   }
-                    // }}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === 1) {
+                        setSearchTypeView("ทะเล");
+                      } else if (value === 2) {
+                        setSearchTypeView("ภูเขา");
+                      } else if (value === 3) {
+                        setSearchTypeView("เมือง");
+                      } else {
+                        setSearchTypeView("none"); // สำหรับ None
+                      }
+                    }}
                     sx={{
                       borderRadius: 20,
                       bgcolor: "white",
@@ -272,7 +328,26 @@ function PackagePage() {
                     // value={city}
                     // label="จังหวัด"
                     // type="city"
-                    // onChange={(e) => setCity(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === 1) {
+                        setSearchTypeTicket("General Admission / GA");
+                      } else if (value === 2) {
+                        setSearchTypeTicket("VIP Ticket");
+                      } else if (value === 3) {
+                        setSearchTypeTicket("Front Row / Pit Ticket");
+                      } else if (value === 4) {
+                        setSearchTypeTicket("Premium Zone Ticket");
+                      } else if (value === 5) {
+                        setSearchTypeTicket("Reserved Seating");
+                      } else if (value === 6) {
+                        setSearchTypeTicket("Early Entry Ticket");
+                      } else if (value === 7) {
+                        setSearchTypeTicket("Virtual Concert Ticket");
+                      } else {
+                        setSearchTypeTicket("none"); // สำหรับ None
+                      }
+                    }}
                     sx={{
                       borderRadius: 20,
                       bgcolor: "white",
@@ -322,7 +397,7 @@ function PackagePage() {
                   placeholder="จำนวนตั๋ว"
                   type="number"
                   sx={{ width: "19.5pc" }}
-                  //   onChange={(e) => setBirthday(e.target.value)}
+                  onChange={(e) => setSearchAboutTicket(e.target.value)}
                   InputProps={{
                     sx: {
                       borderRadius: "20px",
@@ -332,6 +407,22 @@ function PackagePage() {
                     startAdornment: <></>,
                   }}
                 />
+              </div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    borderRadius: 20,
+                    bgcolor: "#4E6A97", // เปลี่ยนสีปุ่มได้ตามต้องการ
+                    color: "white",
+                    height: "40px",
+                    width: "150px",
+                    marginTop: "20px",
+                  }}
+                  onClick={handleSearchAdv} // ฟังก์ชันสำหรับการค้นหา
+                >
+                  ค้นหา
+                </Button>
               </div>
             </Box>
             <div>
@@ -378,7 +469,7 @@ function PackagePage() {
                       placeholder="ค้นหาพื้นที่ใกล้เคียง"
                       type="search"
                       sx={{ m: 1, width: "35pc" }}
-                      //   onChange={(e) => setName(e.target.value)}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                       InputProps={{
                         sx: {
                           borderRadius: "20px",
@@ -393,6 +484,7 @@ function PackagePage() {
                         width: "50px",
                         color: "black",
                       }}
+                      onClick={handleSearch}
                     >
                       <SearchIcon />
                     </IconButton>
@@ -401,34 +493,94 @@ function PackagePage() {
               </div>
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginRight: "250px",
-                  marginTop: "50px",
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+                  gap: "20px",
+                  marginTop: "16px",
+                  marginLeft: "150px",
+                  marginBottom: "20px",
                 }}
               >
-                <Card sx={{ maxWidth: 345, background: "#D9D9D9", border: 2 }}>
-                  <CardMedia
-                    component="img"
-                    alt="green iguana"
-                    height="140"
-                    image="src\img\webteemi.png"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      Lizard
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Lizards are a widespread group of squamate reptiles, with
-                      over 6,000 species, ranging across all continents except
-                      Antarctica
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">Share</Button>
-                    <Button size="small">Learn More</Button>
-                  </CardActions>
-                </Card>
+                {filteredData.length > 0 ? (
+                  filteredData.map((concert) => (
+                    <Card
+                      key={concert.PID}
+                      sx={{ maxWidth: 345, background: "#4E6A97", border: 2 }}
+                    >
+                      <CardMedia
+                        component="img"
+                        alt={concert.name_concert}
+                        height="140"
+                        sx={{ maxHeight: 140 }}
+                        image={concert.poster_concert}
+                      />
+                      <CardContent>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            overflow: "auto",
+                            bgcolor: "white",
+                            borderRadius: 2,
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginLeft: "10px",
+                            }}
+                          >
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="div"
+                              color="black"
+                            >
+                              {concert.name_concert}
+                            </Typography>
+                            <Typography variant="body1" color="black">
+                              {/* รายละเอียด: {concert.detail_concert} */}
+                            </Typography>
+                            <Typography variant="body1" color="black">
+                              วันที่การแสดง:{" "}
+                              {concert.show_schedule_concert.toString()}
+                            </Typography>
+                          </div>
+                        </Box>
+                      </CardContent>
+                      <CardActions
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography
+                          variant="body1"
+                          color="white"
+                          sx={{ marginLeft: "10px" }}
+                        >
+                          {/* ที่อยู่คอนเสิร์ต: {concert.address_concert} {concert.CID} */}
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          style={{ backgroundColor: "#343434" }}
+                          sx={{
+                            width: "110px",
+                            borderRadius: "10px",
+                          }}
+                          // onClick={() => navigateToConcertDetailPage(concert.CID.toString())}
+                        >
+                          รายละเอียด
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  ))
+                ) : (
+                  <div className="pt-40 ml-40">
+                    <p>ไม่มีข้อมูล</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
