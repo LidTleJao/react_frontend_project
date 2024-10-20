@@ -91,7 +91,7 @@ function HotelPage() {
   };
 
   // console.log(hotelAll);
-  console.log(roomAll);
+  // console.log(roomAll);
   // console.log(hotelImageByHID);
 
   const handleSearch = () => {
@@ -719,10 +719,6 @@ function HotelPage() {
                               </Typography>
                               <Typography variant="body1" color="black">
                                 รายละเอียด: {concert.detail}
-                              </Typography>
-                              <Typography variant="body1" color="black">
-                                {/* วันที่การแสดง:{" "} */}
-                                {/* {concert.show_schedule_concert.toString()} */}
                               </Typography>
                             </div>
                           </Box>

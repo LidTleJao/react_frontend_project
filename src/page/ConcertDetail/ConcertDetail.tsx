@@ -8,9 +8,13 @@ import { ConcertService } from "../../service/concertService";
 import { GetConcertTicketByCIDRes } from "../../model/Response/Concert/GetConcertTicketByCIDRes";
 import { GetConcertShowByCIDRes } from "../../model/Response/Concert/GetConcertShowByCIDRes";
 import { GetConcertChannelByCIDRes } from "../../model/Response/Concert/GetConcertChannelByCIDRes";
-import {  useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { GetConcertByCIDRes } from "../../model/Response/Concert/GetConcertByCIDRes";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import { Button, Typography } from "@mui/material";
+
 function ConcertDetailPage() {
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const concertService = new ConcertService();
   const [concert, setConcert] = useState<GetConcertByCIDRes[]>([]);
@@ -18,8 +22,7 @@ function ConcertDetailPage() {
   const [concertTicket, setConcertTicket] = useState<
     GetConcertTicketByCIDRes[]
   >([]);
-  // const {concertID} = location.state;
-  const  {cid}  = useParams(); // สมมติว่าเส้นทางเป็น "/concert/:cid"
+  const { cid } = useParams(); // สมมติว่าเส้นทางเป็น "/concert/:cid"
 
   console.log(cid);
 
@@ -45,7 +48,10 @@ function ConcertDetailPage() {
   }, [cid]);
 
   console.log(concertChannel);
-  
+
+  function navigateToConcertPage() {
+    navigate("/Concert");
+  }
 
   return (
     <>
@@ -59,8 +65,39 @@ function ConcertDetailPage() {
             <HeaderUserTypeGeneral2 />
           </>
         ))}
-      <div className="concert-cont pt-40">
-        <div className="flex flex-col justify-center items-center">
+      <div className="concert-cont pt-20">
+        <div className="flex flex-col justify-center">
+          <div
+            style={{ display: "flex", justifyContent: "center", marginTop: 20 }}
+          >
+            <Typography
+              gutterBottom
+              sx={{
+                display: "flex",
+                fontWeight: "bold",
+                color: "black",
+                fontFamily: "Mitr, sans-serif",
+                fontStyle: "normal",
+              }}
+              variant="h4"
+            >
+              รายละเอียดของคอนเสิรต์
+            </Typography>
+          </div>
+          <div style={{ display: "flex", marginBottom: 5 }}>
+            <Button
+              variant="contained"
+              style={{ backgroundColor: "#343434" }}
+              sx={{
+                width: "110px",
+                borderRadius: "10px",
+              }}
+              startIcon={<KeyboardArrowLeftIcon />}
+              onClick={navigateToConcertPage}
+            >
+              กลับหน้า
+            </Button>
+          </div>
           {concert.map((concert) => (
             <div className="bg-sky-200 p-6 rounded-2xl mt-1">
               <div className=" flex flex-row justify-between">
