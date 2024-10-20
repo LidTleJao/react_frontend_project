@@ -35,6 +35,7 @@ import { HotelDealsGetByUserRes } from "../../../../model/Response/Packet/Hotel/
 import { HotelDealsGetByHDIDRes } from "../../../../model/Response/Packet/Hotel/HotelDealsGetByHDIDRes";
 import { DealsService } from "../../../../service/dealsService";
 import { PacketService } from "../../../../service/packetService";
+import dayjs from "dayjs";
 
 function HotelDealPage() {
   const navigate = useNavigate();
@@ -506,7 +507,7 @@ function HotelDealPage() {
                       </TableCell>
                       <TableCell>
                         วันที่สิ้นสุดการยื่นข้อเสนอ:{" "}
-                        {hoteldeal.e_datetime.toString()}
+                        {dayjs(hoteldeal.e_datetime).format("YYYY-MM-DD")}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -586,7 +587,7 @@ function HotelDealPage() {
                               <TableCell>{concertdeal.name_type_ticket}</TableCell>
                               <TableCell>{concertdeal.number_of_tickets}</TableCell>
                               <TableCell>{concertdeal.concert_deal_price}</TableCell>
-                              <TableCell>{concertdeal.e_datetime.toString()}</TableCell>
+                              <TableCell>{dayjs(concertdeal.e_datetime).format("YYYY-MM-DD")}</TableCell>
                               <TableCell>{concertdeal.name_status}</TableCell>
                               <TableCell>
                                 <Radio

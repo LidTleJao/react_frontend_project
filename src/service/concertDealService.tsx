@@ -41,7 +41,7 @@ export class ConcertDealsService {
     const body = {
         status_ID: 1,
         number_of_tickets: number_of_tickets,
-        price: price,
+        concert_deal_price: price,
         s_datetime: s_datetime,
         e_datetime:e_datetime,
     };

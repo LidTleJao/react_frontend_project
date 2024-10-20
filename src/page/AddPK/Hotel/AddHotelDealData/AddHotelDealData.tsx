@@ -4,7 +4,14 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
+  Paper,
   Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   TextField,
   Typography,
 } from "@mui/material";
@@ -25,6 +32,7 @@ import { HotelService } from "../../../../service/hotelService";
 import { RoomHotelService } from "../../../../service/roomHotelService";
 import { RoomGetByHotelIDRes } from "../../../../model/Response/Hotel/RoomGetByHotelIDRes";
 import { HotelDealsService } from "../../../../service/hotelDealService";
+import { HotelGetByHIDRes } from "../../../../model/Response/Hotel/HotelGetByHIDRes";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -37,6 +45,7 @@ function AddHotelDealDataPage() {
   const hotelDealService = new HotelDealsService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [hotels, setHotel] = useState<HotelGetByIDRes[]>([]);
+  const [hotelselect, setHotelSelect] = useState<HotelGetByHIDRes[]>([]);
   const [rooms, setRoom] = useState<RoomGetByHotelIDRes[]>([]);
   const [valueDate, setValueDate] = useState<[Dayjs, Dayjs | null]>([
     dayjs(),
@@ -57,6 +66,15 @@ function AddHotelDealDataPage() {
     };
     loadDataAsync();
   }, []);
+
+  useEffect(() => {
+    const loadDataAsync = async () => {
+      const reshotel = await hotelService.getShowHotelByHid(Room_Hotel_ID);
+      const data: HotelGetByHIDRes[] = reshotel.data;
+      setHotelSelect(data);
+    };
+    loadDataAsync();
+  }, [Room_Hotel_ID]);
 
   useEffect(() => {
     const loadDataAsync = async () => {
@@ -99,428 +117,604 @@ function AddHotelDealDataPage() {
     <>
       <HeaderUserTypeManager2 />
       <div className="addhoteldealdata-cont">
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <Typography
-              gutterBottom
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Typography
+                gutterBottom
+                sx={{
+                  display: "flex",
+                  fontWeight: "bold",
+                  color: "black",
+                  fontFamily: "Mitr, sans-serif",
+                  fontStyle: "normal",
+                }}
+                variant="h4"
+              >
+                เพิ่มข้อมูลข้อเสนอ
+              </Typography>
+            </div>
+            <Box
               sx={{
+                width: 650,
+                height: 470,
+                maxHeight: 480,
+                borderRadius: 3,
+                bgcolor: "#D9D9D9",
+                border: 2,
                 display: "flex",
-                fontWeight: "bold",
-                color: "black",
-                fontFamily: "Mitr, sans-serif",
-                fontStyle: "normal",
+                justifyContent: "center",
               }}
-              variant="h4"
             >
-              เพิ่มข้อมูลข้อเสนอ
-            </Typography>
-          </div>
-          <Box
-            sx={{
-              width: 650,
-              height: 470,
-              maxHeight: 480,
-              borderRadius: 3,
-              bgcolor: "#D9D9D9",
-              border: 2,
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginTop: "30px",
-                }}
-              >
-                <Typography
-                  gutterBottom
-                  sx={{
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <div
+                  style={{
                     display: "flex",
-                    fontWeight: "bold",
-                    color: "black",
-                    fontFamily: "Mitr, sans-serif",
-                    fontStyle: "normal",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginTop: "30px",
                   }}
-                  variant="h6"
                 >
-                  ชื่อโรงแรม :
-                </Typography>
-                <FormControl sx={{ width: "20pc" }}>
-                  <InputLabel
-                    id="demo-select-small-label"
-                    sx={{ marginTop: "-10px" }}
-                  >
-                    ชื่อโรงแรม
-                  </InputLabel>
-                  <Select
-                    labelId="demo-select-small-label"
-                    id="demo-select-small"
-                    label="ชื่อโรงแรม"
-                    value={Room_Hotel_ID}
-                    onChange={async (e) => {
-                      try {
-                        setRoom_Hotel_ID(e.target.value);
-                      } catch (error) {
-                        setLoadSelectRoom(false);
-                        console.log(error);
-                      }
-                    }}
+                  <Typography
+                    gutterBottom
                     sx={{
-                      borderRadius: 20,
-                      bgcolor: "white",
-                      height: "40px",
-                    }}
-                  >
-                    {hotels.map((hotel, index) => (
-                      <MenuItem value={hotel.HID}>
-                        {1 + index} - {hotel.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginTop: "20px",
-                }}
-              >
-                {isLoadSelectRoom ? (
-                  <div
-                    style={{
                       display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      fontWeight: "bold",
+                      color: "black",
+                      fontFamily: "Mitr, sans-serif",
+                      fontStyle: "normal",
                     }}
+                    variant="h6"
                   >
-                    <CircularProgress
-                      style={{ marginRight: "20px", color: "black" }}
-                    />
-                  </div>
-                ) : (
-                  <>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        display: "flex",
-                        fontWeight: "bold",
-                        color: "black",
-                        fontFamily: "Mitr, sans-serif",
-                        fontStyle: "normal",
-                      }}
-                      variant="h6"
+                    ชื่อโรงแรม :
+                  </Typography>
+                  <FormControl sx={{ width: "20pc" }}>
+                    <InputLabel
+                      id="demo-select-small-label"
+                      sx={{ marginTop: "-10px" }}
                     >
-                      ชนิดห้อง :
-                    </Typography>
-                    <FormControl sx={{ width: "20pc" }}>
-                      <InputLabel
-                        id="demo-select-small-label"
-                        sx={{ marginTop: "-10px" }}
-                      >
-                        ชนิดห้อง
-                      </InputLabel>
-                      <Select
-                        labelId="demo-select-small-label"
-                        id="demo-select-small"
-                        label="ชนิดห้อง"
-                        value={Room_Type}
-                        onChange={(e) => setRoom_Type(e.target.value)}
+                      ชื่อโรงแรม
+                    </InputLabel>
+                    <Select
+                      labelId="demo-select-small-label"
+                      id="demo-select-small"
+                      label="ชื่อโรงแรม"
+                      value={Room_Hotel_ID}
+                      onChange={async (e) => {
+                        try {
+                          setRoom_Hotel_ID(e.target.value);
+                        } catch (error) {
+                          setLoadSelectRoom(false);
+                          console.log(error);
+                        }
+                      }}
+                      sx={{
+                        borderRadius: 20,
+                        bgcolor: "white",
+                        height: "40px",
+                      }}
+                    >
+                      {hotels.map((hotel, index) => (
+                        <MenuItem value={hotel.HID}>
+                          {1 + index} - {hotel.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginTop: "20px",
+                  }}
+                >
+                  {isLoadSelectRoom ? (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <CircularProgress
+                        style={{ marginRight: "20px", color: "black" }}
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      <Typography
+                        gutterBottom
                         sx={{
-                          borderRadius: 20,
-                          bgcolor: "white",
-                          height: "40px",
+                          display: "flex",
+                          fontWeight: "bold",
+                          color: "black",
+                          fontFamily: "Mitr, sans-serif",
+                          fontStyle: "normal",
                         }}
+                        variant="h6"
                       >
-                        {rooms.map((room, index) => (
-                          <MenuItem key={room.HRID} value={room.HRID}>
-                            {1 + index} - {room.type_room} - จำนวนของห้อง{" "}
-                            {room.Number_of_rooms}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </>
-                )}
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginTop: "20px",
-                }}
-              >
-                <Typography
-                  gutterBottom
-                  sx={{
+                        ชนิดห้อง :
+                      </Typography>
+                      <FormControl sx={{ width: "20pc" }}>
+                        <InputLabel
+                          id="demo-select-small-label"
+                          sx={{ marginTop: "-10px" }}
+                        >
+                          ชนิดห้อง
+                        </InputLabel>
+                        <Select
+                          labelId="demo-select-small-label"
+                          id="demo-select-small"
+                          label="ชนิดห้อง"
+                          value={Room_Type}
+                          onChange={(e) => setRoom_Type(e.target.value)}
+                          sx={{
+                            borderRadius: 20,
+                            bgcolor: "white",
+                            height: "40px",
+                          }}
+                        >
+                          {rooms.map((room, index) => (
+                            <MenuItem key={room.HRID} value={room.HRID}>
+                              {1 + index} - {room.type_room}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </>
+                  )}
+                </div>
+                <div
+                  style={{
                     display: "flex",
-                    fontWeight: "bold",
-                    color: "black",
-                    fontFamily: "Mitr, sans-serif",
-                    fontStyle: "normal",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginTop: "20px",
                   }}
-                  variant="h6"
                 >
-                  ราคาห้อง :
-                </Typography>
-                <TextField
-                  placeholder="ราคาห้อง"
-                  type="number"
-                  sx={{ width: "20pc" }}
-                  onChange={handlePrice}
-                  InputProps={{
-                    sx: {
-                      borderRadius: "20px",
-                      bgcolor: "white",
-                      height: "35px",
-                    },
-                    startAdornment: <></>,
-                  }}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginTop: "20px",
-                }}
-              >
-                <Typography
-                  gutterBottom
-                  sx={{
-                    display: "flex",
-                    fontWeight: "bold",
-                    color: "black",
-                    fontFamily: "Mitr, sans-serif",
-                    fontStyle: "normal",
-                  }}
-                  variant="h6"
-                >
-                  จำนวนห้อง :
-                </Typography>
-                <TextField
-                  placeholder="จำนวนห้อง"
-                  type="number"
-                  sx={{ width: "20pc" }}
-                  // onChange={(e) => setName(e.target.value)}
-                  onChange={handleNumberRoom}
-                  InputProps={{
-                    sx: {
-                      borderRadius: "20px",
-                      bgcolor: "white",
-                      height: "35px",
-                    },
-                    startAdornment: <></>,
-                  }}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginTop: "20px",
-                }}
-              >
-                <Typography
-                  gutterBottom
-                  sx={{
-                    display: "flex",
-                    fontWeight: "bold",
-                    color: "black",
-                    fontFamily: "Mitr, sans-serif",
-                    fontStyle: "normal",
-                    marginTop: "10px",
-                  }}
-                  variant="h6"
-                >
-                  วันที่สิ้นสุดการยื่นข้อเสนอ:
-                </Typography>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DateRangePicker
-                    sx={{ ml: 2, width: 250 }}
-                    // startText="Check-in"
-                    // endText="Check-out"
-                    value={valueDate}
-                    onChange={(newValueDate) => {
-                      const newCheckOut = newValueDate[1]; // วันที่ Check-out ใหม่
-                      // อัปเดตค่าเฉพาะ Check-out เท่านั้น
-                      if (newCheckOut) {
-                        const startDate = dayjs(newValueDate[0]).tz(
-                          "Asia/Bangkok"
-                        ); // ค่าตั้งต้น
-                        const endDate = dayjs(newValueDate[1]).tz(
-                          "Asia/Bangkok"
-                        ); // วันที่ Check-out ใหม่
-                        // setValueDate([valueDate[0].tz("Asia/Bangkok"), newCheckOut.tz("Asia/Bangkok")]);
-                        setValueDate([startDate, endDate]);
-                      }
-                    }}
-                    disablePast // ป้องกันการเลือกวันที่ในอดีตสำหรับ Check-out
-                  />
-                </LocalizationProvider>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginTop: "30px",
-                }}
-              >
-                <Button
-                  variant="contained"
-                  style={{ backgroundColor: "#343434" }}
-                  sx={{
-                    width: "110px",
-                    borderRadius: "10px",
-                  }}
-                  startIcon={<KeyboardArrowLeftIcon />}
-                  onClick={navigateToMenuHotelDealPage}
-                >
-                  กลับหน้า
-                </Button>
-                {isLoad ? (
-                  <div
-                    style={{
+                  <Typography
+                    gutterBottom
+                    sx={{
                       display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      fontWeight: "bold",
+                      color: "black",
+                      fontFamily: "Mitr, sans-serif",
+                      fontStyle: "normal",
                     }}
+                    variant="h6"
                   >
-                    <CircularProgress
-                      style={{ marginRight: "20px", color: "black" }}
+                    ราคาห้อง :
+                  </Typography>
+                  <TextField
+                    placeholder="ราคาห้อง"
+                    type="number"
+                    sx={{ width: "20pc" }}
+                    onChange={handlePrice}
+                    InputProps={{
+                      sx: {
+                        borderRadius: "20px",
+                        bgcolor: "white",
+                        height: "35px",
+                      },
+                      startAdornment: <></>,
+                    }}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginTop: "20px",
+                  }}
+                >
+                  <Typography
+                    gutterBottom
+                    sx={{
+                      display: "flex",
+                      fontWeight: "bold",
+                      color: "black",
+                      fontFamily: "Mitr, sans-serif",
+                      fontStyle: "normal",
+                    }}
+                    variant="h6"
+                  >
+                    จำนวนห้อง :
+                  </Typography>
+                  <TextField
+                    placeholder="จำนวนห้อง"
+                    type="number"
+                    sx={{ width: "20pc" }}
+                    // onChange={(e) => setName(e.target.value)}
+                    onChange={handleNumberRoom}
+                    InputProps={{
+                      sx: {
+                        borderRadius: "20px",
+                        bgcolor: "white",
+                        height: "35px",
+                      },
+                      startAdornment: <></>,
+                    }}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginTop: "20px",
+                  }}
+                >
+                  <Typography
+                    gutterBottom
+                    sx={{
+                      display: "flex",
+                      fontWeight: "bold",
+                      color: "black",
+                      fontFamily: "Mitr, sans-serif",
+                      fontStyle: "normal",
+                      marginTop: "10px",
+                    }}
+                    variant="h6"
+                  >
+                    วันที่สิ้นสุดการยื่นข้อเสนอ:
+                  </Typography>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateRangePicker
+                      sx={{ ml: 2, width: 250 }}
+                      // startText="Check-in"
+                      // endText="Check-out"
+                      value={valueDate}
+                      onChange={(newValueDate) => {
+                        const newCheckIn = newValueDate[0];
+                        const newCheckOut = newValueDate[1]; // วันที่ Check-out ใหม่
+                        // อัปเดตค่าเฉพาะ Check-out เท่านั้น
+                        if (newCheckIn && newCheckOut) {
+                          const startDate = dayjs(newValueDate[0]).tz(
+                            "Asia/Bangkok"
+                          ); // ค่าตั้งต้น
+                          const endDate = dayjs(newValueDate[1]).tz(
+                            "Asia/Bangkok"
+                          ); // วันที่ Check-out ใหม่
+                          // setValueDate([valueDate[0].tz("Asia/Bangkok"), newCheckOut.tz("Asia/Bangkok")]);
+                          setValueDate([startDate, endDate]);
+                        }
+                      }}
+                      disablePast // ป้องกันการเลือกวันที่ในอดีตสำหรับ Check-out
                     />
-                  </div>
-                ) : (
+                  </LocalizationProvider>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginTop: "30px",
+                  }}
+                >
                   <Button
                     variant="contained"
-                    style={{ backgroundColor: "#3B7AF4" }}
+                    style={{ backgroundColor: "#343434" }}
                     sx={{
-                      width: "100px",
+                      width: "110px",
                       borderRadius: "10px",
                     }}
-                    startIcon={<ChevronRightIcon />}
-                    // onClick={navigateToAddRoomP2Page}
-                    onClick={async () => {
-                      try {
-                        setLoad(true);
-                        let getstr1 = "";
-                        let getstr2 = "";
-                        if (valueDate[0]) {
-                          //   console.log(valueDate[0]);
-                          const getarrayshow1 =
-                            valueDate[0]?.get("D").valueOf() || 0;
-                          const getarrayshow2 =
-                            valueDate[0]?.get("M").valueOf() || 0;
-                          const getarrayshow3 =
-                            valueDate[0]?.get("y").valueOf() || 0;
-                          getstr1 = `${getarrayshow3}-${
-                            getarrayshow2 + 1
-                          }-${getarrayshow1}`;
-                        }
-                        if (valueDate[1]) {
-                          //   console.log(valueDate[1]);
-                          const getarrayshow1 =
-                            valueDate[1]?.get("D").valueOf() || 0;
-                          const getarrayshow2 =
-                            valueDate[1]?.get("M").valueOf() || 0;
-                          const getarrayshow3 =
-                            valueDate[1]?.get("y").valueOf() || 0;
-                          getstr2 = `${getarrayshow3}-${
-                            getarrayshow2 + 1
-                          }-${getarrayshow1}`;
+                    startIcon={<KeyboardArrowLeftIcon />}
+                    onClick={navigateToMenuHotelDealPage}
+                  >
+                    กลับหน้า
+                  </Button>
+                  {isLoad ? (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <CircularProgress
+                        style={{ marginRight: "20px", color: "black" }}
+                      />
+                    </div>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: "#3B7AF4" }}
+                      sx={{
+                        width: "120px",
+                        borderRadius: "10px",
+                      }}
+                      startIcon={<ChevronRightIcon />}
+                      // onClick={navigateToAddRoomP2Page}
+                      onClick={async () => {
+                        try {
+                          setLoad(true);
+                          let getstr1 = "";
+                          let getstr2 = "";
+                          if (valueDate[0]) {
+                            //   console.log(valueDate[0]);
+                            const getarrayshow1 =
+                              valueDate[0]?.get("D").valueOf() || 0;
+                            const getarrayshow2 =
+                              valueDate[0]?.get("M").valueOf() || 0;
+                            const getarrayshow3 =
+                              valueDate[0]?.get("y").valueOf() || 0;
+                            getstr1 = `${getarrayshow3}-${
+                              getarrayshow2 + 1
+                            }-${getarrayshow1}`;
+                          }
+                          if (valueDate[1]) {
+                            //   console.log(valueDate[1]);
+                            const getarrayshow1 =
+                              valueDate[1]?.get("D").valueOf() || 0;
+                            const getarrayshow2 =
+                              valueDate[1]?.get("M").valueOf() || 0;
+                            const getarrayshow3 =
+                              valueDate[1]?.get("y").valueOf() || 0;
+                            getstr2 = `${getarrayshow3}-${
+                              getarrayshow2 + 1
+                            }-${getarrayshow1}`;
 
-                          const parsedDate1 = new Date(getstr1);
-                          const parsedDate2 = new Date(getstr2);
+                            const parsedDate1 = new Date(getstr1);
+                            const parsedDate2 = new Date(getstr2);
 
-                          const formatDate = (date: Date): string => {
-                            const year = date.getFullYear();
-                            const month = String(date.getMonth() + 1).padStart(
-                              2,
-                              "0"
-                            ); // เดือนเริ่มที่ 0, ต้อง +1
-                            const day = String(date.getDate()).padStart(2, "0"); // เพิ่ม 0 ข้างหน้า ถ้าวันหรือเดือนมีแค่หลักเดียว
-                            return `${year}-${month}-${day}`;
-                          };
+                            const formatDate = (date: Date): string => {
+                              const year = date.getFullYear();
+                              const month = String(
+                                date.getMonth() + 1
+                              ).padStart(2, "0"); // เดือนเริ่มที่ 0, ต้อง +1
+                              const day = String(date.getDate()).padStart(
+                                2,
+                                "0"
+                              ); // เพิ่ม 0 ข้างหน้า ถ้าวันหรือเดือนมีแค่หลักเดียว
+                              return `${year}-${month}-${day}`;
+                            };
 
-                          console.log(formatDate(parsedDate1));
-                          console.log(formatDate(parsedDate2));
+                            console.log(formatDate(parsedDate1));
+                            console.log(formatDate(parsedDate2));
 
-                          if (Room_Hotel_ID == "") {
-                            window.alert(
-                              "ข้อมูลโรงแรมไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
-                            );
-                          } else {
-                            if (Room_Type == "") {
+                            if (Room_Hotel_ID == "") {
                               window.alert(
-                                "ข้อมูลห้องโรงแรมไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                                "ข้อมูลโรงแรมไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
                               );
                             } else {
-                              if (
-                                Price === "" ||
-                                (Number(Price) < 1 && !Price.includes("-"))
-                              ) {
+                              if (Room_Type == "") {
                                 window.alert(
-                                  "ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
+                                  "ข้อมูลห้องโรงแรมไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
                                 );
                               } else {
                                 if (
-                                  Number_of_rooms === "" ||
-                                  (Number(Number_of_rooms) == 0 &&
-                                    !Number_of_rooms.includes("-"))
+                                  Price === "" ||
+                                  (Number(Price) < 1 && !Price.includes("-"))
                                 ) {
                                   window.alert(
-                                    "จำนวนห้องไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
+                                    "ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
                                   );
                                 } else {
-                                  const reshoteldeal =
-                                    await hotelDealService.AddHotelDealData(
-                                      Room_Type,
-                                      Number_of_rooms,
-                                      Price,
-                                      formatDate(parsedDate1),
-                                      formatDate(parsedDate2)
-                                    );
-                                  if (reshoteldeal.status == 201) {
+                                  if (
+                                    Number_of_rooms === "" ||
+                                    (Number(Number_of_rooms) == 0 &&
+                                      !Number_of_rooms.includes("-"))
+                                  ) {
                                     window.alert(
-                                      "ข้อมูลของข้อเสนอ ได้ลงทะเบียนแล้ว!!!"
+                                      "จำนวนห้องไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
                                     );
-                                    navigateToMenuHotelDealPage();
+                                  } else {
+                                    const reshoteldeal =
+                                      await hotelDealService.AddHotelDealData(
+                                        Room_Type,
+                                        Number_of_rooms,
+                                        Price,
+                                        formatDate(parsedDate1),
+                                        formatDate(parsedDate2)
+                                      );
+                                    if (reshoteldeal.status == 201) {
+                                      window.alert(
+                                        "ข้อมูลของข้อเสนอ ได้ลงทะเบียนแล้ว!!!"
+                                      );
+                                      navigateToMenuHotelDealPage();
+                                    }
                                   }
                                 }
                               }
                             }
+                          } else {
+                            window.alert(
+                              "ข้อมูลวันที่ไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                            );
                           }
-                        } else {
-                          window.alert(
-                            "ข้อมูลวันที่ไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
-                          );
-                        }
 
-                        setLoad(false);
-                      } catch (error) {
-                        setLoad(false);
-                        window.alert(
-                          "ข้อมูลห้องไม่ถูกต้อง ต้องมีจำนวนน้อยกว่าหรือเท่ากับจำนวนห้องที่ลงทะเบียน โปรดเพิ่มข้อมูลใหม่"
-                        );
-                        console.log(error);
-                      }
+                          setLoad(false);
+                        } catch (error) {
+                          setLoad(false);
+                          window.alert(
+                            "ข้อมูลห้องไม่ถูกต้อง ต้องมีจำนวนน้อยกว่าหรือเท่ากับจำนวนห้องที่ลงทะเบียน โปรดเพิ่มข้อมูลใหม่"
+                          );
+                          console.log(error);
+                        }
+                      }}
+                    >
+                      เพิ่มข้อมูลข้อเสนอ
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </Box>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginLeft: "120px",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Typography
+                gutterBottom
+                sx={{
+                  display: "flex",
+                  fontWeight: "bold",
+                  color: "black",
+                  fontFamily: "Mitr, sans-serif",
+                  fontStyle: "normal",
+                }}
+                variant="h4"
+              >
+                ข้อมูลโรงแรมที่เลือก
+              </Typography>
+            </div>
+            <Box
+              sx={{
+                width: 650,
+                height: 470,
+                maxHeight: 480,
+                borderRadius: 3,
+                bgcolor: "#D9D9D9",
+                border: 2,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                {hotelselect.map((hotel) => (
+                  <>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        marginTop: "30px",
+                      }}
+                    >
+                      <Typography
+                        gutterBottom
+                        sx={{
+                          display: "flex",
+                          fontWeight: "bold",
+                          color: "black",
+                          fontFamily: "Mitr, sans-serif",
+                          fontStyle: "normal",
+                        }}
+                        variant="h6"
+                      >
+                        ชื่อโรงแรม : {hotel.name}
+                      </Typography>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        marginTop: "30px",
+                      }}
+                    >
+                      <Typography
+                        gutterBottom
+                        sx={{
+                          display: "flex",
+                          fontWeight: "bold",
+                          color: "black",
+                          fontFamily: "Mitr, sans-serif",
+                          fontStyle: "normal",
+                        }}
+                        variant="h6"
+                      >
+                        ชนิดโรงแรม : {hotel.typename_hotel}
+                      </Typography>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        marginTop: "30px",
+                      }}
+                    >
+                      <Typography
+                        gutterBottom
+                        sx={{
+                          display: "flex",
+                          fontWeight: "bold",
+                          color: "black",
+                          fontFamily: "Mitr, sans-serif",
+                          fontStyle: "normal",
+                        }}
+                        variant="h6"
+                      >
+                        จังหวัด : {hotel.province}
+                      </Typography>
+                    </div>
+                  </>
+                ))}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginTop: "30px",
+                  }}
+                >
+                  <TableContainer
+                    component={Paper}
+                    sx={{
+                      height: 200,
+                      maxHeight: 200,
+                      width: 550,
+                      maxWidth: 750,
+                      border: 2,
+                      borderRadius: 2,
+                      overflow: "auto",
                     }}
                   >
-                    เพิ่มข้อมูลข้อเสนอ
-                  </Button>
-                )}
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell sx={{ fontWeight: "bold" }}>
+                            ชนิดห้อง
+                          </TableCell>
+                          <TableCell sx={{ fontWeight: "bold" }}>
+                            ชนิดวิว
+                          </TableCell>
+                          <TableCell sx={{ fontWeight: "bold" }}>
+                            จำนวนคนเข้าพัก
+                          </TableCell>
+                          <TableCell sx={{ fontWeight: "bold" }}>
+                            จำนวนห้อง
+                          </TableCell>
+                          <TableCell sx={{ fontWeight: "bold" }}>
+                            ราคาห้อง
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {rooms.map((room_hotel) => (
+                          <TableRow>
+                            <TableCell >
+                              {room_hotel.type_room}
+                            </TableCell>
+                            <TableCell >
+                              {room_hotel.type_view_name_room}
+                            </TableCell>
+                            <TableCell >
+                              {room_hotel.Number_of_guests}
+                            </TableCell>
+                            <TableCell >
+                              {room_hotel.Number_of_rooms}
+                            </TableCell>
+                            <TableCell >
+                              {room_hotel.price}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </div>
               </div>
-            </div>
-          </Box>
+            </Box>
+          </div>
         </div>
       </div>
     </>

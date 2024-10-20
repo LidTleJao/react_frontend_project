@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ConcertDealsService } from "../../../../service/concertDealService";
 import { ConcertDealsGetByUserRes } from "../../../../model/Response/Packet/Concert/ConcertDealsGetByUserRes";
+import dayjs from "dayjs";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -189,7 +190,7 @@ function CheckConcertDealPage() {
                                   {concertdeal.concert_deal_price}
                                 </TableCell>
                                 <TableCell>
-                                  {concertdeal.e_datetime.toString()}
+                                  {dayjs(concertdeal.e_datetime).format("YYYY-MM-DD")}
                                 </TableCell>
                                 <TableCell>
                                   {concertdeal.name_status}

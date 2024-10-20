@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { HotelDealsGetByUserRes } from "../../../../model/Response/Packet/Hotel/HotelDealsGetByUserRes";
 import { HotelDealsService } from "../../../../service/hotelDealService";
+import dayjs from "dayjs";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -67,7 +68,7 @@ function CheckHotelDealPage() {
 
   useEffect(() => {
     const loadDataAsync = async () => {
-      const reshotel = await hotelDealService.getHotelDealAllByUser(user?.uid);
+      const reshotel = await hotelDealService.getHotelDealByUser(user?.uid);
       const data: HotelDealsGetByUserRes[] = reshotel.data;
       setHotelDealByUser(data);
     };
@@ -145,8 +146,9 @@ function CheckHotelDealPage() {
                       onChange={handleChange}
                       aria-label="Hotel Deal Tabs"
                     >
-                      <Tab label="ข้อมูลข้อเสนอ" {...a11yProps(0)} />
-                      <Tab label="รายละเอียดเพิ่มเติม" {...a11yProps(1)} />
+                      <Tab label="ข้อมูลข้อเสนอที่ยังไม่บรรลุ" {...a11yProps(0)} />
+                      <Tab label="ข้อมูลข้อเสนอที่บรรลุข้อตกลงแล้ว" {...a11yProps(1)} />
+                      <Tab label="ข้อมูลข้อเสนอที่สิ้นสุดเวลาแล้ว" {...a11yProps(2)} />
                     </Tabs>
                     <TabPanel value={tabValue} index={0}>
                       <TableContainer
@@ -208,7 +210,7 @@ function CheckHotelDealPage() {
                                   {hoteldeal.number_of_rooms}
                                 </TableCell>
                                 <TableCell>
-                                  {hoteldeal.e_datetime.toString()}
+                                {dayjs(hoteldeal.e_datetime).format("YYYY-MM-DD")}
                                 </TableCell>
                                 <TableCell>
                                   {hoteldeal.name_status}

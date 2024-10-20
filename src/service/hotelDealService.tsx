@@ -16,8 +16,8 @@ export class HotelDealsService {
     return response;
   }
 
-  async getHotelDealAllByUser(uid: string) {
-    const url = `${HOST}/HotelDealAllByUser/${uid}`;
+  async getHotelDealType2ByUser(uid: string) {
+    const url = `${HOST}/HotelDealType2ByUser/${uid}`;
     const response = await axios.get(url);
     return response;
   }
@@ -40,7 +40,7 @@ export class HotelDealsService {
 
     const body = {
       status_ID: 1,
-      price: price,
+      hotel_deal_price: price,
       s_datetime: s_datetime,
       e_datetime: e_datetime,
     };
