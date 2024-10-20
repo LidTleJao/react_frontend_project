@@ -176,30 +176,6 @@ function PackagePage() {
                   <Select
                     labelId="demo-select-small-label"
                     id="demo-select-small"
-                    // placeholder="จังหวัด"
-                    // value={city}
-                    // label="จังหวัด"
-                    // type="city"
-                    // onChange={(e) => {
-                    //   const value = e.target.value;
-                    //   if (value === 1) {
-                    //     setSearchTypeRoom("Standard Room");
-                    //   } else if (value === 2) {
-                    //     setSearchTypeRoom("Deluxe Room");
-                    //   } else if (value === 3) {
-                    //     setSearchTypeRoom("Executive Room");
-                    //   } else if (value === 4) {
-                    //     setSearchTypeRoom("Connecting Rooms");
-                    //   } else if (value === 5) {
-                    //     setSearchTypeRoom("Suite");
-                    //   } else if (value === 6) {
-                    //     setSearchTypeRoom("Superior Room");
-                    //   } else if (value === 7) {
-                    //     setSearchTypeRoom("Accessible Room");
-                    //   } else {
-                    //     setSearchTypeRoom("none"); // สำหรับ None
-                    //   }
-                    // }}
                     onChange={(e) => {
                       const value = e.target.value;
                       if (value === 1) {
@@ -535,10 +511,10 @@ function PackagePage() {
                               component="div"
                               color="black"
                             >
-                              {concert.name_concert}
+                              {concert.name}
                             </Typography>
                             <Typography variant="body1" color="black">
-                              {/* รายละเอียด: {concert.detail_concert} */}
+                              {/* รายละเอียด: {concert.province} */}
                             </Typography>
                             <Typography variant="body1" color="black">
                               วันที่การแสดง:{" "}
@@ -558,7 +534,7 @@ function PackagePage() {
                           color="white"
                           sx={{ marginLeft: "10px" }}
                         >
-                          {/* ที่อยู่คอนเสิร์ต: {concert.address_concert} {concert.CID} */}
+                          ที่อยู่โรมแรม: {concert.province}
                         </Typography>
                         <Button
                           variant="contained"

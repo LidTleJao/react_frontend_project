@@ -28,8 +28,6 @@ import {
 import HeaderUserTypeGeneral2 from "../../../components/HeadUserTypeGeneral2";
 import HeaderUserTypeManager2 from "../../../components/HeadUserTypeManager2";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-// import { useNavigate } from "react-router-dom";
 import { HotelService } from "../../../service/hotelService";
 import { RoomHotelService } from "../../../service/roomHotelService";
 import { useEffect, useState } from "react";
@@ -545,7 +543,6 @@ function CheckDataHotelPage() {
                           <TableCell>จำนวนห้อง</TableCell>
                           <TableCell>สถานะของห้อง</TableCell>
                           <TableCell>แก้ไขข้อมูลห้อง</TableCell>
-                          <TableCell>ลบข้อมูลห้อง</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -577,19 +574,6 @@ function CheckDataHotelPage() {
                                   startIcon={<EditIcon />}
                                 >
                                   รายละเอียดของห้อง
-                                </Button>
-                              </TableCell>
-                              <TableCell>
-                                <Button
-                                  variant="contained"
-                                  style={{ backgroundColor: "red" }}
-                                  sx={{
-                                    // width: "100px",
-                                    borderRadius: "10px",
-                                  }}
-                                  startIcon={<DeleteIcon />}
-                                >
-                                  ลบข้อมูลห้อง
                                 </Button>
                               </TableCell>
                             </TableRow>
