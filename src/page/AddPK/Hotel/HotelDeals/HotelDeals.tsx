@@ -527,66 +527,6 @@ function HotelDealPage() {
                   </div>
                 </Box>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginTop: "30px",
-                }}
-              >
-                <Button
-                  variant="contained"
-                  style={{ backgroundColor: "#343434" }}
-                  sx={{
-                    width: "110px",
-                    borderRadius: "10px",
-                  }}
-                  startIcon={<KeyboardArrowLeftIcon />}
-                  onClick={navigateToMenuHotelDealPage}
-                >
-                  กลับหน้า
-                </Button>
-                {isLoad ? (
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <CircularProgress
-                      style={{ marginRight: "20px", color: "black" }}
-                    />
-                  </div>
-                ) : (
-                  <Button
-                    variant="contained"
-                    sx={{
-                      width: "120px",
-                      borderRadius: "10px",
-                    }}
-                    startIcon={<ChevronRightIcon />}
-                    // onClick={navigateToAddTicketP2Page}
-                    onClick={async () => {
-                      try {
-                        setLoad(true);
-                        if (hoteldeal_ID && selectedValueRadio != "") {
-                          handleClickOpen();
-                        } else {
-                          window.alert("ข้อมูลไม่ถูกต้อง โปรดเลือกข้อมูลใหม่");
-                        }
-                        setLoad(false);
-                      } catch (error) {
-                        setLoad(false);
-                        console.log(error);
-                      }
-                    }}
-                  >
-                    ส่งคำร้อง
-                  </Button>
-                )}
-              </div>
             </div>
             <Dialog
               open={open}
@@ -622,8 +562,8 @@ function HotelDealPage() {
               <div style={{ display: "flex", marginBottom: "10px" }}>
                 <TableContainer
                   sx={{
-                    height: 60,
-                    maxHeight: 60,
+                    height: 120,
+                    maxHeight: 120,
                     width: 950,
                     maxWidth: 950,
                     border: 2,
@@ -633,32 +573,54 @@ function HotelDealPage() {
                     display: "flex",
                   }}
                 >
-                  {HotelDealByHDID.map((hoteldeal) => (
-                    <TableRow>
-                      <TableCell>ชื่อโรงแรม: {hoteldeal.name}</TableCell>
-                      <TableCell>จังหวัด: {hoteldeal.province}</TableCell>
-                      <TableCell>ชนิดห้อง: {hoteldeal.type_room}</TableCell>
-                      <TableCell>
-                        ชนิดวิว: {hoteldeal.type_view_name_room}
-                      </TableCell>
-                      <TableCell>
-                        ราคาห้อง: {hoteldeal.hotel_deal_price}
-                      </TableCell>
-                      <TableCell>
-                        จำนวนห้อง: {hoteldeal.number_of_rooms}
-                      </TableCell>
-                      <TableCell>
-                        วันที่สิ้นสุดการยื่นข้อเสนอ:{" "}
-                        {dayjs(hoteldeal.e_datetime).format("YYYY-MM-DD")}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          ชื่อโรงแรม
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          จังหวัด
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          ชนิดห้อง
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          ชนิดวิว
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          จำนวนห้อง
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          ราคาห้อง
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          วันที่สิ้นสุดข้อเสนอ
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {HotelDealByHDID.map((hoteldeal) => (
+                        <TableRow>
+                          <TableCell>{hoteldeal.name}</TableCell>
+                          <TableCell>{hoteldeal.province}</TableCell>
+                          <TableCell>{hoteldeal.type_room}</TableCell>
+                          <TableCell>{hoteldeal.type_view_name_room}</TableCell>
+                          <TableCell>{hoteldeal.hotel_deal_price}</TableCell>
+                          <TableCell>{hoteldeal.number_of_rooms}</TableCell>
+                          <TableCell>
+                            {dayjs(hoteldeal.e_datetime).format("YYYY-MM-DD")}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
                 </TableContainer>
               </div>
               <Box
                 sx={{
                   width: 950,
-                  height: 570,
+                  height: 520,
                   borderRadius: 3,
                   // bgcolor: "#D9D9D9",
                   marginBottom: "20px",
@@ -671,6 +633,7 @@ function HotelDealPage() {
                   style={{
                     display: "flex",
                     marginTop: "10px",
+                    flexDirection: "column",
                     // marginLeft: "10px",
                   }}
                 >
@@ -684,8 +647,8 @@ function HotelDealPage() {
                       component={Paper}
                       sx={{
                         marginTop: "10px",
-                        height: 520,
-                        maxHeight: 520,
+                        height: 400,
+                        maxHeight: 400,
                         width: 900,
                         maxWidth: 900,
                         border: 2,
@@ -764,6 +727,68 @@ function HotelDealPage() {
                         </TableBody>
                       </Table>
                     </TableContainer>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      marginTop: "30px",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: "#343434" }}
+                      sx={{
+                        width: "110px",
+                        borderRadius: "10px",
+                      }}
+                      startIcon={<KeyboardArrowLeftIcon />}
+                      onClick={navigateToMenuHotelDealPage}
+                    >
+                      กลับหน้า
+                    </Button>
+                    {isLoad ? (
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <CircularProgress
+                          style={{ marginRight: "20px", color: "black" }}
+                        />
+                      </div>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        sx={{
+                          width: "120px",
+                          borderRadius: "10px",
+                        }}
+                        startIcon={<ChevronRightIcon />}
+                        // onClick={navigateToAddTicketP2Page}
+                        onClick={async () => {
+                          try {
+                            setLoad(true);
+                            if (hoteldeal_ID && selectedValueRadio != "") {
+                              handleClickOpen();
+                            } else {
+                              window.alert(
+                                "ข้อมูลไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
+                              );
+                            }
+                            setLoad(false);
+                          } catch (error) {
+                            setLoad(false);
+                            console.log(error);
+                          }
+                        }}
+                      >
+                        ส่งคำร้อง
+                      </Button>
+                    )}
                   </div>
                 </div>
               </Box>

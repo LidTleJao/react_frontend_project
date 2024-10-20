@@ -575,67 +575,6 @@ function ConcertDealPage() {
                   </div>
                 </Box>
               </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginTop: "30px",
-                }}
-              >
-                <Button
-                  variant="contained"
-                  style={{ backgroundColor: "#343434" }}
-                  sx={{
-                    width: "110px",
-                    borderRadius: "10px",
-                  }}
-                  startIcon={<KeyboardArrowLeftIcon />}
-                  onClick={navigateToMenuConcertDealPage}
-                >
-                  กลับหน้า
-                </Button>
-                {isLoad ? (
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <CircularProgress
-                      style={{ marginRight: "20px", color: "black" }}
-                    />
-                  </div>
-                ) : (
-                  <Button
-                    variant="contained"
-                    sx={{
-                      width: "120px",
-                      borderRadius: "10px",
-                    }}
-                    startIcon={<ChevronRightIcon />}
-                    // onClick={navigateToAddTicketP2Page}
-                    onClick={async () => {
-                      try {
-                        setLoad(true);
-                        if (concertdeal_ID && selectedValueRadio != "") {
-                          handleClickOpen();
-                        } else {
-                          window.alert("ข้อมูลไม่ถูกต้อง โปรดเลือกข้อมูลใหม่");
-                        }
-                        setLoad(false);
-                      } catch (error) {
-                        setLoad(false);
-                        console.log(error);
-                      }
-                    }}
-                  >
-                    ส่งคำร้อง
-                  </Button>
-                )}
-              </div>
             </div>
             <Dialog
               open={open}
@@ -671,8 +610,8 @@ function ConcertDealPage() {
               <div style={{ display: "flex", marginBottom: "10px" }}>
                 <TableContainer
                   sx={{
-                    height: 60,
-                    maxHeight: 60,
+                    height: 120,
+                    maxHeight: 120,
                     width: 950,
                     maxWidth: 950,
                     border: 2,
@@ -682,33 +621,52 @@ function ConcertDealPage() {
                     display: "flex",
                   }}
                 >
-                  {ConcertDealByCDID.map((concertdeal) => (
-                    <TableRow>
-                      <TableCell>
-                        ชื่อคอนเสิร์ต: {concertdeal.name_concert}
-                      </TableCell>
-                      <TableCell>จังหวัด: {concertdeal.province}</TableCell>
-                      <TableCell>
-                        ชนิดตั๋ว: {concertdeal.name_type_ticket}
-                      </TableCell>
-                      <TableCell>
-                        ราคาตั๋ว: {concertdeal.concert_deal_price}
-                      </TableCell>
-                      <TableCell>
-                        จำนวนตั๋ว: {concertdeal.number_of_tickets}
-                      </TableCell>
-                      <TableCell>
-                        วันที่สิ้นสุดการยื่นข้อเสนอ:{" "}
-                        {dayjs(concertdeal.e_datetime).format("YYYY-MM-DD")}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          ชื่อคอนเสิร์ต
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          จังหวัด
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          ชนิดตั๋ว
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          จำนวนตั๋ว
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          ราคาตั๋ว
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>
+                          วันที่สิ้นสุดข้อเสนอ
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {ConcertDealByCDID.map((concertdeal) => (
+                        <TableRow>
+                          <TableCell>{concertdeal.name_concert}</TableCell>
+                          <TableCell>{concertdeal.province}</TableCell>
+                          <TableCell>{concertdeal.name_type_ticket}</TableCell>
+                          <TableCell>
+                            {concertdeal.concert_deal_price}
+                          </TableCell>
+                          <TableCell>{concertdeal.number_of_tickets}</TableCell>
+                          <TableCell>
+                            {dayjs(concertdeal.e_datetime).format("YYYY-MM-DD")}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
                 </TableContainer>
               </div>
               <Box
                 sx={{
                   width: 950,
-                  height: 570,
+                  height: 520,
                   borderRadius: 3,
                   // bgcolor: "#D9D9D9",
                   marginBottom: "20px",
@@ -721,6 +679,7 @@ function ConcertDealPage() {
                   style={{
                     display: "flex",
                     marginTop: "10px",
+                    flexDirection: "column",
                     // marginLeft: "10px",
                   }}
                 >
@@ -734,8 +693,8 @@ function ConcertDealPage() {
                       component={Paper}
                       sx={{
                         marginTop: "10px",
-                        height: 520,
-                        maxHeight: 520,
+                        height: 400,
+                        maxHeight: 400,
                         width: 900,
                         maxWidth: 900,
                         border: 2,
@@ -818,6 +777,68 @@ function ConcertDealPage() {
                         </TableBody>
                       </Table>
                     </TableContainer>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      marginTop: "30px",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: "#343434" }}
+                      sx={{
+                        width: "110px",
+                        borderRadius: "10px",
+                      }}
+                      startIcon={<KeyboardArrowLeftIcon />}
+                      onClick={navigateToMenuConcertDealPage}
+                    >
+                      กลับหน้า
+                    </Button>
+                    {isLoad ? (
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <CircularProgress
+                          style={{ marginRight: "20px", color: "black" }}
+                        />
+                      </div>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        sx={{
+                          width: "120px",
+                          borderRadius: "10px",
+                        }}
+                        startIcon={<ChevronRightIcon />}
+                        // onClick={navigateToAddTicketP2Page}
+                        onClick={async () => {
+                          try {
+                            setLoad(true);
+                            if (concertdeal_ID && selectedValueRadio != "") {
+                              handleClickOpen();
+                            } else {
+                              window.alert(
+                                "ข้อมูลไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
+                              );
+                            }
+                            setLoad(false);
+                          } catch (error) {
+                            setLoad(false);
+                            console.log(error);
+                          }
+                        }}
+                      >
+                        ส่งคำร้อง
+                      </Button>
+                    )}
                   </div>
                 </div>
               </Box>
