@@ -16,6 +16,7 @@ import {
   TableCell,
   tableCellClasses,
 } from "@mui/material";
+import dayjs from "dayjs";
 function PackageDetailPage() {
   const { pid } = useParams();
   const packetService = new PacketService();
@@ -194,7 +195,7 @@ function PackageDetailPage() {
                         </h1>
 
                         <h1 className="text-lg text-gray-500 justify-start pl-3 max-w-lg">
-                          {packet.s_deadline_package.toString()}
+                          {dayjs(packet.s_deadline_package).format("YYYY-MM-DD")}
                         </h1>
                       </div>
                       <div className="flex flex-row justify-start ">
@@ -203,7 +204,7 @@ function PackageDetailPage() {
                         </h1>
 
                         <h1 className="text-lg text-gray-500 justify-start pl-3 max-w-lg">
-                          {packet.deadline_package.toString()}
+                          {dayjs(packet.deadline_package).format("YYYY-MM-DD")}
                         </h1>
                       </div>
                     </div>
