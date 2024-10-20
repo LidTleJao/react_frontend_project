@@ -716,11 +716,6 @@ function CheckDataConcertPage() {
                               variant="h5"
                             >
                               {concertselect?.detail_concert}
-                              {/* ที่อยู่คอนเสิร์ต Pre-sale วันจันทร์ที่ 19 มิถุนายน
-                              2566 เวลา 10:00 เปิดจำหน่ายวันอังคารที่ 20
-                              มิถุนายน 2566 เวลา 10:00 วันศุกร์ที่ 30 มิถุนายน
-                              2566, 10:00 น. บัตรมีจำนวนจำกัด ณ สถานที่สนามกีฬา
-                              มภร มหาสารคาม */}
                             </Typography>
                           ))}
                         </div>
@@ -1247,12 +1242,12 @@ function CheckDataConcertPage() {
                                 }}
                                 variant="h4"
                               >
-                                รอบการแสดง
+                                ช่องทางการติดต่อ
                               </Typography>
                               <div
                                 style={{
                                   display: "flex",
-                                  marginRight: "10px",
+                                  // marginRight: "5px",
                                   marginTop: "5px",
                                 }}
                               >

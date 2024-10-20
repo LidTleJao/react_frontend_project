@@ -30,6 +30,8 @@ import "./page/AddPK/Hotel/AddHotelDealData/AddHotelDealData.css";
 import "./page/AddPK/Concert/AddConcertDealData/AddConcertDealData.css";
 import "./page/AddPK/Hotel/HotelDeals/HotelDeals.css";
 import "./page/AddPK/Concert/ConcertDeals/ConcertDeals.css";
+import "./page/AddPK/Hotel/CheckHotelDeal/CheckHotelDeal.css";
+import "./page/AddPK/Concert/CheckConcertDeal/CheckConcertDeal.css";
 import LoginPage from "./page/Login/Login";
 import RegisterPage from "./page/Register/Register";
 import HomePage from "./page/Home/Home";
@@ -63,6 +65,8 @@ import HotelDealPage from "./page/AddPK/Hotel/HotelDeals/HotelDeals";
 import ConcertDealPage from "./page/AddPK/Concert/ConcertDeals/ConcertDeals";
 import ConcertDetailPage from "./page/ConcertDetail/ConcertDetail";
 import HotelDetailPage from "./page/Hotel/HotelDetail";
+import CheckHotelDealPage from "./page/AddPK/Hotel/CheckHotelDeal/CheckHotelDeal";
+import CheckConcertDealPage from "./page/AddPK/Concert/CheckConcertDeal/CheckConcertDeal";
 
 function App() {
   const routers = createBrowserRouter([
@@ -94,9 +98,11 @@ function App() {
     { path: "/SelectData", element: <SelectDataPage /> },
     { path: "/MenuHotelDeal", element: <MenuHotelDealPage /> },
     { path: "/AddHotelDealData", element: <AddHotelDealDataPage /> },
+    { path: "/CheckHotelDeal", element: <CheckHotelDealPage /> },
     { path: "/HotelDeal", element: <HotelDealPage /> },
     { path: "/MenuConcertDeal", element: <MenuConcertDealPage /> },
     { path: "/AddConcertDealData", element: <AddConcertDealDataPage /> },
+    { path: "/CheckConcertDeal", element: <CheckConcertDealPage /> },
     { path: "/ConcertDeal", element: <ConcertDealPage /> },
     { path: "/HotelDetail/:hid", element: <HotelDetailPage /> },
   ]);

@@ -16,11 +16,18 @@ export class HotelDealsService {
     return response;
   }
 
+  async getHotelDealAllByUser(uid: string) {
+    const url = `${HOST}/HotelDealAllByUser/${uid}`;
+    const response = await axios.get(url);
+    return response;
+  }
+
   async getHotelDealByHDID(hdid: string) {
     const url = `${HOST}/HotelDealByHDID/${hdid}`;
     const response = await axios.get(url);
     return response;
   }
+  
 
   async AddHotelDealData(
     room_ID: string,

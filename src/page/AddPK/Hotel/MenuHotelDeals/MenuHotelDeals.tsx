@@ -11,6 +11,9 @@ function MenuHotelDealPage() {
   function navigateToAddHotelDealDataPage() {
     navigate("/AddHotelDealData");
   }
+  function navigateToChcekHotelDealPage() {
+    navigate("/CheckHotelDeal");
+  }
   function navigateToHotelDealPage() {
     navigate("/HotelDeal");
   }
@@ -63,7 +66,7 @@ function MenuHotelDealPage() {
             <div style={{ display: "flex", marginLeft: "100px" }}>
               <Card>
                 <CardActionArea
-                  // onClick={navigateToHotelDealPage}
+                  onClick={navigateToChcekHotelDealPage}
                 >
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     <FactCheckIcon sx={{ fontSize: "150px" }} />

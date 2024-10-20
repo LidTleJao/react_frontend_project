@@ -187,7 +187,9 @@ function CheckDataHotelPage() {
                 </Typography>
                 <div style={{ display: "flex", marginRight: "10px" }}>
                   <Card sx={{ height: 55, border: 1 }}>
-                    <CardActionArea onClick={navigateToEditDataHotelPage}>
+                    <CardActionArea 
+                    // onClick={navigateToEditDataHotelPage}
+                    >
                       <div
                         style={{ display: "flex", justifyContent: "center" }}
                       >
@@ -369,7 +371,7 @@ function CheckDataHotelPage() {
             style={{
               display: "flex",
               marginTop: "20px",
-              marginRight:"700px",
+              marginRight: "700px",
               justifyContent: "center",
             }}
           >
@@ -391,6 +393,7 @@ function CheckDataHotelPage() {
                   display: "flex",
                   marginLeft: "10px",
                   marginTop: "10px",
+                  justifyContent: "space-between",
                 }}
               >
                 <Typography
@@ -406,6 +409,20 @@ function CheckDataHotelPage() {
                 >
                   ช่องทางการติดต่อ
                 </Typography>
+                <div style={{ display: "flex", marginRight: "10px",marginBottom:"10px" }}>
+                  <Card sx={{ height: 40, border: 1 }}>
+                    <CardActionArea 
+                    // onClick={navigateToEditDataHotelPage}
+                    >
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <EditIcon sx={{ fontSize: "40px" }} />
+                      </div>
+                      {/* <CardContent></CardContent> */}
+                    </CardActionArea>
+                  </Card>
+                </div>
               </div>
               <div style={{ display: "flex", marginLeft: "10px" }}>
                 <Box
