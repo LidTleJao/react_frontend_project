@@ -418,7 +418,7 @@ function ConcertPage() {
                           color="white"
                           sx={{ marginLeft: "10px" }}
                         >
-                          ที่อยู่คอนเสิร์ต: {concert.address_concert} {concert.CID}
+                          ที่อยู่คอนเสิร์ต: {concert.province}
                         </Typography>
                         <Button
                           variant="contained"

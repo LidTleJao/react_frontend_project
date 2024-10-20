@@ -44,15 +44,6 @@ function HomePage() {
               marginTop: 100,
             }}
           >
-            {/* <Box
-              sx={{
-                width: 350,
-                height: 170,
-                borderRadius: 3,
-                bgcolor: "#D9D9D9",
-                border: 2,
-              }}
-            ></Box> */}
             <div
               style={{
                 display: "flex",

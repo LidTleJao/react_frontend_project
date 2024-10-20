@@ -26,8 +26,6 @@ function PackagePage() {
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [packetAll, setPacketAll] = useState<PacketGetAllRes[]>([]);
   const [filteredData, setFilteredData] = useState<PacketGetAllRes[]>([]);
-  // const [packet, setPacket] = useState<PacketGetPIDRes[]>([]);
-  // const [packet_ID, setPacket_ID] = useState(4);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchTypeRoom, setSearchTypeRoom] = useState("");
   const [searchTypeView, setSearchTypeView] = useState("");
