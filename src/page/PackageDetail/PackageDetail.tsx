@@ -4,26 +4,42 @@ import HeaderUserTypeManager2 from "../../components/HeadUserTypeManager2";
 import { PacketGetPIDRes } from "../../model/Response/Packet/Packet/PacketGetByPIDRes";
 import { PacketService } from "../../service/packetService";
 import { useParams } from "react-router-dom";
-
+import PlaceIcon from "@mui/icons-material/Place";
+import { Box, styled } from "@mui/system";
+import {
+  TableContainer,
+  Paper,
+  Table,
+  TableHead,
+  TableRow,
+  TableBody,
+  TableCell,
+  tableCellClasses,
+} from "@mui/material";
 function PackageDetailPage() {
-    const { pid } = useParams();
-  const packetService  = new PacketService();
+  const { pid } = useParams();
+  const packetService = new PacketService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [packetselect, setPacketselect] = useState<PacketGetPIDRes[]>([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (!pid) return;
-    const loadDataAsync = async () =>{
-        const respacket = await packetService.getPacketByPID(pid);
-        const data: PacketGetPIDRes[] = respacket.data;
-        setPacketselect(data);
+    const loadDataAsync = async () => {
+      const respacket = await packetService.getPacketByPID(pid);
+      const data: PacketGetPIDRes[] = respacket.data;
+      setPacketselect(data);
     };
     loadDataAsync();
-  },[pid]);
+  }, [pid]);
 
   console.log(packetselect);
-  
-
+  const StyledTableCell = styled(TableCell)(() => ({
+    [`&.${tableCellClasses.head}`]: {
+      color: "black",
+      fontWeight: "bold",
+      fontSize: 16,
+    },
+  }));
   return (
     <>
       {(user?.type_user === 2 && (
@@ -36,6 +52,168 @@ function PackageDetailPage() {
             <HeaderUserTypeGeneral2 />
           </>
         ))}
+      <div className="concert-cont pt-40">
+        <div className="flex flex-col justify-center items-center">
+          {packetselect.map((packet) => (
+            <div className="bg-sky-200 p-6 rounded-2xl mt-1">
+              <div className=" flex flex-row justify-between">
+                <div className="h-auto flex flex-col ">
+                  <div className="h-auto flex flex-row">
+                    <h1 className="text-2xl font-bold pr-10 text-black">
+                      {packet.name} ({packet.typename_hotel})
+                    </h1>
+                  </div>
+                  <div className="h-auto flex flex-row items-center mt-1 justify-start">
+                    <PlaceIcon sx={{ fontSize: 30 }} className="text-sky-700" />
+                    <h1 className="text-xl font-semibold text-gray-500 j">
+                      จังหวัด{packet.province}
+                    </h1>
+                  </div>
+                </div>
+              </div>
+
+              <div className=" flex h-auto w-auto  bg-white mt-2 rounded-xl p-2 flex-col">
+                <div className=" flex h-auto w-auto  bg-white ml- rounded-xl p-2">
+                  <div className="h-auto flex flex-col">
+                    <TableContainer component={Paper} className="mt-2">
+                      <Table sx={{ minWidth: 650 }} aria-label="">
+                        <TableHead sx={{ border: "1px solid black" }}>
+                          <TableRow sx={{ border: "1px solid black" }}>
+                            <StyledTableCell
+                              sx={{ border: "1px solid black" }}
+                              align="center"
+                            >
+                              ชนิดห้องพัก
+                            </StyledTableCell>
+                            <StyledTableCell
+                              sx={{ border: "1px solid black" }}
+                              align="center"
+                            >
+                              วิวของห้อง
+                            </StyledTableCell>
+                            <StyledTableCell
+                              sx={{ border: "1px solid black" }}
+                              align="center"
+                            >
+                              ราคาห้องต่อคือ
+                            </StyledTableCell>
+                            <StyledTableCell
+                              sx={{ border: "1px solid black" }}
+                              align="center"
+                            >
+                              จำนวนคนเข้าพัก
+                            </StyledTableCell>
+                            <StyledTableCell
+                              sx={{ border: "1px solid black" }}
+                              align="center"
+                            >
+                              จำนวนห้อง
+                            </StyledTableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody sx={{ border: "1px solid black" }}>
+                          <TableRow key={packet.hotel_ID}>
+                            <TableCell sx={{ border: "1px solid black" }}>
+                              {packet.type_room}
+                            </TableCell>
+                            <TableCell
+                              align="left"
+                              sx={{ border: "1px solid black" }}
+                            >
+                              {packet.type_view_name_room}
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{ border: "1px solid black" }}
+                            >
+                              {packet.hotel_deal_price}
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{ border: "1px solid black" }}
+                            >
+                              {" 10"}
+                              {/* {packet.number_of_tickets} */}
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              sx={{ border: "1px solid black" }}
+                            >
+                              {packet.number_of_rooms}
+                            </TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </div>
+                </div>
+                <h1 className="text-2xl text-black ml-2 font-semibold mt-4">concert : {packet.name_concert}</h1>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "start",
+                    marginTop: 1,
+                    marginLeft: 1,
+                  }}
+                >
+                  <img
+                    className="object-cover h-64 w-48 rounded-xl "
+                    src={packet.poster_concert}
+                  ></img>
+                  <div className=" flex h-auto w-auto  bg-white ml-7 rounded-xl p-2">
+                    <div className="h-auto flex flex-col">
+                      {" "}
+                      <h1 className="text-lg text-gray-500">
+                        สถานที่จัดการแสดง ณ {packet.province}
+                      </h1>
+                      <h1 className="text-lg text-gray-500">
+                        ไลน์อัพ : {packet.lineup}
+                      </h1>
+                      <h1 className="text-lg text-gray-500">
+                        วันที่แสดง : {packet.show_schedule_concert.toString()}
+                      </h1>
+                      <div className="flex flex-row">
+                        <h1 className="text-lg text-gray-500">จำนวนบัตร :</h1>
+                        <h1 className="text-lg text-gray-500 justify-start pl-3 max-w-md whitespace-normal">
+                          {packet.number_of_tickets}
+                        </h1>
+                      </div>
+                    
+                      <div className="flex flex-row justify-between ">
+                        <h1 className="text-lg text-gray-500">ราคาบัตร :</h1>
+
+                        <h1 className="text-lg text-gray-500 justify-start pl-3 max-w-lg">
+                          {packet.name_type_ticket}/{packet.concert_deal_price}{" "}
+                          บาท
+                        </h1>
+                      </div>
+                      <div className="flex flex-row justify-start ">
+                        <h1 className="text-lg text-gray-500">
+                          เวลาเริ่มแพ็คเกจ
+                        </h1>
+
+                        <h1 className="text-lg text-gray-500 justify-start pl-3 max-w-lg">
+                          {packet.s_deadline_package.toString()}
+                        </h1>
+                      </div>
+                      <div className="flex flex-row justify-start ">
+                        <h1 className="text-lg text-gray-500">
+                          เวลาสิ้นสุดแพ็คเกจ
+                        </h1>
+
+                        <h1 className="text-lg text-gray-500 justify-start pl-3 max-w-lg">
+                          {packet.deadline_package.toString()}
+                        </h1>
+                      </div>
+                    </div>
+                  </div>
+                </Box>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 }
