@@ -3,7 +3,7 @@ import HeaderUserTypeGeneral2 from "../../components/HeadUserTypeGeneral2";
 import HeaderUserTypeManager2 from "../../components/HeadUserTypeManager2";
 import { PacketGetPIDRes } from "../../model/Response/Packet/Packet/PacketGetByPIDRes";
 import { PacketService } from "../../service/packetService";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import PlaceIcon from "@mui/icons-material/Place";
 import { Box, styled } from "@mui/system";
 import {
@@ -16,16 +16,23 @@ import {
   TableCell,
   tableCellClasses,
   Button,
+  Typography,
 } from "@mui/material";
 import dayjs from "dayjs";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import { HotelURLGetByHotelIDRes } from "../../model/Response/Hotel/HotelUrlGetByHotelIDRes";
+import { HotelService } from "../../service/hotelService";
 
 function PackageDetailPage() {
   const navigate = useNavigate();
   const { pid } = useParams();
+  const hotelService = new HotelService();
   const packetService = new PacketService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [packetselect, setPacketselect] = useState<PacketGetPIDRes[]>([]);
+  const [hotelChannel, setHotelChannel] = useState<HotelURLGetByHotelIDRes[]>(
+    []
+  );
 
   useEffect(() => {
     if (!pid) return;
@@ -36,6 +43,17 @@ function PackageDetailPage() {
     };
     loadDataAsync();
   }, [pid]);
+
+  useEffect(() => {
+    const loadDataAsync = async () => {
+      const reshotel = await hotelService.getHotelUrlByHid(
+        String(packetselect.map((packet) => packet.hotel_ID))
+      );
+      const data: HotelURLGetByHotelIDRes[] = reshotel.data;
+      setHotelChannel(data);
+    };
+    loadDataAsync();
+  }, [packetselect.map((packet) => packet.hotel_ID)]);
 
   console.log(packetselect);
   const StyledTableCell = styled(TableCell)(() => ({
@@ -62,8 +80,23 @@ function PackageDetailPage() {
             <HeaderUserTypeGeneral2 />
           </>
         ))}
-      <div className="concert-cont pt-40">
+      <div className="concert-cont mt-20">
         <div className="flex flex-col justify-center">
+          <div style={{ display: "flex", justifyContent: "center" ,marginTop:20}}>
+            <Typography
+              gutterBottom
+              sx={{
+                display: "flex",
+                fontWeight: "bold",
+                color: "black",
+                fontFamily: "Mitr, sans-serif",
+                fontStyle: "normal",
+              }}
+              variant="h4"
+            >
+              รายละเอียดของแพ็คเกจ
+            </Typography>
+          </div>
           <div style={{ display: "flex", marginBottom: 5 }}>
             <Button
               variant="contained"
@@ -171,10 +204,19 @@ function PackageDetailPage() {
                   </div>
                 </div>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                    <h1 className="text-2xl text-black ml-2 font-semibold mt-4">
-                      concert : {packet.name_concert}
-                    </h1>
-                  </div>
+                  <h1 className="text-xl font-bold text-black pt-2">
+                    ช่องทางการติดต่อ
+                  </h1>
+                  {hotelChannel.map((h, index) => (
+                    <Link
+                      key={index}
+                      to={h.url}
+                      className="text-lg text-gray-500 hover:text-gray-700"
+                    >
+                      {h.url}
+                    </Link>
+                  ))}
+                </div>
                 <h1 className="text-2xl text-black ml-2 font-semibold mt-4">
                   concert : {packet.name_concert}
                 </h1>

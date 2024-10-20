@@ -11,7 +11,7 @@ import { GetConcertChannelByCIDRes } from "../../model/Response/Concert/GetConce
 import { useNavigate, useParams } from "react-router-dom";
 import { GetConcertByCIDRes } from "../../model/Response/Concert/GetConcertByCIDRes";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 function ConcertDetailPage() {
   const navigate = useNavigate();
@@ -65,9 +65,26 @@ function ConcertDetailPage() {
             <HeaderUserTypeGeneral2 />
           </>
         ))}
-      <div className="concert-cont pt-40">
+      <div className="concert-cont pt-20">
         <div className="flex flex-col justify-center">
-        <div style={{display:"flex",marginBottom:5}}>
+          <div
+            style={{ display: "flex", justifyContent: "center", marginTop: 20 }}
+          >
+            <Typography
+              gutterBottom
+              sx={{
+                display: "flex",
+                fontWeight: "bold",
+                color: "black",
+                fontFamily: "Mitr, sans-serif",
+                fontStyle: "normal",
+              }}
+              variant="h4"
+            >
+              รายละเอียดของคอนเสิรต์
+            </Typography>
+          </div>
+          <div style={{ display: "flex", marginBottom: 5 }}>
             <Button
               variant="contained"
               style={{ backgroundColor: "#343434" }}

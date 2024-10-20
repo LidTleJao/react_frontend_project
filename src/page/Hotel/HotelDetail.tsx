@@ -26,6 +26,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 function HotelDetailPage() {
   const user = JSON.parse(localStorage.getItem("objUser")!);
@@ -101,9 +102,26 @@ function HotelDetailPage() {
           </>
         ))}
 
-      <div className="concert-cont pt-40">
+      <div className="concert-cont pt-20">
         <div className="flex flex-col justify-center ">
-          <div style={{display:"flex",marginBottom:5}}>
+          <div
+            style={{ display: "flex", justifyContent: "center", marginTop: 20 }}
+          >
+            <Typography
+              gutterBottom
+              sx={{
+                display: "flex",
+                fontWeight: "bold",
+                color: "black",
+                fontFamily: "Mitr, sans-serif",
+                fontStyle: "normal",
+              }}
+              variant="h4"
+            >
+              รายละเอียดของโรงแรม
+            </Typography>
+          </div>
+          <div style={{ display: "flex", marginBottom: 5 }}>
             <Button
               variant="contained"
               style={{ backgroundColor: "#343434" }}
