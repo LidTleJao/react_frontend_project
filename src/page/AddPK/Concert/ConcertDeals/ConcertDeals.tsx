@@ -57,8 +57,11 @@ function ConcertDealPage() {
   const [open, setOpen] = useState(false);
 
   // เพิ่มสถานะสำหรับฟิลด์ค้นหา
-  const [filteredHotelDeals, setFilteredHotelDeals] = useState<HotelDealsGetAllRes[]>([]);
+  const [filteredHotelDeals, setFilteredHotelDeals] = useState<
+    HotelDealsGetAllRes[]
+  >([]);
   const [searchName, setSearchName] = useState("");
+  const [searchProvince, setSearchProvince] = useState("");
   const [searchRoomType, setSearchRoomType] = useState<number | string>("");
   const [searchViewType, setSearchViewType] = useState<number | string>("");
   const [searchRoomCount, setSearchRoomCount] = useState<number | string>("");
@@ -106,7 +109,6 @@ function ConcertDealPage() {
     loadDataAsync();
   }, []);
 
-
   const handleClickOpen = () => {
     setOpen(true);
     console.log(concertdeal_ID);
@@ -147,6 +149,7 @@ function ConcertDealPage() {
   const filterHotelDeals = () => {
     const isSearching =
       searchName !== "" ||
+      searchProvince !== "" ||
       searchRoomType !== "" ||
       searchViewType !== "" ||
       searchRoomCount !== "" ||
@@ -159,18 +162,32 @@ function ConcertDealPage() {
 
     const results = hotelDealAll.filter((deal) => {
       const isNameMatch = searchName === "" || deal.name.includes(searchName);
-      const isRoomTypeMatch = searchRoomType === "" || deal.room_type_ID === Number(searchRoomType);
-      const isViewTypeMatch = searchViewType === "" || deal.room_view_type_ID === Number(searchViewType);
-      const isRoomCountMatch = searchRoomCount === "" || deal.number_of_rooms === Number(searchRoomCount);
-      const isPriceMatch = searchPrice === "" || deal.hotel_deal_price === Number(searchPrice);
+      const isProvinceMatch =
+        searchProvince === "" || deal.province.includes(searchProvince);
+      const isRoomTypeMatch =
+        searchRoomType === "" || deal.room_type_ID === Number(searchRoomType);
+      const isViewTypeMatch =
+        searchViewType === "" ||
+        deal.room_view_type_ID === Number(searchViewType);
+      const isRoomCountMatch =
+        searchRoomCount === "" ||
+        deal.number_of_rooms === Number(searchRoomCount);
+      const isPriceMatch =
+        searchPrice === "" || deal.hotel_deal_price === Number(searchPrice);
 
-      return isNameMatch && isRoomTypeMatch && isViewTypeMatch && isRoomCountMatch && isPriceMatch;
+      return (
+        isNameMatch &&
+        isProvinceMatch &&
+        isRoomTypeMatch &&
+        isViewTypeMatch &&
+        isRoomCountMatch &&
+        isPriceMatch
+      );
     });
 
     console.log("Filtered Hotel Deals:", results);
     setFilteredHotelDeals(results);
   };
-
 
   function navigateToMenuConcertDealPage() {
     navigate("/MenuConcertDeal");
@@ -243,8 +260,8 @@ function ConcertDealPage() {
                   sx={{
                     width: 400,
                     maxWidth: 400,
-                    height: 420,
-                    maxHeight: 420,
+                    height: 480,
+                    maxHeight: 480,
                     borderRadius: 3,
                     border: 2,
                     display: "flex",
@@ -293,10 +310,124 @@ function ConcertDealPage() {
                         }}
                       />
                     </div>
-
                     <div style={{ display: "flex", marginTop: "20px" }}>
                       <FormControl sx={{ width: "20pc" }}>
-                        <InputLabel id="room-type-label" sx={{ marginTop: "-5px" }}>
+                        <InputLabel
+                          id="demo-select-small-label"
+                          sx={{ marginTop: "-5px" }}
+                        >
+                          จังหวัด
+                        </InputLabel>
+                        <Select
+                          labelId="demo-select-small-label"
+                          id="demo-select-small"
+                          label="จังหวัด"
+                          value={searchProvince}
+                          onChange={(e) => setSearchProvince(e.target.value)}
+                          sx={{
+                            borderRadius: 20,
+                            border: 1,
+                            borderColor: "black",
+                            bgcolor: "white",
+                            height: "40px",
+                          }}
+                        >
+                          <MenuItem value={"กรุงเทพมหานคร"}>
+                            กรุงเทพมหานคร
+                          </MenuItem>
+                          <MenuItem value={"กระบี่"}>กระบี่</MenuItem>
+                          <MenuItem value={"กาญจนบุรี"}>กาญจนบุรี</MenuItem>
+                          <MenuItem value={"กาฬสินธุ์"}>กาฬสินธุ์</MenuItem>
+                          <MenuItem value={"กำแพงเพชร"}>กำแพงเพชร</MenuItem>
+                          <MenuItem value={"ขอนแก่น"}>ขอนแก่น</MenuItem>
+                          <MenuItem value={"จันทบุรี"}>จันทบุรี</MenuItem>
+                          <MenuItem value={"ฉะเชิงเทรา"}>ฉะเชิงเทรา</MenuItem>
+                          <MenuItem value={"ชลบุรี"}>ชลบุรี</MenuItem>
+                          <MenuItem value={"ชัยนาท"}>ชัยนาท</MenuItem>
+                          <MenuItem value={"ชัยภูมิ"}>ชัยภูมิ</MenuItem>
+                          <MenuItem value={"ชุมพร"}>ชุมพร</MenuItem>
+                          <MenuItem value={"เชียงราย"}>เชียงราย</MenuItem>
+                          <MenuItem value={"เชียงใหม่"}>เชียงใหม่</MenuItem>
+                          <MenuItem value={"ตรัง"}>ตรัง</MenuItem>
+                          <MenuItem value={"ตราด"}>ตราด</MenuItem>
+                          <MenuItem value={"ตาก"}>ตาก</MenuItem>
+                          <MenuItem value={"นครนายก"}>นครนายก</MenuItem>
+                          <MenuItem value={"นครปฐม"}>นครปฐม</MenuItem>
+                          <MenuItem value={"นครพนม"}>นครพนม</MenuItem>
+                          <MenuItem value={"นครราชสีมา"}>นครราชสีมา</MenuItem>
+                          <MenuItem value={"นครศรีธรรมราช"}>
+                            นครศรีธรรมราช
+                          </MenuItem>
+                          <MenuItem value={"นครสวรรค์"}>นครสวรรค์</MenuItem>
+                          <MenuItem value={"นนทบุรี"}>นนทบุรี</MenuItem>
+                          <MenuItem value={"นราธิวาส"}>นราธิวาส</MenuItem>
+                          <MenuItem value={"น่าน"}>น่าน</MenuItem>
+                          <MenuItem value={"บึงกาฬ"}>บึงกาฬ</MenuItem>
+                          <MenuItem value={"บุรีรัมย์"}>บุรีรัมย์</MenuItem>
+                          <MenuItem value={"ปทุมธานี"}>ปทุมธานี</MenuItem>
+                          <MenuItem value={"ประจวบคีรีขันธ์"}>
+                            ประจวบคีรีขันธ์
+                          </MenuItem>
+                          <MenuItem value={"ปราจีนบุรี"}>ปราจีนบุรี</MenuItem>
+                          <MenuItem value={"ปัตตานี"}>ปัตตานี</MenuItem>
+                          <MenuItem value={"พระนครศรีอยุธยา"}>
+                            พระนครศรีอยุธยา
+                          </MenuItem>
+                          <MenuItem value={"พังงา"}>พังงา</MenuItem>
+                          <MenuItem value={"พัทลุง"}>พัทลุง</MenuItem>
+                          <MenuItem value={"พิจิตร"}>พิจิตร</MenuItem>
+                          <MenuItem value={"พิษณุโลก"}>พิษณุโลก</MenuItem>
+                          <MenuItem value={"เพชรบุรี"}>เพชรบุรี</MenuItem>
+                          <MenuItem value={"เพชรบูรณ์"}>เพชรบูรณ์</MenuItem>
+                          <MenuItem value={"แพร่"}>แพร่</MenuItem>
+                          <MenuItem value={"พะเยา"}>พะเยา</MenuItem>
+                          <MenuItem value={"ภูเก็ต"}>ภูเก็ต</MenuItem>
+                          <MenuItem value={"มหาสารคาม"}>มหาสารคาม</MenuItem>
+                          <MenuItem value={"มุกดาหาร"}>มุกดาหาร</MenuItem>
+                          <MenuItem value={"แม่ฮ่องสอน"}>แม่ฮ่องสอน</MenuItem>
+                          <MenuItem value={"ยโสธร"}>ยโสธร</MenuItem>
+                          <MenuItem value={"ยะลา"}>ยะลา</MenuItem>
+                          <MenuItem value={"ร้อยเอ็ด"}>ร้อยเอ็ด</MenuItem>
+                          <MenuItem value={"ระนอง"}>ระนอง</MenuItem>
+                          <MenuItem value={"ระยอง"}>ระยอง</MenuItem>
+                          <MenuItem value={"ราชบุรี"}>ราชบุรี</MenuItem>
+                          <MenuItem value={"ลพบุรี"}>ลพบุรี</MenuItem>
+                          <MenuItem value={"ลำปาง"}>ลำปาง</MenuItem>
+                          <MenuItem value={"ลำพูน"}>ลำพูน</MenuItem>
+                          <MenuItem value={"เลย"}>เลย</MenuItem>
+                          <MenuItem value={"ศรีสะเกษ"}>ศรีสะเกษ</MenuItem>
+                          <MenuItem value={"สกลนคร"}>สกลนคร</MenuItem>
+                          <MenuItem value={"สงขลา"}>สงขลา</MenuItem>
+                          <MenuItem value={"สตูล"}>สตูล</MenuItem>
+                          <MenuItem value={"สมุทรปราการ"}>สมุทรปราการ</MenuItem>
+                          <MenuItem value={"สมุทรสงคราม"}>สมุทรสงคราม</MenuItem>
+                          <MenuItem value={"สมุทรสาคร"}>สมุทรสาคร</MenuItem>
+                          <MenuItem value={"สระแก้ว"}>สระแก้ว</MenuItem>
+                          <MenuItem value={"สระบุรี"}>สระบุรี</MenuItem>
+                          <MenuItem value={"สิงห์บุรี"}>สิงห์บุรี</MenuItem>
+                          <MenuItem value={"สุโขทัย"}>สุโขทัย</MenuItem>
+                          <MenuItem value={"สุพรรณบุรี"}>สุพรรณบุรี</MenuItem>
+                          <MenuItem value={"สุราษฎร์ธานี"}>
+                            สุราษฎร์ธานี
+                          </MenuItem>
+                          <MenuItem value={"สุรินทร์"}>สุรินทร์</MenuItem>
+                          <MenuItem value={"หนองคาย"}>หนองคาย</MenuItem>
+                          <MenuItem value={"หนองบัวลำภู"}>หนองบัวลำภู</MenuItem>
+                          <MenuItem value={"อ่างทอง"}>อ่างทอง</MenuItem>
+                          <MenuItem value={"อำนาจเจริญ"}>อำนาจเจริญ</MenuItem>
+                          <MenuItem value={"อุดรธานี"}>อุดรธานี</MenuItem>
+                          <MenuItem value={"อุตรดิตถ์"}>อุตรดิตถ์</MenuItem>
+                          <MenuItem value={"อุทัยธานี"}>อุทัยธานี</MenuItem>
+                          <MenuItem value={"อุบลราชธานี"}>อุบลราชธานี</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <div style={{ display: "flex", marginTop: "20px" }}>
+                      <FormControl sx={{ width: "20pc" }}>
+                        <InputLabel
+                          id="room-type-label"
+                          sx={{ marginTop: "-5px" }}
+                        >
                           ชนิดห้อง
                         </InputLabel>
                         <Select
@@ -314,20 +445,35 @@ function ConcertDealPage() {
                           }}
                         >
                           <MenuItem value="">ล้างค่า</MenuItem>
-                          <MenuItem value="1">ห้องธรรมดา (Standard Room)</MenuItem>
-                          <MenuItem value="2">ห้องดีลักซ์ (Deluxe Room)</MenuItem>
-                          <MenuItem value="3">ห้องเอกซ์คลูซีฟ (Executive Room)</MenuItem>
-                          <MenuItem value="4">ห้องที่มีประตูเชื่อมต่อกัน (Connecting Rooms)</MenuItem>
+                          <MenuItem value="1">
+                            ห้องธรรมดา (Standard Room)
+                          </MenuItem>
+                          <MenuItem value="2">
+                            ห้องดีลักซ์ (Deluxe Room)
+                          </MenuItem>
+                          <MenuItem value="3">
+                            ห้องเอกซ์คลูซีฟ (Executive Room)
+                          </MenuItem>
+                          <MenuItem value="4">
+                            ห้องที่มีประตูเชื่อมต่อกัน (Connecting Rooms)
+                          </MenuItem>
                           <MenuItem value="5">ห้องสวีท (Suite)</MenuItem>
-                          <MenuItem value="6">ห้องสุพีเรียร์ (Superior Room)</MenuItem>
-                          <MenuItem value="7">ห้องพักพิเศษสำหรับผู้พิการ (Accessible Room)</MenuItem>
+                          <MenuItem value="6">
+                            ห้องสุพีเรียร์ (Superior Room)
+                          </MenuItem>
+                          <MenuItem value="7">
+                            ห้องพักพิเศษสำหรับผู้พิการ (Accessible Room)
+                          </MenuItem>
                         </Select>
                       </FormControl>
                     </div>
 
                     <div style={{ display: "flex", marginTop: "20px" }}>
                       <FormControl sx={{ width: "20pc" }}>
-                        <InputLabel id="view-type-label" sx={{ marginTop: "-5px" }}>
+                        <InputLabel
+                          id="view-type-label"
+                          sx={{ marginTop: "-5px" }}
+                        >
                           ชนิดวิว
                         </InputLabel>
                         <Select
@@ -358,7 +504,9 @@ function ConcertDealPage() {
                         type="number"
                         sx={{ width: "20pc" }}
                         value={searchRoomCount || ""}
-                        onChange={(e) => setSearchRoomCount(Number(e.target.value))}
+                        onChange={(e) =>
+                          setSearchRoomCount(Number(e.target.value))
+                        }
                         InputProps={{
                           sx: {
                             borderRadius: "20px",
@@ -392,7 +540,13 @@ function ConcertDealPage() {
                       />
                     </div>
 
-                    <div style={{ display: "flex", marginTop: "20px", justifyContent: "space-between" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        marginTop: "20px",
+                        justifyContent: "space-between",
+                      }}
+                    >
                       <Button
                         variant="contained"
                         style={{ backgroundColor: "#343434" }}
@@ -533,13 +687,13 @@ function ConcertDealPage() {
                       <TableCell>
                         ชื่อคอนเสิร์ต: {concertdeal.name_concert}
                       </TableCell>
-                      <TableCell>
-                        จังหวัด: {concertdeal.province}
-                      </TableCell>
+                      <TableCell>จังหวัด: {concertdeal.province}</TableCell>
                       <TableCell>
                         ชนิดตั๋ว: {concertdeal.name_type_ticket}
                       </TableCell>
-                      <TableCell>ราคาตั๋ว: {concertdeal.concert_deal_price}</TableCell>
+                      <TableCell>
+                        ราคาตั๋ว: {concertdeal.concert_deal_price}
+                      </TableCell>
                       <TableCell>
                         จำนวนตั๋ว: {concertdeal.number_of_tickets}
                       </TableCell>
@@ -626,18 +780,37 @@ function ConcertDealPage() {
                               <TableCell>{hoteldeals.name}</TableCell>
                               <TableCell>{hoteldeals.province}</TableCell>
                               <TableCell>{hoteldeals.type_room}</TableCell>
-                              <TableCell>{hoteldeals.type_view_name_room}</TableCell>
-                              <TableCell>{hoteldeals.number_of_rooms}</TableCell>
-                              <TableCell>{hoteldeals.hotel_deal_price}</TableCell>
-                              <TableCell>{dayjs(hoteldeals.e_datetime).format("YYYY-MM-DD")}</TableCell>
+                              <TableCell>
+                                {hoteldeals.type_view_name_room}
+                              </TableCell>
+                              <TableCell>
+                                {hoteldeals.number_of_rooms}
+                              </TableCell>
+                              <TableCell>
+                                {hoteldeals.hotel_deal_price}
+                              </TableCell>
+                              <TableCell>
+                                {dayjs(hoteldeals.e_datetime).format(
+                                  "YYYY-MM-DD"
+                                )}
+                              </TableCell>
                               <TableCell>{hoteldeals.name_status}</TableCell>
                               <TableCell>
                                 <Radio
-                                  checked={selectedValueRadio === hoteldeals.HDID.toString()}
-                                  onChange={() => setSelectedValueRadio(hoteldeals.HDID.toString())}
+                                  checked={
+                                    selectedValueRadio ===
+                                    hoteldeals.HDID.toString()
+                                  }
+                                  onChange={() =>
+                                    setSelectedValueRadio(
+                                      hoteldeals.HDID.toString()
+                                    )
+                                  }
                                   value={hoteldeals.HDID.toString()}
                                   name="radio-buttons"
-                                  inputProps={{ "aria-label": hoteldeals.HDID.toString() }}
+                                  inputProps={{
+                                    "aria-label": hoteldeals.HDID.toString(),
+                                  }}
                                 />
                               </TableCell>
                             </TableRow>
