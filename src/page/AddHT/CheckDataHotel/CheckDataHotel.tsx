@@ -53,7 +53,6 @@ function CheckDataHotelPage() {
   const [Hotel_ID, setHotel_ID] = useState("");
   const [editing1, setEditing1] = useState(false);
   const [editing2, setEditing2] = useState(false);
-  const [editing3, setEditing3] = useState(false);
   const nameHotelRef = useRef<HTMLInputElement>();
   const addressHotelRef = useRef<HTMLInputElement>();
   const detailHotelRef = useRef<HTMLInputElement>();
@@ -163,7 +162,9 @@ function CheckDataHotelPage() {
                   setHotel_ID(e.target.value);
                   setEditing1(false);
                   setEditing2(false);
-                  setEditing3(false);
+
+                  setEditingRow(null);
+                  setEditedData(null);
                 }}
                 sx={{ borderRadius: 20, overflow: "auto" }}
                 autoWidth
@@ -1070,24 +1071,38 @@ function CheckDataHotelPage() {
                           <TableCell>
                             {editingRow === index ? (
                               <Select
-                              value={editedData?.type_room}
-                              onChange={(e) =>
-                                setEditedData({
-                                  ...editedData!,
-                                  type_room: e.target.value,
-                                })
-                              }
-                              label="ชนิดห้องพัก"
-                            >
-                              {/* แสดงรายการชนิดห้องพัก */}
-                              <MenuItem value="Standard Room">ห้องธรรมดา (Standard Room)</MenuItem>
-                              <MenuItem value="Deluxe Room">ห้องดีลักซ์ (Deluxe Room)</MenuItem>
-                              <MenuItem value="Executive Room">ห้องเอกซ์คลูซีฟ (Executive Room)</MenuItem>
-                              <MenuItem value="Connecting Rooms">ห้องที่มีประตูเชื่อมต่อกัน (Connecting Rooms)</MenuItem>
-                              <MenuItem value="Suite Room">ห้องสวีท (Suite Room)</MenuItem>
-                              <MenuItem value="Superior Room">ห้องสุพีเรียร์ (Superior Room)</MenuItem>
-                              <MenuItem value="Accessible Room">ห้องพักพิเศษสำหรับผู้พิการ (Accessible Room)</MenuItem>
-                            </Select>
+                                value={editedData?.type_room}
+                                onChange={(e) =>
+                                  setEditedData({
+                                    ...editedData!,
+                                    type_room: e.target.value,
+                                  })
+                                }
+                                label="ชนิดห้องพัก"
+                              >
+                                {/* แสดงรายการชนิดห้องพัก */}
+                                <MenuItem value="Standard Room">
+                                  ห้องธรรมดา (Standard Room)
+                                </MenuItem>
+                                <MenuItem value="Deluxe Room">
+                                  ห้องดีลักซ์ (Deluxe Room)
+                                </MenuItem>
+                                <MenuItem value="Executive Room">
+                                  ห้องเอกซ์คลูซีฟ (Executive Room)
+                                </MenuItem>
+                                <MenuItem value="Connecting Rooms">
+                                  ห้องที่มีประตูเชื่อมต่อกัน (Connecting Rooms)
+                                </MenuItem>
+                                <MenuItem value="Suite Room">
+                                  ห้องสวีท (Suite Room)
+                                </MenuItem>
+                                <MenuItem value="Superior Room">
+                                  ห้องสุพีเรียร์ (Superior Room)
+                                </MenuItem>
+                                <MenuItem value="Accessible Room">
+                                  ห้องพักพิเศษสำหรับผู้พิการ (Accessible Room)
+                                </MenuItem>
+                              </Select>
                             ) : (
                               hotelselect.type_room
                             )}
@@ -1179,7 +1194,6 @@ function CheckDataHotelPage() {
                                 {/* เพิ่มรายการสำหรับสถานะห้อง */}
                                 <MenuItem value="ว่าง">ว่าง</MenuItem>
                                 <MenuItem value="ไม่ว่าง">ไม่ว่าง</MenuItem>
-                                
                               </Select>
                             ) : (
                               hotelselect.status_name_room
