@@ -146,18 +146,6 @@ function HeaderUserTypeGeneral() {
           <div
             style={{ display: "flex", marginRight: 55, flexDirection: "row" }}
           >
-            {/* <IconButton
-              sx={{
-                background: "linear-gradient(45deg, #085078, #85D8CE)",
-                color: "white",
-                "&:hover": {
-                  background: "linear-gradient(45deg, #085078, #85D8CE)",
-                },
-                ml: 1,
-              }}
-            >
-              <NotificationsIcon />
-            </IconButton> */}
             <Tooltip title="Account settings">
               <IconButton
                 onClick={handleAccountClick}

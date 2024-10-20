@@ -12,8 +12,8 @@ import {
   Typography,
 } from "@mui/material";
 // import NotificationsIcon from "@mui/icons-material/Notifications";
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
@@ -71,7 +71,23 @@ function HeaderUserTypeGeneral2() {
                 alignItems: "center",
                 fontWeight: "bold",
                 color: "white",
-                ml: 3,
+                // ml: 5,
+                fontFamily: "Mitr, sans-serif",
+                fontStyle: "oblique",
+              }}
+              onClick={navigateToHomePage}
+            >
+              หน้าแรก
+            </Button>
+            <Button
+              variant="text"
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontWeight: "bold",
+                color: "white",
+                ml: 5,
                 fontFamily: "Mitr, sans-serif",
                 fontStyle: "oblique",
               }}
@@ -110,22 +126,6 @@ function HeaderUserTypeGeneral2() {
               onClick={navigateToConcertPage}
             >
               คอนเสิรต์
-            </Button>
-            <Button
-              variant="text"
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                fontWeight: "bold",
-                color: "white",
-                ml: 5,
-                fontFamily: "Mitr, sans-serif",
-                fontStyle: "oblique",
-              }}
-              onClick={navigateToHomePage}
-            >
-              หน้าแรก
             </Button>
           </div>
           <div style={{ flexGrow: 2, display: "flex", flexDirection: "row" }}>
@@ -166,19 +166,6 @@ function HeaderUserTypeGeneral2() {
           <div
             style={{ display: "flex", marginRight: 55, flexDirection: "row" }}
           >
-            
-            {/* <IconButton
-              sx={{
-                background: "linear-gradient(45deg, #085078, #85D8CE)",
-                color: "white",
-                "&:hover": {
-                  background: "linear-gradient(45deg, #085078, #85D8CE)",
-                },
-                ml: 1,
-              }}
-            >
-              <NotificationsIcon />
-            </IconButton> */}
             <Tooltip title="Account settings">
               <IconButton
                 onClick={handleAccountClick}
@@ -197,7 +184,10 @@ function HeaderUserTypeGeneral2() {
                 )) ||
                   (user?.image_user != "" && (
                     <>
-                      <Avatar sx={{ width: 35, height: 32 }} src={user?.image_user}></Avatar>
+                      <Avatar
+                        sx={{ width: 35, height: 32 }}
+                        src={user?.image_user}
+                      ></Avatar>
                     </>
                   ))}
               </IconButton>
@@ -272,16 +262,13 @@ function HeaderUserTypeGeneral2() {
                 {user?.gmail_user}
               </Typography>
               <Divider />
-              <MenuItem
-              onClick={navigateToProfilePage}
-              >
+              <MenuItem onClick={navigateToProfilePage}>
                 <ListItemIcon>
                   <AccountBoxIcon fontSize="small" />
                 </ListItemIcon>
                 Profile
               </MenuItem>
-              <MenuItem  onClick={navigateToEditProfilePage}
-              >
+              <MenuItem onClick={navigateToEditProfilePage}>
                 <ListItemIcon>
                   <ManageAccountsIcon fontSize="small" />
                 </ListItemIcon>

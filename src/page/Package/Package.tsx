@@ -20,8 +20,10 @@ import { useEffect, useState } from "react";
 import { PacketGetAllRes } from "../../model/Response/Packet/Packet/PacketGetAllRes";
 // import { PacketGetPIDRes } from "../../model/Response/Packet/Packet/PacketGetByPIDRes";
 import { PacketService } from "../../service/packetService";
+import { useNavigate } from "react-router-dom";
 
 function PackagePage() {
+  const navigate = useNavigate();
   const packetService = new PacketService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [packetAll, setPacketAll] = useState<PacketGetAllRes[]>([]);
@@ -121,7 +123,7 @@ function PackagePage() {
             <Box
               sx={{
                 width: 350,
-                height: 570,
+                height: 500,
                 marginTop: "50px",
                 borderRadius: 3,
                 bgcolor: "#D9D9D9",
@@ -543,7 +545,7 @@ function PackagePage() {
                             width: "110px",
                             borderRadius: "10px",
                           }}
-                          // onClick={() => navigateToConcertDetailPage(concert.CID.toString())}
+                          onClick={() => navigate(`/PackageDetail/${concert.PID}`)}
                         >
                           รายละเอียด
                         </Button>
