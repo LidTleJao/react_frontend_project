@@ -174,7 +174,7 @@ function PackageDetailPage() {
                               {packet.type_room}
                             </TableCell>
                             <TableCell
-                              align="left"
+                              align="center"
                               sx={{ border: "1px solid black" }}
                             >
                               {packet.type_view_name_room}
@@ -203,7 +203,7 @@ function PackageDetailPage() {
                     </TableContainer>
                   </div>
                 </div>
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div className="ml-2" style={{ display: "flex", flexDirection: "column" }}>
                   <h1 className="text-xl font-bold text-black pt-2">
                     ช่องทางการติดต่อ
                   </h1>
@@ -236,7 +236,6 @@ function PackageDetailPage() {
                   ></img>
                   <div className=" flex h-auto w-auto  bg-white ml-7 rounded-xl p-2">
                     <div className="h-auto flex flex-col">
-                      {" "}
                       <h1 className="text-lg text-gray-500">
                         สถานที่จัดการแสดง ณ {packet.province}
                       </h1>
