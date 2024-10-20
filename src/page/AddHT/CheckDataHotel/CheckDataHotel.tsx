@@ -29,7 +29,7 @@ import HeaderUserTypeGeneral2 from "../../../components/HeadUserTypeGeneral2";
 import HeaderUserTypeManager2 from "../../../components/HeadUserTypeManager2";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { HotelService } from "../../../service/hotelService";
 import { RoomHotelService } from "../../../service/roomHotelService";
 import { useEffect, useState } from "react";
@@ -48,7 +48,7 @@ function CheckDataHotelPage() {
   const [hotelImage, setHotelImage] = useState<HotelImageGetByHotelIDRes[]>([]);
   const [rooms, setRoom] = useState<RoomGetByHotelIDRes[]>([]);
   const user = JSON.parse(localStorage.getItem("objUser")!);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [Hotel_ID, setHotel_ID] = useState("");
 
   useEffect(() => {
@@ -83,9 +83,6 @@ function CheckDataHotelPage() {
     loadDataHotelAsync();
   }, [Hotel_ID]);
 
-  function navigateToEditDataHotelPage() {
-    navigate("/EditDataHotel");
-  }
 
   return (
     <>

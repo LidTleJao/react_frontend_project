@@ -1,19 +1,19 @@
 // import { Button } from "@mui/material";
-import { Box, fontSize, styled } from "@mui/system";
+import {  styled } from "@mui/system";
 import PlaceIcon from "@mui/icons-material/Place";
 import HeaderUserTypeManager2 from "../../components/HeadUserTypeManager2";
 import HeaderUserTypeGeneral2 from "../../components/HeadUserTypeGeneral2";
 import { useEffect, useState } from "react";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { RoomGetAllRes } from "../../model/Response/Hotel/RoomGetAllRes";
-import { HotelGetAllRes } from "../../model/Response/Hotel/HotelGetAllRes";
+// import { RoomGetAllRes } from "../../model/Response/Hotel/RoomGetAllRes";
+// import { HotelGetAllRes } from "../../model/Response/Hotel/HotelGetAllRes";
 import { HotelService } from "../../service/hotelService";
 import { RoomHotelService } from "../../service/roomHotelService";
 import { HotelGetByHIDRes } from "../../model/Response/Hotel/HotelGetByHIDRes";
 import { HotelImageGetByHotelIDRes } from "../../model/Response/Hotel/HotelImageGetByHotelIDRes";
 import { RoomGetByHotelIDRes } from "../../model/Response/Hotel/RoomGetByHotelIDRes";
 import { HotelURLGetByHotelIDRes } from "../../model/Response/Hotel/HotelUrlGetByHotelIDRes";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import {
   Paper,
@@ -33,7 +33,7 @@ function HotelDetailPage() {
   const [hotelUrl, setHotelUrl] = useState<HotelURLGetByHotelIDRes[]>([]);
   const [hotelImage, setHotelImage] = useState<HotelImageGetByHotelIDRes[]>([]);
   const [rooms, setRoom] = useState<RoomGetByHotelIDRes[]>([]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // const [hotel_ID, setHotel_ID] = useState("");
