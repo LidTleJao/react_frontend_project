@@ -27,8 +27,8 @@ function HomePage() {
     HotelImageGetByHotelIDRes[]
   >([]);
   const [concertAll, setConcertAll] = useState<GetAllConcertRes[]>([]);
-  const [concertID, setConcertID] = useState("");
-  const [hotelID, setHotelID] = useState("");
+  // const [concertID, setConcertID] = useState("");
+  // const [hotelID, setHotelID] = useState("");
 
   useEffect(() => {
     const loadDataAsync = async () => {
@@ -73,12 +73,12 @@ function HomePage() {
   };
 
   function navigateToConcertDetailPage(cid: string) {
-    setConcertID(cid);
+    // setConcertID(cid);
     navigate(`/ConcertDetail/${cid}`);
   }
 
   function navigateToHotelDetailPage(hid: string) {
-    setHotelID(hid);
+    // setHotelID(hid);
     navigate(`/HotelDetail/${hid}`);
   }
 
