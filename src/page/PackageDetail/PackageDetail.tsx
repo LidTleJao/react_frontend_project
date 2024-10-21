@@ -237,7 +237,7 @@ function PackageDetailPage() {
                   <div className=" flex h-auto w-auto  bg-white ml-7 rounded-xl p-2">
                     <div className="h-auto flex flex-col">
                       <h1 className="text-lg text-gray-500">
-                        สถานที่จัดการแสดง ณ {packet.province}
+                        สถานที่จัดการแสดง ณ {packet.address_concert}
                       </h1>
                       <h1 className="text-lg text-gray-500">
                         ไลน์อัพ : {packet.lineup}
