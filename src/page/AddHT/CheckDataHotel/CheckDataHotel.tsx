@@ -813,18 +813,34 @@ function CheckDataHotelPage() {
                                 >
                                   <SaveIcon
                                     onClick={async () => {
-                                      console.log("ข้อมูลส่วนที่สอง");
-                                      console.log(contact.map((hotel) => hotel.HCID));
+                                      try {
+                                        // console.log("ข้อมูลส่วนที่สอง");
+                                        // console.log(contact.map((hotel) => hotel.HCID));
+                                        console.log(contact);
+                                        for (
+                                          let index = 0;
+                                          index < contact.length;
+                                          index++
+                                        ) {
+                                          const hotel = contact[index];
+                                          console.log(hotel);
 
-                                      // if (contact.length == 0) {
-                                      //   console.log(hotelUrl);
-                                      // } else {
-                                      //   console.log(contact);
-                                      // }
-
-                                      console.log(
-                                        "================================================================="
-                                      );
+                                          const reshotel =
+                                            await hotelService.updateHotelChannel(
+                                              String(hotel.hotel_ID),
+                                              String(hotel.HCID),
+                                              hotel.url
+                                            );
+                                          console.log(reshotel.status);
+                                        }
+                                        window.alert(
+                                          "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                        );
+                                        setEditing2(false);
+                                      } catch (error) {
+                                        setEditing2(false);
+                                        console.log(error);
+                                      }
                                     }}
                                     sx={{
                                       fontSize: "40px",
@@ -888,81 +904,6 @@ function CheckDataHotelPage() {
                           marginBottom: 2,
                         }}
                       >
-                        {/* <Grid container spacing={2}>
-                          {hotelUrl.map((hotelselect, index) => (
-                            <>
-                              <Grid item>
-                                <TextField
-                                  sx={{
-                                    width: "100%", // ปรับขนาดตามความต้องการ
-                                    "& .MuiInputBase-root": {
-                                      color: "#3A3A3A", // สีของข้อความ
-                                    },
-                                  }}
-                                  // variant="outlined"
-                                  defaultValue={hotelselect.url}
-                                  onChange={(e) => {
-                                    const updatedUrl = e.target.value;
-                                    const updatedHotelUrl = [...hotelUrl]; // สร้างสำเนาของ array
-                                    updatedHotelUrl[index].url = updatedUrl; // แก้ไขค่าในตำแหน่งที่ถูกต้อง
-                                    console.log(updatedHotelUrl);
-                                    setContact(updatedHotelUrl);
-                                  }}
-                                />
-                              </Grid>
-                            </>
-                          ))}
-                        </Grid> */}
-
-                        {/* <Grid container spacing={2}>
-                          {hotelUrl.map((hotelselect, index) => (
-                            <Grid item key={index}>
-                              <TextField
-                                sx={{
-                                  width: "100%",
-                                  "& .MuiInputBase-root": {
-                                    color: "#3A3A3A",
-                                  },
-                                }}
-                                defaultValue={hotelselect.url}
-                                onChange={(e) => {
-                                  const updatedUrl = e.target.value;
-                                  const updatedHotelUrl = [...hotelUrl];
-                                  updatedHotelUrl[index].url = updatedUrl;
-                                  console.log(updatedHotelUrl);
-                                  setContact(updatedHotelUrl);
-                                }}
-                              />
-                            </Grid>
-                          ))}
-                          {Array.from({ length: 3 - hotelUrl.length }).map(
-                            (_, index) => (
-                              <Grid item key={hotelUrl.length + index}>
-                                <TextField
-                                  sx={{
-                                    width: "100%",
-                                    "& .MuiInputBase-root": {
-                                      color: "#3A3A3A",
-                                    },
-                                  }}
-                                  placeholder="กรอกข้อมูล..."
-                                  onChange={(e) => {
-                                    const newUrl = e.target.value;
-                                    const updatedHotelUrl = [...hotelUrl];
-                                    // เพิ่มข้อมูลใหม่เข้าไปในตำแหน่งที่เหมาะสมใน array
-                                    updatedHotelUrl.push({
-                                      url: newUrl,
-                                      HCID: 0,
-                                      hotel_ID: Number(Hotel_ID)
-                                    });
-                                    setContact(updatedHotelUrl);
-                                  }}
-                                />
-                              </Grid>
-                            )
-                          )}
-                        </Grid> */}
-
                         <div
                           style={{ display: "flex", flexDirection: "column" }}
                         >
@@ -1018,8 +959,10 @@ function CheckDataHotelPage() {
                                       const updatedHotelUrl = [...contact];
                                       updatedHotelUrl[hotelUrl.length + idx] = {
                                         url: newUrl,
-                                        HCID: Number(hotelUrl.map((hotel) => hotel.HCID)),
-                                        hotel_ID: Number(Hotel_ID)
+                                        HCID: Number(
+                                          hotelUrl.map((hotel) => hotel.HCID)
+                                        ),
+                                        hotel_ID: Number(Hotel_ID),
                                       };
                                       setContact(updatedHotelUrl);
                                     }}
@@ -1047,7 +990,11 @@ function CheckDataHotelPage() {
                                     onChange={(e) => {
                                       const newUrl = e.target.value;
                                       const updatedHotelUrl = [...contact];
-                                      updatedHotelUrl[idx] = { url: newUrl, HCID: 0, hotel_ID: Number(Hotel_ID) };
+                                      updatedHotelUrl[idx] = {
+                                        url: newUrl,
+                                        HCID: 0,
+                                        hotel_ID: Number(Hotel_ID),
+                                      };
                                       setContact(updatedHotelUrl);
                                     }}
                                   />
