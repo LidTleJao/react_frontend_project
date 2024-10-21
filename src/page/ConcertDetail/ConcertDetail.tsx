@@ -149,13 +149,15 @@ function ConcertDetailPage() {
                         {concert.detail_concert}
                       </h1>
                     </div>
-                    <div className="flex flex-row justify-between ">
+                    <div className="flex flex-col justify-between ">
                       <h1 className="text-lg text-gray-500">ราคาบัตร :</h1>
 
                       {concertTicket.map((concertTic) => (
-                        <h1 className="text-lg text-gray-500 justify-start pl-3 "
-                        style={{maxWidth:350}}>
-                          {concertTic.name_type_ticket}/{concertTic.price} บาท
+                        <h1
+                          className="text-lg text-gray-500 justify-start pl-3 "
+                          style={{ display: "flex"}}
+                        >
+                          วันที่การแสดง {concertTic.show_concert.toString()}/เวลา {concertTic.time_show_concert} - {concertTic.name_type_ticket}/{concertTic.price} บาท 
                         </h1>
                       ))}
                     </div>
