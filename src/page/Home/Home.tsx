@@ -74,12 +74,12 @@ function HomePage() {
 
   function navigateToConcertDetailPage(cid: string) {
     setConcertID(cid);
-    navigate(`/ConcertDetail/${concertID}`);
+    navigate(`/ConcertDetail/${cid}`);
   }
 
   function navigateToHotelDetailPage(hid: string) {
     setHotelID(hid);
-    navigate(`/HotelDetail/${hotelID}`);
+    navigate(`/HotelDetail/${hid}`);
   }
 
   return (
