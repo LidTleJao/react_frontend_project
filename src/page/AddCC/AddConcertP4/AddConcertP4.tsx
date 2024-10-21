@@ -410,6 +410,9 @@ function AddConcertP4Page() {
                                     gettime2
                                   );
                                 console.log(resshow2.status);
+                                window.alert(
+                                  "ข้อมูลของคอนเสิร์ต ได้ลงทะเบียนแล้ว!!!"
+                                );
                                 navigateToAddConcertDataPage();
                               }
                             }
