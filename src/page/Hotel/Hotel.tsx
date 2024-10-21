@@ -699,6 +699,7 @@ function HotelPage() {
                               display: "flex",
                               flexDirection: "column",
                               overflow: "auto",
+                              maxHeight: 200,
                               bgcolor: "white",
                               borderRadius: 2,
                             }}
@@ -715,10 +716,25 @@ function HotelPage() {
                                 variant="h5"
                                 component="div"
                                 color="black"
+                                sx={{
+                                  display: "flex",
+                                  overflow: "auto",
+                                  maxWidth:300,
+                                  maxHeight:100,
+                                }}
                               >
                                 {concert.name}
                               </Typography>
-                              <Typography variant="body1" color="black">
+                              <Typography
+                                variant="body1"
+                                color="black"
+                                sx={{
+                                  display: "flex",
+                                  overflow: "auto",
+                                  maxWidth: 300,
+                                  maxHeight: 50,
+                                }}
+                              >
                                 รายละเอียด: {concert.detail}
                               </Typography>
                             </div>

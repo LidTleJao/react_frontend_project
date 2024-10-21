@@ -114,11 +114,11 @@ function ConcertPage() {
           >
             <Box
               sx={{
-                display:"flex",
-                marginTop:"50px",
+                display: "flex",
+                marginTop: "50px",
                 width: 350,
                 // height: 400,
-                maxHeight:400,
+                maxHeight: 400,
                 borderRadius: 3,
                 bgcolor: "#D9D9D9",
                 border: 2,
@@ -268,7 +268,7 @@ function ConcertPage() {
                     display: "flex",
                     marginTop: "20px",
                     justifyContent: "center",
-                    marginBottom:"20px"
+                    marginBottom: "20px",
                   }}
                 >
                   <Button
@@ -379,6 +379,7 @@ function ConcertPage() {
                             display: "flex",
                             flexDirection: "column",
                             overflow: "auto",
+                            maxHeight: 200,
                             bgcolor: "white",
                             borderRadius: 2,
                           }}
@@ -395,10 +396,25 @@ function ConcertPage() {
                               variant="h5"
                               component="div"
                               color="black"
+                              sx={{
+                                display: "flex",
+                                overflow: "auto",
+                                maxWidth:300,
+                                maxHeight:100,
+                              }}
                             >
                               {concert.name_concert}
                             </Typography>
-                            <Typography variant="body1" color="black">
+                            <Typography
+                              variant="body1"
+                              color="black"
+                              sx={{
+                                display: "flex",
+                                overflow: "auto",
+                                maxWidth:300,
+                                maxHeight: 50,
+                              }}
+                            >
                               รายละเอียด: {concert.detail_concert}
                             </Typography>
                             <Typography variant="body1" color="black">
@@ -428,7 +444,9 @@ function ConcertPage() {
                             width: "110px",
                             borderRadius: "10px",
                           }}
-                          onClick={() => navigateToConcertDetailPage(concert.CID.toString())}
+                          onClick={() =>
+                            navigateToConcertDetailPage(concert.CID.toString())
+                          }
                         >
                           รายละเอียด
                         </Button>
