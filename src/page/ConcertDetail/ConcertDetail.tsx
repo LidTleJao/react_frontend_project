@@ -138,7 +138,7 @@ function ConcertDetailPage() {
                       บัตรมีจำนวนจำกัด ณ {concert.address_concert}
                     </h1>
                     <h1 className="text-lg text-gray-500">
-                      ไลน์อัพ : ColdPlay
+                      ไลน์อัพ : {concert.lineup}
                     </h1>
                     <h1 className="text-lg text-gray-500">
                       วันที่แสดง : {concert.show_schedule_concert.toString()}
