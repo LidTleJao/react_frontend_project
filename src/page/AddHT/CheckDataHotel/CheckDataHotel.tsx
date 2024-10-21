@@ -51,7 +51,6 @@ function CheckDataHotelPage() {
   const user = JSON.parse(localStorage.getItem("objUser")!);
   // const navigate = useNavigate();
   const [Hotel_ID, setHotel_ID] = useState("");
-  const [Room_ID, setRoom_ID] = useState("");
   const [editing1, setEditing1] = useState(false);
   const [editing2, setEditing2] = useState(false);
   const nameHotelRef = useRef<HTMLInputElement>();
@@ -63,6 +62,7 @@ function CheckDataHotelPage() {
   const [editedData, setEditedData] = useState<RoomGetByHotelIDRes | null>(
     null
   );
+
   useEffect(() => {
     const loadDataAsync = async () => {
       const res = await hotelService.getHotelByUid(user?.uid);
@@ -94,6 +94,7 @@ function CheckDataHotelPage() {
     };
     loadDataHotelAsync();
   }, [Hotel_ID]);
+
   // ฟังก์ชันเริ่มแก้ไข
   const handleEditClick = (index: number) => {
     setEditingRow(index);
