@@ -200,8 +200,8 @@ function HotelPage() {
           >
             <Box
               sx={{
-                display:"flex",
-                marginTop:"50px",
+                display: "flex",
+                marginTop: "50px",
                 width: 350,
                 // height: 400,
                 maxHeight: 700,
@@ -586,6 +586,7 @@ function HotelPage() {
                         height: "40px",
                         width: "150px",
                         marginTop: "20px",
+                        marginBottom: "20px",
                       }}
                       onClick={handleSearchAdv} // ฟังก์ชันสำหรับการค้นหา
                     >

@@ -51,12 +51,13 @@ function CheckDataHotelPage() {
   const user = JSON.parse(localStorage.getItem("objUser")!);
   // const navigate = useNavigate();
   const [Hotel_ID, setHotel_ID] = useState("");
+  const [Room_ID, setRoom_ID] = useState("");
   const [editing1, setEditing1] = useState(false);
   const [editing2, setEditing2] = useState(false);
   const nameHotelRef = useRef<HTMLInputElement>();
   const addressHotelRef = useRef<HTMLInputElement>();
   const detailHotelRef = useRef<HTMLInputElement>();
-  const [hotel_type, setHotel_type] = useState(0);
+  const [hotel_type, setHotel_type] = useState(1);
   const [contact, setContact] = useState<HotelURLGetByHotelIDRes[]>([]);
   const [editingRow, setEditingRow] = useState<number | null>(null);
   const [editedData, setEditedData] = useState<RoomGetByHotelIDRes | null>(
@@ -241,22 +242,54 @@ function CheckDataHotelPage() {
                               >
                                 <SaveIcon
                                   onClick={async () => {
-                                    console.log("ข้อมูลส่วนแรก");
-                                    console.log(nameHotelRef.current?.value);
-                                    console.log(addressHotelRef.current?.value);
-                                    if (hotel_type == 0) {
-                                      hotel.map((concertselect) => {
-                                        console.log(
-                                          concertselect.hotel_type_ID
+                                    try {
+                                      // console.log("ข้อมูลส่วนแรก");
+                                      // console.log(nameHotelRef.current?.value);
+                                      // console.log(
+                                      //   addressHotelRef.current?.value
+                                      // );
+
+                                      if (
+                                        Hotel_ID &&
+                                        hotel_type &&
+                                        nameHotelRef.current?.value &&
+                                        addressHotelRef.current?.value &&
+                                        detailHotelRef.current?.value
+                                      ) {
+                                        // console.log(Hotel_ID);
+                                        // console.log(hotel_type);
+                                        // console.log(nameHotelRef.current!.value);
+                                        // console.log(addressHotelRef.current!.value);
+                                        // console.log(detailHotelRef.current!.value);
+
+                                        const reshotel =
+                                          await hotelService.updateHotel(
+                                            Hotel_ID,
+                                            nameHotelRef.current!.value,
+                                            addressHotelRef.current!.value,
+                                            hotel_type.toString(),
+                                            detailHotelRef.current!.value
+                                          );
+                                        console.log(reshotel.status);
+                                        if (reshotel.status === 200) {
+                                          window.alert(
+                                            "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                          );
+                                          console.log(reshotel.data);
+                                        }
+                                      } else {
+                                        window.alert(
+                                          "โปรดทำการแก้ไขข้อมูลอีกครั้ง"
                                         );
-                                      });
-                                    } else {
-                                      console.log(hotel_type);
+                                      }
+                                      console.log(
+                                        "================================================================="
+                                      );
+                                      setEditing1(false);
+                                    } catch (error) {
+                                      setEditing1(false);
+                                      console.log(error);
                                     }
-                                    console.log(detailHotelRef.current?.value);
-                                    console.log(
-                                      "================================================================="
-                                    );
                                   }}
                                   sx={{
                                     fontSize: "40px",
@@ -418,27 +451,24 @@ function CheckDataHotelPage() {
                       variant="h5"
                     >
                       ชนิดโรงแรม :{" "}
-                      {hotel.map((concertselect) => (
-                        <Select
-                          labelId="demo-select-small-label"
-                          id="demo-select-small"
-                          value={concertselect.hotel_type_ID}
-                          label="ประเภทของคอนเสิร์ต"
-                          defaultValue={concertselect.hotel_type_ID}
-                          onChange={(e) => {
-                            setHotel_type(Number(e.target.value));
-                          }}
-                          sx={{
-                            borderRadius: 20,
-                            bgcolor: "white",
-                            height: "40px",
-                          }}
-                        >
-                          <MenuItem value={1}>โรงแรม</MenuItem>
-                          <MenuItem value={2}>รีสอร์ท</MenuItem>
-                          <MenuItem value={3}>บังกะโล</MenuItem>
-                        </Select>
-                      ))}
+                      <Select
+                        labelId="demo-select-small-label"
+                        id="demo-select-small"
+                        value={hotel_type}
+                        label="ประเภทของคอนเสิร์ต"
+                        onChange={(e) => {
+                          setHotel_type(Number(e.target.value));
+                        }}
+                        sx={{
+                          borderRadius: 20,
+                          bgcolor: "white",
+                          height: "40px",
+                        }}
+                      >
+                        <MenuItem value={1}>โรงแรม</MenuItem>
+                        <MenuItem value={2}>รีสอร์ท</MenuItem>
+                        <MenuItem value={3}>บังกะโล</MenuItem>
+                      </Select>
                     </Typography>
                   </div>
                   <div
@@ -784,13 +814,13 @@ function CheckDataHotelPage() {
                                   <SaveIcon
                                     onClick={async () => {
                                       console.log("ข้อมูลส่วนที่สอง");
-                                      console.log(contact);
+                                      console.log(contact.map((hotel) => hotel.HCID));
 
-                                      if (contact.length == 0) {
-                                        console.log(hotelUrl);
-                                      } else {
-                                        console.log(contact);
-                                      }
+                                      // if (contact.length == 0) {
+                                      //   console.log(hotelUrl);
+                                      // } else {
+                                      //   console.log(contact);
+                                      // }
 
                                       console.log(
                                         "================================================================="
@@ -858,7 +888,7 @@ function CheckDataHotelPage() {
                           marginBottom: 2,
                         }}
                       >
-                        <Grid container spacing={2}>
+                        {/* <Grid container spacing={2}>
                           {hotelUrl.map((hotelselect, index) => (
                             <>
                               <Grid item>
@@ -882,7 +912,150 @@ function CheckDataHotelPage() {
                               </Grid>
                             </>
                           ))}
-                        </Grid>
+                        </Grid> */}
+
+                        {/* <Grid container spacing={2}>
+                          {hotelUrl.map((hotelselect, index) => (
+                            <Grid item key={index}>
+                              <TextField
+                                sx={{
+                                  width: "100%",
+                                  "& .MuiInputBase-root": {
+                                    color: "#3A3A3A",
+                                  },
+                                }}
+                                defaultValue={hotelselect.url}
+                                onChange={(e) => {
+                                  const updatedUrl = e.target.value;
+                                  const updatedHotelUrl = [...hotelUrl];
+                                  updatedHotelUrl[index].url = updatedUrl;
+                                  console.log(updatedHotelUrl);
+                                  setContact(updatedHotelUrl);
+                                }}
+                              />
+                            </Grid>
+                          ))}
+                          {Array.from({ length: 3 - hotelUrl.length }).map(
+                            (_, index) => (
+                              <Grid item key={hotelUrl.length + index}>
+                                <TextField
+                                  sx={{
+                                    width: "100%",
+                                    "& .MuiInputBase-root": {
+                                      color: "#3A3A3A",
+                                    },
+                                  }}
+                                  placeholder="กรอกข้อมูล..."
+                                  onChange={(e) => {
+                                    const newUrl = e.target.value;
+                                    const updatedHotelUrl = [...hotelUrl];
+                                    // เพิ่มข้อมูลใหม่เข้าไปในตำแหน่งที่เหมาะสมใน array
+                                    updatedHotelUrl.push({
+                                      url: newUrl,
+                                      HCID: 0,
+                                      hotel_ID: Number(Hotel_ID)
+                                    });
+                                    setContact(updatedHotelUrl);
+                                  }}
+                                />
+                              </Grid>
+                            )
+                          )}
+                        </Grid> */}
+
+                        <div
+                          style={{ display: "flex", flexDirection: "column" }}
+                        >
+                          {hotelUrl && hotelUrl.length > 0 ? (
+                            <>
+                              {/* ถ้ามีข้อมูลใน hotelUrl แสดงข้อมูลที่มี และสร้าง TextField ที่ขาดให้ครบ 3 */}
+                              {hotelUrl.map((hotelselect, index) => (
+                                <div
+                                  key={index}
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    marginBottom: 10,
+                                  }}
+                                >
+                                  <TextField
+                                    placeholder={hotelselect.url}
+                                    className="w-[200px] mb-5"
+                                    label="Url"
+                                    variant="outlined"
+                                    value={contact[index]?.url || ""}
+                                    onChange={(e) => {
+                                      const newUrl = e.target.value;
+                                      const updatedHotelUrl = [...contact];
+                                      updatedHotelUrl[index] = {
+                                        ...hotelselect,
+                                        url: newUrl,
+                                      };
+                                      setContact(updatedHotelUrl);
+                                    }}
+                                  />
+                                </div>
+                              ))}
+                              {/* เติม TextField ให้ครบ 3 ถ้าข้อมูลไม่ถึง */}
+                              {[...Array(3 - hotelUrl.length)].map((_, idx) => (
+                                <div
+                                  key={hotelUrl.length + idx}
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    marginBottom: 10,
+                                  }}
+                                >
+                                  <TextField
+                                    className="w-[200px] mb-5"
+                                    label="Url"
+                                    variant="outlined"
+                                    value={
+                                      contact[hotelUrl.length + idx]?.url || ""
+                                    }
+                                    onChange={(e) => {
+                                      const newUrl = e.target.value;
+                                      const updatedHotelUrl = [...contact];
+                                      updatedHotelUrl[hotelUrl.length + idx] = {
+                                        url: newUrl,
+                                        HCID: Number(hotelUrl.map((hotel) => hotel.HCID)),
+                                        hotel_ID: Number(Hotel_ID)
+                                      };
+                                      setContact(updatedHotelUrl);
+                                    }}
+                                  />
+                                </div>
+                              ))}
+                            </>
+                          ) : (
+                            <>
+                              {/* ถ้าไม่มีข้อมูลใน hotelUrl ให้สร้าง TextField 3 ช่อง */}
+                              {[...Array(3)].map((_, idx) => (
+                                <div
+                                  key={idx}
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    marginBottom: 10,
+                                  }}
+                                >
+                                  <TextField
+                                    className="w-[200px] mb-5"
+                                    label="Url"
+                                    variant="outlined"
+                                    value={contact[idx]?.url || ""}
+                                    onChange={(e) => {
+                                      const newUrl = e.target.value;
+                                      const updatedHotelUrl = [...contact];
+                                      updatedHotelUrl[idx] = { url: newUrl, HCID: 0, hotel_ID: Number(Hotel_ID) };
+                                      setContact(updatedHotelUrl);
+                                    }}
+                                  />
+                                </div>
+                              ))}
+                            </>
+                          )}
+                        </div>
                       </div>
                     </Box>
                   </div>

@@ -153,7 +153,8 @@ function ConcertDetailPage() {
                       <h1 className="text-lg text-gray-500">ราคาบัตร :</h1>
 
                       {concertTicket.map((concertTic) => (
-                        <h1 className="text-lg text-gray-500 justify-start pl-3 max-w-lg">
+                        <h1 className="text-lg text-gray-500 justify-start pl-3 "
+                        style={{maxWidth:350}}>
                           {concertTic.name_type_ticket}/{concertTic.price} บาท
                         </h1>
                       ))}
