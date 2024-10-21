@@ -136,7 +136,10 @@ function HotelDetailPage() {
             </Button>
           </div>
           {hotel.map((hotel) => (
-            <div className="bg-sky-200 p-6 rounded-2xl mt-1">
+            <div
+              className="bg-sky-200 p-6 rounded-2xl mt-1"
+              style={{ maxWidth: 700 }}
+            >
               <div className=" flex flex-row justify-between">
                 <div className="h-auto flex flex-col ">
                   <div className="h-auto flex flex-row">
@@ -161,7 +164,12 @@ function HotelDetailPage() {
                     {hotelImage.map((banner, index) => (
                       <img
                         key={index}
-                        style={{ width:900,height:600,maxWidth: 900, maxHeight: 600 }}
+                        style={{
+                          width: 900,
+                          height: 600,
+                          maxWidth: 900,
+                          maxHeight: 600,
+                        }}
                         src={banner.url_image}
                         alt={`Banner ${index}`}
                         className="w-auto h-auto object-cover  flex-shrink-0 rounded-xl"
@@ -184,9 +192,12 @@ function HotelDetailPage() {
                 </div>
               </div>
 
-              <div className=" flex h-auto w-auto  bg-white mt-2 rounded-xl p-2">
-                <div className=" flex h-auto w-auto  bg-white ml- rounded-xl p-2">
-                  <div className="h-auto flex flex-col">
+              <div className=" flex h-auto  bg-white mt-2 rounded-xl p-2">
+                <div className=" flex h-auto   bg-white ml- rounded-xl p-2">
+                  <div
+                    className="h-auto flex flex-col"
+                    style={{ maxWidth: 600 }}
+                  >
                     {" "}
                     <h1 className="text-xl font-bold text-black">
                       รายละเอียดโรงแรม
@@ -195,17 +206,23 @@ function HotelDetailPage() {
                     <h1 className="text-xl font-bold text-black pt-2">
                       ช่องทางการติดต่อ
                     </h1>
-                    {hotelUrl.map((h, index) => (
-                      <Link
-                        key={index}
-                        to={h.url}
-                        className="text-lg text-gray-500 hover:text-gray-700"
-                      >
-                        {h.url}
-                      </Link>
-                    ))}
-                    <TableContainer component={Paper} className="mt-2">
-                      <Table sx={{ minWidth: 650 }} aria-label="">
+                    <div style={{ display: "flex",overflow:"auto", maxWidth: 600 }}>
+                      {hotelUrl.map((h, index) => (
+                        <Link
+                          key={index}
+                          to={h.url}
+                          className="text-lg text-gray-500 hover:text-gray-700"
+                        >
+                          {h.url}
+                        </Link>
+                      ))}
+                    </div>
+                    <TableContainer
+                      component={Paper}
+                      className="mt-2"
+                      sx={{ minWidth: 600 }}
+                    >
+                      <Table sx={{ minWidth: 600 }} aria-label="">
                         <TableHead sx={{ border: "1px solid black" }}>
                           <TableRow sx={{ border: "1px solid black" }}>
                             <StyledTableCell
