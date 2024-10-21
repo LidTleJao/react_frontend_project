@@ -34,6 +34,61 @@ export class HotelService {
     const response = await axios.get(url);
     return response;
   }
+
+  async updateHotel(
+    hotel_ID: string,
+    hotel_name: string,
+    hotel_address: string,
+    hotel_type_ID: string,
+    hotel_detail: string,
+  ){
+    const url = `${HOST}/updateHotel/${hotel_ID}`;
+
+    const body = {
+      hotel_type_ID : hotel_type_ID,
+      name: hotel_name,
+      address: hotel_address,
+      detail: hotel_detail,
+    };
+
+    try {
+      const response = await axios.post(url, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error("Error updating hotel:", error);
+      throw error;
+    }
+  }
+
+  async updateHotelChannel(
+    hotel_ID: string,
+    HCID: string,
+    urlAdd: string,
+  ){
+    const link = `${HOST}/updateHotelChannel/${hotel_ID}`;
+
+    const payload = {
+      HCID: HCID,
+      url: urlAdd,
+    };
+
+    try {
+      const response = await axios.post(link, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error("Error updating hotelChannel:", error);
+      throw error;
+    }
+  }
+
   async AddHotel(
     uid: string,
     hotelType: number,
