@@ -161,6 +161,7 @@ function HotelDetailPage() {
                     {hotelImage.map((banner, index) => (
                       <img
                         key={index}
+                        style={{ width:900,height:600,maxWidth: 900, maxHeight: 600 }}
                         src={banner.url_image}
                         alt={`Banner ${index}`}
                         className="w-auto h-auto object-cover  flex-shrink-0 rounded-xl"
