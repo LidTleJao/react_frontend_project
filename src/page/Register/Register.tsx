@@ -428,6 +428,9 @@ function RegisterPage() {
                                     setLoad(false);
                                     if (res.status === 201) {
                                       console.log(res.data);
+                                      window.alert(
+                                        "ข้อมูลของผู้ใช้งาน ได้ลงทะเบียนแล้ว!!!"
+                                      );
                                       navigate("/");
                                     }
                                   } else {

@@ -89,6 +89,8 @@ export class HotelService {
     }
   }
 
+  
+
   async AddHotel(
     uid: string,
     hotelType: number,

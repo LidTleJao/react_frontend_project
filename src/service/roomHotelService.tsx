@@ -16,6 +16,19 @@ export class RoomHotelService {
     return response;
   }
 
+  async updateHotelRoom(
+    hotel_ID: string,
+    HRID: string,
+    hotel_price: string,
+    Number_of_guests: string,
+    Number_of_rooms: string,
+    room_type_ID: string,
+    room_view_type_ID: string,
+    room_status_ID: string,
+  ){
+    const url = `${HOST}/updateRoom/`;
+  }
+
   async AddRoom(
     hid: string,
     Price: string,
