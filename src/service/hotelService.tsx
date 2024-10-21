@@ -89,40 +89,40 @@ export class HotelService {
     }
   }
 
-  async updateRoom(
-    HRID: string,
-    hotel_ID: string,
-    price: string,
-    Number_of_guests: string,
-    Number_of_rooms: string,
-    room_type_ID: string,
-    room_view_type_ID: string,
-    room_status_ID: string,
-  ){
-    const url = `${HOST}/updateRoom/${hotel_ID}`;
+  // async updateRoom(
+  //   HRID: number,
+  //   hotel_ID: string,
+  //   price: number,
+  //   Number_of_guests: number,
+  //   Number_of_rooms: number,
+  //   room_type_ID: number,
+  //   room_view_type_ID: number,
+  //   room_status_ID: number,
+  // ){
+  //   const url = `${HOST}/updateRoom/${hotel_ID}`;
 
-    const payload = {
-      HRID: HRID,
-    price: price,
-    Number_of_guests: Number_of_guests,
-    Number_of_rooms: Number_of_rooms,
-    room_type_ID: room_type_ID,
-    room_view_type_ID: room_view_type_ID,
-    room_status_ID: room_status_ID,
-    };
+  //   const payload = {
+  //     HRID: HRID,
+  //   price: price,
+  //   Number_of_guests: Number_of_guests,
+  //   Number_of_rooms: Number_of_rooms,
+  //   room_type_ID: room_type_ID,
+  //   room_view_type_ID: room_view_type_ID,
+  //   room_status_ID: room_status_ID,
+  //   };
 
-    try {
-      const response = await axios.post(url, payload, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      return response;
-    } catch (error) {
-      console.error("Error updating hotelRoom:", error);
-      throw error;
-    }
-  }
+  //   try {
+  //     const response = await axios.post(url, payload, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     return response;
+  //   } catch (error) {
+  //     console.error("Error updating hotelRoom:", error);
+  //     throw error;
+  //   }
+  // }
 
   async AddHotel(
     uid: string,

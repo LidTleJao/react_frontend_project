@@ -108,11 +108,33 @@ function CheckDataHotelPage() {
   };
 
   // ฟังก์ชันบันทึกการแก้ไข
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
     if (editedData) {
       // ทำการบันทึกข้อมูลที่แก้ไข (คุณสามารถเพิ่มฟังก์ชันการบันทึกไปยัง API หรืออื่นๆ ได้ที่นี่)
       console.log("บันทึกข้อมูล:", editedData);
-      setEditingRow(null); // ปิดโหมดแก้ไข
+      try {
+        const reshotel = await roomHotelService.updateHotelRoom(
+          String(editedData.hotel_ID),
+          String(editedData.HRID),
+          String(editedData.price),
+          String(editedData.Number_of_guests),
+          String(editedData.Number_of_rooms),
+          String(editedData.room_type_ID),
+          String(editedData.room_view_type_ID),
+          String(editedData.room_status_ID)
+        );
+
+        if (reshotel.status === 200) {
+          window.alert("แก้ไขข้อมูลเสร็จสิ้น!!!");
+          console.log(reshotel.data);
+        }
+        setEditingRow(null);
+      } catch (error) {
+        window.alert("โปรดทำการแก้ไขข้อมูลอีกครั้ง");
+        setEditingRow(null);
+        console.log(error);
+      }
+      // const reshotel = await
     }
   };
 
@@ -834,9 +856,7 @@ function CheckDataHotelPage() {
                                             );
                                           console.log(reshotel.status);
                                         }
-                                        window.alert(
-                                          "แก้ไขข้อมูลเสร็จสิ้น!!!"
-                                        );
+                                        window.alert("แก้ไขข้อมูลเสร็จสิ้น!!!");
                                         setEditing2(false);
                                       } catch (error) {
                                         setEditing2(false);
