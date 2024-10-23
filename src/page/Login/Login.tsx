@@ -105,8 +105,8 @@ function LoginPage() {
                 sx={{
                   display: "flex",
                   color: "black",
-                  fontFamily: "Mitr, sans-serif",
                   fontStyle: "normal",
+                  fontFamily: "Kanit, sans-serif",
                 }}
                 variant="h5"
               >
@@ -115,13 +115,17 @@ function LoginPage() {
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <TextField
-                label="email"
+
+                label="Email"
                 type="email"
                 placeholder="อีเมล"
                 inputRef={gmailRef}
-                sx={{ m: 1, width: "45ch" }}
+                sx={{ m: 1, width: "45ch", }}
                 InputProps={{
-                  sx: { borderRadius: "10px" },
+                  sx: { borderRadius: "10px", fontFamily: "Kanit, sans-serif" },
+                }}
+                InputLabelProps={{
+                  sx: { fontFamily: "Kanit, sans-serif" },
                 }}
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
@@ -133,13 +137,16 @@ function LoginPage() {
             <div style={{ display: "flex", justifyContent: "center" }}>
               <TextField
                 placeholder="รหัสผ่าน"
-                label="password"
+                label="Password"
                 inputRef={passwordRef}
                 sx={{ mt: 3, width: "45ch" }}
                 type="password"
                 autoComplete="current-password"
                 InputProps={{
-                  sx: { borderRadius: "10px" },
+                  sx: { borderRadius: "10px", fontFamily: "Kanit, sans-serif", },
+                }}
+                InputLabelProps={{
+                  sx: { fontFamily: "Kanit, sans-serif" },
                 }}
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
@@ -152,7 +159,7 @@ function LoginPage() {
               style={{
                 marginLeft: "10px",
                 display: "flex",
-                justifyContent: "start",
+                justifyContent: "space-between", 
                 marginTop: "50px",
               }}
             >
@@ -178,7 +185,7 @@ function LoginPage() {
                   <Button
                     variant="contained"
                     color="primary"
-                    sx={{ width: "120px", borderRadius: "10px" }}
+                    sx={{ width: "120px", borderRadius: "10px", fontFamily: "Kanit, sans-serif", }}
                     onClick={handleLogin} // กดปุ่มนี้เพื่อเรียกฟังก์ชันล็อกอิน
                   >
                     Login
@@ -189,7 +196,7 @@ function LoginPage() {
                 style={{
                   display: "flex",
                   justifyContent: "end",
-                  marginLeft: "141px",
+                  marginLeft: "150px",
                 }}
               >
                 <Button
@@ -198,6 +205,7 @@ function LoginPage() {
                   sx={{
                     width: "120px",
                     borderRadius: "10px",
+                    fontFamily: "Kanit, sans-serif",
                   }}
                   onClick={navigateToRegisterPage}
                 >

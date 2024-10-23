@@ -1,7 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap');
+
 .register-cont {
+    font-family: "Kanit", sans-serif;
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 95vh;
-  }
+}
+
+MenuItem {
+  font-family: "Kanit", sans-serif;
+}
