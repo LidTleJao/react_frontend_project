@@ -1098,7 +1098,6 @@ function CheckDataHotelPage() {
                                   onClick={() => setEditing2(true)}
                                 />
                               </div>
-                              {/* <CardContent></CardContent> */}
                             </CardActionArea>
                           </Card>
                         </div>
@@ -1118,6 +1117,7 @@ function CheckDataHotelPage() {
                             justifyContent: "start",
                           }}
                         >
+                          {hotelUrl.length > 0 ? (<>
                           <div
                             style={{
                               display: "flex",
@@ -1146,6 +1146,15 @@ function CheckDataHotelPage() {
                               ))}
                             </Grid>
                           </div>
+                          </>):(
+                            <div
+                            style={{ display: "flex", justifyContent: "center",marginLeft:"150px" }}
+                          >
+                            <p>
+                              ยังไม่มีข้อมูลช่องการติดต่อ
+                            </p>
+                          </div>
+                          )}
                         </Box>
                       </div>
                     </Box>
@@ -1169,6 +1178,7 @@ function CheckDataHotelPage() {
                     display: "flex",
                     justifyContent: "start",
                     flexDirection: "column",
+                    marginBottom:"20px",
                   }}
                 >
                   <div
@@ -1205,194 +1215,216 @@ function CheckDataHotelPage() {
                         borderRadius: 2,
                       }}
                     >
-                      <Table aria-label="room information table">
-                        <TableHead>
-                          <TableRow>
-                            <TableCell>ชนิดห้องพัก</TableCell>
-                            <TableCell>วิวของห้อง</TableCell>
-                            <TableCell>ราคาห้องต่อคืน</TableCell>
-                            <TableCell>จำนวนคนเข้าพัก</TableCell>
-                            <TableCell>จำนวนห้อง</TableCell>
-                            <TableCell>สถานะของห้อง</TableCell>
-                            <TableCell>แก้ไขข้อมูลห้อง</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {rooms.map((hotelselect, index) => (
-                            <TableRow key={index}>
-                              <TableCell>
-                                {editingRow === index ? (
-                                  <Select
-                                    value={editedData?.type_room}
-                                    onChange={(e) =>
-                                      setEditedData({
-                                        ...editedData!,
-                                        type_room: e.target.value,
-                                      })
-                                    }
-                                    label="ชนิดห้องพัก"
-                                  >
-                                    {/* แสดงรายการชนิดห้องพัก */}
-                                    <MenuItem value="Standard Room">
-                                      ห้องธรรมดา (Standard Room)
-                                    </MenuItem>
-                                    <MenuItem value="Deluxe Room">
-                                      ห้องดีลักซ์ (Deluxe Room)
-                                    </MenuItem>
-                                    <MenuItem value="Executive Room">
-                                      ห้องเอกซ์คลูซีฟ (Executive Room)
-                                    </MenuItem>
-                                    <MenuItem value="Connecting Rooms">
-                                      ห้องที่มีประตูเชื่อมต่อกัน (Connecting
-                                      Rooms)
-                                    </MenuItem>
-                                    <MenuItem value="Suite Room">
-                                      ห้องสวีท (Suite Room)
-                                    </MenuItem>
-                                    <MenuItem value="Superior Room">
-                                      ห้องสุพีเรียร์ (Superior Room)
-                                    </MenuItem>
-                                    <MenuItem value="Accessible Room">
-                                      ห้องพักพิเศษสำหรับผู้พิการ (Accessible
-                                      Room)
-                                    </MenuItem>
-                                  </Select>
-                                ) : (
-                                  hotelselect.type_room
-                                )}
-                              </TableCell>
-                              <TableCell>
-                                {editingRow === index ? (
-                                  <Select
-                                    value={
-                                      editedData?.type_view_name_room || ""
-                                    }
-                                    onChange={(e) =>
-                                      setEditedData({
-                                        ...editedData!,
-                                        type_view_name_room: e.target.value,
-                                      })
-                                    }
-                                    label="วิวของห้อง"
-                                  >
-                                    {/* เพิ่มรายการสำหรับวิวห้อง */}
-                                    <MenuItem value="ทะเล">ทะเล</MenuItem>
-                                    <MenuItem value="ภูเขา">ภูเขา</MenuItem>
-                                    <MenuItem value="เมือง">เมือง</MenuItem>
-                                  </Select>
-                                ) : (
-                                  hotelselect.type_view_name_room
-                                )}
-                              </TableCell>
-                              <TableCell>
-                                {editingRow === index ? (
-                                  <TextField
-                                    type="number"
-                                    value={editedData?.price || ""}
-                                    label="ราคาห้องต่อคืน"
-                                    onChange={(e) =>
-                                      setEditedData({
-                                        ...editedData!,
-                                        price: Number(e.target.value),
-                                      })
-                                    }
-                                  />
-                                ) : (
-                                  hotelselect.price
-                                )}
-                              </TableCell>
-                              <TableCell>
-                                {editingRow === index ? (
-                                  <TextField
-                                    type="number"
-                                    value={editedData?.Number_of_guests || ""}
-                                    label="จำนวนคนเข้าพัก"
-                                    onChange={(e) =>
-                                      setEditedData({
-                                        ...editedData!,
-                                        Number_of_guests: Number(
-                                          e.target.value
-                                        ),
-                                      })
-                                    }
-                                  />
-                                ) : (
-                                  hotelselect.Number_of_guests
-                                )}
-                              </TableCell>
-                              <TableCell>
-                                {editingRow === index ? (
-                                  <TextField
-                                    type="number"
-                                    value={editedData?.Number_of_rooms || ""}
-                                    label="จำนวนห้อง"
-                                    onChange={(e) =>
-                                      setEditedData({
-                                        ...editedData!,
-                                        Number_of_rooms: Number(e.target.value),
-                                      })
-                                    }
-                                  />
-                                ) : (
-                                  hotelselect.Number_of_rooms
-                                )}
-                              </TableCell>
-                              <TableCell>
-                                {editingRow === index ? (
-                                  <Select
-                                    value={editedData?.status_name_room || ""}
-                                    onChange={(e) =>
-                                      setEditedData({
-                                        ...editedData!,
-                                        status_name_room: e.target.value,
-                                      })
-                                    }
-                                    label="สถานะของห้อง"
-                                  >
-                                    {/* เพิ่มรายการสำหรับสถานะห้อง */}
-                                    <MenuItem value="ว่าง">ว่าง</MenuItem>
-                                    <MenuItem value="ไม่ว่าง">ไม่ว่าง</MenuItem>
-                                  </Select>
-                                ) : (
-                                  hotelselect.status_name_room
-                                )}
-                              </TableCell>
-                              <TableCell>
-                                {editingRow === index ? (
-                                  <div>
-                                    <Button
-                                      variant="contained"
-                                      style={{
-                                        backgroundColor: "#343434",
-                                        marginRight: "10px",
-                                      }}
-                                      onClick={handleCancelClick}
-                                    >
-                                      ยกเลิก
-                                    </Button>
-                                    <Button
-                                      variant="contained"
-                                      style={{ backgroundColor: "#4CAF50" }}
-                                      onClick={handleSaveClick}
-                                    >
-                                      บันทึก
-                                    </Button>
-                                  </div>
-                                ) : (
-                                  <Button
-                                    variant="contained"
-                                    style={{ backgroundColor: "#343434" }}
-                                    onClick={() => handleEditClick(index)}
-                                    startIcon={<EditIcon />}
-                                  >
-                                    รายละเอียดของห้อง
-                                  </Button>
-                                )}
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
+                      {rooms.length > 0 ? (
+                        <>
+                          <Table aria-label="room information table">
+                            <TableHead>
+                              <TableRow>
+                                <TableCell>ชนิดห้องพัก</TableCell>
+                                <TableCell>วิวของห้อง</TableCell>
+                                <TableCell>ราคาห้องต่อคืน</TableCell>
+                                <TableCell>จำนวนคนเข้าพัก</TableCell>
+                                <TableCell>จำนวนห้อง</TableCell>
+                                <TableCell>สถานะของห้อง</TableCell>
+                                <TableCell>แก้ไขข้อมูลห้อง</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {rooms.map((hotelselect, index) => (
+                                <TableRow key={index}>
+                                  <TableCell>
+                                    {editingRow === index ? (
+                                      <Select
+                                        value={editedData?.type_room}
+                                        onChange={(e) =>
+                                          setEditedData({
+                                            ...editedData!,
+                                            type_room: e.target.value,
+                                          })
+                                        }
+                                        label="ชนิดห้องพัก"
+                                      >
+                                        {/* แสดงรายการชนิดห้องพัก */}
+                                        <MenuItem value="Standard Room">
+                                          ห้องธรรมดา (Standard Room)
+                                        </MenuItem>
+                                        <MenuItem value="Deluxe Room">
+                                          ห้องดีลักซ์ (Deluxe Room)
+                                        </MenuItem>
+                                        <MenuItem value="Executive Room">
+                                          ห้องเอกซ์คลูซีฟ (Executive Room)
+                                        </MenuItem>
+                                        <MenuItem value="Connecting Rooms">
+                                          ห้องที่มีประตูเชื่อมต่อกัน (Connecting
+                                          Rooms)
+                                        </MenuItem>
+                                        <MenuItem value="Suite Room">
+                                          ห้องสวีท (Suite Room)
+                                        </MenuItem>
+                                        <MenuItem value="Superior Room">
+                                          ห้องสุพีเรียร์ (Superior Room)
+                                        </MenuItem>
+                                        <MenuItem value="Accessible Room">
+                                          ห้องพักพิเศษสำหรับผู้พิการ (Accessible
+                                          Room)
+                                        </MenuItem>
+                                      </Select>
+                                    ) : (
+                                      hotelselect.type_room
+                                    )}
+                                  </TableCell>
+                                  <TableCell>
+                                    {editingRow === index ? (
+                                      <Select
+                                        value={
+                                          editedData?.type_view_name_room || ""
+                                        }
+                                        onChange={(e) =>
+                                          setEditedData({
+                                            ...editedData!,
+                                            type_view_name_room: e.target.value,
+                                          })
+                                        }
+                                        label="วิวของห้อง"
+                                      >
+                                        {/* เพิ่มรายการสำหรับวิวห้อง */}
+                                        <MenuItem value="ทะเล">ทะเล</MenuItem>
+                                        <MenuItem value="ภูเขา">ภูเขา</MenuItem>
+                                        <MenuItem value="เมือง">เมือง</MenuItem>
+                                      </Select>
+                                    ) : (
+                                      hotelselect.type_view_name_room
+                                    )}
+                                  </TableCell>
+                                  <TableCell>
+                                    {editingRow === index ? (
+                                      <TextField
+                                        type="number"
+                                        value={editedData?.price || ""}
+                                        label="ราคาห้องต่อคืน"
+                                        onChange={(e) =>
+                                          setEditedData({
+                                            ...editedData!,
+                                            price: Number(e.target.value),
+                                          })
+                                        }
+                                      />
+                                    ) : (
+                                      hotelselect.price
+                                    )}
+                                  </TableCell>
+                                  <TableCell>
+                                    {editingRow === index ? (
+                                      <TextField
+                                        type="number"
+                                        value={
+                                          editedData?.Number_of_guests || ""
+                                        }
+                                        label="จำนวนคนเข้าพัก"
+                                        onChange={(e) =>
+                                          setEditedData({
+                                            ...editedData!,
+                                            Number_of_guests: Number(
+                                              e.target.value
+                                            ),
+                                          })
+                                        }
+                                      />
+                                    ) : (
+                                      hotelselect.Number_of_guests
+                                    )}
+                                  </TableCell>
+                                  <TableCell>
+                                    {editingRow === index ? (
+                                      <TextField
+                                        type="number"
+                                        value={
+                                          editedData?.Number_of_rooms || ""
+                                        }
+                                        label="จำนวนห้อง"
+                                        onChange={(e) =>
+                                          setEditedData({
+                                            ...editedData!,
+                                            Number_of_rooms: Number(
+                                              e.target.value
+                                            ),
+                                          })
+                                        }
+                                      />
+                                    ) : (
+                                      hotelselect.Number_of_rooms
+                                    )}
+                                  </TableCell>
+                                  <TableCell>
+                                    {editingRow === index ? (
+                                      <Select
+                                        value={
+                                          editedData?.status_name_room || ""
+                                        }
+                                        onChange={(e) =>
+                                          setEditedData({
+                                            ...editedData!,
+                                            status_name_room: e.target.value,
+                                          })
+                                        }
+                                        label="สถานะของห้อง"
+                                      >
+                                        {/* เพิ่มรายการสำหรับสถานะห้อง */}
+                                        <MenuItem value="ว่าง">ว่าง</MenuItem>
+                                        <MenuItem value="ไม่ว่าง">
+                                          ไม่ว่าง
+                                        </MenuItem>
+                                      </Select>
+                                    ) : (
+                                      hotelselect.status_name_room
+                                    )}
+                                  </TableCell>
+                                  <TableCell>
+                                    {editingRow === index ? (
+                                      <div>
+                                        <Button
+                                          variant="contained"
+                                          style={{
+                                            backgroundColor: "#343434",
+                                            marginRight: "10px",
+                                          }}
+                                          onClick={handleCancelClick}
+                                        >
+                                          ยกเลิก
+                                        </Button>
+                                        <Button
+                                          variant="contained"
+                                          style={{ backgroundColor: "#4CAF50" }}
+                                          onClick={handleSaveClick}
+                                        >
+                                          บันทึก
+                                        </Button>
+                                      </div>
+                                    ) : (
+                                      <Button
+                                        variant="contained"
+                                        style={{ backgroundColor: "#343434" }}
+                                        onClick={() => handleEditClick(index)}
+                                        startIcon={<EditIcon />}
+                                      >
+                                        รายละเอียดของห้อง
+                                      </Button>
+                                    )}
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </>
+                      ) : (
+                        <div
+                          style={{ display: "flex", justifyContent: "center" }}
+                        >
+                          <p>
+                            ยังไม่มีข้อมูลห้อง โปรดดำเนินการเพิ่มข้อมูลห้อง
+                          </p>
+                        </div>
+                      )}
                     </TableContainer>
                   </div>
                 </Box>

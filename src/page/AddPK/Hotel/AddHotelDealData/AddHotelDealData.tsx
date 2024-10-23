@@ -145,7 +145,7 @@ function AddHotelDealDataPage() {
                     }}
                     variant="h4"
                   >
-                    เพิ่มข้อมูลข้อเสนอ
+                    เพิ่มข้อมูลข้อเสนอโรงแรม
                   </Typography>
                 </div>
                 <div style={{ marginTop: "20px" }}>
@@ -624,6 +624,7 @@ function AddHotelDealDataPage() {
                       <Box
                         sx={{
                           width: 650,
+                          maxWidth: 650,
                           height: 470,
                           maxHeight: 480,
                           borderRadius: 3,
@@ -631,6 +632,7 @@ function AddHotelDealDataPage() {
                           border: 2,
                           display: "flex",
                           justifyContent: "center",
+                          overflow: "auto"
                         }}
                       >
                         <div
@@ -723,6 +725,7 @@ function AddHotelDealDataPage() {
                                 maxWidth: 750,
                                 border: 2,
                                 borderRadius: 2,
+                                marginBottom:"20px",
                                 overflow: "auto",
                               }}
                             >
@@ -801,7 +804,7 @@ function AddHotelDealDataPage() {
                   }}
                   variant="h4"
                 >
-                  เพิ่มข้อมูลข้อเสนอ
+                  เพิ่มข้อมูลข้อเสนอโรงแรม
                 </Typography>
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>

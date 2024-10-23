@@ -14,7 +14,7 @@ import { HotelGetByHIDRes } from "../../model/Response/Hotel/HotelGetByHIDRes";
 import { HotelImageGetByHotelIDRes } from "../../model/Response/Hotel/HotelImageGetByHotelIDRes";
 import { RoomGetByHotelIDRes } from "../../model/Response/Hotel/RoomGetByHotelIDRes";
 import { HotelURLGetByHotelIDRes } from "../../model/Response/Hotel/HotelUrlGetByHotelIDRes";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import {
   Button,
@@ -26,7 +26,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
 function HotelDetailPage() {
   const user = JSON.parse(localStorage.getItem("objUser")!);
@@ -38,16 +37,20 @@ function HotelDetailPage() {
   const [rooms, setRoom] = useState<RoomGetByHotelIDRes[]>([]);
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  // const [hotel_ID, setHotel_ID] = useState("");
-
-  // const {concertID} = location.state;
   const { hid } = useParams(); // สมมติว่าเส้นทางเป็น "/concert/:cid"
   const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
       color: "black",
       fontWeight: "bold",
-      fontSize: 16,
+      fontSize: 17,
+    },
+  }));
+
+  const StyledTableRow = styled(TableCell)(() => ({
+    [`&.${tableCellClasses.body}`]: {
+      color: "#6B7280",
+      fontWeight: "normal",
+      fontSize: 17,
     },
   }));
 
@@ -107,19 +110,9 @@ function HotelDetailPage() {
           <div
             style={{ display: "flex", justifyContent: "center", marginTop: 20 }}
           >
-            <Typography
-              gutterBottom
-              sx={{
-                display: "flex",
-                fontWeight: "bold",
-                color: "black",
-                fontFamily: "Mitr, sans-serif",
-                fontStyle: "normal",
-              }}
-              variant="h4"
-            >
+             <h1 className="text-[25px] font-semibold pr-10 text-black">
               รายละเอียดของโรงแรม
-            </Typography>
+            </h1>
           </div>
           <div style={{ display: "flex", marginBottom: 5 }}>
             <Button
@@ -137,7 +130,7 @@ function HotelDetailPage() {
           </div>
           {hotel.map((hotel) => (
             <div
-              className="bg-sky-200 p-6 rounded-2xl mt-1"
+              className="bg-white p-6 rounded-2xl mt-1  shadow-[0_2px_4px_rgba(0,0,0,0.3)] mb-10"
               style={{ maxWidth: 1000 }}
             >
               <div className=" flex flex-row justify-between">
@@ -149,14 +142,14 @@ function HotelDetailPage() {
                   </div>
                   <div className="h-auto flex flex-row items-center mt-1 justify-start">
                     <PlaceIcon sx={{ fontSize: 30 }} className="text-sky-700" />
-                    <h1 className="text-xl font-semibold text-gray-500 j">
+                    <h1 className="text-xl  text-gray-500">
                       จังหวัด{hotel.province}
                     </h1>
                   </div>
                 </div>
               </div>
-              <div className="  flex  justify-center items-center">
-                <div className="relative overflow-hidden mt-2  mb-4 w-[1000px] h-[700px] rounded-xl">
+              <div className="  flex  justify-center items-center bg-black rounded-xl mt-2">
+                <div className="relative overflow-hidden mt-2  mb-4 w-[1000px] h-[700px]">
                   <div
                     className="flex transition-transform duration-500 ease-in-out "
                     style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -201,59 +194,72 @@ function HotelDetailPage() {
                       style={{
                         display: "flex",
                         overflow: "auto",
-                        maxWidth: 600,
                       }}
                     >
-                      {hotelUrl.map((h, index) => (
-                        <Link
-                          key={index}
-                          to={h.url}
-                          className="text-lg text-gray-500 hover:text-gray-700"
-                        >
-                          {h.url}
-                        </Link>
-                      ))}
+                      {hotelUrl.length > 0 ? (
+                        hotelUrl.map((h, index) => (
+                          <a
+                            key={index}
+                            href={h.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-lg text-gray-500 hover:text-gray-700 mr-4"
+                            style={{ whiteSpace: "nowrap" }}
+                          >
+                            <button
+                              type="button"
+                              className="py-2 px-4 font-medium rounded-lg transition duration-500 border-2 border-sky-600 text-gray-500 hover:text-white hover:bg-sky-800 text-lg"
+                            >
+                              ลิงก์ {index + 1}
+                            </button>
+                          </a>
+                        ))
+                      ) : (
+                        <p className="text-lg text-red-500">
+                          ไม่มีช่องทางการติดต่อ
+                        </p>
+                      )}
                     </div>
                     <TableContainer
                       component={Paper}
-                      className="mt-2"
+                      className="mt-3"
                       sx={{ minWidth: 600 }}
                     >
                       <Table sx={{ minWidth: 600 }} aria-label="">
                         <TableHead sx={{ border: "1px solid black" }}>
                           <TableRow sx={{ border: "1px solid black" }}>
                             <StyledTableCell
-                              sx={{ border: "1px solid black" }}
+                               sx={{backgroundColor: "#f2f2f2", border: "1px solid black" }}
                               align="center"
                             >
                               ชนิดห้องพัก
                             </StyledTableCell>
                             <StyledTableCell
-                              sx={{ border: "1px solid black" }}
+                               sx={{backgroundColor: "#f2f2f2", border: "1px solid black" }}
                               align="center"
                             >
                               วิวของห้อง
                             </StyledTableCell>
                             <StyledTableCell
-                              sx={{ border: "1px solid black" }}
+                               sx={{backgroundColor: "#f2f2f2", border: "1px solid black" }}
                               align="center"
                             >
                               ราคาห้องต่อคือ
                             </StyledTableCell>
                             <StyledTableCell
-                              sx={{ border: "1px solid black" }}
+                               sx={{backgroundColor: "#f2f2f2", border: "1px solid black" }}
                               align="center"
                             >
                               จำนวนคนเข้าพัก
                             </StyledTableCell>
                             <StyledTableCell
-                              sx={{ border: "1px solid black" }}
+                               sx={{backgroundColor: "#f2f2f2", border: "1px solid black" }}
                               align="center"
                             >
                               จำนวนห้อง
                             </StyledTableCell>
                             <StyledTableCell
-                              sx={{ border: "1px solid black" }}
+                               sx={{backgroundColor: "#f2f2f2", border: "1px solid black" }}
                               align="center"
                             >
                               สถานะห้อง
@@ -261,43 +267,55 @@ function HotelDetailPage() {
                           </TableRow>
                         </TableHead>
                         <TableBody sx={{ border: "1px solid black" }}>
-                          {rooms.map((room) => (
-                            <TableRow key={room.hotel_ID}>
-                              <TableCell sx={{ border: "1px solid black" }}>
-                                {room.type_room}
-                              </TableCell>
-                              <TableCell
-                                align="left"
-                                sx={{ border: "1px solid black" }}
-                              >
-                                {room.type_view_name_room}
-                              </TableCell>
-                              <TableCell
+                          {rooms.length > 0 ? (
+                            rooms.map((room) => (
+                              <TableRow key={room.hotel_ID}>
+                                <StyledTableRow sx={{ border: "1px solid black" }}>
+                                  {room.type_room}
+                                </StyledTableRow>
+                                <StyledTableRow
+                                  align="left"
+                                  sx={{ border: "1px solid black" }}
+                                >
+                                  {room.type_view_name_room}
+                                </StyledTableRow>
+                                <StyledTableRow
+                                  align="center"
+                                  sx={{ border: "1px solid black" }}
+                                >
+                                  {room.price}
+                                </StyledTableRow>
+                                <StyledTableRow
+                                  align="center"
+                                  sx={{ border: "1px solid black" }}
+                                >
+                                  {room.Number_of_guests}
+                                </StyledTableRow>
+                                <StyledTableRow
+                                  align="center"
+                                  sx={{ border: "1px solid black" }}
+                                >
+                                  {room.Number_of_rooms}
+                                </StyledTableRow>
+                                <StyledTableRow
+                                  align="center"
+                                  sx={{ border: "1px solid black" }}
+                                >
+                                  {room.status_name_room}
+                                </StyledTableRow>
+                              </TableRow>
+                            ))
+                          ) : (
+                            <TableRow>
+                              <StyledTableRow
+                                colSpan={6}
                                 align="center"
                                 sx={{ border: "1px solid black" }}
                               >
-                                {room.price}
-                              </TableCell>
-                              <TableCell
-                                align="center"
-                                sx={{ border: "1px solid black" }}
-                              >
-                                {room.Number_of_guests}
-                              </TableCell>
-                              <TableCell
-                                align="center"
-                                sx={{ border: "1px solid black" }}
-                              >
-                                {room.Number_of_rooms}
-                              </TableCell>
-                              <TableCell
-                                align="center"
-                                sx={{ border: "1px solid black" }}
-                              >
-                                {room.status_name_room}
-                              </TableCell>
+                                ยังไม่มีข้อมูลห้องพัก
+                              </StyledTableRow>
                             </TableRow>
-                          ))}
+                          )}
                         </TableBody>
                       </Table>
                     </TableContainer>
