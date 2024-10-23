@@ -112,6 +112,7 @@ function App() {
   ]);
 
   const theme = createTheme({
+    
     typography: {
       fontFamily: "Kanit, sans-serif",
     },

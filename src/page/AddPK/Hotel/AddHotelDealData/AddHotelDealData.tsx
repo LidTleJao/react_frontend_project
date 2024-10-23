@@ -145,7 +145,7 @@ function AddHotelDealDataPage() {
                     }}
                     variant="h4"
                   >
-                    เพิ่มข้อมูลข้อเสนอ
+                    เพิ่มข้อมูลข้อเสนอโรงแรม
                   </Typography>
                 </div>
                 <div style={{ marginTop: "20px" }}>
@@ -801,7 +801,7 @@ function AddHotelDealDataPage() {
                   }}
                   variant="h4"
                 >
-                  เพิ่มข้อมูลข้อเสนอ
+                  เพิ่มข้อมูลข้อเสนอโรงแรม
                 </Typography>
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
