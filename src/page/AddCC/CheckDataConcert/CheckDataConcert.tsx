@@ -1511,45 +1511,50 @@ function CheckDataConcertPage() {
                                         flexDirection: "column",
                                       }}
                                     >
-                                      {concertChannel.length > 0 ?(<>
-                                      <Grid
-                                        container
-                                        spacing={2}
-                                        sx={{
-                                          display: "flex",
-                                          flexDirection: "column",
-                                          overflow: "auto",
-                                          maxHeight: 250,
-                                          maxWidth: 350,
-                                        }}
-                                      >
-                                        {concertChannel.map(
-                                          (concertselect, index) => (
-                                            <Grid item key={index}>
-                                              <Link
-                                                href={concertselect?.channel}
-                                                sx={{
-                                                  color: "#3A3A3A",
-                                                  "&:hover": {
-                                                    color: "#3A3A3A",
-                                                  },
-                                                }}
-                                                underline="hover"
-                                              >
-                                                - {concertselect?.channel}
-                                              </Link>
-                                            </Grid>
-                                          )
-                                        )}
-                                      </Grid>
-                                      </>) :(
+                                      {concertChannel.length > 0 ? (
+                                        <>
+                                          <Grid
+                                            container
+                                            spacing={2}
+                                            sx={{
+                                              display: "flex",
+                                              flexDirection: "column",
+                                              overflow: "auto",
+                                              maxHeight: 250,
+                                              maxWidth: 350,
+                                            }}
+                                          >
+                                            {concertChannel.map(
+                                              (concertselect, index) => (
+                                                <Grid item key={index}>
+                                                  <Link
+                                                    href={
+                                                      concertselect?.channel
+                                                    }
+                                                    sx={{
+                                                      color: "#3A3A3A",
+                                                      "&:hover": {
+                                                        color: "#3A3A3A",
+                                                      },
+                                                    }}
+                                                    underline="hover"
+                                                  >
+                                                    - {concertselect?.channel}
+                                                  </Link>
+                                                </Grid>
+                                              )
+                                            )}
+                                          </Grid>
+                                        </>
+                                      ) : (
                                         <div
-                                        style={{ display: "flex", justifyContent: "center"}}
-                                      >
-                                        <p>
-                                          ยังไม่มีข้อมูลช่องการติดต่อ
-                                        </p>
-                                      </div>
+                                          style={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                          }}
+                                        >
+                                          <p>ยังไม่มีข้อมูลช่องการติดต่อ</p>
+                                        </div>
                                       )}
                                     </div>
                                   </>
@@ -1630,254 +1635,278 @@ function CheckDataConcertPage() {
                           borderRadius: 2,
                         }}
                       >
-                        {concertTicket.length > 0 ? (<>
-                        <Table aria-label="room information table">
-                          {" "}
-                          {editing4 ? (
-                            <>
-                              <TableHead>
-                                <TableRow>
+                        {concertTicket.length > 0 ? (
+                          <>
+                            <Table aria-label="room information table">
+                              {" "}
+                              {editing4 ? (
+                                <>
+                                  <TableHead>
+                                    <TableRow>
+                                      <TableCell>โซนที่นั่ง</TableCell>
+                                      <TableCell>ราคาตั๋ว</TableCell>
+                                      <TableCell>ชนิดตั๋ว</TableCell>
+                                      <TableCell>วันที่การแสดง</TableCell>
+                                      <TableCell>เวลา</TableCell>
+                                      <TableCell>บันทึกข้อมูลห้อง</TableCell>
+                                      <TableCell>แก้ไขข้อมูลห้อง</TableCell>
+
+                                      <TableCell>ลบข้อมูลห้อง</TableCell>
+                                    </TableRow>
+                                  </TableHead>
+                                </>
+                              ) : (
+                                <>
                                   <TableCell>โซนที่นั่ง</TableCell>
                                   <TableCell>ราคาตั๋ว</TableCell>
                                   <TableCell>ชนิดตั๋ว</TableCell>
                                   <TableCell>วันที่การแสดง</TableCell>
                                   <TableCell>เวลา</TableCell>
-                                  <TableCell>บันทึกข้อมูลห้อง</TableCell>
                                   <TableCell>แก้ไขข้อมูลห้อง</TableCell>
-
-                                  <TableCell>ลบข้อมูลห้อง</TableCell>
-                                </TableRow>
-                              </TableHead>
-                            </>
-                          ) : (
-                            <>
-                              <TableCell>โซนที่นั่ง</TableCell>
-                              <TableCell>ราคาตั๋ว</TableCell>
-                              <TableCell>ชนิดตั๋ว</TableCell>
-                              <TableCell>วันที่การแสดง</TableCell>
-                              <TableCell>เวลา</TableCell>
-                              <TableCell>แก้ไขข้อมูลห้อง</TableCell>
-                            </>
-                          )}
-                          <TableBody>
-                            {concertTicket.map((concertselect) => (
-                              <>
-                                {editing4 ? (
+                                </>
+                              )}
+                              <TableBody>
+                                {concertTicket.map((concertselect) => (
                                   <>
-                                    <TableRow>
-                                      <TableCell>
-                                        <TextField
-                                          label="โซนที่นั่ง"
-                                          defaultValue={
-                                            concertselect?.ticket_zone
-                                          }
-                                          value={ticket_zone}
-                                          onChange={(e) =>
-                                            setTicket_zone(e.target.value)
-                                          }
-                                          variant="outlined"
-                                          className="w-[100px]"
-                                        />
-                                      </TableCell>
-                                      <TableCell>
-                                        <TextField
-                                          label="	ราคาตั๋ว"
-                                          type="number"
-                                          onChange={handlePrice}
-                                          defaultValue={concertselect?.price}
-                                          variant="outlined"
-                                          className="w-[100px]"
-                                        />
-                                      </TableCell>
-                                      <TableCell>
-                                        <TextField
-                                          id="outlined-select-currency"
-                                          className="w-[200px]"
-                                          select
-                                          value={ticket_type}
-                                          onChange={(e) =>
-                                            setTicket_Type(
-                                              Number(e.target.value)
-                                            )
-                                          }
-                                          defaultValue={
-                                            concertselect.type_ticket_ID
-                                          }
-                                          label="	ชนิดตั๋ว"
-                                        >
-                                          <MenuItem value={1}>
-                                            ตั๋วเข้าชมทั่วไป (General Admission
-                                            / GA)
-                                          </MenuItem>
-                                          <MenuItem value={2}>
-                                            ตั๋ววีไอพี (VIP Ticket)
-                                          </MenuItem>
-                                          <MenuItem value={3}>
-                                            ตั๋วหน้าเวที (Front Row / Pit
-                                            Ticket)
-                                          </MenuItem>
-                                          <MenuItem value={4}>
-                                            ตั๋วโซนพิเศษ (Premium Zone Ticket)
-                                          </MenuItem>
-                                          <MenuItem value={5}>
-                                            ตั๋วที่นั่งสำรอง (Reserved Seating)
-                                          </MenuItem>
-                                          <MenuItem value={6}>
-                                            ตั๋วเข้าชมก่อน (Early Entry Ticket)
-                                          </MenuItem>
-                                          <MenuItem value={7}>
-                                            ตั๋วเข้าชมคอนเสิร์ตออนไลน์ (Virtual
-                                            Concert Ticket)
-                                          </MenuItem>
-                                        </TextField>
-                                      </TableCell>
-                                      <TableCell>
-                                        {concertselect?.show_concert.toString()}
-                                      </TableCell>
-                                      <TableCell>
-                                        {concertselect?.time_show_concert}
-                                      </TableCell>
-                                      <TableCell>
-                                        <Button
-                                          variant="contained"
-                                          style={{ backgroundColor: "#343434" }}
-                                          sx={{
-                                            width: "150px",
-                                            borderRadius: "10px",
-                                          }}
-                                          startIcon={<SaveIcon />}
-                                          onClick={async () => {
-                                            try {
-                                              if (ticket_zone.trim() === "") {
-                                                window.alert(
-                                                  "โซนที่นั่งไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
-                                                );
-                                              } else {
-                                                if (
-                                                  price === "" ||
-                                                  (Number(price) < 1 &&
-                                                    !price.includes("-"))
-                                                ) {
-                                                  window.alert(
-                                                    "ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
-                                                  );
-                                                } else {
-                                                  const resconcert =
-                                                    await concertService.updateConcertTicket(
-                                                      ticket_ID,
-                                                      concert_ID,
-                                                      ticket_type.toString(),
-                                                      ticket_zone,
-                                                      price
-                                                    );
+                                    {editing4 ? (
+                                      <>
+                                        <TableRow>
+                                          <TableCell>
+                                            <TextField
+                                              label="โซนที่นั่ง"
+                                              defaultValue={
+                                                concertselect?.ticket_zone
+                                              }
+                                              value={ticket_zone}
+                                              onChange={(e) =>
+                                                setTicket_zone(e.target.value)
+                                              }
+                                              variant="outlined"
+                                              className="w-[100px]"
+                                            />
+                                          </TableCell>
+                                          <TableCell>
+                                            <TextField
+                                              label="	ราคาตั๋ว"
+                                              type="number"
+                                              onChange={handlePrice}
+                                              defaultValue={
+                                                concertselect?.price
+                                              }
+                                              variant="outlined"
+                                              className="w-[100px]"
+                                            />
+                                          </TableCell>
+                                          <TableCell>
+                                            <TextField
+                                              id="outlined-select-currency"
+                                              className="w-[200px]"
+                                              select
+                                              value={ticket_type}
+                                              onChange={(e) =>
+                                                setTicket_Type(
+                                                  Number(e.target.value)
+                                                )
+                                              }
+                                              defaultValue={
+                                                concertselect.type_ticket_ID
+                                              }
+                                              label="	ชนิดตั๋ว"
+                                            >
+                                              <MenuItem value={1}>
+                                                ตั๋วเข้าชมทั่วไป (General
+                                                Admission / GA)
+                                              </MenuItem>
+                                              <MenuItem value={2}>
+                                                ตั๋ววีไอพี (VIP Ticket)
+                                              </MenuItem>
+                                              <MenuItem value={3}>
+                                                ตั๋วหน้าเวที (Front Row / Pit
+                                                Ticket)
+                                              </MenuItem>
+                                              <MenuItem value={4}>
+                                                ตั๋วโซนพิเศษ (Premium Zone
+                                                Ticket)
+                                              </MenuItem>
+                                              <MenuItem value={5}>
+                                                ตั๋วที่นั่งสำรอง (Reserved
+                                                Seating)
+                                              </MenuItem>
+                                              <MenuItem value={6}>
+                                                ตั๋วเข้าชมก่อน (Early Entry
+                                                Ticket)
+                                              </MenuItem>
+                                              <MenuItem value={7}>
+                                                ตั๋วเข้าชมคอนเสิร์ตออนไลน์
+                                                (Virtual Concert Ticket)
+                                              </MenuItem>
+                                            </TextField>
+                                          </TableCell>
+                                          <TableCell>
+                                            {concertselect?.show_concert.toString()}
+                                          </TableCell>
+                                          <TableCell>
+                                            {concertselect?.time_show_concert}
+                                          </TableCell>
+                                          <TableCell>
+                                            <Button
+                                              variant="contained"
+                                              style={{
+                                                backgroundColor: "#343434",
+                                              }}
+                                              sx={{
+                                                width: "150px",
+                                                borderRadius: "10px",
+                                              }}
+                                              startIcon={<SaveIcon />}
+                                              onClick={async () => {
+                                                try {
                                                   if (
-                                                    resconcert.status === 200
+                                                    ticket_zone.trim() === ""
                                                   ) {
                                                     window.alert(
-                                                      "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                                      "โซนที่นั่งไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
                                                     );
-                                                    console.log(
-                                                      resconcert.data
-                                                    );
-                                                    setEditing4(false);
                                                   } else {
-                                                    window.alert(
-                                                      "โปรดทำการแก้ไขข้อมูลอีกครั้ง"
-                                                    );
+                                                    if (
+                                                      price === "" ||
+                                                      (Number(price) < 1 &&
+                                                        !price.includes("-"))
+                                                    ) {
+                                                      window.alert(
+                                                        "ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
+                                                      );
+                                                    } else {
+                                                      const resconcert =
+                                                        await concertService.updateConcertTicket(
+                                                          ticket_ID,
+                                                          concert_ID,
+                                                          ticket_type.toString(),
+                                                          ticket_zone,
+                                                          price
+                                                        );
+                                                      if (
+                                                        resconcert.status ===
+                                                        200
+                                                      ) {
+                                                        window.alert(
+                                                          "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                                        );
+                                                        console.log(
+                                                          resconcert.data
+                                                        );
+                                                        setEditing4(false);
+                                                      } else {
+                                                        window.alert(
+                                                          "โปรดทำการแก้ไขข้อมูลอีกครั้ง"
+                                                        );
+                                                      }
+                                                    }
                                                   }
+                                                } catch (error) {
+                                                  setEditing4(false);
+                                                  console.log(error);
                                                 }
+                                              }}
+                                            >
+                                              บันทึกข้อมูล
+                                            </Button>
+                                          </TableCell>
+                                          <TableCell>
+                                            <Button
+                                              variant="contained"
+                                              style={{
+                                                backgroundColor: "chocolate",
+                                              }}
+                                              sx={{
+                                                width: "200px",
+                                                borderRadius: "10px",
+                                              }}
+                                              startIcon={
+                                                <HighlightOffIcon
+                                                  sx={{ color: "white" }}
+                                                />
                                               }
-                                            } catch (error) {
-                                              setEditing4(false);
-                                              console.log(error);
-                                            }
-                                          }}
-                                        >
-                                          บันทึกข้อมูล
-                                        </Button>
-                                      </TableCell>
-                                      <TableCell>
-                                        <Button
-                                          variant="contained"
-                                          style={{
-                                            backgroundColor: "chocolate",
-                                          }}
-                                          sx={{
-                                            width: "200px",
-                                            borderRadius: "10px",
-                                          }}
-                                          startIcon={
-                                            <HighlightOffIcon
-                                              sx={{ color: "white" }}
-                                            />
-                                          }
-                                          onClick={() => handleGetOutTicketID()}
-                                        >
-                                          ยกเลิกการแก้ไข
-                                        </Button>
-                                      </TableCell>
-                                      <TableCell>
-                                        <Button
-                                          variant="contained"
-                                          style={{ backgroundColor: "red" }}
-                                          sx={{
-                                            width: "200px",
-                                            borderRadius: "10px",
-                                          }}
-                                          startIcon={<DeleteIcon />}
-                                        >
-                                          ลบข้อมูลตั๋ว
-                                        </Button>
-                                      </TableCell>
-                                    </TableRow>
+                                              onClick={() =>
+                                                handleGetOutTicketID()
+                                              }
+                                            >
+                                              ยกเลิกการแก้ไข
+                                            </Button>
+                                          </TableCell>
+                                          <TableCell>
+                                            <Button
+                                              variant="contained"
+                                              style={{ backgroundColor: "red" }}
+                                              sx={{
+                                                width: "200px",
+                                                borderRadius: "10px",
+                                              }}
+                                              startIcon={<DeleteIcon />}
+                                            >
+                                              ลบข้อมูลตั๋ว
+                                            </Button>
+                                          </TableCell>
+                                        </TableRow>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <TableRow>
+                                          <TableCell>
+                                            {concertselect?.ticket_zone}
+                                          </TableCell>
+                                          <TableCell>
+                                            {concertselect?.price}
+                                          </TableCell>
+                                          <TableCell>
+                                            {concertselect?.name_type_ticket}
+                                          </TableCell>
+                                          <TableCell>
+                                            {concertselect?.show_concert.toString()}
+                                          </TableCell>
+                                          <TableCell>
+                                            {concertselect?.time_show_concert}
+                                          </TableCell>
+                                          <TableCell>
+                                            <Button
+                                              variant="contained"
+                                              style={{
+                                                backgroundColor: "#343434",
+                                              }}
+                                              sx={{
+                                                // width: "100px",
+                                                borderRadius: "10px",
+                                              }}
+                                              startIcon={<EditIcon />}
+                                              onClick={() =>
+                                                handleGetTicketID(
+                                                  concertselect?.CTID
+                                                )
+                                              }
+                                            >
+                                              แก้ไขข้อมูลของตั๋ว
+                                            </Button>
+                                          </TableCell>
+                                        </TableRow>
+                                      </>
+                                    )}
                                   </>
-                                ) : (
-                                  <>
-                                    <TableRow>
-                                      <TableCell>
-                                        {concertselect?.ticket_zone}
-                                      </TableCell>
-                                      <TableCell>
-                                        {concertselect?.price}
-                                      </TableCell>
-                                      <TableCell>
-                                        {concertselect?.name_type_ticket}
-                                      </TableCell>
-                                      <TableCell>
-                                        {concertselect?.show_concert.toString()}
-                                      </TableCell>
-                                      <TableCell>
-                                        {concertselect?.time_show_concert}
-                                      </TableCell>
-                                      <TableCell>
-                                        <Button
-                                          variant="contained"
-                                          style={{ backgroundColor: "#343434" }}
-                                          sx={{
-                                            // width: "100px",
-                                            borderRadius: "10px",
-                                          }}
-                                          startIcon={<EditIcon />}
-                                          onClick={() =>
-                                            handleGetTicketID(
-                                              concertselect?.CTID
-                                            )
-                                          }
-                                        >
-                                          แก้ไขข้อมูลของตั๋ว
-                                        </Button>
-                                      </TableCell>
-                                    </TableRow>
-                                  </>
-                                )}
-                              </>
-                            ))}
-                          </TableBody>
-                        </Table>
-                        </>):(
-                          <div style={{ display: "flex", justifyContent: "center",marginTop:"150px" }}>
-                          <p>ยังไม่มีข้อมูลตั๋ว โปรดดำเนินการเพิ่มข้อมูลตั๋ว</p>
-                        </div>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </>
+                        ) : (
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              marginTop: "150px",
+                            }}
+                          >
+                            <p>
+                              ยังไม่มีข้อมูลตั๋ว โปรดดำเนินการเพิ่มข้อมูลตั๋ว
+                            </p>
+                          </div>
                         )}
                       </TableContainer>
                     </div>
