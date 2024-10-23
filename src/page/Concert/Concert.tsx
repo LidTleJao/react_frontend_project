@@ -117,8 +117,7 @@ function ConcertPage() {
                 display: "flex",
                 marginTop: "50px",
                 width: 350,
-                // height: 400,
-                maxHeight: 400,
+                maxHeight: 420,
                 borderRadius: 3,
                 bgcolor: "#D9D9D9",
                 border: 2,
@@ -177,7 +176,7 @@ function ConcertPage() {
                   }}
                 />
               </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
+              <div style={{ marginLeft: "10px", marginTop: "15px" }}>
                 <Typography
                   gutterBottom
                   sx={{
@@ -191,10 +190,10 @@ function ConcertPage() {
                 >
                   ชนิดของคอนเสิร์ต :
                 </Typography>
-                <FormControl sx={{ width: 315 }}>
+                <FormControl sx={{ width: 315,marginTop:"10px" }}>
                   <InputLabel
                     id="demo-select-small-label"
-                    sx={{ marginTop: "-5px" }}
+                    sx={{ marginTop: "-10px" }}
                   >
                     ชนิดคอนเสิร์ต
                   </InputLabel>
@@ -234,7 +233,7 @@ function ConcertPage() {
                   </Select>
                 </FormControl>
               </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
+              <div style={{ marginLeft: "10px", marginTop: "15px" }}>
                 <Typography
                   gutterBottom
                   sx={{

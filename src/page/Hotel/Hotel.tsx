@@ -204,7 +204,7 @@ function HotelPage() {
                 marginTop: "50px",
                 width: 350,
                 // height: 400,
-                maxHeight: 700,
+                maxHeight: 750,
                 borderRadius: 3,
                 bgcolor: "#D9D9D9",
                 marginBottom: 10,
@@ -247,20 +247,18 @@ function HotelPage() {
                   }}
                   variant="h5"
                 >
-                  ชนิดของโรมแรม :
+                  ชนิดของโรงแรม :
                 </Typography>
-                <FormControl sx={{ width: 315 }}>
+                <FormControl sx={{ width: 315,marginTop:"10px" }}>
                   <InputLabel
                     id="demo-select-small-label"
-                    sx={{ marginTop: "-5px" }}
+                    sx={{ marginTop: "-10px" }}
                   >
-                    ชนิดโรมแรม
+                    ชนิดโรงแรม
                   </InputLabel>
                   <Select
                     labelId="demo-select-small-label"
                     id="demo-select-small"
-                    // placeholder="จังหวัด"
-                    // value={city}
                     label="ชนิดโรงแรม"
                     type="city"
                     onChange={(e) => {
@@ -290,7 +288,7 @@ function HotelPage() {
                   </Select>
                 </FormControl>
               </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
+              <div style={{ marginLeft: "10px", marginTop: "15px" }}>
                 <Typography
                   gutterBottom
                   sx={{
@@ -304,20 +302,16 @@ function HotelPage() {
                 >
                   ชนิดห้อง :
                 </Typography>
-                <FormControl sx={{ width: 315 }}>
+                <FormControl sx={{ width: 315,marginTop:"10px"}}>
                   <InputLabel
                     id="demo-select-small-label"
-                    sx={{ marginTop: "-5px" }}
+                    sx={{ marginTop: "-10px" }}
                   >
                     ชนิดห้อง
                   </InputLabel>
                   <Select
                     labelId="demo-select-small-label"
                     id="demo-select-small"
-                    // placeholder="จังหวัด"
-                    // value={city}
-                    // label="จังหวัด"
-                    // type="city"
                     onChange={(e) => {
                       const value = e.target.value;
                       if (value === 1) {
@@ -365,7 +359,7 @@ function HotelPage() {
                   </Select>
                 </FormControl>
               </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
+              <div style={{ marginLeft: "10px", marginTop: "15px" }}>
                 <Typography
                   gutterBottom
                   sx={{
@@ -379,10 +373,10 @@ function HotelPage() {
                 >
                   ราคาห้องต่อคืน :
                 </Typography>
-                <FormControl sx={{ width: 315 }}>
+                <FormControl sx={{ width: 315,marginTop:"10px" }}>
                   <InputLabel
                     id="demo-select-small-label"
-                    sx={{ marginTop: "-5px" }}
+                    sx={{ marginTop: "-10px" }}
                   >
                     ราคา
                   </InputLabel>
@@ -416,7 +410,7 @@ function HotelPage() {
                   </Select>
                 </FormControl>
               </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
+              <div style={{ marginLeft: "10px", marginTop: "15px" }}>
                 <Typography
                   gutterBottom
                   sx={{
@@ -430,20 +424,16 @@ function HotelPage() {
                 >
                   ชนิดวิวของห้อง :
                 </Typography>
-                <FormControl sx={{ width: 315 }}>
+                <FormControl sx={{ width: 315,marginTop:"10px" }}>
                   <InputLabel
                     id="demo-select-small-label"
-                    sx={{ marginTop: "-5px" }}
+                    sx={{ marginTop: "-10px" }}
                   >
                     ชนิดวิวห้อง
                   </InputLabel>
                   <Select
                     labelId="demo-select-small-label"
                     id="demo-select-small"
-                    // placeholder="จังหวัด"
-                    // value={city}
-                    // label="จังหวัด"
-                    // type="city"
                     onChange={(e) => {
                       const value = e.target.value;
                       if (value === 1) {
@@ -471,7 +461,7 @@ function HotelPage() {
                   </Select>
                 </FormControl>
               </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
+              <div style={{ marginLeft: "10px", marginTop: "15px" }}>
                 <Typography
                   gutterBottom
                   sx={{
@@ -485,10 +475,10 @@ function HotelPage() {
                 >
                   จำนวนคนเข้าพัก :
                 </Typography>
-                <FormControl sx={{ width: 315 }}>
+                <FormControl sx={{ width: 315,marginTop:"10px" }}>
                   <InputLabel
                     id="demo-select-small-label"
-                    sx={{ marginTop: "-5px" }}
+                    sx={{ marginTop: "-10px" }}
                   >
                     จำนวน 1-5
                   </InputLabel>
@@ -532,7 +522,7 @@ function HotelPage() {
                   </Select>
                 </FormControl>
               </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
+              <div style={{ marginLeft: "10px", marginTop: "15px" }}>
                 <Typography
                   gutterBottom
                   sx={{
@@ -546,10 +536,10 @@ function HotelPage() {
                 >
                   สถานะห้อง :
                 </Typography>
-                <FormControl sx={{ width: 315 }}>
+                <FormControl sx={{ width: 315,marginTop:"10px" }}>
                   <InputLabel
                     id="demo-select-small-label"
-                    sx={{ marginTop: "-5px" }}
+                    sx={{ marginTop: "-10px" }}
                   >
                     ห้องที่ว่าง
                   </InputLabel>
@@ -574,7 +564,6 @@ function HotelPage() {
                       <em>None</em>
                     </MenuItem>
                     <MenuItem value={1}>ว่าง</MenuItem>
-                    {/* <MenuItem value={2}>ไม่ว่าง</MenuItem> */}
                   </Select>
                   <div style={{ display: "flex", justifyContent: "center" }}>
                     <Button
@@ -585,7 +574,7 @@ function HotelPage() {
                         color: "white",
                         height: "40px",
                         width: "150px",
-                        marginTop: "20px",
+                        marginTop: "10px",
                         marginBottom: "20px",
                       }}
                       onClick={handleSearchAdv} // ฟังก์ชันสำหรับการค้นหา
