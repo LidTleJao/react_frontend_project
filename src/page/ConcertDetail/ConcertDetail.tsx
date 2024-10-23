@@ -21,7 +21,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
 
 function ConcertDetailPage() {
@@ -38,7 +37,15 @@ function ConcertDetailPage() {
     [`&.${tableCellClasses.head}`]: {
       color: "black",
       fontWeight: "bold",
-      fontSize: 16,
+      fontSize: 17,
+    },
+  }));
+
+  const StyledTableRow = styled(TableCell)(() => ({
+    [`&.${tableCellClasses.body}`]: {
+      color: "#6B7280",
+      fontWeight: "normal",
+      fontSize: 17,
     },
   }));
 
@@ -100,19 +107,9 @@ function ConcertDetailPage() {
           <div
             style={{ display: "flex", justifyContent: "center", marginTop: 20 }}
           >
-            <Typography
-              gutterBottom
-              sx={{
-                display: "flex",
-                fontWeight: "bold",
-                color: "black",
-                fontFamily: "Mitr, sans-serif",
-                fontStyle: "normal",
-              }}
-              variant="h4"
-            >
+            <h1 className="text-[25px] font-semibold pr-10 text-black">
               รายละเอียดของคอนเสิร์ต
-            </Typography>
+            </h1>
           </div>
           <div style={{ display: "flex", marginBottom: 5 }}>
             <Button
@@ -136,13 +133,13 @@ function ConcertDetailPage() {
                     <h1 className="text-2xl font-semibold pr-10 text-black">
                       {concert.name_concert}
                     </h1>
-                    <h1 className="text-xl font-semibold text-gray-500 j">
-                      ประเภทการแสดง : {concert.name_type_concert}
-                    </h1>
                   </div>
-                  <div className="h-auto flex flex-row items-center mt-1 justify-start">
+                  <h1 className="text-xl  text-gray-500 j">
+                    ประเภทการแสดง : {concert.name_type_concert}
+                  </h1>
+                  <div className="h-auto flex flex-row items-center  justify-start">
                     <PlaceIcon sx={{ fontSize: 30 }} className="text-sky-700" />
-                    <h1 className="text-xl font-semibold text-gray-500 j">
+                    <h1 className="text-xl  text-gray-500 ">
                       จังหวัด{concert.province}
                     </h1>
                   </div>
@@ -167,7 +164,10 @@ function ConcertDetailPage() {
 
                   {/* Modal สำหรับแสดงรูป */}
                   {isOpen && (
-                    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 ">
+                    <div
+                      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 "
+                      onClick={handleClose}
+                    >
                       <div className="relative">
                         <img
                           className="max-w-full max-h-full rounded-xl cursor-pointer"
@@ -197,6 +197,15 @@ function ConcertDetailPage() {
                     <h1 className="text-lg text-gray-500">
                       วันที่แสดง : {concert.show_schedule_concert.toString()}
                     </h1>
+                    <div className="flex flex-row justify-start">
+                      <h1 className="text-lg text-gray-500">เวลา :</h1>
+
+                      {concertShow.map((concertShow) => (
+                        <h1 className="text-lg text-gray-500 justify-start pl-3 max-w-lg">
+                          {concertShow.time_show_concert.toString()}
+                        </h1>
+                      ))}
+                    </div>
                     <div className="flex flex-row">
                       <h1 className="text-lg text-gray-500">รายละเอียด :</h1>
                       <h1 className="text-lg text-gray-500 justify-start pl-3 max-w-md whitespace-normal">
@@ -215,13 +224,19 @@ function ConcertDetailPage() {
                             <TableRow>
                               <StyledTableCell
                                 align="center"
-                                sx={{ border: "1px solid black" }}
+                                sx={{
+                                  backgroundColor: "#f2f2f2",
+                                  border: "1px solid black",
+                                }}
                               >
                                 วันเวลาแสดง
                               </StyledTableCell>
                               <StyledTableCell
                                 align="center"
-                                sx={{ border: "1px solid black" }}
+                                sx={{
+                                  backgroundColor: "#f2f2f2",
+                                  border: "1px solid black",
+                                }}
                               >
                                 ประเภทบัตร / ราคา
                               </StyledTableCell>
@@ -257,13 +272,13 @@ function ConcertDetailPage() {
                                 }, {})
                               ).map(([dateTimeKey, tickets]) => (
                                 <TableRow key={dateTimeKey}>
-                                  <TableCell
+                                  <StyledTableRow
                                     align="left"
                                     sx={{ border: "1px solid black" }}
                                   >
                                     {dateTimeKey} น.
-                                  </TableCell>
-                                  <TableCell
+                                  </StyledTableRow>
+                                  <StyledTableRow
                                     align="left"
                                     sx={{ border: "1px solid black" }}
                                   >
@@ -273,7 +288,7 @@ function ConcertDetailPage() {
                                         {ticket.price} บาท
                                       </div>
                                     ))}
-                                  </TableCell>
+                                  </StyledTableRow>
                                 </TableRow>
                               ))
                             ) : (
@@ -291,23 +306,14 @@ function ConcertDetailPage() {
                         </Table>
                       </TableContainer>
                     </div>
-                    <div className="flex flex-row justify-start mt-2">
-                      <h1 className="text-lg text-gray-500"> เวลา</h1>
-
-                      {concertShow.map((concertShow) => (
-                        <h1 className="text-lg text-gray-500 justify-start pl-3 max-w-lg">
-                          {concertShow.time_show_concert.toString()}
-                        </h1>
-                      ))}
-                    </div>
                   </div>
                 </div>
               </Box>
-              <h1 className="text-2xl text-black font-semibold mt-1">
+              <h1 className="text-2xl text-black font-semibold mt-1 ml-2">
                 ผังการแสดง & รอบการแสดง
               </h1>
-              <div className=" flex h-auto w-auto  bg-white mt-2 rounded-xl p-5">
-                <div className=" flex justify-center items-center">
+              <div className=" flex h-auto w-auto  bg-white mt-2 rounded-xl ">
+                <div className=" flex justify-start items-center">
                   <img
                     className=" h-64 w-80  object-fill rounded-xl cursor-pointer"
                     src={concert.performance_chart}
@@ -316,7 +322,10 @@ function ConcertDetailPage() {
 
                   {/* Modal สำหรับแสดงรูป */}
                   {isOpen && (
-                    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+                    <div
+                      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50"
+                      onClick={handleClose}
+                    >
                       <div className="relative">
                         <img
                           className="max-w-full max-h-full rounded-xl cursor-pointer"
@@ -341,7 +350,6 @@ function ConcertDetailPage() {
                     </h1>
                     <div className="flex flex-col justify-between">
                       <h1 className="text-lg text-gray-500">ราคาบัตร :</h1>
-
                       <TableContainer component={Paper} className="mt-2">
                         <Table
                           sx={{ border: "1px solid black" }}
@@ -351,13 +359,19 @@ function ConcertDetailPage() {
                             <TableRow>
                               <StyledTableCell
                                 align="center"
-                                sx={{ border: "1px solid black" }}
+                                sx={{
+                                  backgroundColor: "#f2f2f2",
+                                  border: "1px solid black",
+                                }}
                               >
                                 วันเวลาแสดง
                               </StyledTableCell>
                               <StyledTableCell
                                 align="center"
-                                sx={{ border: "1px solid black" }}
+                                sx={{
+                                  backgroundColor: "#f2f2f2",
+                                  border: "1px solid black",
+                                }}
                               >
                                 ประเภทบัตร / ราคา
                               </StyledTableCell>
@@ -393,13 +407,13 @@ function ConcertDetailPage() {
                                 }, {})
                               ).map(([dateTimeKey, tickets]) => (
                                 <TableRow key={dateTimeKey}>
-                                  <TableCell
+                                  <StyledTableRow
                                     align="left"
                                     sx={{ border: "1px solid black" }}
                                   >
                                     {dateTimeKey} น.
-                                  </TableCell>
-                                  <TableCell
+                                  </StyledTableRow>
+                                  <StyledTableRow
                                     align="left"
                                     sx={{ border: "1px solid black" }}
                                   >
@@ -409,7 +423,7 @@ function ConcertDetailPage() {
                                         {ticket.price} บาท
                                       </div>
                                     ))}
-                                  </TableCell>
+                                  </StyledTableRow>
                                 </TableRow>
                               ))
                             ) : (
@@ -443,6 +457,37 @@ function ConcertDetailPage() {
                     </div>
                   </div>
                 </div>
+              </div>
+              <h1 className="text-xl font-bold text-black pt-2">
+                ช่องทางการติดต่อ
+              </h1>
+              <div
+                style={{
+                  display: "flex",
+                  overflow: "auto",
+                }}
+              >
+                {concertChannel.length > 0 ? (
+                  concertChannel.map((h, index) => (
+                    <a
+                      key={index}
+                      href={h.channel}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-lg text-gray-500 hover:text-gray-700 mr-4"
+                      style={{ whiteSpace: "nowrap" }}
+                    >
+                      <button
+                        type="button"
+                        className="py-2 px-4 font-medium rounded-lg transition duration-500 border-2 border-sky-600 text-gray-500 hover:text-white hover:bg-sky-800 text-lg"
+                      >
+                        ลิงก์ {index + 1}
+                      </button>
+                    </a>
+                  ))
+                ) : (
+                  <p className="text-lg text-red-500">ไม่มีช่องทางการติดต่อ</p>
+                )}
               </div>
             </div>
           ))}
