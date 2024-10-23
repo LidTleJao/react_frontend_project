@@ -76,12 +76,14 @@ function RegisterPage() {
               style={{
                 display: "flex",
                 justifyContent: "center",
+                fontFamily: "Kanit, sans-serif"
               }}
             >
               <Typography
                 gutterBottom
                 sx={{
                   fontWeight: "bold",
+                  fontFamily: "Kanit, sans-serif"
                 }}
                 variant="h5"
               >
@@ -110,7 +112,7 @@ function RegisterPage() {
                   }}
                 >
                   <div style={{ display: "flex", marginLeft: "40px" }}>
-                    <Typography gutterBottom variant="h6">
+                    <Typography gutterBottom variant="h6" sx={{ fontFamily: "Kanit, sans-serif" }}>
                       ข้อมูลส่วนตัว
                     </Typography>
                   </div>
@@ -125,6 +127,7 @@ function RegisterPage() {
                           borderRadius: "20px",
                           bgcolor: "white",
                           height: "35px",
+                          fontFamily: "Kanit, sans-serif"
                         },
                         startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
                       }}
@@ -142,6 +145,7 @@ function RegisterPage() {
                           borderRadius: "20px",
                           bgcolor: "white",
                           height: "35px",
+                          fontFamily: "Kanit, sans-serif"
                         },
                         startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
                       }}
@@ -159,16 +163,17 @@ function RegisterPage() {
                           borderRadius: "20px",
                           bgcolor: "white",
                           height: "35px",
+                          fontFamily: "Kanit, sans-serif"
                         },
                         startAdornment: <></>,
                       }}
                     />
                   </div>
-                  <div style={{ display: "flex", marginLeft: "40px" }}>
+                  <div style={{ display: "flex", marginLeft: "40px", marginTop: "15px" }}>
                     <FormControl sx={{ width: 415 }}>
                       <InputLabel
                         id="demo-select-small-label"
-                        sx={{ marginTop: "-5px" }}
+                        sx={{ marginTop: "-12px", fontFamily: "Kanit, sans-serif", fontSize: "20px", }}
                       >
                         จังหวัด
                       </InputLabel>
@@ -183,6 +188,21 @@ function RegisterPage() {
                           borderRadius: 20,
                           bgcolor: "white",
                           height: "40px",
+                          fontFamily: "Kanit, sans-serif"
+                        }}
+                        MenuProps={{
+                          PaperProps: {
+                            sx: {
+                              "& .MuiMenuItem-root": {
+                                fontFamily: "Kanit, sans-serif", // กำหนดฟอนต์ให้กับทุก MenuItem
+                                fontSize: "16px",
+                                padding: "10px",
+                              },
+                              "& .MuiMenuItem-root:hover": {
+                                bgcolor: "#f0f0f0", // สีพื้นหลังเมื่อ hover
+                              }
+                            }
+                          }
                         }}
                       >
                         <MenuItem value={"กรุงเทพมหานคร"}>
@@ -273,11 +293,11 @@ function RegisterPage() {
                       </Select>
                     </FormControl>
                   </div>
-                  <div style={{ display: "flex", marginLeft: "40px" }}>
+                  <div style={{ display: "flex", marginLeft: "40px", marginTop: "15px" }}>
                     <FormControl sx={{ mt: 1, width: 415 }}>
                       <InputLabel
                         id="demo-select-small-label"
-                        sx={{ marginTop: "-5px" }}
+                        sx={{ marginTop: "-12px", fontFamily: "Kanit, sans-serif", fontSize: "20px", }}
                       >
                         ประเภทของผู้ใช้
                       </InputLabel>
@@ -290,6 +310,21 @@ function RegisterPage() {
                           borderRadius: 20,
                           bgcolor: "white",
                           height: "40px",
+                          fontFamily: "Kanit, sans-serif"
+                        }}
+                        MenuProps={{
+                          PaperProps: {
+                            sx: {
+                              "& .MuiMenuItem-root": {
+                                fontFamily: "Kanit, sans-serif", // กำหนดฟอนต์ให้กับทุก MenuItem
+                                fontSize: "16px",
+                                padding: "10px",
+                              },
+                              "& .MuiMenuItem-root:hover": {
+                                bgcolor: "#f0f0f0", // สีพื้นหลังเมื่อ hover
+                              }
+                            }
+                          }
                         }}
                       >
                         <MenuItem value={1}>ผู้ใช้ทั่วไป</MenuItem>
@@ -309,13 +344,14 @@ function RegisterPage() {
                           borderRadius: "20px",
                           bgcolor: "white",
                           height: "35px",
+                          fontFamily: "Kanit, sans-serif"
                         },
                         startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
                       }}
                     />
                   </div>
                   <div style={{ display: "flex", marginLeft: "40px" }}>
-                    <Typography gutterBottom variant="h6">
+                    <Typography gutterBottom variant="h6" sx={{ fontFamily: "Kanit, sans-serif" }}>
                       อีเมลและรหัสผ่าน
                     </Typography>
                   </div>
@@ -331,6 +367,7 @@ function RegisterPage() {
                           borderRadius: "20px",
                           bgcolor: "white",
                           height: "35px",
+                          fontFamily: "Kanit, sans-serif"
                         },
                       }}
                     />
@@ -348,6 +385,7 @@ function RegisterPage() {
                           borderRadius: "20px",
                           bgcolor: "white",
                           height: "35px",
+                          fontFamily: "Kanit, sans-serif"
                         },
                       }}
                     />
@@ -382,7 +420,7 @@ function RegisterPage() {
                         <Button
                           variant="contained"
                           color="info"
-                          sx={{ width: "100px", borderRadius: "10px" }}
+                          sx={{ width: "100px", borderRadius: "10px", fontFamily: "Kanit, sans-serif" }}
                           onClick={async () => {
                             try {
                               if (passRef.current!.value.length < 6) {
@@ -428,7 +466,7 @@ function RegisterPage() {
                               console.log(error);
                             }
                           }}
-                          
+
                         >
                           ยืนยัน
                         </Button>
@@ -446,6 +484,7 @@ function RegisterPage() {
                         sx={{
                           width: "100px",
                           borderRadius: "10px",
+                          fontFamily: "Kanit, sans-serif"
                         }}
                         onClick={navigateToLoginPage}
                       >
