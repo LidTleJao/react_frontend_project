@@ -65,7 +65,7 @@ import CheckDataConcertPage from "./page/AddCC/CheckDataConcert/CheckDataConcert
 import HotelDealPage from "./page/AddPK/Hotel/HotelDeals/HotelDeals";
 import ConcertDealPage from "./page/AddPK/Concert/ConcertDeals/ConcertDeals";
 import ConcertDetailPage from "./page/ConcertDetail/ConcertDetail";
-import HotelDetailPage from "./page/Hotel/HotelDetail";
+import HotelDetailPage from "./page/HotelDetail/HotelDetail";
 import CheckHotelDealPage from "./page/AddPK/Hotel/CheckHotelDeal/CheckHotelDeal";
 import CheckConcertDealPage from "./page/AddPK/Concert/CheckConcertDeal/CheckConcertDeal";
 import PackageDetailPage from "./page/PackageDetail/PackageDetail";
