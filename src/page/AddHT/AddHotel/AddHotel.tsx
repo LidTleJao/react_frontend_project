@@ -83,15 +83,15 @@ function AddHotelPage() {
 
   const [open, setOpen] = useState(false);
 
-  const handleClick = () => {
-    setOpen(true);
-  };
+  // const handleClick = () => {
+  //   setOpen(true);
+  // };
 
   const handleClose = (
     event: React.SyntheticEvent | Event,
-    reason?: SnackbarCloseReason,
+    reason?: SnackbarCloseReason
   ) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -567,11 +567,12 @@ function AddHotelPage() {
                           console.log(resimage.status);
                         }
                       }
-                      handleClick();
-                      navigateToAddHotelDataPage();
+                      setOpen(true);
+                      setTimeout(() => {
+                        navigateToAddHotelDataPage();
+                      }, 2000);
+                      setLoad(false);
                     }
-
-                    setLoad(false);
                   } catch (error) {
                     setLoad(false);
                     console.log(error);
@@ -582,6 +583,7 @@ function AddHotelPage() {
               </Button>
             )}
           </div>
+          {/* <Button onClick={handleClick}>Open Snackbar</Button> */}
         </div>
       </div>
       <Snackbar
