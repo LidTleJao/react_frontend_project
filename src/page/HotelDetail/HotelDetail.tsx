@@ -138,7 +138,7 @@ function HotelDetailPage() {
           {hotel.map((hotel) => (
             <div
               className="bg-sky-200 p-6 rounded-2xl mt-1"
-              style={{ maxWidth: 700 }}
+              style={{ maxWidth: 1000 }}
             >
               <div className=" flex flex-row justify-between">
                 <div className="h-auto flex flex-col ">
@@ -156,7 +156,7 @@ function HotelDetailPage() {
                 </div>
               </div>
               <div className="  flex  justify-center items-center">
-                <div className="relative overflow-hidden mt-2  mb-4 w-[700px] h-[400px] ">
+                <div className="relative overflow-hidden mt-2  mb-4 w-[1000px] h-[700px] rounded-xl">
                   <div
                     className="flex transition-transform duration-500 ease-in-out "
                     style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -164,15 +164,9 @@ function HotelDetailPage() {
                     {hotelImage.map((banner, index) => (
                       <img
                         key={index}
-                        style={{
-                          width: 900,
-                          height: 600,
-                          maxWidth: 900,
-                          maxHeight: 600,
-                        }}
                         src={banner.url_image}
                         alt={`Banner ${index}`}
-                        className="w-auto h-auto object-cover  flex-shrink-0 rounded-xl"
+                        className="w-[1000px] h-[700px] object-scale-down flex-shrink-0 rounded-xl"
                       />
                     ))}
                   </div>
@@ -194,10 +188,7 @@ function HotelDetailPage() {
 
               <div className=" flex h-auto  bg-white mt-2 rounded-xl p-2">
                 <div className=" flex h-auto   bg-white ml- rounded-xl p-2">
-                  <div
-                    className="h-auto flex flex-col"
-                    style={{ maxWidth: 600 }}
-                  >
+                  <div className="h-auto flex flex-col">
                     {" "}
                     <h1 className="text-xl font-bold text-black">
                       รายละเอียดโรงแรม
@@ -206,7 +197,13 @@ function HotelDetailPage() {
                     <h1 className="text-xl font-bold text-black pt-2">
                       ช่องทางการติดต่อ
                     </h1>
-                    <div style={{ display: "flex",overflow:"auto", maxWidth: 600 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        overflow: "auto",
+                        maxWidth: 600,
+                      }}
+                    >
                       {hotelUrl.map((h, index) => (
                         <Link
                           key={index}
