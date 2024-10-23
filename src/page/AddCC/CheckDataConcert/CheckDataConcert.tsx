@@ -267,8 +267,9 @@ function CheckDataConcertPage() {
                         {concert.map((concertselect) => (
                           <img
                             src={concertselect.poster_concert}
-                            width={340}
+                            width={350}
                             height={450}
+                            style={{maxHeight:450,maxWidth:350}}
                             className="rounded-lg"
                           />
                         ))}
@@ -276,7 +277,7 @@ function CheckDataConcertPage() {
                       <Box
                         sx={{
                           width: 350,
-                          height: 350,
+                          height: 260,
                           // maxHeight: 900,
                           borderRadius: 3,
                           border: 2,
@@ -290,7 +291,8 @@ function CheckDataConcertPage() {
                           <img
                             src={concertselect.performance_chart}
                             width={350}
-                            height={350}
+                            height={260}
+                            style={{maxHeight:260,maxWidth:350}}
                             className="rounded-lg"
                           />
                         ))}
@@ -1619,8 +1621,6 @@ function CheckDataConcertPage() {
                               <TableCell>วันที่การแสดง</TableCell>
                               <TableCell>เวลา</TableCell>
                               <TableCell>แก้ไขข้อมูลห้อง</TableCell>
-
-                              <TableCell>ลบข้อมูลห้อง</TableCell>
                             </>
                           )}
                           <TableBody>
@@ -1829,19 +1829,6 @@ function CheckDataConcertPage() {
                                           }
                                         >
                                           แก้ไขข้อมูลของตั๋ว
-                                        </Button>
-                                      </TableCell>
-                                      <TableCell>
-                                        <Button
-                                          variant="contained"
-                                          style={{ backgroundColor: "red" }}
-                                          sx={{
-                                            // width: "100px",
-                                            borderRadius: "10px",
-                                          }}
-                                          startIcon={<DeleteIcon />}
-                                        >
-                                          ลบข้อมูลตั๋ว
                                         </Button>
                                       </TableCell>
                                     </TableRow>
