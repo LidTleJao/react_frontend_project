@@ -14,7 +14,7 @@ import { HotelGetByHIDRes } from "../../model/Response/Hotel/HotelGetByHIDRes";
 import { HotelImageGetByHotelIDRes } from "../../model/Response/Hotel/HotelImageGetByHotelIDRes";
 import { RoomGetByHotelIDRes } from "../../model/Response/Hotel/RoomGetByHotelIDRes";
 import { HotelURLGetByHotelIDRes } from "../../model/Response/Hotel/HotelUrlGetByHotelIDRes";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import {
   Button,
@@ -137,7 +137,7 @@ function HotelDetailPage() {
           </div>
           {hotel.map((hotel) => (
             <div
-              className="bg-sky-200 p-6 rounded-2xl mt-1"
+              className="bg-white p-6 rounded-2xl mt-1  shadow-[0_2px_4px_rgba(0,0,0,0.3)] mb-10"
               style={{ maxWidth: 1000 }}
             >
               <div className=" flex flex-row justify-between">
@@ -155,8 +155,8 @@ function HotelDetailPage() {
                   </div>
                 </div>
               </div>
-              <div className="  flex  justify-center items-center">
-                <div className="relative overflow-hidden mt-2  mb-4 w-[1000px] h-[700px] rounded-xl">
+              <div className="  flex  justify-center items-center bg-black rounded-xl mt-2">
+                <div className="relative overflow-hidden mt-2  mb-4 w-[1000px] h-[700px]">
                   <div
                     className="flex transition-transform duration-500 ease-in-out "
                     style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -201,18 +201,31 @@ function HotelDetailPage() {
                       style={{
                         display: "flex",
                         overflow: "auto",
-                        maxWidth: 600,
                       }}
                     >
-                      {hotelUrl.map((h, index) => (
-                        <Link
-                          key={index}
-                          to={h.url}
-                          className="text-lg text-gray-500 hover:text-gray-700"
-                        >
-                          {h.url}
-                        </Link>
-                      ))}
+                      {hotelUrl.length > 0 ? (
+                        hotelUrl.map((h, index) => (
+                          <a
+                            key={index}
+                            href={h.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-lg text-gray-500 hover:text-gray-700 mr-4"
+                            style={{ whiteSpace: "nowrap" }}
+                          >
+                            <button
+                              type="button"
+                              className="py-2 px-4 text-sm font-medium rounded-lg transition duration-500 border-2 border-sky-600 text-black hover:text-white hover:bg-sky-800"
+                            >
+                              ลิงก์ {index + 1}
+                            </button>
+                          </a>
+                        ))
+                      ) : (
+                        <p className="text-lg text-red-500">
+                          ไม่มีช่องทางการติดต่อ
+                        </p>
+                      )}
                     </div>
                     <TableContainer
                       component={Paper}
@@ -261,43 +274,55 @@ function HotelDetailPage() {
                           </TableRow>
                         </TableHead>
                         <TableBody sx={{ border: "1px solid black" }}>
-                          {rooms.map((room) => (
-                            <TableRow key={room.hotel_ID}>
-                              <TableCell sx={{ border: "1px solid black" }}>
-                                {room.type_room}
-                              </TableCell>
+                          {rooms.length > 0 ? (
+                            rooms.map((room) => (
+                              <TableRow key={room.hotel_ID}>
+                                <TableCell sx={{ border: "1px solid black" }}>
+                                  {room.type_room}
+                                </TableCell>
+                                <TableCell
+                                  align="left"
+                                  sx={{ border: "1px solid black" }}
+                                >
+                                  {room.type_view_name_room}
+                                </TableCell>
+                                <TableCell
+                                  align="center"
+                                  sx={{ border: "1px solid black" }}
+                                >
+                                  {room.price}
+                                </TableCell>
+                                <TableCell
+                                  align="center"
+                                  sx={{ border: "1px solid black" }}
+                                >
+                                  {room.Number_of_guests}
+                                </TableCell>
+                                <TableCell
+                                  align="center"
+                                  sx={{ border: "1px solid black" }}
+                                >
+                                  {room.Number_of_rooms}
+                                </TableCell>
+                                <TableCell
+                                  align="center"
+                                  sx={{ border: "1px solid black" }}
+                                >
+                                  {room.status_name_room}
+                                </TableCell>
+                              </TableRow>
+                            ))
+                          ) : (
+                            <TableRow>
                               <TableCell
-                                align="left"
-                                sx={{ border: "1px solid black" }}
-                              >
-                                {room.type_view_name_room}
-                              </TableCell>
-                              <TableCell
+                                colSpan={6}
                                 align="center"
                                 sx={{ border: "1px solid black" }}
                               >
-                                {room.price}
-                              </TableCell>
-                              <TableCell
-                                align="center"
-                                sx={{ border: "1px solid black" }}
-                              >
-                                {room.Number_of_guests}
-                              </TableCell>
-                              <TableCell
-                                align="center"
-                                sx={{ border: "1px solid black" }}
-                              >
-                                {room.Number_of_rooms}
-                              </TableCell>
-                              <TableCell
-                                align="center"
-                                sx={{ border: "1px solid black" }}
-                              >
-                                {room.status_name_room}
+                                ยังไม่มีข้อมูลห้องพัก
                               </TableCell>
                             </TableRow>
-                          ))}
+                          )}
                         </TableBody>
                       </Table>
                     </TableContainer>
