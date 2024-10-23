@@ -150,10 +150,8 @@ function CheckConcertDealPage() {
                 width: 1400,
                 height: 520,
                 borderRadius: 3,
-                // bgcolor: "#D9D9D9",
                 border: 2,
                 display: "flex",
-                // justifyContent: "center",
               }}
             >
               <div
@@ -190,211 +188,277 @@ function CheckConcertDealPage() {
                       />
                     </Tabs>
                     <TabPanel value={tabValue} index={0}>
-                      <TableContainer
-                        component={Paper}
-                        sx={{
-                          height: 400,
-                          maxHeight: 400,
-                          width: 1300,
-                          maxWidth: 1300,
-                          border: 2,
-                          borderRadius: 2,
-                        }}
-                      >
-                        <Table>
-                          <TableHead>
-                            <TableRow>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชื่อคอนเสิร์ต
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                จังหวัด
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชนิดตั๋ว
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                จำนวนตั๋ว
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ราคาตั๋ว
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                วันที่สิ้นสุดข้อเสนอ
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                สถานะ
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                เลือก
-                              </TableCell>
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {ConcertDealType1ByUser.map((concertdeal) => (
-                              <TableRow>
-                                <TableCell>
-                                  {concertdeal.name_concert}
-                                </TableCell>
-                                <TableCell>{concertdeal.province}</TableCell>
-                                <TableCell>
-                                  {concertdeal.name_type_ticket}
-                                </TableCell>
-                                <TableCell>
-                                  {concertdeal.number_of_tickets}
-                                </TableCell>
-                                <TableCell>
-                                  {concertdeal.concert_deal_price}
-                                </TableCell>
-                                <TableCell>
-                                  {dayjs(concertdeal.e_datetime).format(
-                                    "YYYY-MM-DD"
-                                  )}
-                                </TableCell>
-                                <TableCell>{concertdeal.name_status}</TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
+                      {ConcertDealType1ByUser.length > 0 ? (
+                        <>
+                          <TableContainer
+                            component={Paper}
+                            sx={{
+                              height: 400,
+                              maxHeight: 400,
+                              width: 1300,
+                              maxWidth: 1300,
+                              border: 2,
+                              borderRadius: 2,
+                            }}
+                          >
+                            <Table>
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชื่อคอนเสิร์ต
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    จังหวัด
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชนิดตั๋ว
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    จำนวนตั๋ว
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ราคาตั๋ว
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    วันที่สิ้นสุดข้อเสนอ
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    สถานะ
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    เลือก
+                                  </TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                {ConcertDealType1ByUser.map((concertdeal) => (
+                                  <TableRow>
+                                    <TableCell>
+                                      {concertdeal.name_concert}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.province}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.name_type_ticket}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.number_of_tickets}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.concert_deal_price}
+                                    </TableCell>
+                                    <TableCell>
+                                      {dayjs(concertdeal.e_datetime).format(
+                                        "YYYY-MM-DD"
+                                      )}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.name_status}
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </TableContainer>
+                        </>
+                      ) : (
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            marginTop: "150px",
+                            marginLeft: "450px",
+                          }}
+                        >
+                          <p>
+                            ยังไม่มีข้อมูลข้อมูลข้อเสนอ
+                            โปรดดำเนินการเพิ่มข้อมูลข้อเสนอ
+                          </p>
+                        </div>
+                      )}
                     </TabPanel>
                     <TabPanel value={tabValue} index={1}>
-                      <TableContainer
-                        component={Paper}
-                        sx={{
-                          height: 400,
-                          maxHeight: 400,
-                          width: 1300,
-                          maxWidth: 1300,
-                          border: 2,
-                          borderRadius: 2,
-                        }}
-                      >
-                        <Table>
-                          <TableHead>
-                            <TableRow>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชื่อคอนเสิร์ต
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                จังหวัด
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชนิดตั๋ว
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                จำนวนตั๋ว
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ราคาตั๋ว
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                วันที่สิ้นสุดข้อเสนอ
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                สถานะ
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                เลือก
-                              </TableCell>
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {ConcertDealType2ByUser.map((concertdeal) => (
-                              <TableRow>
-                                <TableCell>
-                                  {concertdeal.name_concert}
-                                </TableCell>
-                                <TableCell>{concertdeal.province}</TableCell>
-                                <TableCell>
-                                  {concertdeal.name_type_ticket}
-                                </TableCell>
-                                <TableCell>
-                                  {concertdeal.number_of_tickets}
-                                </TableCell>
-                                <TableCell>
-                                  {concertdeal.concert_deal_price}
-                                </TableCell>
-                                <TableCell>
-                                  {dayjs(concertdeal.e_datetime).format(
-                                    "YYYY-MM-DD"
-                                  )}
-                                </TableCell>
-                                <TableCell>{concertdeal.name_status}</TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
+                      {ConcertDealType2ByUser.length > 0 ? (
+                        <>
+                          <TableContainer
+                            component={Paper}
+                            sx={{
+                              height: 400,
+                              maxHeight: 400,
+                              width: 1300,
+                              maxWidth: 1300,
+                              border: 2,
+                              borderRadius: 2,
+                            }}
+                          >
+                            <Table>
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชื่อคอนเสิร์ต
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    จังหวัด
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชนิดตั๋ว
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    จำนวนตั๋ว
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ราคาตั๋ว
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    วันที่สิ้นสุดข้อเสนอ
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    สถานะ
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    เลือก
+                                  </TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                {ConcertDealType2ByUser.map((concertdeal) => (
+                                  <TableRow>
+                                    <TableCell>
+                                      {concertdeal.name_concert}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.province}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.name_type_ticket}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.number_of_tickets}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.concert_deal_price}
+                                    </TableCell>
+                                    <TableCell>
+                                      {dayjs(concertdeal.e_datetime).format(
+                                        "YYYY-MM-DD"
+                                      )}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.name_status}
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </TableContainer>
+                        </>
+                      ) : (
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            marginTop: "150px",
+                            marginLeft: "450px",
+                          }}
+                        >
+                          <p>
+                            ยังไม่มีข้อมูลข้อมูลข้อเสนอ
+                            โปรดดำเนินการเพิ่มข้อมูลข้อเสนอ
+                          </p>
+                        </div>
+                      )}
                     </TabPanel>
                     <TabPanel value={tabValue} index={2}>
-                      <TableContainer
-                        component={Paper}
-                        sx={{
-                          height: 400,
-                          maxHeight: 400,
-                          width: 1300,
-                          maxWidth: 1300,
-                          border: 2,
-                          borderRadius: 2,
-                        }}
-                      >
-                        <Table>
-                          <TableHead>
-                            <TableRow>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชื่อคอนเสิร์ต
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                จังหวัด
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชนิดตั๋ว
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                จำนวนตั๋ว
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ราคาตั๋ว
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                วันที่สิ้นสุดข้อเสนอ
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                สถานะ
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                เลือก
-                              </TableCell>
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {ConcertDealType3ByUser.map((concertdeal) => (
-                              <TableRow>
-                                <TableCell>
-                                  {concertdeal.name_concert}
-                                </TableCell>
-                                <TableCell>{concertdeal.province}</TableCell>
-                                <TableCell>
-                                  {concertdeal.name_type_ticket}
-                                </TableCell>
-                                <TableCell>
-                                  {concertdeal.number_of_tickets}
-                                </TableCell>
-                                <TableCell>
-                                  {concertdeal.concert_deal_price}
-                                </TableCell>
-                                <TableCell>
-                                  {dayjs(concertdeal.e_datetime).format(
-                                    "YYYY-MM-DD"
-                                  )}
-                                </TableCell>
-                                <TableCell>{concertdeal.name_status}</TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
+                      {ConcertDealType3ByUser.length > 0 ? (
+                        <>
+                          <TableContainer
+                            component={Paper}
+                            sx={{
+                              height: 400,
+                              maxHeight: 400,
+                              width: 1300,
+                              maxWidth: 1300,
+                              border: 2,
+                              borderRadius: 2,
+                            }}
+                          >
+                            <Table>
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชื่อคอนเสิร์ต
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    จังหวัด
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชนิดตั๋ว
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    จำนวนตั๋ว
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ราคาตั๋ว
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    วันที่สิ้นสุดข้อเสนอ
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    สถานะ
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    เลือก
+                                  </TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                {ConcertDealType3ByUser.map((concertdeal) => (
+                                  <TableRow>
+                                    <TableCell>
+                                      {concertdeal.name_concert}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.province}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.name_type_ticket}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.number_of_tickets}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.concert_deal_price}
+                                    </TableCell>
+                                    <TableCell>
+                                      {dayjs(concertdeal.e_datetime).format(
+                                        "YYYY-MM-DD"
+                                      )}
+                                    </TableCell>
+                                    <TableCell>
+                                      {concertdeal.name_status}
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </TableContainer>
+                        </>
+                      ) : (
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            marginTop: "150px",
+                            marginLeft: "450px",
+                          }}
+                        >
+                          <p>
+                            ยังไม่มีข้อมูลข้อมูลข้อเสนอ
+                            โปรดดำเนินการเพิ่มข้อมูลข้อเสนอ
+                          </p>
+                        </div>
+                      )}
                     </TabPanel>
                   </Box>
                 </div>
