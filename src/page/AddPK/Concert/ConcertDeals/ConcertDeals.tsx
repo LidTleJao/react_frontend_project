@@ -702,6 +702,7 @@ function ConcertDealPage() {
                         borderRadius: 2,
                       }}
                     >
+                      {hotelDealAll.length > 0 ? (<>
                       <Table>
                         <TableHead>
                           <TableRow>
@@ -777,6 +778,19 @@ function ConcertDealPage() {
                           ))}
                         </TableBody>
                       </Table>
+                      </>) : (
+                        <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          marginTop: "160px",
+                        }}
+                      >
+                        <p>
+                          ยังไม่มีข้อมูลข้อเสนอโรงแรม
+                        </p>
+                      </div>
+                      )}
                     </TableContainer>
                   </div>
                   <div
