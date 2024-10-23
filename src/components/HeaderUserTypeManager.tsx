@@ -111,7 +111,7 @@ function HeaderUserTypeManager() {
               }}
               onClick={navigateToHotelPage}
             >
-              โรมแรม
+              โรงแรม
             </Button>
             <Button
               variant="text"
@@ -201,7 +201,7 @@ function HeaderUserTypeManager() {
                 variant="h6"
                 marginTop={"-10px"}
               >
-                สร้าง
+                สร้างข้อมูล
               </Typography>
               <Divider />
               <MenuItem onClick={navigateToAddHotelDataPage}>
@@ -219,7 +219,7 @@ function HeaderUserTypeManager() {
                   }}
                   variant="h6"
                 >
-                  โรมแรม
+                  ฝั่งโรมแรม
                 </Typography>
               </MenuItem>
               <MenuItem onClick={navigateToAddConcertDataPage}>
@@ -237,7 +237,7 @@ function HeaderUserTypeManager() {
                   }}
                   variant="h6"
                 >
-                  คอนเสิรต์
+                  ฝั่งคอนเสิรต์
                 </Typography>
               </MenuItem>
               <MenuItem onClick={navigateToAddPacketPage}>
@@ -255,22 +255,10 @@ function HeaderUserTypeManager() {
                   }}
                   variant="h6"
                 >
-                  แพ็คเกจ
+                  ฝั่งแพ็คเกจ
                 </Typography>
               </MenuItem>
             </Menu>
-            {/* <IconButton
-              sx={{
-                background: "linear-gradient(45deg, #085078, #85D8CE)",
-                color: "white",
-                "&:hover": {
-                  background: "linear-gradient(45deg, #085078, #85D8CE)",
-                },
-                ml: 1,
-              }}
-            >
-              <NotificationsIcon />
-            </IconButton> */}
             <Tooltip title="Account settings">
               <IconButton
                 onClick={handleAccountClick}

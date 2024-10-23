@@ -181,7 +181,7 @@ function HomePage() {
                 variant="h3"
                 marginTop={"25px"}
               >
-                Concert
+                คอนเสิร์ต
               </Typography>
               <div
                 style={{
@@ -291,7 +291,7 @@ function HomePage() {
                 variant="h3"
                 marginTop={"25px"}
               >
-                Hotel
+                โรงแรม
               </Typography>
               <div
                 style={{

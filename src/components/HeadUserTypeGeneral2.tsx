@@ -109,7 +109,7 @@ function HeaderUserTypeGeneral2() {
               }}
               onClick={navigateToHotelPage}
             >
-              โรมแรม
+              โรงแรม
             </Button>
             <Button
               variant="text"
