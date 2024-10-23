@@ -1,6 +1,4 @@
 export interface PacketGetPIDRes {
-    [x: string]: number;
-    reduce<T>(arg0: (data: any, packet: any) => any, arg1: {}): { [s: string]: unknown; } | ArrayLike<unknown>;
     PID:                   number;
     deals_ID:              number;
     concert_deal_ID:       number;
