@@ -469,7 +469,7 @@ function PackagePage() {
                   filteredData.map((concert) => (
                     <Card
                       key={concert.PID}
-                      sx={{ maxWidth: 345, background: "#4E6A97", border: 2 }}
+                      sx={{ maxWidth: 345, background: "#4E6A97", border: 1 }}
                     >
                       <CardMedia
                         component="img"
