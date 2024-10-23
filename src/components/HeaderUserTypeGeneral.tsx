@@ -11,11 +11,9 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-// import NotificationsIcon from "@mui/icons-material/Notifications";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 function HeaderUserTypeGeneral() {
@@ -48,9 +46,6 @@ function HeaderUserTypeGeneral() {
   }
   function navigateToProfilePage() {
     navigate("/Profile");
-  }
-  function navigateToEditProfilePage() {
-    navigate("/EditProfile");
   }
   return (
     <>
@@ -258,13 +253,6 @@ function HeaderUserTypeGeneral() {
                   <AccountBoxIcon fontSize="small" />
                 </ListItemIcon>
                 Profile
-              </MenuItem>
-
-              <MenuItem onClick={navigateToEditProfilePage} sx={{ fontFamily: "Kanit, sans-serif", fontSize: "16px" }}>
-                <ListItemIcon sx={{ minWidth: "40px", color: "#666" }}>
-                  <ManageAccountsIcon fontSize="small" />
-                </ListItemIcon>
-                Setting Account
               </MenuItem>
 
               <MenuItem onClick={navigateToLoginPage} sx={{ fontFamily: "Kanit, sans-serif", fontSize: "16px" }}>
