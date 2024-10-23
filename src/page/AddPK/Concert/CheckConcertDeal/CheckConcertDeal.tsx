@@ -268,12 +268,11 @@ function CheckConcertDealPage() {
                             display: "flex",
                             justifyContent: "center",
                             marginTop: "150px",
-                            marginLeft: "450px",
+                            marginLeft: "600px",
                           }}
                         >
                           <p>
-                            ยังไม่มีข้อมูลข้อมูลข้อเสนอ
-                            โปรดดำเนินการเพิ่มข้อมูลข้อเสนอ
+                            ไม่มีข้อมูลข้อเสนอ
                           </p>
                         </div>
                       )}
@@ -316,9 +315,6 @@ function CheckConcertDealPage() {
                                   <TableCell sx={{ fontWeight: "bold" }}>
                                     สถานะ
                                   </TableCell>
-                                  <TableCell sx={{ fontWeight: "bold" }}>
-                                    เลือก
-                                  </TableCell>
                                 </TableRow>
                               </TableHead>
                               <TableBody>
@@ -359,12 +355,11 @@ function CheckConcertDealPage() {
                             display: "flex",
                             justifyContent: "center",
                             marginTop: "150px",
-                            marginLeft: "450px",
+                            marginLeft: "600px",
                           }}
                         >
                           <p>
-                            ยังไม่มีข้อมูลข้อมูลข้อเสนอ
-                            โปรดดำเนินการเพิ่มข้อมูลข้อเสนอ
+                            ไม่มีข้อมูลข้อเสนอ
                           </p>
                         </div>
                       )}
@@ -407,9 +402,6 @@ function CheckConcertDealPage() {
                                   <TableCell sx={{ fontWeight: "bold" }}>
                                     สถานะ
                                   </TableCell>
-                                  <TableCell sx={{ fontWeight: "bold" }}>
-                                    เลือก
-                                  </TableCell>
                                 </TableRow>
                               </TableHead>
                               <TableBody>
@@ -450,12 +442,11 @@ function CheckConcertDealPage() {
                             display: "flex",
                             justifyContent: "center",
                             marginTop: "150px",
-                            marginLeft: "450px",
+                            marginLeft: "600px",
                           }}
                         >
                           <p>
-                            ยังไม่มีข้อมูลข้อมูลข้อเสนอ
-                            โปรดดำเนินการเพิ่มข้อมูลข้อเสนอ
+                            ยังไม่มีข้อมูลข้อเสนอ
                           </p>
                         </div>
                       )}

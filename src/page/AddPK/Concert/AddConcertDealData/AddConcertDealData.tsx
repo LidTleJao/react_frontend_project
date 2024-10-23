@@ -197,8 +197,8 @@ function AddConcertDealDataPage() {
                       <Box
                         sx={{
                           width: 650,
-                          height: 470,
-                          maxHeight: 480,
+                          height: 350,
+                          maxHeight: 350,
                           borderRadius: 3,
                           bgcolor: "#D9D9D9",
                           border: 2,

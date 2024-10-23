@@ -219,6 +219,7 @@ function ConcertDealPage() {
               ข้อมูลข้อเสนอ
             </Typography>
           </div>
+          {ConcertDealByUser.length > 0 ? (<>
           <div
             style={{
               display: "flex",
@@ -844,6 +845,20 @@ function ConcertDealPage() {
               </Box>
             </div>
           </div>
+          </>):(
+            <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "60px",
+            }}
+          >
+            <p>
+              ยังไม่มีข้อมูลข้อเสนอคอนเสิร์ต
+              โปรดดำเนินการเพิ่มข้อมูลข้อเสนอคอนเสิร์ต
+            </p>
+          </div>
+          )}
         </div>
       </div>
     </>

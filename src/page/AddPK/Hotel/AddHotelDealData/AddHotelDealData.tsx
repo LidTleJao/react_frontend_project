@@ -624,6 +624,7 @@ function AddHotelDealDataPage() {
                       <Box
                         sx={{
                           width: 650,
+                          maxWidth: 650,
                           height: 470,
                           maxHeight: 480,
                           borderRadius: 3,
@@ -631,6 +632,7 @@ function AddHotelDealDataPage() {
                           border: 2,
                           display: "flex",
                           justifyContent: "center",
+                          overflow: "auto"
                         }}
                       >
                         <div
@@ -723,6 +725,7 @@ function AddHotelDealDataPage() {
                                 maxWidth: 750,
                                 border: 2,
                                 borderRadius: 2,
+                                marginBottom:"20px",
                                 overflow: "auto",
                               }}
                             >

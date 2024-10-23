@@ -230,9 +230,6 @@ function CheckHotelDealPage() {
                                   <TableCell sx={{ fontWeight: "bold" }}>
                                     สถานะ
                                   </TableCell>
-                                  <TableCell sx={{ fontWeight: "bold" }}>
-                                    เลือก
-                                  </TableCell>
                                 </TableRow>
                               </TableHead>
                               <TableBody>
@@ -270,12 +267,11 @@ function CheckHotelDealPage() {
                             display: "flex",
                             justifyContent: "center",
                             marginTop: "150px",
-                            marginLeft: "450px",
+                            marginLeft: "600px",
                           }}
                         >
                           <p>
-                            ยังไม่มีข้อมูลข้อมูลข้อเสนอ
-                            โปรดดำเนินการเพิ่มข้อมูลข้อเสนอ
+                            ยังไม่มีข้อมูลข้อเสนอ
                           </p>
                         </div>
                       )}
@@ -321,9 +317,6 @@ function CheckHotelDealPage() {
                                   <TableCell sx={{ fontWeight: "bold" }}>
                                     สถานะ
                                   </TableCell>
-                                  <TableCell sx={{ fontWeight: "bold" }}>
-                                    เลือก
-                                  </TableCell>
                                 </TableRow>
                               </TableHead>
                               <TableBody>
@@ -361,12 +354,11 @@ function CheckHotelDealPage() {
                             display: "flex",
                             justifyContent: "center",
                             marginTop: "150px",
-                            marginLeft: "450px",
+                            marginLeft: "600px",
                           }}
                         >
                           <p>
-                            ยังไม่มีข้อมูลข้อมูลข้อเสนอ
-                            โปรดดำเนินการเพิ่มข้อมูลข้อเสนอ
+                            ยังไม่มีข้อมูลข้อเสนอ
                           </p>
                         </div>
                       )}
@@ -412,9 +404,6 @@ function CheckHotelDealPage() {
                                   <TableCell sx={{ fontWeight: "bold" }}>
                                     สถานะ
                                   </TableCell>
-                                  <TableCell sx={{ fontWeight: "bold" }}>
-                                    เลือก
-                                  </TableCell>
                                 </TableRow>
                               </TableHead>
                               <TableBody>
@@ -452,12 +441,11 @@ function CheckHotelDealPage() {
                             display: "flex",
                             justifyContent: "center",
                             marginTop: "150px",
-                            marginLeft: "450px",
+                            marginLeft: "600px",
                           }}
                         >
                           <p>
-                            ยังไม่มีข้อมูลข้อมูลข้อเสนอ
-                            โปรดดำเนินการเพิ่มข้อมูลข้อเสนอ
+                            ยังไม่มีข้อมูลข้อเสนอ
                           </p>
                         </div>
                       )}

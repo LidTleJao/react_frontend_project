@@ -207,6 +207,7 @@ function HotelDealPage() {
               ข้อมูลข้อเสนอ
             </Typography>
           </div>
+          {HotelDealByUser.length > 0 ? (<>
           <div
             style={{
               display: "flex",
@@ -794,6 +795,20 @@ function HotelDealPage() {
               </Box>
             </div>
           </div>
+          </>) : (
+            <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "60px",
+            }}
+          >
+            <p>
+            ยังไม่มีข้อมูลข้อเสนอโรงแรม
+            โปรดดำเนินการเพิ่มข้อมูลข้อเสนอโรงแรม
+            </p>
+          </div>
+          )}
         </div>
       </div>
     </>
