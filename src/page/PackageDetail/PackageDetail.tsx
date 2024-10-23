@@ -82,7 +82,9 @@ function PackageDetailPage() {
         ))}
       <div className="concert-cont mt-20">
         <div className="flex flex-col justify-center">
-          <div style={{ display: "flex", justifyContent: "center" ,marginTop:20}}>
+          <div
+            style={{ display: "flex", justifyContent: "center", marginTop: 20 }}
+          >
             <Typography
               gutterBottom
               sx={{
@@ -112,7 +114,7 @@ function PackageDetailPage() {
             </Button>
           </div>
           {packetselect.map((packet) => (
-            <div className="bg-sky-200 p-6 rounded-2xl mt-1">
+            <div className="bg-white p-6 rounded-2xl mt-1 shadow-[0_2px_4px_rgba(0,0,0,0.3)] mb-10">
               <div className=" flex flex-row justify-between">
                 <div className="h-auto flex flex-col ">
                   <div className="h-auto flex flex-row">
@@ -169,54 +171,79 @@ function PackageDetailPage() {
                           </TableRow>
                         </TableHead>
                         <TableBody sx={{ border: "1px solid black" }}>
-                          <TableRow key={packet.hotel_ID}>
-                            <TableCell sx={{ border: "1px solid black" }}>
-                              {packet.type_room}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              sx={{ border: "1px solid black" }}
-                            >
-                              {packet.type_view_name_room}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              sx={{ border: "1px solid black" }}
-                            >
-                              {packet.hotel_deal_price}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              sx={{ border: "1px solid black" }}
-                            >
-                              {packet.Number_of_guests}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              sx={{ border: "1px solid black" }}
-                            >
-                              {packet.number_of_rooms}
-                            </TableCell>
-                          </TableRow>
+                          {packetselect.length > 0 ? (
+                            <TableRow key={packet.hotel_ID}>
+                              <TableCell sx={{ border: "1px solid black" }}>
+                                {packet.type_room}
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{ border: "1px solid black" }}
+                              >
+                                {packet.type_view_name_room}
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{ border: "1px solid black" }}
+                              >
+                                {packet.hotel_deal_price}
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{ border: "1px solid black" }}
+                              >
+                                {packet.Number_of_guests}
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{ border: "1px solid black" }}
+                              >
+                                {packet.number_of_rooms}
+                              </TableCell>
+                            </TableRow>
+                          ) : (
+                            <TableRow>
+                              <TableCell
+                                colSpan={5}
+                                align="center"
+                                sx={{
+                                  border: "1px solid black",
+                                  color: "gray",
+                                }}
+                              >
+                                ยังไม่มีข้อมูล
+                              </TableCell>
+                            </TableRow>
+                          )}
                         </TableBody>
                       </Table>
                     </TableContainer>
                   </div>
                 </div>
-                <div className="ml-2" style={{ display: "flex", flexDirection: "column" }}>
+                <div
+                  className="ml-2"
+                  style={{ display: "flex", flexDirection: "column" }}
+                >
                   <h1 className="text-xl font-bold text-black pt-2">
                     ช่องทางการติดต่อ
                   </h1>
-                  {hotelChannel.map((h, index) => (
-                    <Link
-                      key={index}
-                      to={h.url}
-                      className="text-lg text-gray-500 hover:text-gray-700"
-                    >
-                      {h.url}
-                    </Link>
-                  ))}
+                  {hotelChannel.length > 0 ? (
+                    hotelChannel.map((h, index) => (
+                      <Link
+                        key={index}
+                        to={h.url}
+                        className="text-lg text-gray-500 hover:text-gray-700"
+                      >
+                        {h.url}
+                      </Link>
+                    ))
+                  ) : (
+                    <h2 className="text-lg text-red-500">
+                      ไม่มีช่องทางการติดต่อ
+                    </h2>
+                  )}
                 </div>
+
                 <h1 className="text-2xl text-black ml-2 font-semibold mt-4">
                   concert : {packet.name_concert}
                 </h1>
@@ -254,10 +281,10 @@ function PackageDetailPage() {
                           {packet.number_of_tickets}
                         </h1>
                       </div>
-                      <div className="flex flex-row justify-between ">
+                      <div className="flex flex-col justify-between ">
                         <h1 className="text-lg text-gray-500">ราคาบัตร :</h1>
 
-                        <h1 className="text-lg text-gray-500 justify-start pl-3 max-w-lg">
+                        <h1 className="text-lg text-gray-500 justify-start pl-3 ">
                           {packet.name_type_ticket}/{packet.concert_deal_price}{" "}
                           บาท
                         </h1>
