@@ -190,217 +190,277 @@ function CheckHotelDealPage() {
                       />
                     </Tabs>
                     <TabPanel value={tabValue} index={0}>
-                      <TableContainer
-                        component={Paper}
-                        sx={{
-                          height: 400,
-                          maxHeight: 400,
-                          width: 1300,
-                          maxWidth: 1300,
-                          border: 2,
-                          borderRadius: 2,
-                        }}
-                      >
-                        <Table>
-                          <TableHead>
-                            <TableRow>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชื่อโรงแรม
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                จังหวัด
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชนิดห้อง
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชนิดวิว
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                จำนวนห้อง
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ราคาห้อง
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                วันที่สิ้นสุดข้อเสนอ
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                สถานะ
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                เลือก
-                              </TableCell>
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {HotelDealType1ByUser.map((hoteldeal) => (
-                              <TableRow>
-                                <TableCell>{hoteldeal.name}</TableCell>
-                                <TableCell>{hoteldeal.province}</TableCell>
-                                <TableCell>{hoteldeal.type_room}</TableCell>
-                                <TableCell>
-                                  {hoteldeal.type_view_name_room}
-                                </TableCell>
-                                <TableCell>
-                                  {hoteldeal.hotel_deal_price}
-                                </TableCell>
-                                <TableCell>
-                                  {hoteldeal.number_of_rooms}
-                                </TableCell>
-                                <TableCell>
-                                  {dayjs(hoteldeal.e_datetime).format(
-                                    "YYYY-MM-DD"
-                                  )}
-                                </TableCell>
-                                <TableCell>{hoteldeal.name_status}</TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
+                      {HotelDealType1ByUser.length > 0 ? (
+                        <>
+                          <TableContainer
+                            component={Paper}
+                            sx={{
+                              height: 400,
+                              maxHeight: 400,
+                              width: 1300,
+                              maxWidth: 1300,
+                              border: 2,
+                              borderRadius: 2,
+                            }}
+                          >
+                            <Table>
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชื่อโรงแรม
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    จังหวัด
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชนิดห้อง
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชนิดวิว
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    จำนวนห้อง
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ราคาห้อง
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    วันที่สิ้นสุดข้อเสนอ
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    สถานะ
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    เลือก
+                                  </TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                {HotelDealType1ByUser.map((hoteldeal) => (
+                                  <TableRow>
+                                    <TableCell>{hoteldeal.name}</TableCell>
+                                    <TableCell>{hoteldeal.province}</TableCell>
+                                    <TableCell>{hoteldeal.type_room}</TableCell>
+                                    <TableCell>
+                                      {hoteldeal.type_view_name_room}
+                                    </TableCell>
+                                    <TableCell>
+                                      {hoteldeal.hotel_deal_price}
+                                    </TableCell>
+                                    <TableCell>
+                                      {hoteldeal.number_of_rooms}
+                                    </TableCell>
+                                    <TableCell>
+                                      {dayjs(hoteldeal.e_datetime).format(
+                                        "YYYY-MM-DD"
+                                      )}
+                                    </TableCell>
+                                    <TableCell>
+                                      {hoteldeal.name_status}
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </TableContainer>
+                        </>
+                      ) : (
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            marginTop: "150px",
+                            marginLeft: "450px",
+                          }}
+                        >
+                          <p>
+                            ยังไม่มีข้อมูลข้อมูลข้อเสนอ
+                            โปรดดำเนินการเพิ่มข้อมูลข้อเสนอ
+                          </p>
+                        </div>
+                      )}
                     </TabPanel>
                     <TabPanel value={tabValue} index={1}>
-                      <TableContainer
-                        component={Paper}
-                        sx={{
-                          height: 400,
-                          maxHeight: 400,
-                          width: 1300,
-                          maxWidth: 1300,
-                          border: 2,
-                          borderRadius: 2,
-                        }}
-                      >
-                        <Table>
-                          <TableHead>
-                            <TableRow>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชื่อโรงแรม
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                จังหวัด
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชนิดห้อง
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชนิดวิว
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                จำนวนห้อง
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ราคาห้อง
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                วันที่สิ้นสุดข้อเสนอ
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                สถานะ
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                เลือก
-                              </TableCell>
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {HotelDealType2ByUser.map((hoteldeal) => (
-                              <TableRow>
-                                <TableCell>{hoteldeal.name}</TableCell>
-                                <TableCell>{hoteldeal.province}</TableCell>
-                                <TableCell>{hoteldeal.type_room}</TableCell>
-                                <TableCell>
-                                  {hoteldeal.type_view_name_room}
-                                </TableCell>
-                                <TableCell>
-                                  {hoteldeal.hotel_deal_price}
-                                </TableCell>
-                                <TableCell>
-                                  {hoteldeal.number_of_rooms}
-                                </TableCell>
-                                <TableCell>
-                                  {dayjs(hoteldeal.e_datetime).format(
-                                    "YYYY-MM-DD"
-                                  )}
-                                </TableCell>
-                                <TableCell>{hoteldeal.name_status}</TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
+                      {HotelDealType2ByUser.length > 0 ? (
+                        <>
+                          <TableContainer
+                            component={Paper}
+                            sx={{
+                              height: 400,
+                              maxHeight: 400,
+                              width: 1300,
+                              maxWidth: 1300,
+                              border: 2,
+                              borderRadius: 2,
+                            }}
+                          >
+                            <Table>
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชื่อโรงแรม
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    จังหวัด
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชนิดห้อง
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชนิดวิว
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    จำนวนห้อง
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ราคาห้อง
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    วันที่สิ้นสุดข้อเสนอ
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    สถานะ
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    เลือก
+                                  </TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                {HotelDealType2ByUser.map((hoteldeal) => (
+                                  <TableRow>
+                                    <TableCell>{hoteldeal.name}</TableCell>
+                                    <TableCell>{hoteldeal.province}</TableCell>
+                                    <TableCell>{hoteldeal.type_room}</TableCell>
+                                    <TableCell>
+                                      {hoteldeal.type_view_name_room}
+                                    </TableCell>
+                                    <TableCell>
+                                      {hoteldeal.hotel_deal_price}
+                                    </TableCell>
+                                    <TableCell>
+                                      {hoteldeal.number_of_rooms}
+                                    </TableCell>
+                                    <TableCell>
+                                      {dayjs(hoteldeal.e_datetime).format(
+                                        "YYYY-MM-DD"
+                                      )}
+                                    </TableCell>
+                                    <TableCell>
+                                      {hoteldeal.name_status}
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </TableContainer>
+                        </>
+                      ) : (
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            marginTop: "150px",
+                            marginLeft: "450px",
+                          }}
+                        >
+                          <p>
+                            ยังไม่มีข้อมูลข้อมูลข้อเสนอ
+                            โปรดดำเนินการเพิ่มข้อมูลข้อเสนอ
+                          </p>
+                        </div>
+                      )}
                     </TabPanel>
                     <TabPanel value={tabValue} index={2}>
-                      <TableContainer
-                        component={Paper}
-                        sx={{
-                          height: 400,
-                          maxHeight: 400,
-                          width: 1300,
-                          maxWidth: 1300,
-                          border: 2,
-                          borderRadius: 2,
-                        }}
-                      >
-                        <Table>
-                          <TableHead>
-                            <TableRow>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชื่อโรงแรม
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                จังหวัด
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชนิดห้อง
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ชนิดวิว
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                จำนวนห้อง
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                ราคาห้อง
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                วันที่สิ้นสุดข้อเสนอ
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                สถานะ
-                              </TableCell>
-                              <TableCell sx={{ fontWeight: "bold" }}>
-                                เลือก
-                              </TableCell>
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {HotelDealType3ByUser.map((hoteldeal) => (
-                              <TableRow>
-                                <TableCell>{hoteldeal.name}</TableCell>
-                                <TableCell>{hoteldeal.province}</TableCell>
-                                <TableCell>{hoteldeal.type_room}</TableCell>
-                                <TableCell>
-                                  {hoteldeal.type_view_name_room}
-                                </TableCell>
-                                <TableCell>
-                                  {hoteldeal.hotel_deal_price}
-                                </TableCell>
-                                <TableCell>
-                                  {hoteldeal.number_of_rooms}
-                                </TableCell>
-                                <TableCell>
-                                  {dayjs(hoteldeal.e_datetime).format(
-                                    "YYYY-MM-DD"
-                                  )}
-                                </TableCell>
-                                <TableCell>{hoteldeal.name_status}</TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
+                      {HotelDealType3ByUser.length > 0 ? (
+                        <>
+                          <TableContainer
+                            component={Paper}
+                            sx={{
+                              height: 400,
+                              maxHeight: 400,
+                              width: 1300,
+                              maxWidth: 1300,
+                              border: 2,
+                              borderRadius: 2,
+                            }}
+                          >
+                            <Table>
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชื่อโรงแรม
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    จังหวัด
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชนิดห้อง
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ชนิดวิว
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    จำนวนห้อง
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    ราคาห้อง
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    วันที่สิ้นสุดข้อเสนอ
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    สถานะ
+                                  </TableCell>
+                                  <TableCell sx={{ fontWeight: "bold" }}>
+                                    เลือก
+                                  </TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                {HotelDealType3ByUser.map((hoteldeal) => (
+                                  <TableRow>
+                                    <TableCell>{hoteldeal.name}</TableCell>
+                                    <TableCell>{hoteldeal.province}</TableCell>
+                                    <TableCell>{hoteldeal.type_room}</TableCell>
+                                    <TableCell>
+                                      {hoteldeal.type_view_name_room}
+                                    </TableCell>
+                                    <TableCell>
+                                      {hoteldeal.hotel_deal_price}
+                                    </TableCell>
+                                    <TableCell>
+                                      {hoteldeal.number_of_rooms}
+                                    </TableCell>
+                                    <TableCell>
+                                      {dayjs(hoteldeal.e_datetime).format(
+                                        "YYYY-MM-DD"
+                                      )}
+                                    </TableCell>
+                                    <TableCell>
+                                      {hoteldeal.name_status}
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </TableContainer>
+                        </>
+                      ) : (
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            marginTop: "150px",
+                            marginLeft: "450px",
+                          }}
+                        >
+                          <p>
+                            ยังไม่มีข้อมูลข้อมูลข้อเสนอ
+                            โปรดดำเนินการเพิ่มข้อมูลข้อเสนอ
+                          </p>
+                        </div>
+                      )}
                     </TabPanel>
                   </Box>
                 </div>
