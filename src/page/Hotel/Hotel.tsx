@@ -614,7 +614,7 @@ function HotelPage() {
                     height: 60,
                     borderRadius: 3,
                     bgcolor: "#D9D9D9",
-                    border: 2,
+                    border: 1,
                   }}
                 >
                   <div

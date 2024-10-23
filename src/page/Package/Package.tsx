@@ -77,20 +77,8 @@ function PackagePage() {
     });
     setFilteredData(filtered);
   };
-  // useEffect(() => {
-  //   const loadDataAsync = async () => {
-  //     setPacket_ID(4);
-  //     const respacket = await packetService.getPacketByPID(
-  //       packet_ID.toString()
-  //     );
-  //     const data: PacketGetAllRes[] = respacket.data;
-  //     setPacket(data);
-  //   };
-  //   loadDataAsync();
-  // }, [packet_ID]);
 
   console.log(packetAll);
-  // console.log(packet);
 
   return (
     <>
@@ -127,7 +115,7 @@ function PackagePage() {
                 marginTop: "50px",
                 borderRadius: 3,
                 bgcolor: "#D9D9D9",
-                border: 2,
+                border: 1,
               }}
               display={"flex"}
               justifyContent={"start"}

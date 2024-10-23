@@ -120,7 +120,7 @@ function ConcertPage() {
                 maxHeight: 420,
                 borderRadius: 3,
                 bgcolor: "#D9D9D9",
-                border: 2,
+                border: 1,
               }}
               display={"flex"}
               justifyContent={"start"}
