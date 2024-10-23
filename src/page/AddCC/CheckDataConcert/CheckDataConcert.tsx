@@ -198,14 +198,17 @@ function CheckDataConcertPage() {
               }}
               variant="h4"
             >
-              ตรวจสอบข้อมูล
+              ตรวจสอบข้อมูลคอนเสิร์ต
             </Typography>
           </div>
           {concertAll.length > 0 ? (
             <>
               <div style={{ display: "flex", justifyContent: "start" }}>
                 <FormControl sx={{ ml: 15, minWidth: 150 }}>
-                  <InputLabel id="demo-simple-select-autowidth-label">
+                  <InputLabel
+                    id="demo-simple-select-autowidth-label"
+                    sx={{ marginTop: "-5px" }}
+                  >
                     เลือกคอนเสิร์ต
                   </InputLabel>
                   <Select
@@ -269,7 +272,7 @@ function CheckDataConcertPage() {
                             src={concertselect.poster_concert}
                             width={350}
                             height={450}
-                            style={{maxHeight:450,maxWidth:350}}
+                            style={{ maxHeight: 450, maxWidth: 350 }}
                             className="rounded-lg"
                           />
                         ))}
@@ -292,7 +295,7 @@ function CheckDataConcertPage() {
                             src={concertselect.performance_chart}
                             width={350}
                             height={260}
-                            style={{maxHeight:260,maxWidth:350}}
+                            style={{ maxHeight: 260, maxWidth: 350 }}
                             className="rounded-lg"
                           />
                         ))}
@@ -756,7 +759,7 @@ function CheckDataConcertPage() {
                                 <CardMedia
                                   component="img"
                                   alt="green iguana"
-                                  image="src\img\placeholder.png"
+                                  image="https://firebasestorage.googleapis.com/v0/b/teemi-backend-projectcs.appspot.com/o/Logo%2Fplaceholder.png?alt=media&token=7928f28b-1307-49b6-ae06-36cb8123e5d5"
                                 />
                               </Card>
                               <div
@@ -1113,130 +1116,152 @@ function CheckDataConcertPage() {
                                   </Card>
                                 </div>
                               </div>
-                              {concertShow.map((concertselect, index) => (
+                              {concertShow.length > 0 ? (
                                 <>
-                                  {editing2 ? (
+                                  {concertShow.map((concertselect, index) => (
                                     <>
-                                      <div className="flex flex-row  items-center">
-                                        <h1 className="text-xl font-medium pr-3">
-                                          รอบการแสดง
-                                        </h1>
+                                      {editing2 ? (
+                                        <>
+                                          <div className="flex flex-row  items-center">
+                                            <h1 className="text-xl font-medium pr-3">
+                                              รอบการแสดง
+                                            </h1>
 
-                                        {cstidCount.length === 1 ? (
-                                          // ถ้าจำนวน CSTID เท่ากับ 1 ใช้ DateRangePicker
-                                          <div className="flex flex-col pl-5 mt-5 items-start">
-                                            <LocalizationProvider
-                                              dateAdapter={AdapterDayjs}
-                                            >
-                                              <DateRangePicker
-                                                value={getshow3} // ค่าจาก state
-                                                onChange={(e) => setGetShow3(e)} // ฟังก์ชันเปลี่ยนค่า
-                                                slots={{
-                                                  field:
-                                                    SingleInputDateRangeField,
-                                                }}
-                                                slotProps={{
-                                                  textField: {
-                                                    InputProps: {
-                                                      endAdornment: (
-                                                        <Calendar />
-                                                      ),
-                                                    },
-                                                  },
-                                                }}
-                                                disablePast
-                                              />
-                                            </LocalizationProvider>
-                                            <TextField
-                                              sx={{ marginTop: 1 }}
-                                              type="time"
-                                              defaultValue={
-                                                concertselect?.time_show_concert
-                                              }
-                                              value={gettime3}
-                                              onChange={(e) =>
-                                                setGetTime3(e.target.value)
-                                              }
-                                              variant="outlined"
-                                            />
-                                          </div>
-                                        ) : (
-                                          // ถ้าจำนวน CSTID ไม่เท่ากับ 1 ใช้ DatePicker และ TextField แบบเดิม
-                                          <div
-                                            key={index}
-                                            className="flex flex-col pl-5 mt-5 items-start"
-                                          >
-                                            <LocalizationProvider
-                                              dateAdapter={AdapterDayjs}
-                                            >
-                                              <DemoContainer
-                                                components={["DatePicker"]}
-                                              >
-                                                <DatePicker
-                                                  label="วันที่"
-                                                  value={getshow[index]}
-                                                  onChange={(e) =>
-                                                    handleDateChange(e, index)
+                                            {cstidCount.length === 1 ? (
+                                              // ถ้าจำนวน CSTID เท่ากับ 1 ใช้ DateRangePicker
+                                              <div className="flex flex-col pl-5 mt-5 items-start">
+                                                <LocalizationProvider
+                                                  dateAdapter={AdapterDayjs}
+                                                >
+                                                  <DateRangePicker
+                                                    value={getshow3} // ค่าจาก state
+                                                    onChange={(e) =>
+                                                      setGetShow3(e)
+                                                    } // ฟังก์ชันเปลี่ยนค่า
+                                                    slots={{
+                                                      field:
+                                                        SingleInputDateRangeField,
+                                                    }}
+                                                    slotProps={{
+                                                      textField: {
+                                                        InputProps: {
+                                                          endAdornment: (
+                                                            <Calendar />
+                                                          ),
+                                                        },
+                                                      },
+                                                    }}
+                                                    disablePast
+                                                  />
+                                                </LocalizationProvider>
+                                                <TextField
+                                                  sx={{ marginTop: 1 }}
+                                                  type="time"
+                                                  defaultValue={
+                                                    concertselect?.time_show_concert
                                                   }
-                                                  disablePast
+                                                  value={gettime3}
+                                                  onChange={(e) =>
+                                                    setGetTime3(e.target.value)
+                                                  }
+                                                  variant="outlined"
                                                 />
-                                              </DemoContainer>
-                                            </LocalizationProvider>
-                                            <TextField
-                                              sx={{ marginTop: 1 }}
-                                              type="time"
-                                              onChange={(event) =>
-                                                handleTimeChange(event, index)
-                                              } // อัปเดตเวลา
-                                              defaultValue={
-                                                concertselect?.time_show_concert ||
-                                                gettime[index]
-                                              }
-                                              variant="outlined"
-                                            />
+                                              </div>
+                                            ) : (
+                                              // ถ้าจำนวน CSTID ไม่เท่ากับ 1 ใช้ DatePicker และ TextField แบบเดิม
+                                              <div
+                                                key={index}
+                                                className="flex flex-col pl-5 mt-5 items-start"
+                                              >
+                                                <LocalizationProvider
+                                                  dateAdapter={AdapterDayjs}
+                                                >
+                                                  <DemoContainer
+                                                    components={["DatePicker"]}
+                                                  >
+                                                    <DatePicker
+                                                      label="วันที่"
+                                                      value={getshow[index]}
+                                                      onChange={(e) =>
+                                                        handleDateChange(
+                                                          e,
+                                                          index
+                                                        )
+                                                      }
+                                                      disablePast
+                                                    />
+                                                  </DemoContainer>
+                                                </LocalizationProvider>
+                                                <TextField
+                                                  sx={{ marginTop: 1 }}
+                                                  type="time"
+                                                  onChange={(event) =>
+                                                    handleTimeChange(
+                                                      event,
+                                                      index
+                                                    )
+                                                  } // อัปเดตเวลา
+                                                  defaultValue={
+                                                    concertselect?.time_show_concert ||
+                                                    gettime[index]
+                                                  }
+                                                  variant="outlined"
+                                                />
+                                              </div>
+                                            )}
                                           </div>
-                                        )}
-                                      </div>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                            }}
+                                          >
+                                            <Typography
+                                              gutterBottom
+                                              sx={{
+                                                display: "flex",
+                                                color: "black",
+                                                fontFamily: "Mitr, sans-serif",
+                                                fontStyle: "normal",
+                                              }}
+                                              variant="h5"
+                                            >
+                                              วันที่{" "}
+                                              {concertselect?.show_concert}
+                                            </Typography>
+                                            <Typography
+                                              gutterBottom
+                                              sx={{
+                                                display: "flex",
+                                                marginLeft: "10px",
+                                                color: "#857878",
+                                                fontFamily: "Mitr, sans-serif",
+                                                fontStyle: "normal",
+                                              }}
+                                              variant="h5"
+                                            >
+                                              เวลา{" "}
+                                              {concertselect?.time_show_concert}
+                                            </Typography>
+                                          </div>
+                                        </>
+                                      )}
                                     </>
-                                  ) : (
-                                    <>
-                                      <div
-                                        style={{
-                                          display: "flex",
-                                          flexDirection: "row",
-                                        }}
-                                      >
-                                        <Typography
-                                          gutterBottom
-                                          sx={{
-                                            display: "flex",
-                                            color: "black",
-                                            fontFamily: "Mitr, sans-serif",
-                                            fontStyle: "normal",
-                                          }}
-                                          variant="h5"
-                                        >
-                                          วันที่ {concertselect?.show_concert}
-                                        </Typography>
-                                        <Typography
-                                          gutterBottom
-                                          sx={{
-                                            display: "flex",
-                                            marginLeft: "10px",
-                                            color: "#857878",
-                                            fontFamily: "Mitr, sans-serif",
-                                            fontStyle: "normal",
-                                          }}
-                                          variant="h5"
-                                        >
-                                          เวลา{" "}
-                                          {concertselect?.time_show_concert}
-                                        </Typography>
-                                      </div>
-                                    </>
-                                  )}
+                                  ))}
                                 </>
-                              ))}
+                              ) : (
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <p>ยังไม่มีข้อมูลรอบการแสดง</p>
+                                </div>
+                              )}
                             </div>
                           </Box>
                           <div style={{ display: "flex", marginLeft: "10px" }}>
@@ -1486,6 +1511,7 @@ function CheckDataConcertPage() {
                                         flexDirection: "column",
                                       }}
                                     >
+                                      {concertChannel.length > 0 ?(<>
                                       <Grid
                                         container
                                         spacing={2}
@@ -1516,6 +1542,15 @@ function CheckDataConcertPage() {
                                           )
                                         )}
                                       </Grid>
+                                      </>) :(
+                                        <div
+                                        style={{ display: "flex", justifyContent: "center"}}
+                                      >
+                                        <p>
+                                          ยังไม่มีข้อมูลช่องการติดต่อ
+                                        </p>
+                                      </div>
+                                      )}
                                     </div>
                                   </>
                                 )}
@@ -1595,6 +1630,7 @@ function CheckDataConcertPage() {
                           borderRadius: 2,
                         }}
                       >
+                        {concertTicket.length > 0 ? (<>
                         <Table aria-label="room information table">
                           {" "}
                           {editing4 ? (
@@ -1838,6 +1874,11 @@ function CheckDataConcertPage() {
                             ))}
                           </TableBody>
                         </Table>
+                        </>):(
+                          <div style={{ display: "flex", justifyContent: "center",marginTop:"150px" }}>
+                          <p>ยังไม่มีข้อมูลตั๋ว โปรดดำเนินการเพิ่มข้อมูลตั๋ว</p>
+                        </div>
+                        )}
                       </TableContainer>
                     </div>
                   </div>
