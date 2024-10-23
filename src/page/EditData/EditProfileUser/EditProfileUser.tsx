@@ -185,9 +185,7 @@ function EditProfileUserPage() {
                       gutterBottom
                       sx={{
                         display: "flex",
-                        fontWeight: "bold",
                         color: "black",
-                        fontFamily: "Mitr, sans-serif",
                         fontStyle: "normal",
                         marginTop: "5px",
                       }}
@@ -233,9 +231,7 @@ function EditProfileUserPage() {
                       gutterBottom
                       sx={{
                         display: "flex",
-                        fontWeight: "bold",
                         color: "black",
-                        fontFamily: "Mitr, sans-serif",
                         fontStyle: "normal",
                         marginTop: "5px",
                       }}
@@ -281,9 +277,7 @@ function EditProfileUserPage() {
                       gutterBottom
                       sx={{
                         display: "flex",
-                        fontWeight: "bold",
                         color: "black",
-                        fontFamily: "Mitr, sans-serif",
                         fontStyle: "normal",
                         marginTop: "5px",
                       }}
@@ -300,12 +294,6 @@ function EditProfileUserPage() {
                     }}
                   >
                     <FormControl sx={{ width: 230 }}>
-                      <InputLabel
-                        id="demo-select-small-label"
-                        sx={{ marginTop: "-8px" }}
-                      >
-                        จังหวัด
-                      </InputLabel>
                       <Select
                         labelId="demo-select-small-label"
                         id="demo-select-small"
@@ -317,6 +305,20 @@ function EditProfileUserPage() {
                           borderRadius: 20,
                           bgcolor: "white",
                           height: "40px",
+                        }}
+                        MenuProps={{
+                          PaperProps: {
+                            sx: {
+                              "& .MuiMenuItem-root": {
+                                fontFamily: "Kanit, sans-serif", // กำหนดฟอนต์ให้กับทุก MenuItem
+                                fontSize: "16px",
+                                padding: "10px",
+                              },
+                              "& .MuiMenuItem-root:hover": {
+                                bgcolor: "#f0f0f0", // สีพื้นหลังเมื่อ hover
+                              }
+                            }
+                          }
                         }}
                       >
                         <MenuItem value={"กรุงเทพมหานคร"}>
@@ -421,9 +423,7 @@ function EditProfileUserPage() {
                       gutterBottom
                       sx={{
                         display: "flex",
-                        fontWeight: "bold",
                         color: "black",
-                        fontFamily: "Mitr, sans-serif",
                         fontStyle: "normal",
                         marginTop: "5px",
                       }}
@@ -469,9 +469,7 @@ function EditProfileUserPage() {
                       gutterBottom
                       sx={{
                         display: "flex",
-                        fontWeight: "bold",
                         color: "black",
-                        fontFamily: "Mitr, sans-serif",
                         fontStyle: "normal",
                         marginTop: "5px",
                       }}
@@ -517,9 +515,7 @@ function EditProfileUserPage() {
                       gutterBottom
                       sx={{
                         display: "flex",
-                        fontWeight: "bold",
                         color: "black",
-                        fontFamily: "Mitr, sans-serif",
                         fontStyle: "normal",
                         marginTop: "5px",
                       }}
@@ -555,8 +551,8 @@ function EditProfileUserPage() {
                 <div
                   style={{
                     display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "end",
+                    alignItems: "center",
+                    justifyContent: "center",
                     marginTop: "20px",
                   }}
                 >
