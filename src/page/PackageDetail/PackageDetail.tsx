@@ -63,7 +63,13 @@ function PackageDetailPage() {
       fontSize: 16,
     },
   }));
-
+  const StyledTableRow = styled(TableCell)(() => ({
+    [`&.${tableCellClasses.body}`]: {
+      color: "#6B7280",
+      fontWeight: "normal",
+      fontSize: 17,
+    },
+  }));
   function navigateToPackagePage() {
     navigate("/Package");
   }
@@ -135,7 +141,7 @@ function PackageDetailPage() {
                   </div>
                   <div className="h-auto flex flex-row items-center mt-1 justify-start">
                     <PlaceIcon sx={{ fontSize: 30 }} className="text-sky-700" />
-                    <h1 className="text-xl font-semibold text-gray-500 j">
+                    <h1 className="text-xl  text-gray-500 ">
                       จังหวัด{packet.province}
                     </h1>
                   </div>
@@ -209,37 +215,39 @@ function PackageDetailPage() {
                         <TableBody>
                           {packetselect.length > 0 ? (
                             <TableRow key={packet.hotel_ID}>
-                              <TableCell sx={{ border: "1px solid black" }}>
+                              <StyledTableRow
+                                sx={{ border: "1px solid black" }}
+                              >
                                 {packet.type_room}
-                              </TableCell>
-                              <TableCell
+                              </StyledTableRow>
+                              <StyledTableRow
                                 align="center"
                                 sx={{ border: "1px solid black" }}
                               >
                                 {packet.type_view_name_room}
-                              </TableCell>
-                              <TableCell
+                              </StyledTableRow>
+                              <StyledTableRow
                                 align="center"
                                 sx={{ border: "1px solid black" }}
                               >
                                 {packet.hotel_deal_price}
-                              </TableCell>
-                              <TableCell
+                              </StyledTableRow>
+                              <StyledTableRow
                                 align="center"
                                 sx={{ border: "1px solid black" }}
                               >
                                 {packet.Number_of_guests}
-                              </TableCell>
-                              <TableCell
+                              </StyledTableRow>
+                              <StyledTableRow
                                 align="center"
                                 sx={{ border: "1px solid black" }}
                               >
                                 {packet.number_of_rooms}
-                              </TableCell>
+                              </StyledTableRow>
                             </TableRow>
                           ) : (
                             <TableRow>
-                              <TableCell
+                              <StyledTableRow
                                 colSpan={5}
                                 align="center"
                                 sx={{
@@ -249,7 +257,7 @@ function PackageDetailPage() {
                                 }}
                               >
                                 ยังไม่มีข้อมูล
-                              </TableCell>
+                              </StyledTableRow>
                             </TableRow>
                           )}
                         </TableBody>
@@ -261,7 +269,7 @@ function PackageDetailPage() {
                   className="ml-2"
                   style={{ display: "flex", flexDirection: "column" }}
                 >
-                  <h1 className="text-xl font-bold text-black pt-2">
+                  <h1 className="text-xl font-bold text-black pt-5">
                     ช่องทางการติดต่อ
                   </h1>
                   {hotelChannel.length > 0 ? (
@@ -312,7 +320,7 @@ function PackageDetailPage() {
 
                     {/* Modal สำหรับแสดงรูป */}
                     {isOpen && (
-                      <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 ">
+                      <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50" onClick={handleClose}>
                         <div className="relative">
                           <img
                             className="max-w-full max-h-full  rounded-xl  cursor-pointer"
@@ -338,9 +346,13 @@ function PackageDetailPage() {
                       <h1 className="text-lg text-gray-500">
                         ไลน์อัพ : {packet.lineup}
                       </h1>
-                      <h1 className="text-lg text-gray-500">
-                        รายละเอียด : {packet.detail_concert}
-                      </h1>
+                      <div className="flex flex-row">
+                        <h1 className="text-lg text-gray-500">รายละเอียด :</h1>
+                        <h1 className="text-lg text-gray-500 justify-start pl-3 max-w-md whitespace-normal">
+                          {packet.detail_concert}
+                        </h1>
+                      </div>
+
                       <h1 className="text-lg text-gray-500">
                         วันที่แสดง : {packet.show_schedule_concert.toString()}
                       </h1>
@@ -353,7 +365,11 @@ function PackageDetailPage() {
                       <div className="flex flex-col justify-between">
                         <h1 className="text-lg text-gray-500">ราคาบัตร :</h1>
 
-                        <TableContainer component={Paper} className="mt-2" sx={{width: 600}}>
+                        <TableContainer
+                          component={Paper}
+                          className="mt-2"
+                          sx={{ width: 600 }}
+                        >
                           <Table
                             sx={{ border: "1px solid black" }}
                             aria-label="concert tickets table"
@@ -362,13 +378,19 @@ function PackageDetailPage() {
                               <TableRow>
                                 <StyledTableCell
                                   align="center"
-                                  sx={{backgroundColor: "#f2f2f2", border: "1px solid black" }}
+                                  sx={{
+                                    backgroundColor: "#f2f2f2",
+                                    border: "1px solid black",
+                                  }}
                                 >
                                   วันเวลาแสดง
                                 </StyledTableCell>
                                 <StyledTableCell
                                   align="center"
-                                  sx={{backgroundColor: "#f2f2f2",  border: "1px solid black" }}
+                                  sx={{
+                                    backgroundColor: "#f2f2f2",
+                                    border: "1px solid black",
+                                  }}
                                 >
                                   ประเภทบัตร / ราคา
                                 </StyledTableCell>
@@ -402,13 +424,13 @@ function PackageDetailPage() {
                                   }, {})
                                 ).map(([dateTimeKey, tickets]) => (
                                   <TableRow key={dateTimeKey}>
-                                    <TableCell
+                                    <StyledTableRow
                                       align="left"
                                       sx={{ border: "1px solid black" }}
                                     >
                                       {dateTimeKey}
-                                    </TableCell>
-                                    <TableCell
+                                    </StyledTableRow>
+                                    <StyledTableRow
                                       align="left"
                                       sx={{ border: "1px solid black" }}
                                     >
@@ -418,18 +440,18 @@ function PackageDetailPage() {
                                           {ticket.price} บาท
                                         </div>
                                       ))}
-                                    </TableCell>
+                                    </StyledTableRow>
                                   </TableRow>
                                 ))
                               ) : (
                                 <TableRow>
-                                  <TableCell
+                                  <StyledTableRow
                                     colSpan={2}
                                     align="center"
                                     style={{ color: "gray" }}
                                   >
                                     ยังไม่มีข้อมูล
-                                  </TableCell>
+                                  </StyledTableRow>
                                 </TableRow>
                               )}
                             </TableBody>

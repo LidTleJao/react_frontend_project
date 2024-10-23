@@ -26,7 +26,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
 function HotelDetailPage() {
   const user = JSON.parse(localStorage.getItem("objUser")!);
@@ -38,16 +37,20 @@ function HotelDetailPage() {
   const [rooms, setRoom] = useState<RoomGetByHotelIDRes[]>([]);
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  // const [hotel_ID, setHotel_ID] = useState("");
-
-  // const {concertID} = location.state;
   const { hid } = useParams(); // สมมติว่าเส้นทางเป็น "/concert/:cid"
   const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
       color: "black",
       fontWeight: "bold",
-      fontSize: 16,
+      fontSize: 17,
+    },
+  }));
+
+  const StyledTableRow = styled(TableCell)(() => ({
+    [`&.${tableCellClasses.body}`]: {
+      color: "#6B7280",
+      fontWeight: "normal",
+      fontSize: 17,
     },
   }));
 
@@ -107,19 +110,9 @@ function HotelDetailPage() {
           <div
             style={{ display: "flex", justifyContent: "center", marginTop: 20 }}
           >
-            <Typography
-              gutterBottom
-              sx={{
-                display: "flex",
-                fontWeight: "bold",
-                color: "black",
-                fontFamily: "Mitr, sans-serif",
-                fontStyle: "normal",
-              }}
-              variant="h4"
-            >
+             <h1 className="text-[25px] font-semibold pr-10 text-black">
               รายละเอียดของโรงแรม
-            </Typography>
+            </h1>
           </div>
           <div style={{ display: "flex", marginBottom: 5 }}>
             <Button
@@ -149,7 +142,7 @@ function HotelDetailPage() {
                   </div>
                   <div className="h-auto flex flex-row items-center mt-1 justify-start">
                     <PlaceIcon sx={{ fontSize: 30 }} className="text-sky-700" />
-                    <h1 className="text-xl font-semibold text-gray-500 j">
+                    <h1 className="text-xl  text-gray-500">
                       จังหวัด{hotel.province}
                     </h1>
                   </div>
@@ -215,7 +208,7 @@ function HotelDetailPage() {
                           >
                             <button
                               type="button"
-                              className="py-2 px-4 text-sm font-medium rounded-lg transition duration-500 border-2 border-sky-600 text-black hover:text-white hover:bg-sky-800"
+                              className="py-2 px-4 font-medium rounded-lg transition duration-500 border-2 border-sky-600 text-gray-500 hover:text-white hover:bg-sky-800 text-lg"
                             >
                               ลิงก์ {index + 1}
                             </button>
@@ -229,44 +222,44 @@ function HotelDetailPage() {
                     </div>
                     <TableContainer
                       component={Paper}
-                      className="mt-2"
+                      className="mt-3"
                       sx={{ minWidth: 600 }}
                     >
                       <Table sx={{ minWidth: 600 }} aria-label="">
                         <TableHead sx={{ border: "1px solid black" }}>
                           <TableRow sx={{ border: "1px solid black" }}>
                             <StyledTableCell
-                              sx={{ border: "1px solid black" }}
+                               sx={{backgroundColor: "#f2f2f2", border: "1px solid black" }}
                               align="center"
                             >
                               ชนิดห้องพัก
                             </StyledTableCell>
                             <StyledTableCell
-                              sx={{ border: "1px solid black" }}
+                               sx={{backgroundColor: "#f2f2f2", border: "1px solid black" }}
                               align="center"
                             >
                               วิวของห้อง
                             </StyledTableCell>
                             <StyledTableCell
-                              sx={{ border: "1px solid black" }}
+                               sx={{backgroundColor: "#f2f2f2", border: "1px solid black" }}
                               align="center"
                             >
                               ราคาห้องต่อคือ
                             </StyledTableCell>
                             <StyledTableCell
-                              sx={{ border: "1px solid black" }}
+                               sx={{backgroundColor: "#f2f2f2", border: "1px solid black" }}
                               align="center"
                             >
                               จำนวนคนเข้าพัก
                             </StyledTableCell>
                             <StyledTableCell
-                              sx={{ border: "1px solid black" }}
+                               sx={{backgroundColor: "#f2f2f2", border: "1px solid black" }}
                               align="center"
                             >
                               จำนวนห้อง
                             </StyledTableCell>
                             <StyledTableCell
-                              sx={{ border: "1px solid black" }}
+                               sx={{backgroundColor: "#f2f2f2", border: "1px solid black" }}
                               align="center"
                             >
                               สถานะห้อง
@@ -277,50 +270,50 @@ function HotelDetailPage() {
                           {rooms.length > 0 ? (
                             rooms.map((room) => (
                               <TableRow key={room.hotel_ID}>
-                                <TableCell sx={{ border: "1px solid black" }}>
+                                <StyledTableRow sx={{ border: "1px solid black" }}>
                                   {room.type_room}
-                                </TableCell>
-                                <TableCell
+                                </StyledTableRow>
+                                <StyledTableRow
                                   align="left"
                                   sx={{ border: "1px solid black" }}
                                 >
                                   {room.type_view_name_room}
-                                </TableCell>
-                                <TableCell
+                                </StyledTableRow>
+                                <StyledTableRow
                                   align="center"
                                   sx={{ border: "1px solid black" }}
                                 >
                                   {room.price}
-                                </TableCell>
-                                <TableCell
+                                </StyledTableRow>
+                                <StyledTableRow
                                   align="center"
                                   sx={{ border: "1px solid black" }}
                                 >
                                   {room.Number_of_guests}
-                                </TableCell>
-                                <TableCell
+                                </StyledTableRow>
+                                <StyledTableRow
                                   align="center"
                                   sx={{ border: "1px solid black" }}
                                 >
                                   {room.Number_of_rooms}
-                                </TableCell>
-                                <TableCell
+                                </StyledTableRow>
+                                <StyledTableRow
                                   align="center"
                                   sx={{ border: "1px solid black" }}
                                 >
                                   {room.status_name_room}
-                                </TableCell>
+                                </StyledTableRow>
                               </TableRow>
                             ))
                           ) : (
                             <TableRow>
-                              <TableCell
+                              <StyledTableRow
                                 colSpan={6}
                                 align="center"
                                 sx={{ border: "1px solid black" }}
                               >
                                 ยังไม่มีข้อมูลห้องพัก
-                              </TableCell>
+                              </StyledTableRow>
                             </TableRow>
                           )}
                         </TableBody>
