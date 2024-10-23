@@ -55,7 +55,7 @@ function AddHotelPage() {
             <HeaderUserTypeGeneral2 />
           </>
         ))}
-      <div className="addhotel-cont">
+      <div className="addhotel-cont pt-20">
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Typography
@@ -64,8 +64,6 @@ function AddHotelPage() {
                 display: "flex",
                 fontWeight: "bold",
                 color: "black",
-                fontFamily: "Mitr, sans-serif",
-                fontStyle: "normal",
               }}
               variant="h4"
             >
