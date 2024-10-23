@@ -418,7 +418,7 @@ function PackageDetailPage() {
                                     data[dateTimeKey].push({
                                       name_type_ticket:
                                         packege.name_type_ticket,
-                                      price: packege.price,
+                                      price: packege.concert_deal_price,
                                     });
                                     return data;
                                   }, {})
