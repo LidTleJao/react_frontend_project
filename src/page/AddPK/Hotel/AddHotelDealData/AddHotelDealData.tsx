@@ -130,6 +130,7 @@ function AddHotelDealDataPage() {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
+                  alignItems:"center"
                 }}
               >
                 <div style={{ display: "flex", justifyContent: "center" }}>
@@ -148,7 +149,7 @@ function AddHotelDealDataPage() {
                   </Typography>
                 </div>
                 <div style={{ marginTop: "20px" }}>
-                  <FormControl sx={{ width: "20pc" }}>
+                  <FormControl sx={{ width: "35pc" }}>
                     <InputLabel
                       id="demo-select-small-label"
                       sx={{ marginTop: "-10px" }}
@@ -185,7 +186,7 @@ function AddHotelDealDataPage() {
               </div>
               {hotelselect.length > 0 ? (
                 <>
-                  <div style={{ display: "flex", flexDirection: "row" }}>
+                  <div style={{ display: "flex", flexDirection: "row",marginTop:"20px" }}>
                     <div
                       style={{
                         display: "flex",
