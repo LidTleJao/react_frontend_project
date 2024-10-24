@@ -57,6 +57,7 @@ function ConcertPage() {
     }
   };
   const handleSearchAdv = () => {
+    
     const searchDateObj = searchDate ? new Date(searchDate) : null;
     const filtered = concertAll.filter((concert) => {
       const concertDate = new Date(concert.show_schedule_concert);
@@ -73,7 +74,7 @@ function ConcertPage() {
           concertDate.toDateString() === searchDateObj.toDateString())
       );
     });
-
+    setSearchDate('')
     setFilteredData(filtered);
   };
   console.log(filteredData);
