@@ -9,7 +9,6 @@ import {
   CircularProgress,
 } from "@mui/material";
 import HeaderUserTypeManager2 from "../../../components/HeadUserTypeManager2";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -306,7 +305,6 @@ function AddRoomPage() {
                           width: "100px",
                           borderRadius: "10px",
                         }}
-                        startIcon={<ChevronRightIcon />}
                         // onClick={navigateToAddRoomP2Page}
                         onClick={async () => {
                           try {
@@ -355,7 +353,7 @@ function AddRoomPage() {
                                   }
                                 }
                               }
-                              toast.success("เพิ่มข้อมูลโรงแรมสำเร็จ!");
+                              toast.success("เพิ่มข้อมูลห้องในโรงแรมสำเร็จ!");
                               setTimeout(() => {
                                 navigateToAddHotelDataPage();
                               }, 3000);
@@ -367,7 +365,7 @@ function AddRoomPage() {
                           }
                         }}
                       >
-                        ถัดไป
+                        เพิ่ม
                       </Button>
                     )}
                   </div>
