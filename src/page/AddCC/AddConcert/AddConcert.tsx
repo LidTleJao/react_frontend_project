@@ -81,16 +81,15 @@ function AddConcertPage() {
               maxHeight: 570,
               paddingBottom: 5,
               borderRadius: 3,
-              bgcolor: "#D9D9D9",
-              border: 2,
+              // bgcolor: "#D9D9D9",
+              border: 1,
               display: "flex",
               justifyContent: "center",
             }}
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
               <TextField
-                placeholder="ชื่อคอนเสิร์ต"
-                type="name"
+                placeholder="ชื่อคอนเสิร์ต*"
                 sx={{ mt: 3, width: "25pc" }}
                 value={name_concert}
                 onChange={(e) => setName_concert(e.target.value)}
@@ -99,13 +98,13 @@ function AddConcertPage() {
                     borderRadius: "20px",
                     bgcolor: "white",
                     height: "35px",
+                    border: "1px solid grey",
                   },
                   startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
                 }}
               />
               <TextField
-                placeholder="ไลน์อัพ"
-                // type="name"
+                placeholder="ไลน์อัพ*"
                 sx={{ mt: 3, width: "25pc" }}
                 value={lineup}
                 onChange={(e) => setLineup(e.target.value)}
@@ -114,11 +113,12 @@ function AddConcertPage() {
                     borderRadius: "20px",
                     bgcolor: "white",
                     height: "35px",
+                    border: "1px solid grey",
                   },
                   startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
                 }}
               />
-              <FormControl sx={{ width: "25pc", mt: 2 }}>
+              <FormControl sx={{ width: "25pc", mt: 3 }}>
                 <InputLabel
                   id="demo-select-small-label"
                   sx={{ marginTop: "-5px" }}
@@ -135,6 +135,7 @@ function AddConcertPage() {
                     borderRadius: 20,
                     bgcolor: "white",
                     height: "40px",
+                    border: "1px solid grey",
                   }}
                 >
                   <MenuItem value={1}>คอนเสิร์ตเดี่ยว (Solo Concert)</MenuItem>
@@ -149,7 +150,7 @@ function AddConcertPage() {
               <TextField
                 placeholder="วันที่ทำการแสดง"
                 type="Date"
-                sx={{ mt: 2, width: "25pc" }}
+                sx={{ mt: 3, width: "25pc" }}
                 value={show_schedule_concert}
                 onChange={(e) => setShow_schedule_concert(e.target.value)}
                 InputProps={{
@@ -157,44 +158,44 @@ function AddConcertPage() {
                     borderRadius: "20px",
                     bgcolor: "white",
                     height: "35px",
+                    border: "1px solid grey",
                   },
                   startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
                 }}
               />
               <TextField
-                placeholder="ที่อยู่"
-                type="address"
-                sx={{ mt: 2, width: "25pc" }}
+                placeholder="ที่อยู่*"
+                sx={{ mt: 3, width: "25pc", }}
                 value={address_concert}
                 onChange={(e) => setAddress_concert(e.target.value)}
                 InputProps={{
                   sx: {
                     borderRadius: "20px",
+                    border: "1px solid grey",
                     bgcolor: "white",
                     height: "35px",
                   },
                   startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
                 }}
               />
-              <FormControl sx={{ width: "25pc", mt: 2 }}>
+              <FormControl sx={{ width: "25pc", mt: 3 }}>
                 <InputLabel
                   id="demo-select-small-label"
                   sx={{ marginTop: "-5px" }}
                 >
-                  จังหวัด
+                  จังหวัด*
                 </InputLabel>
                 <Select
                   labelId="demo-select-small-label"
                   id="demo-select-small"
                   label="จังหวัด"
-                  // defaultValue={"กาฬสินธุ์"}
                   value={province}
-                  // type="city"
                   onChange={(e) => setProvince(e.target.value)}
                   sx={{
                     borderRadius: 20,
                     bgcolor: "white",
                     height: "40px",
+                    border: "1px solid grey",
                   }}
                 >
                   <MenuItem value={"กรุงเทพมหานคร"}>กรุงเทพมหานคร</MenuItem>
@@ -280,12 +281,13 @@ function AddConcertPage() {
                 aria-label="minimum height"
                 minRows={3}
                 maxRows={3}
-                placeholder="รายละเอียดของคอนเสิรต์"
+                placeholder="รายละเอียดของคอนเสิร์ต*"
                 value={detail_concert}
                 onChange={(e) => setDetail_concert(e.target.value)}
                 style={{
                   borderRadius: "5px",
-                  marginTop: 10,
+                  marginTop: 25,
+                  border: "1px solid grey",
                   backgroundColor: "white",
                 }}
               />

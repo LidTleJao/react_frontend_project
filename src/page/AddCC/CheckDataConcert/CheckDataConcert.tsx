@@ -25,7 +25,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import HeaderUserTypeManager2 from "../../../components/HeadUserTypeManager2";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { GetConcertByUserIDRes } from "../../../model/Response/Concert/GetConcertByUserIDRes";
 import { ConcertService } from "../../../service/concertService";
 import { Box } from "@mui/system";

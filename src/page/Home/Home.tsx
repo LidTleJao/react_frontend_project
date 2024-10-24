@@ -26,7 +26,7 @@ function HomePage() {
   const concertService = new ConcertService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [hotelAll, setHotelAll] = useState<HotelGetAllRes[]>([]);
-  const [hotelImageByHID] = useState<
+  const [hotelImageByHID, sethotelImageByHID] = useState<
     HotelImageGetByHotelIDRes[]
   >([]);
   const [concertAll, setConcertAll] = useState<GetAllConcertRes[]>([]);
@@ -41,10 +41,15 @@ function HomePage() {
         const hotels: HotelGetAllRes[] = reshotel.data;
         setHotelAll(hotels);
 
+        const hotelIDs = hotels.map((hotel) => hotel.HID);
+        await loadImage(hotelIDs);
+
         // ดึงภาพโรงแรม
         const hotelImages = await Promise.all(
           hotels.map(async (hotel) => {
-            const resImage = await hotelService.getHotelImageByHid(hotel.HID.toString());
+            const resImage = await hotelService.getHotelImageByHid(
+              hotel.HID.toString()
+            );
             const images: HotelImageGetByHotelIDRes[] = resImage.data;
             return images.length > 0 ? images[0].url_image : null;
           })
@@ -59,7 +64,10 @@ function HomePage() {
         const concertImages = concerts.map((concert) => concert.poster_concert);
 
         // รวมภาพจากโรงแรมและคอนเสิร์ต
-        setBanners([...hotelImages.filter(Boolean) as string[], ...concertImages]);
+        setBanners([
+          ...(hotelImages.filter(Boolean) as string[]),
+          ...concertImages,
+        ]);
       } catch (error) {
         console.error("Error loading data:", error);
       }
@@ -67,6 +75,26 @@ function HomePage() {
 
     loadDataAsync();
   }, []);
+
+  const loadImage = async (numbers: number[]) => {
+    try {
+      const imagePromises = numbers.map(async (number) => {
+        const reshotel = await hotelService.getHotelImageByHid(
+          number.toString()
+        );
+        const data: HotelImageGetByHotelIDRes[] = reshotel.data;
+        return data.length > 0 ? data[0] : null; // คืนค่าภาพแรกหรือ null
+      });
+
+      // รอให้ทุกคำขอเสร็จสิ้น
+      const allImages = await Promise.all(imagePromises);
+
+      // กรองเฉพาะภาพที่ไม่เป็น null
+      sethotelImageByHID(allImages.filter((image) => image !== null));
+    } catch (error) {
+      console.error("Error loading hotel images:", error);
+    }
+  };
 
   // การเลื่อนแบนเนอร์
   const goToPrevious = () => {
@@ -107,15 +135,20 @@ function HomePage() {
             justifyContent: "start",
           }}
         >
-
           {/* Carousel แสดงแบนเนอร์ */}
           <div className="relative overflow-hidden bg-gray-900">
             <div
               className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)`, marginTop: "100px" }}
+              style={{
+                transform: `translateX(-${currentIndex * 100}%)`,
+                marginTop: "100px",
+              }}
             >
               {banners.map((banner, index) => (
-                <div className="flex-shrink-0 w-full h-[400px] md:h-[600px] lg:h-[650px] relative" key={index}>
+                <div
+                  className="flex-shrink-0 w-full h-[400px] md:h-[600px] lg:h-[650px] relative"
+                  key={index}
+                >
                   <img
                     src={banner}
                     alt={`Banner ${index}`}
@@ -170,7 +203,13 @@ function HomePage() {
               >
                 Welcome to Teemi
               </Typography>
-              <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginBottom: "20px",
+                }}
+              >
                 <Box
                   sx={{
                     width: 550,
@@ -210,7 +249,13 @@ function HomePage() {
               width: "100%",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", width: "90%" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "90%",
+              }}
+            >
               <Typography
                 variant="h4"
                 fontWeight="bold"
@@ -247,14 +292,24 @@ function HomePage() {
                     alt={concert.name_concert}
                     height="180"
                     image={concert.poster_concert}
-                    sx={{ borderTopLeftRadius: "15px", borderTopRightRadius: "15px" }}
+                    sx={{
+                      borderTopLeftRadius: "15px",
+                      borderTopRightRadius: "15px",
+                    }}
                   />
                   <CardContent>
-                    <Typography gutterBottom variant="h6" fontWeight="bold" color="black">
+                    <Typography
+                      gutterBottom
+                      variant="h6"
+                      fontWeight="bold"
+                      color="black"
+                    >
                       {concert.name_concert}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {new Date(concert.show_schedule_concert).toLocaleDateString()}
+                      {new Date(
+                        concert.show_schedule_concert
+                      ).toLocaleDateString()}
                     </Typography>
                   </CardContent>
                   <CardActions
@@ -274,7 +329,9 @@ function HomePage() {
                         borderRadius: "10px",
                         textTransform: "none",
                       }}
-                      onClick={() => navigateToConcertDetailPage(concert.CID.toString())}
+                      onClick={() =>
+                        navigateToConcertDetailPage(concert.CID.toString())
+                      }
                     >
                       รายละเอียด
                     </Button>
@@ -293,7 +350,13 @@ function HomePage() {
               width: "100%",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", width: "90%" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "90%",
+              }}
+            >
               <Typography
                 variant="h4"
                 fontWeight="bold"
@@ -316,58 +379,74 @@ function HomePage() {
                 width: "90%",
               }}
             >
-              {hotelAll.map((hotel) => (
-                <Card
-                  key={hotel.HID}
-                  sx={{
-                    background: "#f5f5f5",
-                    borderRadius: "15px",
-                    border: "1px solid #ddd",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    alt={hotel.name}
-                    height="180"
-                    image={
-                      hotelImageByHID.length > 0
-                        ? hotelImageByHID[0]?.url_image
-                        : "src/img/webteemi.png"
-                    }
-                    sx={{ borderTopLeftRadius: "15px", borderTopRightRadius: "15px" }}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h6" fontWeight="bold" color="black">
-                      {hotel.name}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {hotel.detail}
-                    </Typography>
-                  </CardContent>
-                  <CardActions
+              {hotelAll.map((hotel) => {
+                const hotelImage = hotelImageByHID.find(
+                  (image) => image.hotel_ID === hotel.HID
+                );
+
+                return (
+                  <Card
+                    key={hotel.HID}
                     sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      padding: "10px",
+                      background: "#f5f5f5",
+                      borderRadius: "15px",
+                      border: "1px solid #ddd",
                     }}
                   >
-                    <Typography variant="body2" color="black">
-                      {hotel.province}
-                    </Typography>
-                    <Button
-                      variant="contained"
+                    <CardMedia
+                      component="img"
+                      alt={hotel.name}
+                      height="180"
+                      image={
+                        hotelImageByHID.length > 0
+                          ? hotelImage?.url_image
+                          : "src/img/webteemi.png"
+                      }
                       sx={{
-                        backgroundColor: "#007bff",
-                        borderRadius: "10px",
-                        textTransform: "none",
+                        borderTopLeftRadius: "15px",
+                        borderTopRightRadius: "15px",
                       }}
-                      onClick={() => navigateToHotelDetailPage(hotel.HID.toString())}
+                    />
+                    <CardContent>
+                      <Typography
+                        gutterBottom
+                        variant="h6"
+                        fontWeight="bold"
+                        color="black"
+                      >
+                        {hotel.name}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {hotel.detail}
+                      </Typography>
+                    </CardContent>
+                    <CardActions
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        padding: "10px",
+                      }}
                     >
-                      รายละเอียด
-                    </Button>
-                  </CardActions>
-                </Card>
-              ))}
+                      <Typography variant="body2" color="black">
+                        {hotel.province}
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          backgroundColor: "#007bff",
+                          borderRadius: "10px",
+                          textTransform: "none",
+                        }}
+                        onClick={() =>
+                          navigateToHotelDetailPage(hotel.HID.toString())
+                        }
+                      >
+                        รายละเอียด
+                      </Button>
+                    </CardActions>
+                  </Card>
+                );
+              })}
             </div>
           </div>
         </div>
