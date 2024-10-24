@@ -11,8 +11,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Snackbar,
-  SnackbarCloseReason,
   TextareaAutosize,
   TextField,
   Typography,
@@ -83,22 +81,22 @@ function AddHotelPage() {
     navigate("/AddHotelData");
   }
 
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
-  // const handleClick = () => {
-  //   setOpen(true);
+  // // const handleClick = () => {
+  // //   setOpen(true);
+  // // };
+
+  // const handleClose = (
+  //   _event: React.SyntheticEvent | Event,
+  //   reason?: SnackbarCloseReason
+  // ) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+
+  //   setOpen(false);
   // };
-
-  const handleClose = (
-    _event: React.SyntheticEvent | Event,
-    reason?: SnackbarCloseReason
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  };
 
   return (
     <>
@@ -572,7 +570,7 @@ function AddHotelPage() {
                           console.log(resimage.status);
                         }
                       }
-                      toast("เพิ่มสำเร็จ!");
+                      toast("เพิ่มข้อมูลโรงแรมสำเร็จ!");
                       setTimeout(() => {
                         navigateToAddHotelDataPage();
                       }, 2000);
@@ -593,12 +591,12 @@ function AddHotelPage() {
         </div>
       </div>
       <ToastContainer />
-      <Snackbar
+      {/* <Snackbar
         open={open}
         autoHideDuration={3000}
         onClose={handleClose}
         message="เพิ่มข้อมูลโรงแรมสำเร็จ"
-      />
+      /> */}
     </>
   );
 }
