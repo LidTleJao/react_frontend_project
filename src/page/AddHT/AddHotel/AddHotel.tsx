@@ -570,10 +570,10 @@ function AddHotelPage() {
                           console.log(resimage.status);
                         }
                       }
-                      toast("เพิ่มข้อมูลโรงแรมสำเร็จ!");
+                      toast.success("เพิ่มข้อมูลโรงแรมสำเร็จ!");
                       setTimeout(() => {
                         navigateToAddHotelDataPage();
-                      }, 2000);
+                      }, 3000);
                     }
                   } catch (error) {
                     setLoad(false);

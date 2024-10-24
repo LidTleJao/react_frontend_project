@@ -40,7 +40,7 @@ function AddRoomPage() {
       setHotel(data);
     };
     loadDataAsync();
-  }, []);
+  }, [hotelService, user?.uid]);
 
   // console.log(Room_Hotel_ID);
 
