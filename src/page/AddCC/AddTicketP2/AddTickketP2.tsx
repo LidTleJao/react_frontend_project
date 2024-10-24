@@ -16,6 +16,7 @@ import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { ConcertService } from "../../../service/concertService";
 import { GetConcertShowByCIDRes } from "../../../model/Response/Concert/GetConcertShowByCIDRes";
+import { toast, ToastContainer } from "react-toastify";
 
 function AddTicketP2Page() {
   const navigate = useNavigate();
@@ -184,7 +185,9 @@ function AddTicketP2Page() {
                         setLoad(true);
 
                         if (checked.length == 1) {
-                          window.alert("ข้อมูลไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
+                          window.alert(
+                            "ข้อมูลรอบการแสดงไม่ถูกต้อง โปรดเลือกข้อมูลรอบการแสดงใหม่"
+                          );
                         } else {
                           // console.log(checked);
                           for (let index = 1; index < checked.length; index++) {
@@ -199,10 +202,11 @@ function AddTicketP2Page() {
                             );
                             console.log(resconcert.status);
                           }
-                          window.alert(
-                            "ข้อมูลของตั๋วคอนเสิร์ต ได้ลงทะเบียนแล้ว!!!"
-                          );
-                          navigateToAddConcertDataPage();
+                          toast.success("เพิ่มข้อมูลตั๋วสำเร็จ!");
+                          setTimeout(() => {
+                            setLoad(false);
+                            navigateToAddConcertDataPage();
+                          }, 3000);
                         }
                         setLoad(false);
                       } catch (error) {
@@ -219,6 +223,7 @@ function AddTicketP2Page() {
           </Box>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

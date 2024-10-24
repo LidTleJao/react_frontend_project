@@ -27,6 +27,7 @@ function AddTicketPage() {
   const [price, setPrice] = useState("");
   const [ticket_type, setTicket_type] = useState(1);
   const [isLoad, setLoad] = useState(false);
+  const [isValidate, setValidate] = useState(false);
 
   useEffect(() => {
     const loadDataAsync = async () => {
@@ -85,8 +86,8 @@ function AddTicketPage() {
               <Box
                 sx={{
                   width: 650,
-                  height: 350,
-                  maxHeight: 350,
+                  // height: 370,
+                  maxHeight: 370,
                   borderRadius: 3,
                   // bgcolor: "#D9D9D9",
                   border: 2,
@@ -117,6 +118,7 @@ function AddTicketPage() {
                         bgcolor: "white",
                         height: "40px",
                       }}
+                      error={isValidate && !ticket_concert_ID}
                     >
                       {concerts.map((concert, index) => (
                         <MenuItem value={concert.CID}>
@@ -125,11 +127,18 @@ function AddTicketPage() {
                       ))}
                       {/* <MenuItem value={1}>ห้องธรรมดา (Standard Room)</MenuItem> */}
                     </Select>
+                    {isValidate && !ticket_concert_ID ? (
+                      <h5 className="ps-3 text-xs text-red-500">
+                        กรุณาเลือกคอนเสิร์ต
+                      </h5>
+                    ) : (
+                      ""
+                    )}
                   </FormControl>
                   <TextField
                     placeholder="ชื่อชนิดของตั๋วโซนที่นั่ง*"
                     // type="number"
-                    sx={{ mt: 3, width: "25pc" }}
+                    sx={{ mt: 2, width: "25pc" }}
                     onChange={(e) => setTicket_zone(e.target.value)}
                     value={ticket_zone}
                     InputProps={{
@@ -139,13 +148,19 @@ function AddTicketPage() {
                         bgcolor: "white",
                         height: "35px",
                       },
-                      startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                      startAdornment: <></>,
                     }}
+                    error={isValidate && !ticket_zone}
+                    helperText={
+                      !ticket_zone && isValidate
+                        ? "โปรดกรอกชื่อชนิดของตั๋วโซนที่นั่ง"
+                        : ""
+                    }
                   />
                   <TextField
                     placeholder="ราคาตั๋ว*"
                     type="number"
-                    sx={{ mt: 3, width: "25pc" }}
+                    sx={{ mt: 2, width: "25pc" }}
                     //   onChange={(e) => setName(e.target.value)}
                     onChange={handlePrice}
                     inputProps={{ min: 1 }}
@@ -156,8 +171,19 @@ function AddTicketPage() {
                         bgcolor: "white",
                         height: "35px",
                       },
-                      startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                      startAdornment: <></>,
                     }}
+                    required
+                    error={isValidate && (!price || Number(price) < 1)}
+                    helperText={
+                      isValidate
+                        ? !price
+                          ? "กรุณากรอกราคาตั๋ว"
+                          : Number(price) < 1
+                          ? "ราคาตั๋วไม่ถูกต้อง"
+                          : ""
+                        : ""
+                    }
                   />
                   <FormControl sx={{ width: "25pc", mt: 3 }}>
                     <InputLabel
@@ -207,6 +233,7 @@ function AddTicketPage() {
                       flexDirection: "row",
                       justifyContent: "space-between",
                       marginTop: "30px",
+                      marginBottom: "30px",
                     }}
                   >
                     <Button
@@ -245,36 +272,12 @@ function AddTicketPage() {
                         onClick={async () => {
                           try {
                             setLoad(true);
-                            if (ticket_concert_ID == "") {
-                              window.alert(
-                                "ข้อมูลคอนเสิร์ตไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
-                              );
+                            setValidate(true);
+
+                            if (price && Number(price) > 0) {
+                              navigateToAddTicketP2Page();
                             } else {
-                              if (ticket_zone == "") {
-                                window.alert(
-                                  "ข้อมูลโซนที่นั่งไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
-                                );
-                              } else {
-                                if (
-                                  price === "" ||
-                                  (Number(price) < 1 && !price.includes("-"))
-                                ) {
-                                  window.alert(
-                                    "ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
-                                  );
-                                } else {
-                                  if (
-                                    ticket_concert_ID == "" ||
-                                    ticket_zone == ""
-                                  ) {
-                                    window.alert(
-                                      "ข้อมูลไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
-                                    );
-                                  } else {
-                                    navigateToAddTicketP2Page();
-                                  }
-                                }
-                              }
+                              setLoad(false);
                             }
 
                             setLoad(false);
