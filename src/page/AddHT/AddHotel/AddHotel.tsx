@@ -26,6 +26,7 @@ import { HotelService } from "../../../service/hotelService";
 import { toast, ToastContainer } from "react-toastify";
 
 function AddHotelPage() {
+  const [isValidate, setValidate] = useState(false);
   const [hotelName, setHotelName] = useState("");
   const [hotelType, setHotelType] = useState(1);
   const [province, setProvince] = useState("");
@@ -151,23 +152,23 @@ function AddHotelPage() {
                       flexWrap: "wrap",
                       height: "100%",
                       width: "100%",
-                      overflowY: "auto", 
-                      maxHeight: "500px", 
+                      overflowY: "auto",
+                      maxHeight: "500px",
                     }}
                   >
                     {images.map((image, index) => (
                       <div
-                        key={index} 
+                        key={index}
                         style={{
                           display: "flex",
                           flexDirection: "column",
-                          margin: "10px", 
+                          margin: "10px",
                         }}
                       >
                         <Card
                           sx={{
-                            width: 120, 
-                            height: 120, 
+                            width: 120,
+                            height: 120,
                             borderRadius: 3,
                           }}
                         >
@@ -188,7 +189,7 @@ function AddHotelPage() {
                             </IconButton>
                           </div>
                           <CardMedia
-                            sx={{ height: 100, width: 100 }} 
+                            sx={{ height: 100, width: 100 }}
                             component="img"
                             image={URL.createObjectURL(image)}
                           />
@@ -239,7 +240,11 @@ function AddHotelPage() {
               <div className="mt-3 flex flex-row justify-center items-center">
                 <button
                   type="button"
-                  className="text-sm border border-[#343434] text-[#343434] hover:text-white hover:bg-[#343434] transition duration-500 rounded-lg px-3 py-2"
+                  className={`text-sm border transition duration-500 rounded-lg px-3 py-2 ${
+                    isValidate && images.length == 0
+                      ? "bg-red-500 text-white"
+                      : "border-[#343434] text-[#343434] hover:text-white hover:bg-[#343434]"
+                  }`}
                 >
                   <label className="cursor-pointer font-medium" htmlFor="file">
                     เพิ่มรูป
@@ -254,6 +259,11 @@ function AddHotelPage() {
                   multiple
                 />
               </div>
+              {isValidate && images.length == 0 ? (
+                <h5 className="pt-2 text-xs text-red-500">กรุณาเพิ่มรูปภาพ</h5>
+              ) : (
+                ""
+              )}
             </div>
             <div className="flex flex-col gap-3">
               <TextField
@@ -262,7 +272,9 @@ function AddHotelPage() {
                 sx={{ width: "25pc" }}
                 value={hotelName}
                 size="small"
-                onChange={(e) => setHotelName(e.target.value)}
+                onChange={(e) => {
+                  setHotelName(e.target.value);
+                }}
                 //   onChange={(e) => setName(e.target.value)}
                 InputProps={{
                   sx: {
@@ -271,6 +283,8 @@ function AddHotelPage() {
                   },
                 }}
                 required
+                error={!hotelName && isValidate}
+                helperText={!hotelName && isValidate ? "โปรดกรอกชื่อโรงแรม" : ""}
               />
               <div className="flex flex-row gap-2">
                 <FormControl sx={{ width: "100%" }}>
@@ -313,6 +327,8 @@ function AddHotelPage() {
                       borderRadius: "10px",
                       bgcolor: "white",
                     }}
+                    required
+                    error={!province && isValidate}
                   >
                     <MenuItem value={"กรุงเทพมหานคร"}>กรุงเทพมหานคร</MenuItem>
                     <MenuItem value={"กระบี่"}>กระบี่</MenuItem>
@@ -404,7 +420,9 @@ function AddHotelPage() {
                 value={address}
                 sx={{ width: "25pc" }}
                 size="small"
-                onChange={(e) => setAddress(String(e.target.value))}
+                onChange={(e) => {
+                  setAddress(String(e.target.value));
+                }}
                 InputProps={{
                   sx: {
                     borderRadius: "10px",
@@ -412,9 +430,10 @@ function AddHotelPage() {
                   },
                 }}
                 required
+                error={!address && isValidate}
+                helperText={!address && isValidate ? "โปรดกรอกที่อยู่" : ""}
               />
-              <TextareaAutosize
-                aria-label="minimum height"
+              <TextField
                 minRows={2}
                 maxRows={4}
                 placeholder="รายละเอียด*"
@@ -423,10 +442,16 @@ function AddHotelPage() {
                 style={{
                   borderRadius: "10px",
                   backgroundColor: "white",
-                  border: "1px solid grey",
-                  padding: 5,
                 }}
+                InputProps={{
+                  inputComponent: TextareaAutosize,
+                }}
+                multiline
                 required
+                error={!description && isValidate}
+                helperText={
+                  !description && isValidate ? "โปรดกรอกรายละเอียด" : ""
+                }
               />
               <TextField
                 placeholder="ลิงก์ช่องทางการติดต่อ 1"
@@ -515,17 +540,16 @@ function AddHotelPage() {
                 // startIcon={<ChevronRightIcon />}
                 // onClick={navigateToAddHotelP2Page}
                 onClick={async () => {
+                  setLoad(true);
+                  setValidate(true);
                   try {
-                    setLoad(true);
                     if (
-                      hotelName == "" ||
-                      province == "" ||
-                      address == "" ||
-                      description == "" ||
-                      images.length == 0
+                      hotelName != "" &&
+                      province != "" &&
+                      address != "" &&
+                      description != "" &&
+                      images.length > 0
                     ) {
-                      window.alert("โปรดกรอกข้อมูลให้ครบถ้วน");
-                    } else {
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       const res: any = await hotelService.AddHotel(
                         user?.uid,
@@ -572,15 +596,16 @@ function AddHotelPage() {
                       }
                       toast.success("เพิ่มข้อมูลโรงแรมสำเร็จ!");
                       setTimeout(() => {
+                        setLoad(false);
                         navigateToAddHotelDataPage();
                       }, 3000);
+                    }else{
+                      setLoad(false);
                     }
                   } catch (error) {
                     setLoad(false);
                     console.log(error);
-                  } finally {
-                    setLoad(false);
-                  }
+                  } 
                 }}
               >
                 เพิ่ม

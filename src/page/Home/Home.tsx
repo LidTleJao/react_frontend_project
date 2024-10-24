@@ -201,7 +201,7 @@ function HomePage() {
                 variant="h3"
                 marginTop={"15px"}
               >
-                Welcome to Teemi
+                ยินดีต้อนรับสู่เว็บไซต์
               </Typography>
               <div
                 style={{
