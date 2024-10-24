@@ -32,7 +32,7 @@ function PackagePage() {
   const [searchTypeRoom, setSearchTypeRoom] = useState("");
   const [searchTypeView, setSearchTypeView] = useState("");
   const [searchTypeTicket, setSearchTypeTicket] = useState("");
-  const [searchAboutTicket, setSearchAboutTicket] = useState("");
+  const [searchAboutTicket, setSearchAboutTicket] = useState(0);
   useEffect(() => {
     const loadDataAsync = async () => {
       const respacket = await packetService.getAll();
@@ -70,15 +70,14 @@ function PackagePage() {
           searchTypeTicket === "" ||
           concert.name_type_ticket.toLowerCase() ===
             searchTypeTicket.toLowerCase()) &&
-        (searchAboutTicket === "none" ||
-          searchAboutTicket === "" ||
-          concert.number_of_tickets === parseInt(searchAboutTicket, 10))
+        (searchAboutTicket === 0 ||
+          concert.number_of_tickets === searchAboutTicket)
       );
     });
     setFilteredData(filtered);
   };
 
-  console.log(packetAll);
+  // console.log(packet);
 
   return (
     <>
@@ -111,273 +110,229 @@ function PackagePage() {
             <Box
               sx={{
                 width: 350,
-                height: 500,
+                height: 450,
                 marginTop: "50px",
-                borderRadius: 3,
+                borderRadius: 10,
                 bgcolor: "#D9D9D9",
-                border: 1,
+                border: 2,
+                padding: "20px", // เพิ่ม padding เพื่อความสวยงาม
               }}
               display={"flex"}
-              justifyContent={"start"}
               flexDirection={"column"}
             >
-              <div
-                style={{
-                  marginTop: "10px",
-                  display: "flex",
-                  justifyContent: "center",
+              <Typography
+                gutterBottom
+                sx={{
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  color: "black",
+                  marginTop:"10px",
+                  fontStyle: "normal",
+                  fontSize: "24px", // ปรับขนาดฟอนต์ตามต้องการ
+                  lineHeight: "1.5", // เพิ่มความสูงบรรทัด
+                  marginBottom: "30px", // เพิ่ม margin ด้านล่าง
                 }}
+                variant="h5"
               >
-                <Typography
-                  gutterBottom
-                  sx={{
-                    display: "flex",
-                    fontWeight: "bold",
-                    color: "black",
-                    fontFamily: "Mitr, sans-serif",
-                    fontStyle: "normal",
-                  }}
-                  variant="h5"
-                >
-                  ค้นหาข้อมูลแพ็คเกจ
-                </Typography>
-              </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
-                <Typography
-                  gutterBottom
-                  sx={{
-                    display: "flex",
-                    fontWeight: "bold",
-                    color: "black",
-                    fontFamily: "Mitr, sans-serif",
-                    fontStyle: "normal",
-                  }}
-                  variant="h5"
-                >
-                  ชนิดห้อง :
-                </Typography>
-                <FormControl sx={{ width: 315 }}>
-                  <InputLabel
-                    id="demo-select-small-label"
-                    sx={{ marginTop: "-5px" }}
-                  >
-                    ชนิดห้อง
-                  </InputLabel>
-                  <Select
-                    labelId="demo-select-small-label"
-                    id="demo-select-small"
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      if (value === 1) {
+                ค้นหาข้อมูลแพ็คเกจ
+              </Typography>
+
+              {/* ชนิดห้อง */}
+              <FormControl sx={{ marginBottom: "25px" }}>
+                {" "}
+                {/* เพิ่ม marginBottom */}
+                <InputLabel id="room-type-label" sx={{ top: "-8px" }}>
+                  ชนิดห้อง
+                </InputLabel>
+                <Select
+                  labelId="room-type-label"
+                  id="room-type-select"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    switch (value) {
+                      case 1:
                         setSearchTypeRoom("Standard Room");
-                      } else if (value === 2) {
+                        break;
+                      case 2:
                         setSearchTypeRoom("Deluxe Room");
-                      } else if (value === 3) {
+                        break;
+                      case 3:
                         setSearchTypeRoom("Executive Room");
-                      } else if (value === 4) {
+                        break;
+                      case 4:
                         setSearchTypeRoom("Connecting Rooms");
-                      } else if (value === 5) {
+                        break;
+                      case 5:
                         setSearchTypeRoom("Suite");
-                      } else if (value === 6) {
+                        break;
+                      case 6:
                         setSearchTypeRoom("Superior Room");
-                      } else if (value === 7) {
+                        break;
+                      case 7:
                         setSearchTypeRoom("Accessible Room");
-                      } else {
-                        setSearchTypeRoom("none"); // สำหรับ None
-                      }
-                    }}
-                    sx={{
-                      borderRadius: 20,
-                      bgcolor: "white",
-                      height: "40px",
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={1}>ห้องธรรมดา (Standard Room)</MenuItem>
-                    <MenuItem value={2}>ห้องดีลักซ์ (Deluxe Room)</MenuItem>
-                    <MenuItem value={3}>
-                      ห้องเอกซ์คลูซีฟ (Executive Room)
-                    </MenuItem>
-                    <MenuItem value={4}>
-                      ห้องที่มีประตูเชื่อมต่อกัน (Connecting Rooms)
-                    </MenuItem>
-                    <MenuItem value={5}>ห้องสวีท (Suite)</MenuItem>
-                    <MenuItem value={6}>
-                      ห้องสุพีเรียร์ (Superior Room)
-                    </MenuItem>
-                    <MenuItem value={7}>
-                      ห้องพักพิเศษสำหรับผู้พิการ (Accessible Room)
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
-                <Typography
-                  gutterBottom
-                  sx={{
-                    display: "flex",
-                    fontWeight: "bold",
-                    color: "black",
-                    fontFamily: "Mitr, sans-serif",
-                    fontStyle: "normal",
+                        break;
+                      default:
+                        setSearchTypeRoom("none");
+                    }
                   }}
-                  variant="h5"
+                  sx={{
+                    borderRadius: 20,
+                    bgcolor: "white",
+                    height: "40px",
+                  }}
                 >
-                  ชนิดวิวของห้อง :
-                </Typography>
-                <FormControl sx={{ width: 315 }}>
-                  <InputLabel
-                    id="demo-select-small-label"
-                    sx={{ marginTop: "-5px" }}
-                  >
-                    ชนิดวิวห้อง
-                  </InputLabel>
-                  <Select
-                    labelId="demo-select-small-label"
-                    id="demo-select-small"
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      if (value === 1) {
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={1}>ห้องธรรมดา (Standard Room)</MenuItem>
+                  <MenuItem value={2}>ห้องดีลักซ์ (Deluxe Room)</MenuItem>
+                  <MenuItem value={3}>
+                    ห้องเอกซ์คลูซีฟ (Executive Room)
+                  </MenuItem>
+                  <MenuItem value={4}>
+                    ห้องที่มีประตูเชื่อมต่อกัน (Connecting Rooms)
+                  </MenuItem>
+                  <MenuItem value={5}>ห้องสวีท (Suite)</MenuItem>
+                  <MenuItem value={6}>ห้องสุพีเรียร์ (Superior Room)</MenuItem>
+                  <MenuItem value={7}>
+                    ห้องพักพิเศษสำหรับผู้พิการ (Accessible Room)
+                  </MenuItem>
+                </Select>
+              </FormControl>
+
+              {/* ชนิดวิวของห้อง */}
+              <FormControl sx={{ marginBottom: "25px" }}>
+                {" "}
+                {/* เพิ่ม marginBottom */}
+                <InputLabel id="view-type-label" sx={{ top: "-8px" }}>
+                  ชนิดวิวห้อง
+                </InputLabel>
+                <Select
+                  labelId="view-type-label"
+                  id="view-type-select"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    switch (value) {
+                      case 1:
                         setSearchTypeView("ทะเล");
-                      } else if (value === 2) {
+                        break;
+                      case 2:
                         setSearchTypeView("ภูเขา");
-                      } else if (value === 3) {
+                        break;
+                      case 3:
                         setSearchTypeView("เมือง");
-                      } else {
-                        setSearchTypeView("none"); // สำหรับ None
-                      }
-                    }}
-                    sx={{
-                      borderRadius: 20,
-                      bgcolor: "white",
-                      height: "40px",
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={1}>ทะเล</MenuItem>
-                    <MenuItem value={2}>ภูเขา</MenuItem>
-                    <MenuItem value={3}>เมือง</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
-                <Typography
-                  gutterBottom
-                  sx={{
-                    display: "flex",
-                    fontWeight: "bold",
-                    color: "black",
-                    fontFamily: "Mitr, sans-serif",
-                    fontStyle: "normal",
+                        break;
+                      default:
+                        setSearchTypeView("none");
+                    }
                   }}
-                  variant="h5"
+                  sx={{
+                    borderRadius: 20,
+                    bgcolor: "white",
+                    height: "40px",
+                  }}
                 >
-                  ชนิดของตั๋ว :
-                </Typography>
-                <FormControl sx={{ width: 315 }}>
-                  <InputLabel
-                    id="demo-select-small-label"
-                    sx={{ marginTop: "-5px" }}
-                  >
-                    ชนิดตั๋ว
-                  </InputLabel>
-                  <Select
-                    labelId="demo-select-small-label"
-                    id="demo-select-small"
-                    // placeholder="จังหวัด"
-                    // value={city}
-                    // label="จังหวัด"
-                    // type="city"
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      if (value === 1) {
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={1}>ทะเล</MenuItem>
+                  <MenuItem value={2}>ภูเขา</MenuItem>
+                  <MenuItem value={3}>เมือง</MenuItem>
+                </Select>
+              </FormControl>
+
+              {/* ชนิดของตั๋ว */}
+              <FormControl sx={{ marginBottom: "25px" }}>
+                {" "}
+                {/* เพิ่ม marginBottom */}
+                <InputLabel id="ticket-type-label" sx={{ top: "-8px" }}>
+                  ชนิดตั๋ว
+                </InputLabel>
+                <Select
+                  labelId="ticket-type-label"
+                  id="ticket-type-select"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    switch (value) {
+                      case 1:
                         setSearchTypeTicket("General Admission / GA");
-                      } else if (value === 2) {
+                        break;
+                      case 2:
                         setSearchTypeTicket("VIP Ticket");
-                      } else if (value === 3) {
+                        break;
+                      case 3:
                         setSearchTypeTicket("Front Row / Pit Ticket");
-                      } else if (value === 4) {
+                        break;
+                      case 4:
                         setSearchTypeTicket("Premium Zone Ticket");
-                      } else if (value === 5) {
+                        break;
+                      case 5:
                         setSearchTypeTicket("Reserved Seating");
-                      } else if (value === 6) {
+                        break;
+                      case 6:
                         setSearchTypeTicket("Early Entry Ticket");
-                      } else if (value === 7) {
+                        break;
+                      case 7:
                         setSearchTypeTicket("Virtual Concert Ticket");
-                      } else {
-                        setSearchTypeTicket("none"); // สำหรับ None
-                      }
-                    }}
-                    sx={{
-                      borderRadius: 20,
-                      bgcolor: "white",
-                      height: "40px",
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={1}>
-                      ตั๋วเข้าชมทั่วไป (General Admission / GA)
-                    </MenuItem>
-                    <MenuItem value={2}>ตั๋ววีไอพี (VIP Ticket)</MenuItem>
-                    <MenuItem value={3}>
-                      ตั๋วหน้าเวที (Front Row / Pit Ticket)
-                    </MenuItem>
-                    <MenuItem value={4}>
-                      ตั๋วโซนพิเศษ (Premium Zone Ticket)
-                    </MenuItem>
-                    <MenuItem value={5}>
-                      ตั๋วที่นั่งสำรอง (Reserved Seating)
-                    </MenuItem>
-                    <MenuItem value={6}>
-                      ตั๋วเข้าชมก่อน (Early Entry Ticket)
-                    </MenuItem>
-                    <MenuItem value={7}>
-                      ตั๋วเข้าชมคอนเสิร์ตออนไลน์ (Virtual Concert Ticket)
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
-                <Typography
-                  gutterBottom
+                        break;
+                      default:
+                        setSearchTypeTicket("none");
+                    }
+                  }}
                   sx={{
-                    display: "flex",
-                    fontWeight: "bold",
-                    color: "black",
-                    fontFamily: "Mitr, sans-serif",
-                    fontStyle: "normal",
+                    borderRadius: 20,
+                    bgcolor: "white",
+                    height: "40px",
                   }}
-                  variant="h5"
                 >
-                  จำนวนตั๋ว :
-                </Typography>
-                <TextField
-                  placeholder="จำนวนตั๋ว"
-                  type="number"
-                  sx={{ width: "19.5pc" }}
-                  onChange={(e) => setSearchAboutTicket(e.target.value)}
-                  InputProps={{
-                    sx: {
-                      borderRadius: "20px",
-                      bgcolor: "white",
-                      height: "35px",
-                    },
-                    startAdornment: <></>,
-                  }}
-                />
-              </div>
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={1}>
+                    ตั๋วเข้าชมทั่วไป (General Admission / GA)
+                  </MenuItem>
+                  <MenuItem value={2}>ตั๋ววีไอพี (VIP Ticket)</MenuItem>
+                  <MenuItem value={3}>
+                    ตั๋วหน้าเวที (Front Row / Pit Ticket)
+                  </MenuItem>
+                  <MenuItem value={4}>
+                    ตั๋วโซนพิเศษ (Premium Zone Ticket)
+                  </MenuItem>
+                  <MenuItem value={5}>
+                    ตั๋วที่นั่งสำรอง (Reserved Seating)
+                  </MenuItem>
+                  <MenuItem value={6}>
+                    ตั๋วเข้าชมก่อน (Early Entry Ticket)
+                  </MenuItem>
+                  <MenuItem value={7}>
+                    ตั๋วเข้าชมคอนเสิร์ตออนไลน์ (Virtual Concert Ticket)
+                  </MenuItem>
+                </Select>
+              </FormControl>
+
+              {/* จำนวนตั๋ว */}
+              <TextField
+                placeholder="จำนวนตั๋ว"
+                type="number"
+                sx={{ marginBottom: "25px", width: "100%" }} // เพิ่ม marginBottom
+                onChange={(e) => setSearchAboutTicket(Number(e.target.value))}
+                InputProps={{
+                  sx: {
+                    borderRadius: "20px",
+                    bgcolor: "white",
+                    height: "40px",
+                  },
+                }}
+                inputProps={{ min: 0 }} // ป้องกันการกรอกค่าติดลบ
+              />
+
+              {/* ปุ่มค้นหา */}
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <Button
                   variant="contained"
                   sx={{
                     borderRadius: 20,
-                    bgcolor: "#4E6A97", // เปลี่ยนสีปุ่มได้ตามต้องการ
+                    bgcolor: "#4E6A97",
                     color: "white",
                     height: "40px",
                     width: "150px",
@@ -389,6 +344,7 @@ function PackagePage() {
                 </Button>
               </div>
             </Box>
+
             <div>
               <Typography
                 gutterBottom
@@ -416,7 +372,7 @@ function PackagePage() {
                   sx={{
                     width: 650,
                     height: 60,
-                    borderRadius: 3,
+                    borderRadius: 6,
                     bgcolor: "#D9D9D9",
                     border: 2,
                   }}
@@ -425,7 +381,7 @@ function PackagePage() {
                     style={{
                       display: "flex",
                       justifyContent: "start",
-                      marginTop: "5px",
+                      marginTop: "3px",
                       marginLeft: "10px",
                     }}
                   >
@@ -456,84 +412,54 @@ function PackagePage() {
                 </Box>
               </div>
               <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-                  gap: "20px",
-                  marginTop: "16px",
-                  marginLeft: "150px",
-                  marginBottom: "20px",
-                }}
+                className="grid grid-cols-2 gap-5 mt-4 mx-auto mb-5 max-w-6xl px-5"
+                style={{ marginTop: "25px", marginLeft: "145px" }}
               >
                 {filteredData.length > 0 ? (
                   filteredData.map((concert) => (
                     <Card
                       key={concert.PID}
-                      sx={{ maxWidth: 345, background: "#4E6A97", border: 1 }}
+                      className="bg-[#4E6A97]  border-gray-400 shadow-lg transition-transform duration-200 hover:scale-105 max-w-80  " // ปรับขนาดการ์ดให้เล็กลง
                     >
                       <CardMedia
                         component="img"
                         alt={concert.name_concert}
-                        height="140"
-                        sx={{ maxHeight: 140 }}
+                        height="100"
+                        className="object-cover rounded-t-lg"
                         image={concert.poster_concert}
                       />
-                      <CardContent>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            overflow: "auto",
-                            bgcolor: "white",
-                            borderRadius: 2,
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              marginLeft: "10px",
-                            }}
-                          >
-                            <Typography
-                              gutterBottom
-                              variant="h5"
-                              component="div"
-                              color="black"
-                            >
-                              {concert.name}
-                            </Typography>
-                            <Typography variant="body1" color="black">
-                              {/* รายละเอียด: {concert.province} */}
-                            </Typography>
-                            <Typography variant="body1" color="black">
-                              วันที่การแสดง:{" "}
-                              {concert.show_schedule_concert.toString()}
-                            </Typography>
-                          </div>
-                        </Box>
-                      </CardContent>
-                      <CardActions
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
+                      <CardContent className="flex flex-col p-4 bg-white rounded-b-lg">
                         <Typography
-                          variant="body1"
-                          color="white"
-                          sx={{ marginLeft: "10px" }}
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          className="text-black font-semibold mb-2"
                         >
+                          {concert.name}
+                        </Typography>
+                        <Typography variant="body1" className="text-gray-700">
+                          วันที่การแสดง:{" "}
+                          {concert.show_schedule_concert.toString()}
+                        </Typography>
+                        <Typography variant="body1" className="text-gray-700">
                           ที่อยู่โรมแรม: {concert.province}
                         </Typography>
+                      </CardContent>
+                      <CardActions className="flex justify-between p-4">
                         <Button
                           variant="contained"
-                          style={{ backgroundColor: "#343434" }}
                           sx={{
-                            width: "110px",
-                            borderRadius: "10px",
+                            borderRadius: 8,
+                            bgcolor: "#4E6A97",
+                            color: "white",
+                            height: "40px",
+                            
+                            marginBottom: "10px",
                           }}
-                          onClick={() => navigate(`/PackageDetail/${concert.PID}`)}
+                          className="rounded-lg hover:bg-gray-800 transition-colors"
+                          onClick={() =>
+                            navigate(`/PackageDetail/${concert.PID}`)
+                          }
                         >
                           รายละเอียด
                         </Button>
@@ -541,8 +467,8 @@ function PackagePage() {
                     </Card>
                   ))
                 ) : (
-                  <div className="pt-40 ml-40">
-                    <p>ไม่มีข้อมูล</p>
+                  <div className="pt-40 text-center">
+                    <p className="text-gray-600">ไม่มีข้อมูล</p>
                   </div>
                 )}
               </div>
