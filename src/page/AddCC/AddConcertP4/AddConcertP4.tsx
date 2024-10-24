@@ -22,6 +22,7 @@ import HeaderUserTypeGeneral2 from "../../../components/HeadUserTypeGeneral2";
 import { DateRangePicker } from "@mui/x-date-pickers-pro";
 import { Dayjs } from "dayjs";
 import { ConcertService } from "../../../service/concertService";
+import { toast, ToastContainer } from "react-toastify";
 
 function AddConcertP4Page() {
   const navigate = useNavigate();
@@ -405,10 +406,11 @@ function AddConcertP4Page() {
                                     gettime2
                                   );
                                 console.log(resshow2.status);
-                                window.alert(
-                                  "ข้อมูลของคอนเสิร์ต ได้ลงทะเบียนแล้ว!!!"
-                                );
-                                navigateToAddConcertDataPage();
+                                toast.success("เพิ่มข้อมูลของคอนเสิร์ตสำเร็จ!");
+                                setTimeout(() => {
+                                  setLoad(false);
+                                  navigateToAddConcertDataPage();
+                                }, 3000);
                               }
                             }
                           } else if (getshow1 && gettime1) {
@@ -468,10 +470,11 @@ function AddConcertP4Page() {
                                     gettime1
                                   );
                                 console.log(resshow1.status);
-                                window.alert(
-                                  "ข้อมูลของคอนเสิร์ต ได้ลงทะเบียนแล้ว!!!"
-                                );
-                                navigateToAddConcertDataPage();
+                                toast.success("เพิ่มข้อมูลของคอนเสิร์ตสำเร็จ!");
+                                setTimeout(() => {
+                                  setLoad(false);
+                                  navigateToAddConcertDataPage();
+                                }, 3000);
                               }
                             }
                           } else if (getshow2 && gettime2) {
@@ -533,10 +536,11 @@ function AddConcertP4Page() {
                                     gettime2
                                   );
                                 console.log(resshow2.status);
-                                window.alert(
-                                  "ข้อมูลของคอนเสิร์ต ได้ลงทะเบียนแล้ว!!!"
-                                );
-                                navigateToAddConcertDataPage();
+                                toast.success("เพิ่มข้อมูลของคอนเสิร์ตสำเร็จ!");
+                                setTimeout(() => {
+                                  setLoad(false);
+                                  navigateToAddConcertDataPage();
+                                }, 3000);
                               }
                             }
                           } else {
@@ -626,10 +630,13 @@ function AddConcertP4Page() {
                                       gettime3
                                     );
                                   console.log(resshow.status);
-                                  window.alert(
-                                    "ข้อมูลของคอนเสิร์ต ได้ลงทะเบียนแล้ว!!!"
+                                  toast.success(
+                                    "เพิ่มข้อมูลของคอนเสิร์ตสำเร็จ!"
                                   );
-                                  navigateToAddConcertDataPage();
+                                  setTimeout(() => {
+                                    setLoad(false);
+                                    navigateToAddConcertDataPage();
+                                  }, 3000);
                                 }
                               }
                             } else {
@@ -654,6 +661,7 @@ function AddConcertP4Page() {
           </Box>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

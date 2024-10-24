@@ -47,19 +47,6 @@ function AddRoomPage() {
   function navigateToAddHotelDataPage() {
     navigate("/AddHotelData");
   }
-  // function navigateToAddRoomP2Page() {
-  //   navigate("/AddRoomP2", {
-  //     state: {
-  //       Room_Hotel_ID,
-  //       Room_Type,
-  //       Room_View_Type,
-  //       Price,
-  //       Number_of_guests,
-  //       Number_of_rooms,
-  //       Room_Status,
-  //     },
-  //   });
-  // }
 
   return (
     <>
