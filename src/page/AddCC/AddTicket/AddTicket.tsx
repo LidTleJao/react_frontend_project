@@ -80,205 +80,217 @@ function AddTicketPage() {
               เพิ่มข้อมูลตั๋ว
             </Typography>
           </div>
-          <Box
-            sx={{
-              width: 650,
-              height: 350,
-              maxHeight: 350,
-              borderRadius: 3,
-              bgcolor: "#D9D9D9",
-              border: 2,
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <FormControl sx={{ width: "25pc", mt: 2 }}>
-                <InputLabel
-                  id="demo-select-small-label"
-                  sx={{ marginTop: "-5px" }}
-                >
-                  เลือกคอนเสิร์ต
-                </InputLabel>
-
-                <Select
-                  labelId="demo-select-small-label"
-                  id="demo-select-small"
-                  label="ชนิดห้อง"
-                  // type="city"
-                  onChange={(e) => setTicket_concert_ID(String(e.target.value))}
-                  sx={{
-                    borderRadius: 20,
-                    bgcolor: "white",
-                    height: "40px",
-                  }}
-                >
-                  {concerts.map((concert, index) => (
-                    <MenuItem value={concert.CID}>
-                      {1 + index} - {concert.name_concert}
-                    </MenuItem>
-                  ))}
-                  {/* <MenuItem value={1}>ห้องธรรมดา (Standard Room)</MenuItem> */}
-                </Select>
-              </FormControl>
-              <TextField
-                placeholder="ชื่อชนิดของตั๋วโซนที่นั่ง"
-                // type="number"
-                sx={{ mt: 2, width: "25pc" }}
-                onChange={(e) => setTicket_zone(e.target.value)}
-                value={ticket_zone}
-                InputProps={{
-                  sx: {
-                    borderRadius: "20px",
-                    bgcolor: "white",
-                    height: "35px",
-                  },
-                  startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
-                }}
-              />
-              <TextField
-                placeholder="ราคาตั๋ว"
-                type="number"
-                sx={{ mt: 2, width: "25pc" }}
-                //   onChange={(e) => setName(e.target.value)}
-                onChange={handlePrice}
-                InputProps={{
-                  sx: {
-                    borderRadius: "20px",
-                    bgcolor: "white",
-                    height: "35px",
-                  },
-                  startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
-                }}
-              />
-              <FormControl sx={{ width: "25pc", mt: 2 }}>
-                <InputLabel
-                  id="demo-select-small-label"
-                  sx={{ marginTop: "-5px" }}
-                >
-                  ชนิดตั๋ว
-                </InputLabel>
-                <Select
-                  labelId="demo-select-small-label"
-                  id="demo-select-small"
-                  label="ชนิดตั๋ว"
-                  // defaultValue={1}
-                  value={ticket_type}
-                  onChange={(e) => setTicket_type(Number(e.target.value))}
-                  sx={{
-                    borderRadius: 20,
-                    bgcolor: "white",
-                    height: "40px",
-                  }}
-                >
-                  <MenuItem value={1}>
-                    ตั๋วเข้าชมทั่วไป (General Admission / GA)
-                  </MenuItem>
-                  <MenuItem value={2}>ตั๋ววีไอพี (VIP Ticket)</MenuItem>
-                  <MenuItem value={3}>
-                    ตั๋วหน้าเวที (Front Row / Pit Ticket)
-                  </MenuItem>
-                  <MenuItem value={4}>
-                    ตั๋วโซนพิเศษ (Premium Zone Ticket)
-                  </MenuItem>
-                  <MenuItem value={5}>
-                    ตั๋วที่นั่งสำรอง (Reserved Seating)
-                  </MenuItem>
-                  <MenuItem value={6}>
-                    ตั๋วเข้าชมก่อน (Early Entry Ticket)
-                  </MenuItem>
-                  <MenuItem value={7}>
-                    ตั๋วเข้าชมคอนเสิร์ตออนไลน์ (Virtual Concert Ticket)
-                  </MenuItem>
-                </Select>
-              </FormControl>
-              <div
-                style={{
+          {concerts.length > 0 ? (
+            <>
+              <Box
+                sx={{
+                  width: 650,
+                  height: 350,
+                  maxHeight: 350,
+                  borderRadius: 3,
+                  bgcolor: "#D9D9D9",
+                  border: 2,
                   display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginTop: "30px",
+                  justifyContent: "center",
                 }}
               >
-                <Button
-                  variant="contained"
-                  style={{ backgroundColor: "#343434" }}
-                  sx={{
-                    width: "110px",
-                    borderRadius: "10px",
-                  }}
-                  startIcon={<KeyboardArrowLeftIcon />}
-                  onClick={navigateToAddConcertDataPage}
-                >
-                  กลับหน้า
-                </Button>
-                {isLoad ? (
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <FormControl sx={{ width: "25pc", mt: 2 }}>
+                    <InputLabel
+                      id="demo-select-small-label"
+                      sx={{ marginTop: "-5px" }}
+                    >
+                      เลือกคอนเสิร์ต
+                    </InputLabel>
+
+                    <Select
+                      labelId="demo-select-small-label"
+                      id="demo-select-small"
+                      label="ชนิดห้อง"
+                      // type="city"
+                      onChange={(e) =>
+                        setTicket_concert_ID(String(e.target.value))
+                      }
+                      sx={{
+                        borderRadius: 20,
+                        bgcolor: "white",
+                        height: "40px",
+                      }}
+                    >
+                      {concerts.map((concert, index) => (
+                        <MenuItem value={concert.CID}>
+                          {1 + index} - {concert.name_concert}
+                        </MenuItem>
+                      ))}
+                      {/* <MenuItem value={1}>ห้องธรรมดา (Standard Room)</MenuItem> */}
+                    </Select>
+                  </FormControl>
+                  <TextField
+                    placeholder="ชื่อชนิดของตั๋วโซนที่นั่ง"
+                    // type="number"
+                    sx={{ mt: 2, width: "25pc" }}
+                    onChange={(e) => setTicket_zone(e.target.value)}
+                    value={ticket_zone}
+                    InputProps={{
+                      sx: {
+                        borderRadius: "20px",
+                        bgcolor: "white",
+                        height: "35px",
+                      },
+                      startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                    }}
+                  />
+                  <TextField
+                    placeholder="ราคาตั๋ว"
+                    type="number"
+                    sx={{ mt: 2, width: "25pc" }}
+                    //   onChange={(e) => setName(e.target.value)}
+                    onChange={handlePrice}
+                    InputProps={{
+                      sx: {
+                        borderRadius: "20px",
+                        bgcolor: "white",
+                        height: "35px",
+                      },
+                      startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                    }}
+                  />
+                  <FormControl sx={{ width: "25pc", mt: 2 }}>
+                    <InputLabel
+                      id="demo-select-small-label"
+                      sx={{ marginTop: "-5px" }}
+                    >
+                      ชนิดตั๋ว
+                    </InputLabel>
+                    <Select
+                      labelId="demo-select-small-label"
+                      id="demo-select-small"
+                      label="ชนิดตั๋ว"
+                      // defaultValue={1}
+                      value={ticket_type}
+                      onChange={(e) => setTicket_type(Number(e.target.value))}
+                      sx={{
+                        borderRadius: 20,
+                        bgcolor: "white",
+                        height: "40px",
+                      }}
+                    >
+                      <MenuItem value={1}>
+                        ตั๋วเข้าชมทั่วไป (General Admission / GA)
+                      </MenuItem>
+                      <MenuItem value={2}>ตั๋ววีไอพี (VIP Ticket)</MenuItem>
+                      <MenuItem value={3}>
+                        ตั๋วหน้าเวที (Front Row / Pit Ticket)
+                      </MenuItem>
+                      <MenuItem value={4}>
+                        ตั๋วโซนพิเศษ (Premium Zone Ticket)
+                      </MenuItem>
+                      <MenuItem value={5}>
+                        ตั๋วที่นั่งสำรอง (Reserved Seating)
+                      </MenuItem>
+                      <MenuItem value={6}>
+                        ตั๋วเข้าชมก่อน (Early Entry Ticket)
+                      </MenuItem>
+                      <MenuItem value={7}>
+                        ตั๋วเข้าชมคอนเสิร์ตออนไลน์ (Virtual Concert Ticket)
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
                   <div
                     style={{
                       display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      marginTop: "30px",
                     }}
                   >
-                    <CircularProgress
-                      style={{ marginRight: "20px", color: "black" }}
-                    />
-                  </div>
-                ) : (
-                  <Button
-                    variant="contained"
-                    sx={{
-                      width: "110px",
-                      borderRadius: "10px",
-                    }}
-                    startIcon={<ChevronRightIcon />}
-                    // onClick={navigateToAddTicketP2Page}
-                    onClick={async () => {
-                      try {
-                        setLoad(true);
-                        if (ticket_concert_ID == "") {
-                          window.alert(
-                            "ข้อมูลคอนเสิร์ตไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
-                          );
-                        } else {
-                          if (ticket_zone == "") {
-                            window.alert(
-                              "ข้อมูลโซนที่นั่งไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
-                            );
-                          } else {
-                            if (
-                              price === "" ||
-                              (Number(price) < 1 && !price.includes("-"))
-                            ) {
-                              window.alert("ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: "#343434" }}
+                      sx={{
+                        width: "110px",
+                        borderRadius: "10px",
+                      }}
+                      startIcon={<KeyboardArrowLeftIcon />}
+                      onClick={navigateToAddConcertDataPage}
+                    >
+                      กลับหน้า
+                    </Button>
+                    {isLoad ? (
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <CircularProgress
+                          style={{ marginRight: "20px", color: "black" }}
+                        />
+                      </div>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        sx={{
+                          width: "110px",
+                          borderRadius: "10px",
+                        }}
+                        startIcon={<ChevronRightIcon />}
+                        // onClick={navigateToAddTicketP2Page}
+                        onClick={async () => {
+                          try {
+                            setLoad(true);
+                            if (ticket_concert_ID == "") {
+                              window.alert(
+                                "ข้อมูลคอนเสิร์ตไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
+                              );
                             } else {
-                              if (
-                                ticket_concert_ID == "" ||
-                                ticket_zone == ""
-                              ) {
+                              if (ticket_zone == "") {
                                 window.alert(
-                                  "ข้อมูลไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
+                                  "ข้อมูลโซนที่นั่งไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
                                 );
                               } else {
-                                navigateToAddTicketP2Page();
+                                if (
+                                  price === "" ||
+                                  (Number(price) < 1 && !price.includes("-"))
+                                ) {
+                                  window.alert(
+                                    "ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
+                                  );
+                                } else {
+                                  if (
+                                    ticket_concert_ID == "" ||
+                                    ticket_zone == ""
+                                  ) {
+                                    window.alert(
+                                      "ข้อมูลไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
+                                    );
+                                  } else {
+                                    navigateToAddTicketP2Page();
+                                  }
+                                }
                               }
                             }
-                          }
-                        }
 
-                        setLoad(false);
-                      } catch (error) {
-                        setLoad(false);
-                        console.log(error);
-                      }
-                    }}
-                  >
-                    ถัดไป
-                  </Button>
-                )}
-              </div>
+                            setLoad(false);
+                          } catch (error) {
+                            setLoad(false);
+                            console.log(error);
+                          }
+                        }}
+                      >
+                        ถัดไป
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </Box>
+            </>
+          ) : (
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <p>ยังไม่มีข้อมูลคอนเสิร์ต โปรดดำเนินการเพิ่มข้อมูลคอนเสิร์ต</p>
             </div>
-          </Box>
+          )}
         </div>
       </div>
     </>

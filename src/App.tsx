@@ -65,10 +65,11 @@ import CheckDataConcertPage from "./page/AddCC/CheckDataConcert/CheckDataConcert
 import HotelDealPage from "./page/AddPK/Hotel/HotelDeals/HotelDeals";
 import ConcertDealPage from "./page/AddPK/Concert/ConcertDeals/ConcertDeals";
 import ConcertDetailPage from "./page/ConcertDetail/ConcertDetail";
-import HotelDetailPage from "./page/Hotel/HotelDetail";
+import HotelDetailPage from "./page/HotelDetail/HotelDetail";
 import CheckHotelDealPage from "./page/AddPK/Hotel/CheckHotelDeal/CheckHotelDeal";
 import CheckConcertDealPage from "./page/AddPK/Concert/CheckConcertDeal/CheckConcertDeal";
 import PackageDetailPage from "./page/PackageDetail/PackageDetail";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 function App() {
   const routers = createBrowserRouter([
@@ -110,9 +111,18 @@ function App() {
     { path: "/HotelDetail/:hid", element: <HotelDetailPage /> },
   ]);
 
+  const theme = createTheme({
+    
+    typography: {
+      fontFamily: "Kanit, sans-serif",
+    },
+  });
+
   return (
     <>
-      <RouterProvider router={routers} />
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={routers} />
+      </ThemeProvider>
     </>
   );
 }

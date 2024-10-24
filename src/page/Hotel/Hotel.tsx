@@ -203,6 +203,8 @@ function HotelPage() {
               sx={{
                 display: "flex",
                 marginTop: "50px",
+                display: "flex",
+                marginTop: "50px",
                 width: 350,
                 height: 560,
                 borderRadius: 10,
@@ -447,7 +449,7 @@ function HotelPage() {
                     height: 60,
                     borderRadius: 6,
                     bgcolor: "#D9D9D9",
-                    border: 2,
+                    border: 1,
                   }}
                 >
                   <div

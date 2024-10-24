@@ -16,6 +16,41 @@ export class RoomHotelService {
     return response;
   }
 
+  async updateHotelRoom(
+    hotel_ID: string,
+    HRID: string,
+    hotel_price: string,
+    Number_of_guests: string,
+    Number_of_rooms: string,
+    room_type_ID: string,
+    room_view_type_ID: string,
+    room_status_ID: string,
+  ){
+    const url = `${HOST}/updateRoom/${hotel_ID}`;
+
+    const payload = {
+      HRID: HRID,
+      price: hotel_price,
+      Number_of_guests: Number_of_guests,
+      Number_of_rooms: Number_of_rooms,
+      room_type_ID: room_type_ID,
+      room_view_type_ID: room_view_type_ID,
+      room_status_ID: room_status_ID,
+    };
+
+    try {
+      const response = await axios.post(url, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error("Error updating hotelRoom:", error);
+      throw error;
+    }
+  }
+
   async AddRoom(
     hid: string,
     Price: string,

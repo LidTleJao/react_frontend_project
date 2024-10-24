@@ -116,6 +116,8 @@ function ConcertPage() {
               sx={{
                 display: "flex",
                 marginTop: "50px",
+                display: "flex",
+                marginTop: "50px",
                 width: 350,
                 maxHeight: 400,
                 borderRadius: 10,

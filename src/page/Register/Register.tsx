@@ -29,7 +29,6 @@ function RegisterPage() {
 
   const navigate = useNavigate();
 
-  // Loading
   const [isLoad, setLoad] = useState(false);
 
   function navigateToLoginPage() {
@@ -76,12 +75,14 @@ function RegisterPage() {
               style={{
                 display: "flex",
                 justifyContent: "center",
+                fontFamily: "Kanit, sans-serif"
               }}
             >
               <Typography
                 gutterBottom
                 sx={{
                   fontWeight: "bold",
+                  fontFamily: "Kanit, sans-serif"
                 }}
                 variant="h5"
               >
@@ -110,7 +111,7 @@ function RegisterPage() {
                   }}
                 >
                   <div style={{ display: "flex", marginLeft: "40px" }}>
-                    <Typography gutterBottom variant="h6">
+                    <Typography gutterBottom variant="h6" sx={{ fontFamily: "Kanit, sans-serif" }}>
                       ข้อมูลส่วนตัว
                     </Typography>
                   </div>
@@ -119,14 +120,14 @@ function RegisterPage() {
                       placeholder="ชื่อ-นามสกุล"
                       inputRef={nameRef}
                       sx={{ m: 1, width: "26pc" }}
-                      //   onChange={(e) => setName(e.target.value)}
                       InputProps={{
                         sx: {
                           borderRadius: "20px",
                           bgcolor: "white",
                           height: "35px",
+                          fontFamily: "Kanit, sans-serif"
                         },
-                        startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                        startAdornment: <></>,
                       }}
                     />
                   </div>
@@ -136,14 +137,14 @@ function RegisterPage() {
                       inputRef={nicknameRef}
                       type="nickname"
                       sx={{ m: 1, width: "26pc" }}
-                      //   onChange={(e) => setNickname(e.target.value)}
                       InputProps={{
                         sx: {
                           borderRadius: "20px",
                           bgcolor: "white",
                           height: "35px",
+                          fontFamily: "Kanit, sans-serif"
                         },
-                        startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                        startAdornment: <></>,
                       }}
                     />
                   </div>
@@ -151,24 +152,23 @@ function RegisterPage() {
                     <TextField
                       placeholder="Facebook"
                       inputRef={facebookRef}
-                      // type="link"
                       sx={{ m: 1, width: "26pc" }}
-                      //   onChange={(e) => setBirthday(e.target.value)}
                       InputProps={{
                         sx: {
                           borderRadius: "20px",
                           bgcolor: "white",
                           height: "35px",
+                          fontFamily: "Kanit, sans-serif"
                         },
                         startAdornment: <></>,
                       }}
                     />
                   </div>
-                  <div style={{ display: "flex", marginLeft: "40px" }}>
+                  <div style={{ display: "flex", marginLeft: "40px", marginTop: "15px" }}>
                     <FormControl sx={{ width: 415 }}>
                       <InputLabel
                         id="demo-select-small-label"
-                        sx={{ marginTop: "-5px" }}
+                        sx={{ marginTop: "-12px", fontFamily: "Kanit, sans-serif", fontSize: "20px", }}
                       >
                         จังหวัด
                       </InputLabel>
@@ -183,6 +183,21 @@ function RegisterPage() {
                           borderRadius: 20,
                           bgcolor: "white",
                           height: "40px",
+                          fontFamily: "Kanit, sans-serif"
+                        }}
+                        MenuProps={{
+                          PaperProps: {
+                            sx: {
+                              "& .MuiMenuItem-root": {
+                                fontFamily: "Kanit, sans-serif", // กำหนดฟอนต์ให้กับทุก MenuItem
+                                fontSize: "16px",
+                                padding: "10px",
+                              },
+                              "& .MuiMenuItem-root:hover": {
+                                bgcolor: "#f0f0f0", // สีพื้นหลังเมื่อ hover
+                              }
+                            }
+                          }
                         }}
                       >
                         <MenuItem value={"กรุงเทพมหานคร"}>
@@ -273,11 +288,11 @@ function RegisterPage() {
                       </Select>
                     </FormControl>
                   </div>
-                  <div style={{ display: "flex", marginLeft: "40px" }}>
+                  <div style={{ display: "flex", marginLeft: "40px", marginTop: "15px" }}>
                     <FormControl sx={{ mt: 1, width: 415 }}>
                       <InputLabel
                         id="demo-select-small-label"
-                        sx={{ marginTop: "-5px" }}
+                        sx={{ marginTop: "-12px", fontFamily: "Kanit, sans-serif", fontSize: "20px", }}
                       >
                         ประเภทของผู้ใช้
                       </InputLabel>
@@ -290,6 +305,21 @@ function RegisterPage() {
                           borderRadius: 20,
                           bgcolor: "white",
                           height: "40px",
+                          fontFamily: "Kanit, sans-serif"
+                        }}
+                        MenuProps={{
+                          PaperProps: {
+                            sx: {
+                              "& .MuiMenuItem-root": {
+                                fontFamily: "Kanit, sans-serif", // กำหนดฟอนต์ให้กับทุก MenuItem
+                                fontSize: "16px",
+                                padding: "10px",
+                              },
+                              "& .MuiMenuItem-root:hover": {
+                                bgcolor: "#f0f0f0", // สีพื้นหลังเมื่อ hover
+                              }
+                            }
+                          }
                         }}
                       >
                         <MenuItem value={1}>ผู้ใช้ทั่วไป</MenuItem>
@@ -303,19 +333,19 @@ function RegisterPage() {
                       type="phone"
                       inputRef={phoneRef}
                       sx={{ m: 1, width: "26pc" }}
-                      //   onChange={(e) => setPhone(e.target.value)}
                       InputProps={{
                         sx: {
                           borderRadius: "20px",
                           bgcolor: "white",
                           height: "35px",
+                          fontFamily: "Kanit, sans-serif"
                         },
-                        startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                        startAdornment: <></>,
                       }}
                     />
                   </div>
                   <div style={{ display: "flex", marginLeft: "40px" }}>
-                    <Typography gutterBottom variant="h6">
+                    <Typography gutterBottom variant="h6" sx={{ fontFamily: "Kanit, sans-serif" }}>
                       อีเมลและรหัสผ่าน
                     </Typography>
                   </div>
@@ -325,12 +355,12 @@ function RegisterPage() {
                       inputRef={emailRef}
                       type="email"
                       sx={{ m: 1, width: "26pc" }}
-                      //   onChange={(e) => setEmail(e.target.value)}
                       InputProps={{
                         sx: {
                           borderRadius: "20px",
                           bgcolor: "white",
                           height: "35px",
+                          fontFamily: "Kanit, sans-serif"
                         },
                       }}
                     />
@@ -342,12 +372,12 @@ function RegisterPage() {
                       type="password"
                       autoComplete="current-password"
                       sx={{ m: 1, width: "26pc" }}
-                      //   onChange={(e) => setPassword(e.target.value)}
                       InputProps={{
                         sx: {
                           borderRadius: "20px",
                           bgcolor: "white",
                           height: "35px",
+                          fontFamily: "Kanit, sans-serif"
                         },
                       }}
                     />
@@ -382,69 +412,53 @@ function RegisterPage() {
                         <Button
                           variant="contained"
                           color="info"
-                          sx={{ width: "100px", borderRadius: "10px" }}
-                          // onClick={handleSubmit}
+                          sx={{ width: "100px", borderRadius: "10px", fontFamily: "Kanit, sans-serif" }}
                           onClick={async () => {
                             try {
                               if (passRef.current!.value.length < 6) {
-                                window.alert(
-                                  `รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร`
-                                );
+                                window.alert(`รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร`);
+                              } else if (!/^\d{10}$/.test(phoneRef.current!.value)) {
+                                window.alert(`เบอร์โทรศัพท์ต้องเป็นตัวเลขและมีความยาว 10 หลัก`);
+                              } else if (!emailRef.current!.value.includes("@")) {
+                                window.alert(`โปรดตรวจสอบอีเมลว่าถูกต้องหรือไม่`);
                               } else {
-                                if (!emailRef.current!.value.includes("@")) {
-                                  window.alert(
-                                    `โปรดตรวจสอบอีเมลว่าถูกต้องหรือไม่`
+                                if (
+                                  nameRef.current?.value &&
+                                  nicknameRef.current?.value &&
+                                  facebookRef.current?.value &&
+                                  provinceRef.current?.value &&
+                                  phoneRef.current?.value &&
+                                  type_userRef.current?.value &&
+                                  emailRef.current?.value.includes("@") &&
+                                  passRef.current?.value
+                                ) {
+                                  setLoad(true);
+                                  const res = await userservice.register(
+                                    nameRef.current!.value,
+                                    nicknameRef.current!.value,
+                                    facebookRef.current!.value,
+                                    phoneRef.current!.value,
+                                    provinceRef.current!.value,
+                                    emailRef.current!.value,
+                                    passRef.current!.value,
+                                    parseInt(type_userRef.current!.value)
                                   );
-                                } else {
-                                  if (
-                                    nameRef.current?.value &&
-                                    nicknameRef.current?.value &&
-                                    facebookRef.current?.value &&
-                                    provinceRef.current?.value &&
-                                    phoneRef.current?.value &&
-                                    type_userRef.current?.value &&
-                                    emailRef.current?.value.includes("@") &&
-                                    passRef.current?.value
-                                  ) {
-                                    setLoad(true);
-                                    const res = await userservice.register(
-                                      nameRef.current!.value,
-                                      nicknameRef.current!.value,
-                                      facebookRef.current!.value,
-                                      phoneRef.current!.value,
-                                      provinceRef.current!.value,
-                                      emailRef.current!.value,
-                                      passRef.current!.value,
-                                      parseInt(type_userRef.current!.value)
-                                    );
-                                    console.log(nameRef.current?.value);
-                                    console.log(nicknameRef.current?.value);
-                                    console.log(facebookRef.current?.value);
-                                    console.log(provinceRef.current?.value);
-                                    console.log(phoneRef.current?.value);
-                                    console.log(type_userRef.current?.value);
-                                    console.log(emailRef.current?.value);
-                                    console.log(passRef.current?.value);
-                                    setLoad(false);
-                                    if (res.status === 201) {
-                                      console.log(res.data);
-                                      navigate("/");
-                                    }
-                                  } else {
-                                    window.alert(
-                                      `โปรดตรวจสอบว่ากรอกข้อมูลครบถ้วนหรือไม่`
-                                    );
+                                  setLoad(false);
+                                  if (res.status === 201) {
+                                    window.alert("ข้อมูลของผู้ใช้งาน ได้ลงทะเบียนแล้ว!!!");
+                                    navigate("/");
                                   }
+                                } else {
+                                  window.alert(`โปรดตรวจสอบว่ากรอกข้อมูลครบถ้วนหรือไม่`);
                                 }
                               }
                             } catch (error) {
                               setLoad(false);
-                              window.alert(
-                                "ข้อมูลอีเมลมีแล้ว โปรดตรวจสอบข้อมูลใหม่อีกครั้ง"
-                              );
+                              window.alert("ข้อมูลอีเมลมีแล้ว โปรดตรวจสอบข้อมูลใหม่อีกครั้ง");
                               console.log(error);
                             }
                           }}
+
                         >
                           ยืนยัน
                         </Button>
@@ -462,6 +476,7 @@ function RegisterPage() {
                         sx={{
                           width: "100px",
                           borderRadius: "10px",
+                          fontFamily: "Kanit, sans-serif"
                         }}
                         onClick={navigateToLoginPage}
                       >

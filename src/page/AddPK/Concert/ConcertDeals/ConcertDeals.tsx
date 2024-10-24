@@ -219,6 +219,7 @@ function ConcertDealPage() {
               ข้อมูลข้อเสนอ
             </Typography>
           </div>
+          {ConcertDealByUser.length > 0 ? (<>
           <div
             style={{
               display: "flex",
@@ -701,6 +702,7 @@ function ConcertDealPage() {
                         borderRadius: 2,
                       }}
                     >
+                      {hotelDealAll.length > 0 ? (<>
                       <Table>
                         <TableHead>
                           <TableRow>
@@ -776,6 +778,19 @@ function ConcertDealPage() {
                           ))}
                         </TableBody>
                       </Table>
+                      </>) : (
+                        <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          marginTop: "160px",
+                        }}
+                      >
+                        <p>
+                          ยังไม่มีข้อมูลข้อเสนอโรงแรม
+                        </p>
+                      </div>
+                      )}
                     </TableContainer>
                   </div>
                   <div
@@ -844,6 +859,20 @@ function ConcertDealPage() {
               </Box>
             </div>
           </div>
+          </>):(
+            <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "60px",
+            }}
+          >
+            <p>
+              ยังไม่มีข้อมูลข้อเสนอคอนเสิร์ต
+              โปรดดำเนินการเพิ่มข้อมูลข้อเสนอคอนเสิร์ต
+            </p>
+          </div>
+          )}
         </div>
       </div>
     </>

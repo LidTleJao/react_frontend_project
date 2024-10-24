@@ -11,11 +11,9 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-// import NotificationsIcon from "@mui/icons-material/Notifications";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 function HeaderUserTypeGeneral() {
@@ -49,9 +47,6 @@ function HeaderUserTypeGeneral() {
   function navigateToProfilePage() {
     navigate("/Profile");
   }
-  function navigateToEditProfilePage() {
-    navigate("/EditProfile");
-  }
   return (
     <>
       <AppBar position="fixed">
@@ -68,8 +63,8 @@ function HeaderUserTypeGeneral() {
                 fontWeight: "bold",
                 color: "white",
                 ml: 3,
-                fontFamily: "Mitr, sans-serif",
-                fontStyle: "oblique",
+                fontFamily: "Kanit, sans-serif",
+                fontSize: "16px"
               }}
               onClick={navigateToPackagePage}
             >
@@ -84,12 +79,12 @@ function HeaderUserTypeGeneral() {
                 fontWeight: "bold",
                 color: "white",
                 ml: 5,
-                fontFamily: "Mitr, sans-serif",
-                fontStyle: "oblique",
+                fontFamily: "Kanit, sans-serif",
+                fontSize: "16px"
               }}
               onClick={navigateToHotelPage}
             >
-              โรมแรม
+              โรงแรม
             </Button>
             <Button
               variant="text"
@@ -100,8 +95,8 @@ function HeaderUserTypeGeneral() {
                 fontWeight: "bold",
                 color: "white",
                 ml: 5,
-                fontFamily: "Mitr, sans-serif",
-                fontStyle: "oblique",
+                fontFamily: "Kanit, sans-serif",
+                fontSize: "16px"
               }}
               onClick={navigateToConcertPage}
             >
@@ -146,27 +141,40 @@ function HeaderUserTypeGeneral() {
           <div
             style={{ display: "flex", marginRight: 55, flexDirection: "row" }}
           >
-            <Tooltip title="Account settings">
+            <Tooltip title="Account settings" arrow>
               <IconButton
                 onClick={handleAccountClick}
                 size="small"
-                sx={{ ml: 1 }}
+                sx={{
+                  ml: 1,
+                  width: 50,
+                  height: 50,
+                }}
                 aria-controls={openAccount ? "account-menu" : undefined}
                 aria-haspopup="true"
                 aria-expanded={openAccount ? "true" : undefined}
               >
-                {(user?.image_user === "" && (
-                  <>
-                    <Avatar sx={{ width: 35, height: 32 }}>
-                      {user?.name_user[0]}
-                    </Avatar>
-                  </>
-                )) ||
-                  (user?.image_user != "" && (
-                    <>
-                      <Avatar sx={{ width: 35, height: 32 }} src={user?.image_user}></Avatar>
-                    </>
-                  ))}
+                {user?.image_user ? (
+                  <Avatar
+                    sx={{
+                      width: 40,
+                      height: 40,
+                      border: "2px solid white",
+                    }}
+                    src={user?.image_user}
+                  />
+                ) : (
+                  <Avatar
+                    sx={{
+                      width: 40,
+                      height: 40,
+                      bgcolor: "primary.main",
+                      fontSize: "1.5rem",
+                    }}
+                  >
+                    {user?.name_user[0]}
+                  </Avatar>
+                )}
               </IconButton>
             </Tooltip>
             <Menu
@@ -175,6 +183,7 @@ function HeaderUserTypeGeneral() {
               open={openAccount}
               onClose={handleAccountClose}
               onClick={handleAccountClose}
+
               PaperProps={{
                 elevation: 0,
                 sx: {
@@ -212,12 +221,12 @@ function HeaderUserTypeGeneral() {
                   alignItems: "center",
                   fontWeight: "bold",
                   color: "black",
-                  fontFamily: "Mitr, sans-serif",
-                  fontStyle: "normal",
-                  ml: 1,
+                  fontFamily: "Kanit, sans-serif",
+                  fontSize: "18px",
+                  mr: 2, ml: 2, mt: 1
                 }}
                 variant="h6"
-                // marginTop={"-10px"}
+              // marginTop={"-10px"}
               >
                 {user?.name_user}
               </Typography>
@@ -229,37 +238,30 @@ function HeaderUserTypeGeneral() {
                   alignItems: "center",
                   // fontWeight: "",
                   color: "black",
-                  fontFamily: "Mitr, sans-serif",
-                  fontStyle: "normal",
-                  ml: 1,
+                  fontFamily: "Kanit, sans-serif",
+                  fontSize: "16px",
+                  mr: 2, ml: 2, mb: 1
                 }}
-                // variant="h6"
-                // marginTop={"-10px"}
+              // variant="h6"
+              // marginTop={"-10px"}
               >
                 {user?.gmail_user}
               </Typography>
               <Divider />
-              <MenuItem
-              onClick={navigateToProfilePage}
-              >
-                <ListItemIcon>
+              <MenuItem onClick={navigateToProfilePage} sx={{ fontFamily: "Kanit, sans-serif", fontSize: "16px" }}>
+                <ListItemIcon sx={{ minWidth: "40px", color: "#666" }}>
                   <AccountBoxIcon fontSize="small" />
                 </ListItemIcon>
                 Profile
               </MenuItem>
-              <MenuItem onClick={navigateToEditProfilePage}
-              >
-                <ListItemIcon>
-                  <ManageAccountsIcon fontSize="small" />
-                </ListItemIcon>
-                Setting Account
-              </MenuItem>
-              <MenuItem onClick={navigateToLoginPage}>
-                <ListItemIcon>
+
+              <MenuItem onClick={navigateToLoginPage} sx={{ fontFamily: "Kanit, sans-serif", fontSize: "16px" }}>
+                <ListItemIcon sx={{ minWidth: "40px", color: "#666" }}>
                   <Logout fontSize="small" />
                 </ListItemIcon>
                 Logout
               </MenuItem>
+
             </Menu>
           </div>
         </Toolbar>
