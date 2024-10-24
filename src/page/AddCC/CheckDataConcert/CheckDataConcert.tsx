@@ -1759,7 +1759,6 @@ function CheckDataConcertPage() {
                                                   defaultValue={
                                                     concertselect?.ticket_zone
                                                   }
-                                                  value={ticket_zone}
                                                   onChange={(e) =>
                                                     setTicket_zone(
                                                       e.target.value
@@ -1777,6 +1776,7 @@ function CheckDataConcertPage() {
                                                   defaultValue={
                                                     concertselect?.price
                                                   }
+                                                  inputProps={{ min: 1 }}
                                                   variant="outlined"
                                                   className="w-[100px]"
                                                 />
