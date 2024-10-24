@@ -22,6 +22,7 @@ import HeaderUserTypeGeneral2 from "../../../components/HeadUserTypeGeneral2";
 import { DateRangePicker } from "@mui/x-date-pickers-pro";
 import { Dayjs } from "dayjs";
 import { ConcertService } from "../../../service/concertService";
+import { toast, ToastContainer } from "react-toastify";
 
 function AddConcertP4Page() {
   const navigate = useNavigate();
@@ -110,7 +111,7 @@ function AddConcertP4Page() {
               width: 650,
               height: 370,
               borderRadius: 3,
-              bgcolor: "#D9D9D9",
+              // bgcolor: "#D9D9D9",
               border: 2,
               display: "flex",
               justifyContent: "center",
@@ -125,7 +126,7 @@ function AddConcertP4Page() {
               <FormControl sx={{ width: "550px", mt: 3 }}>
                 <InputLabel
                   id="demo-select-small-label"
-                  sx={{ marginTop: "-5px" }}
+                  sx={{ marginTop: "-10px" }}
                 >
                   รอบการแสดง
                 </InputLabel>
@@ -134,6 +135,7 @@ function AddConcertP4Page() {
                   id="demo-select-small"
                   sx={{
                     borderRadius: 20,
+                    border: "1px solid grey",
                     bgcolor: "white",
                     height: "40px",
                   }}
@@ -179,6 +181,7 @@ function AddConcertP4Page() {
                         InputProps={{
                           sx: {
                             borderRadius: "20px",
+                            border: "1px solid grey",
                             bgcolor: "white",
                             height: "35px",
                           },
@@ -217,6 +220,7 @@ function AddConcertP4Page() {
                         InputProps={{
                           sx: {
                             borderRadius: "20px",
+                            border: "1px solid grey",
                             bgcolor: "white",
                             height: "35px",
                           },
@@ -266,6 +270,7 @@ function AddConcertP4Page() {
                           InputProps={{
                             sx: {
                               borderRadius: "20px",
+                              border: "1px solid grey",
                               bgcolor: "white",
                               height: "35px",
                             },
@@ -323,16 +328,7 @@ function AddConcertP4Page() {
                         setLoad(true);
 
                         if (selectedValue == 1) {
-                          if (
-                            getshow1 == null ||
-                            gettime1 == "" ||
-                            getshow2 == null ||
-                            gettime2 == ""
-                          ) {
-                            window.alert(
-                              "ข้อมูลวันที่หรือเวลาไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
-                            );
-                          } else {
+                          if (getshow1 && gettime1 && getshow2 && gettime2) {
                             const getarrayshow1 = getshow1?.get("D").valueOf();
                             const getarrayshow2 = getshow1?.get("M").valueOf();
                             const getarrayshow3 = getshow1?.get("y").valueOf();
@@ -366,7 +362,7 @@ function AddConcertP4Page() {
                             );
                             const last_idx: string = resconcert.data.last_idx;
                             // console.log(last_idx);
-                            if (resconcert.status == 201 ) {
+                            if (resconcert.status == 201) {
                               if (getUrl1) {
                                 const resurl1 =
                                   await concertService.AddConcertUrl(
@@ -410,12 +406,148 @@ function AddConcertP4Page() {
                                     gettime2
                                   );
                                 console.log(resshow2.status);
-                                window.alert(
-                                  "ข้อมูลของคอนเสิร์ต ได้ลงทะเบียนแล้ว!!!"
-                                );
-                                navigateToAddConcertDataPage();
+                                toast.success("เพิ่มข้อมูลของคอนเสิร์ตสำเร็จ!");
+                                setTimeout(() => {
+                                  setLoad(false);
+                                  navigateToAddConcertDataPage();
+                                }, 3000);
                               }
                             }
+                          } else if (getshow1 && gettime1) {
+                            // ถ้ามีข้อมูลแค่ getshow1 และ gettime1
+                            const getarrayshow1 = getshow1.get("D").valueOf();
+                            const getarrayshow2 = getshow1.get("M").valueOf();
+                            const getarrayshow3 = getshow1.get("y").valueOf();
+                            const getstr1 = `${getarrayshow3}-${
+                              getarrayshow2 + 1
+                            }-${getarrayshow1}`;
+
+                            const resconcert = await concertService.AddConcert(
+                              user?.uid,
+                              concert_type,
+                              poster,
+                              image,
+                              show_schedule_concert,
+                              name_concert,
+                              lineup,
+                              address_concert,
+                              province,
+                              detail_concert
+                            );
+                            const last_idx: string = resconcert.data.last_idx;
+                            // console.log(last_idx);
+                            if (resconcert.status == 201) {
+                              if (getUrl1) {
+                                const resurl1 =
+                                  await concertService.AddConcertUrl(
+                                    last_idx,
+                                    getUrl1
+                                  );
+                                console.log(resurl1.status);
+                              }
+                              if (getUrl2) {
+                                const resurl2 =
+                                  await concertService.AddConcertUrl(
+                                    last_idx,
+                                    getUrl2
+                                  );
+                                console.log(resurl2.status);
+                              }
+                              if (getUrl3) {
+                                const resurl3 =
+                                  await concertService.AddConcertUrl(
+                                    last_idx,
+                                    getUrl3
+                                  );
+                                console.log(resurl3.status);
+                              }
+
+                              if (getstr1 && gettime1) {
+                                const resshow1 =
+                                  await concertService.AddShowTime(
+                                    last_idx,
+                                    getstr1,
+                                    gettime1
+                                  );
+                                console.log(resshow1.status);
+                                toast.success("เพิ่มข้อมูลของคอนเสิร์ตสำเร็จ!");
+                                setTimeout(() => {
+                                  setLoad(false);
+                                  navigateToAddConcertDataPage();
+                                }, 3000);
+                              }
+                            }
+                          } else if (getshow2 && gettime2) {
+                            // ถ้ามีข้อมูลแค่ getshow2 และ gettime2
+                            const getarrayshow4 = getshow2.get("D").valueOf();
+                            const getarrayshow5 = getshow2.get("M").valueOf();
+                            const getarrayshow6 = getshow2.get("y").valueOf();
+                            const getstr2 = `${getarrayshow6}-${
+                              getarrayshow5 + 1
+                            }-${getarrayshow4}`;
+
+                            console.log("Date 2:", getstr2); // ใช้งาน getstr2 ตามที่ต้องการ
+
+                            const resconcert = await concertService.AddConcert(
+                              user?.uid,
+                              concert_type,
+                              poster,
+                              image,
+                              show_schedule_concert,
+                              name_concert,
+                              lineup,
+                              address_concert,
+                              province,
+                              detail_concert
+                            );
+                            const last_idx: string = resconcert.data.last_idx;
+                            // console.log(last_idx);
+                            if (resconcert.status == 201) {
+                              if (getUrl1) {
+                                const resurl1 =
+                                  await concertService.AddConcertUrl(
+                                    last_idx,
+                                    getUrl1
+                                  );
+                                console.log(resurl1.status);
+                              }
+                              if (getUrl2) {
+                                const resurl2 =
+                                  await concertService.AddConcertUrl(
+                                    last_idx,
+                                    getUrl2
+                                  );
+                                console.log(resurl2.status);
+                              }
+                              if (getUrl3) {
+                                const resurl3 =
+                                  await concertService.AddConcertUrl(
+                                    last_idx,
+                                    getUrl3
+                                  );
+                                console.log(resurl3.status);
+                              }
+
+                              if (getstr2 && gettime2) {
+                                const resshow2 =
+                                  await concertService.AddShowTime(
+                                    last_idx,
+                                    getstr2,
+                                    gettime2
+                                  );
+                                console.log(resshow2.status);
+                                toast.success("เพิ่มข้อมูลของคอนเสิร์ตสำเร็จ!");
+                                setTimeout(() => {
+                                  setLoad(false);
+                                  navigateToAddConcertDataPage();
+                                }, 3000);
+                              }
+                            }
+                          } else {
+                            // ถ้าไม่มีข้อมูลทั้งสองชุด
+                            window.alert(
+                              "ข้อมูลวันที่หรือเวลาไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                            );
                           }
                         } else {
                           // console.log(getshow3);
@@ -498,10 +630,13 @@ function AddConcertP4Page() {
                                       gettime3
                                     );
                                   console.log(resshow.status);
-                                  window.alert(
-                                    "ข้อมูลของคอนเสิร์ต ได้ลงทะเบียนแล้ว!!!"
+                                  toast.success(
+                                    "เพิ่มข้อมูลของคอนเสิร์ตสำเร็จ!"
                                   );
-                                  navigateToAddConcertDataPage();
+                                  setTimeout(() => {
+                                    setLoad(false);
+                                    navigateToAddConcertDataPage();
+                                  }, 3000);
                                 }
                               }
                             } else {
@@ -526,6 +661,7 @@ function AddConcertP4Page() {
           </Box>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

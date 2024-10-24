@@ -25,7 +25,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import HeaderUserTypeManager2 from "../../../components/HeadUserTypeManager2";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { GetConcertByUserIDRes } from "../../../model/Response/Concert/GetConcertByUserIDRes";
 import { ConcertService } from "../../../service/concertService";
 import { Box } from "@mui/system";
@@ -406,7 +405,7 @@ function CheckDataConcertPage() {
                                                         200
                                                       ) {
                                                         window.alert(
-                                                          "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                                          "แก้ไขข้อมูลคอนเสิร์ตเสร็จสิ้น!!!"
                                                         );
                                                         console.log(
                                                           resconcert.data
@@ -414,7 +413,7 @@ function CheckDataConcertPage() {
                                                       }
                                                     } else {
                                                       window.alert(
-                                                        "โปรดทำการแก้ไขข้อมูลอีกครั้ง"
+                                                        "โปรดทำการแก้ไขข้อมูลคอนเสิร์ตอีกครั้ง"
                                                       );
                                                     }
                                                     // setEditing1(false);
@@ -555,7 +554,7 @@ function CheckDataConcertPage() {
                                 </div>
                                 <div className="flex flex-row pl-5 mt-5 items-center">
                                   <h1 className="text-2xl font-medium pr-3">
-                                    รายละเอียดของคอนเสิรต์ :
+                                    รายละเอียดของคอนเสิร์ต :
                                   </h1>
 
                                   {concert.map((concertselect) => (
@@ -567,7 +566,7 @@ function CheckDataConcertPage() {
                                         concertselect?.detail_concert
                                       }
                                       className="w-[400px]"
-                                      label="รายละเอียดของคอนเสิรต์"
+                                      label="รายละเอียดของคอนเสิร์ต"
                                       variant="outlined"
                                       inputRef={detail_concertRef}
                                     />
@@ -742,7 +741,7 @@ function CheckDataConcertPage() {
                                     }}
                                     variant="h5"
                                   >
-                                    รายละเอียดของคอนเสิรต์:
+                                    รายละเอียดของคอนเสิร์ต:
                                   </Typography>
                                   {concert.map((concertselect) => (
                                     <Typography
@@ -959,12 +958,12 @@ function CheckDataConcertPage() {
                                                               200
                                                             ) {
                                                               window.alert(
-                                                                "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                                                "แก้ไขข้อมูลรอบการแสดงเสร็จสิ้น!!!"
                                                               );
                                                             }
                                                           } else {
                                                             window.alert(
-                                                              "ข้อมูลไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
+                                                              "ข้อมูลไม่ถูกต้อง โปรดเพิ่มข้อมูลรอบการแสดงใหม่"
                                                             );
                                                           }
                                                           setEditing2(false);
@@ -1074,11 +1073,11 @@ function CheckDataConcertPage() {
                                                                     resconcert.data
                                                                   );
                                                                   window.alert(
-                                                                    "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                                                    "แก้ไขข้อมูลรอบการแสดงเสร็จสิ้น!!!"
                                                                   );
                                                                 } else {
                                                                   throw new Error(
-                                                                    "ไม่สามารถแก้ไขข้อมูลได้"
+                                                                    "ไม่สามารถแก้ไขข้อมูลรอบการแสดงได้"
                                                                   );
                                                                 }
                                                               } catch (error) {
@@ -1087,12 +1086,12 @@ function CheckDataConcertPage() {
                                                                   error
                                                                 );
                                                                 window.alert(
-                                                                  "เกิดข้อผิดพลาดในการแก้ไขข้อมูล"
+                                                                  "เกิดข้อผิดพลาดในการแก้ไขข้อมูลรอบการแสดง"
                                                                 );
                                                               }
                                                             } else {
                                                               window.alert(
-                                                                "โปรดทำการแก้ไขข้อมูลอีกครั้ง"
+                                                                "โปรดทำการแก้ไขข้อมูลรอบการแสดงอีกครั้ง"
                                                               );
                                                               break; // ออกจากลูปหากพบข้อผิดพลาด
                                                             }
@@ -1394,35 +1393,41 @@ function CheckDataConcertPage() {
                                                   <SaveIcon
                                                     onClick={async () => {
                                                       try {
-                                                        for (
-                                                          let index = 0;
-                                                          index < urls.length;
-                                                          index++
-                                                        ) {
-                                                          console.log(
-                                                            urls[index]
-                                                          );
-                                                          console.log(
-                                                            getCCID[index]
-                                                          );
-                                                          // const addUrl = urls[index];
-                                                          const ccid =
-                                                            getCCID[index];
-
-                                                          const resconcert =
-                                                            await concertService.updateConcertChannel(
-                                                              concert_ID,
-                                                              ccid.toString(),
+                                                        console.log(urls.length);
+                                                        if (urls.length > 0) {
+                                                          for (
+                                                            let index = 0;
+                                                            index < urls.length;
+                                                            index++
+                                                          ) {
+                                                            console.log(
                                                               urls[index]
                                                             );
-                                                          console.log(
-                                                            resconcert.status
+                                                            console.log(
+                                                              getCCID[index]
+                                                            );
+                                                            // const addUrl = urls[index];
+                                                            const ccid =
+                                                              getCCID[index];
+  
+                                                            const resconcert =
+                                                              await concertService.updateConcertChannel(
+                                                                concert_ID,
+                                                                ccid.toString(),
+                                                                urls[index]
+                                                              );
+                                                            console.log(
+                                                              resconcert.status
+                                                            );
+                                                          }
+                                                          window.alert(
+                                                            "แก้ไขข้อมูลช่องทางการติดต่อเสร็จสิ้น!!!"
+                                                          );
+                                                        } else {
+                                                          window.alert(
+                                                            "แก้ไขข้อมูลช่องทางการติดต่อไม่สำเร็จ โปรดดำเนินการแก้ไขอีกครั้ง"
                                                           );
                                                         }
-                                                        window.alert(
-                                                          "แก้ไขข้อมูลเสร็จสิ้น!!!"
-                                                        );
-
                                                         setEditing3(false);
                                                       } catch (error) {
                                                         setEditing3(false);
@@ -1729,11 +1734,9 @@ function CheckDataConcertPage() {
                                           <TableCell>วันที่การแสดง</TableCell>
                                           <TableCell>เวลา</TableCell>
                                           <TableCell>
-                                            บันทึกข้อมูลห้อง
+                                            บันทึกข้อมูลตั๋ว
                                           </TableCell>
-                                          <TableCell>แก้ไขข้อมูลห้อง</TableCell>
-
-                                          <TableCell>ลบข้อมูลห้อง</TableCell>
+                                          <TableCell>แก้ไขข้อมูลตั๋ว</TableCell>
                                         </TableRow>
                                       </TableHead>
                                     </>
@@ -1744,7 +1747,7 @@ function CheckDataConcertPage() {
                                       <TableCell>ชนิดตั๋ว</TableCell>
                                       <TableCell>วันที่การแสดง</TableCell>
                                       <TableCell>เวลา</TableCell>
-                                      <TableCell>แก้ไขข้อมูลห้อง</TableCell>
+                                      <TableCell>แก้ไขข้อมูลตั๋ว</TableCell>
                                     </>
                                   )}
                                   <TableBody>
@@ -1759,7 +1762,6 @@ function CheckDataConcertPage() {
                                                   defaultValue={
                                                     concertselect?.ticket_zone
                                                   }
-                                                  value={ticket_zone}
                                                   onChange={(e) =>
                                                     setTicket_zone(
                                                       e.target.value
@@ -1777,6 +1779,7 @@ function CheckDataConcertPage() {
                                                   defaultValue={
                                                     concertselect?.price
                                                   }
+                                                  inputProps={{ min: 1 }}
                                                   variant="outlined"
                                                   className="w-[100px]"
                                                 />
@@ -1879,7 +1882,7 @@ function CheckDataConcertPage() {
                                                             200
                                                           ) {
                                                             window.alert(
-                                                              "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                                              "แก้ไขข้อมูลตั๋วเสร็จสิ้น!!!"
                                                             );
                                                             console.log(
                                                               resconcert.data
@@ -1887,7 +1890,7 @@ function CheckDataConcertPage() {
                                                             setEditing4(false);
                                                           } else {
                                                             window.alert(
-                                                              "โปรดทำการแก้ไขข้อมูลอีกครั้ง"
+                                                              "โปรดทำการแก้ไขข้อมูลตั๋วอีกครั้ง"
                                                             );
                                                           }
                                                         }
@@ -1922,21 +1925,6 @@ function CheckDataConcertPage() {
                                                   }
                                                 >
                                                   ยกเลิกการแก้ไข
-                                                </Button>
-                                              </TableCell>
-                                              <TableCell>
-                                                <Button
-                                                  variant="contained"
-                                                  style={{
-                                                    backgroundColor: "red",
-                                                  }}
-                                                  sx={{
-                                                    width: "200px",
-                                                    borderRadius: "10px",
-                                                  }}
-                                                  startIcon={<DeleteIcon />}
-                                                >
-                                                  ลบข้อมูลตั๋ว
                                                 </Button>
                                               </TableCell>
                                             </TableRow>

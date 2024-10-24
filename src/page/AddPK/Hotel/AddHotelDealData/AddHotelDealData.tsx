@@ -202,7 +202,7 @@ function AddHotelDealDataPage() {
                               height: 470,
                               maxHeight: 380,
                               borderRadius: 3,
-                              bgcolor: "#D9D9D9",
+                              // bgcolor: "#D9D9D9",
                               border: 2,
                               display: "flex",
                               justifyContent: "center",
@@ -254,12 +254,6 @@ function AddHotelDealDataPage() {
                                       ชนิดห้อง :
                                     </Typography>
                                     <FormControl sx={{ width: "20pc" }}>
-                                      <InputLabel
-                                        id="demo-select-small-label"
-                                        sx={{ marginTop: "-10px" }}
-                                      >
-                                        ชนิดห้อง
-                                      </InputLabel>
                                       <Select
                                         labelId="demo-select-small-label"
                                         id="demo-select-small"
@@ -313,6 +307,7 @@ function AddHotelDealDataPage() {
                                   type="number"
                                   sx={{ width: "20pc" }}
                                   onChange={handlePrice}
+                                  inputProps={{ min: 1 }}
                                   InputProps={{
                                     sx: {
                                       borderRadius: "20px",
@@ -350,6 +345,7 @@ function AddHotelDealDataPage() {
                                   sx={{ width: "20pc" }}
                                   // onChange={(e) => setName(e.target.value)}
                                   onChange={handleNumberRoom}
+                                  inputProps={{ min: 1 }}
                                   InputProps={{
                                     sx: {
                                       borderRadius: "20px",
@@ -628,7 +624,7 @@ function AddHotelDealDataPage() {
                           height: 470,
                           maxHeight: 480,
                           borderRadius: 3,
-                          bgcolor: "#D9D9D9",
+                          // bgcolor: "#D9D9D9",
                           border: 2,
                           display: "flex",
                           justifyContent: "center",

@@ -70,7 +70,7 @@ function AddConcertDataPage() {
                     variant="h5"
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    เพิ่มข้อมูลคอนเสิรต์
+                    เพิ่มข้อมูลคอนเสิร์ต
                   </Typography>
                 </CardContent>
               </CardActionArea>

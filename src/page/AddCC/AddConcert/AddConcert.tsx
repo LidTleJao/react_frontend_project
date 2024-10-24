@@ -28,6 +28,7 @@ function AddConcertPage() {
   const [province, setProvince] = useState("");
   const [detail_concert, setDetail_concert] = useState("");
   const [isLoad, setLoad] = useState(false);
+  const [isValidate, setValidate] = useState(false);
 
   function navigateToAddConcertDataPage() {
     navigate("/AddConcertData");
@@ -58,7 +59,13 @@ function AddConcertPage() {
           </>
         ))}
       <div className="addconcert-cont">
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "50px",
+          }}
+        >
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Typography
               gutterBottom
@@ -77,20 +84,18 @@ function AddConcertPage() {
           <Box
             sx={{
               width: 650,
-              height: 570,
-              maxHeight: 570,
+              // height: 570,
+              maxHeight: 600,
               paddingBottom: 5,
               borderRadius: 3,
-              bgcolor: "#D9D9D9",
-              border: 2,
+              border: 1,
               display: "flex",
               justifyContent: "center",
             }}
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
               <TextField
-                placeholder="ชื่อคอนเสิร์ต"
-                type="name"
+                placeholder="ชื่อคอนเสิร์ต*"
                 sx={{ mt: 3, width: "25pc" }}
                 value={name_concert}
                 onChange={(e) => setName_concert(e.target.value)}
@@ -99,14 +104,18 @@ function AddConcertPage() {
                     borderRadius: "20px",
                     bgcolor: "white",
                     height: "35px",
+                    border: "1px solid grey",
                   },
-                  startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                  startAdornment: <></>,
                 }}
+                error={isValidate && !name_concert}
+                helperText={
+                  !name_concert && isValidate ? "โปรดกรอกชื่อคอนเสิร์ต" : ""
+                }
               />
               <TextField
-                placeholder="ไลน์อัพ"
-                // type="name"
-                sx={{ mt: 3, width: "25pc" }}
+                placeholder="ไลน์อัพ*"
+                sx={{ mt: 2, width: "25pc" }}
                 value={lineup}
                 onChange={(e) => setLineup(e.target.value)}
                 InputProps={{
@@ -114,11 +123,14 @@ function AddConcertPage() {
                     borderRadius: "20px",
                     bgcolor: "white",
                     height: "35px",
+                    border: "1px solid grey",
                   },
-                  startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                  startAdornment: <></>,
                 }}
+                error={isValidate && !lineup}
+                helperText={!lineup && isValidate ? "โปรดกรอกไลน์อัพ" : ""}
               />
-              <FormControl sx={{ width: "25pc", mt: 2 }}>
+              <FormControl sx={{ width: "25pc", mt: 3 }}>
                 <InputLabel
                   id="demo-select-small-label"
                   sx={{ marginTop: "-5px" }}
@@ -135,6 +147,7 @@ function AddConcertPage() {
                     borderRadius: 20,
                     bgcolor: "white",
                     height: "40px",
+                    border: "1px solid grey",
                   }}
                 >
                   <MenuItem value={1}>คอนเสิร์ตเดี่ยว (Solo Concert)</MenuItem>
@@ -157,45 +170,57 @@ function AddConcertPage() {
                     borderRadius: "20px",
                     bgcolor: "white",
                     height: "35px",
+                    border: "1px solid grey",
                   },
-                  startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                  startAdornment: <></>,
                 }}
+                error={isValidate && !show_schedule_concert}
+                helperText={
+                  !show_schedule_concert && isValidate
+                    ? "โปรดเลือกวันที่ทำการแสดง"
+                    : ""
+                }
               />
               <TextField
-                placeholder="ที่อยู่"
-                type="address"
+                placeholder="ที่อยู่*"
                 sx={{ mt: 2, width: "25pc" }}
                 value={address_concert}
                 onChange={(e) => setAddress_concert(e.target.value)}
                 InputProps={{
                   sx: {
                     borderRadius: "20px",
+                    border: "1px solid grey",
                     bgcolor: "white",
                     height: "35px",
                   },
-                  startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                  startAdornment: <></>,
                 }}
+                error={isValidate && !address_concert}
+                helperText={
+                  !address_concert && isValidate ? "โปรดกรอกที่อยู่" : ""
+                }
               />
               <FormControl sx={{ width: "25pc", mt: 2 }}>
                 <InputLabel
                   id="demo-select-small-label"
                   sx={{ marginTop: "-5px" }}
                 >
-                  จังหวัด
+                  จังหวัด*
                 </InputLabel>
                 <Select
                   labelId="demo-select-small-label"
                   id="demo-select-small"
                   label="จังหวัด"
-                  // defaultValue={"กาฬสินธุ์"}
                   value={province}
-                  // type="city"
                   onChange={(e) => setProvince(e.target.value)}
                   sx={{
                     borderRadius: 20,
                     bgcolor: "white",
                     height: "40px",
+                    border: "1px solid grey",
                   }}
+                  required
+                  error={!province && isValidate}
                 >
                   <MenuItem value={"กรุงเทพมหานคร"}>กรุงเทพมหานคร</MenuItem>
                   <MenuItem value={"กระบี่"}>กระบี่</MenuItem>
@@ -276,18 +301,26 @@ function AddConcertPage() {
                   <MenuItem value={"อุบลราชธานี"}>อุบลราชธานี</MenuItem>
                 </Select>
               </FormControl>
-              <TextareaAutosize
-                aria-label="minimum height"
-                minRows={3}
-                maxRows={3}
-                placeholder="รายละเอียดของคอนเสิรต์"
+              <TextField
+                minRows={2}
+                maxRows={4}
+                placeholder="รายละเอียด*"
                 value={detail_concert}
                 onChange={(e) => setDetail_concert(e.target.value)}
                 style={{
-                  borderRadius: "5px",
-                  marginTop: 10,
+                  marginTop: "20px",
+                  borderRadius: "10px",
                   backgroundColor: "white",
                 }}
+                InputProps={{
+                  inputComponent: TextareaAutosize,
+                }}
+                multiline
+                required
+                error={!detail_concert && isValidate}
+                helperText={
+                  !detail_concert && isValidate ? "โปรดกรอกรายละเอียด" : ""
+                }
               />
               <div
                 style={{
@@ -334,49 +367,23 @@ function AddConcertPage() {
                     onClick={async () => {
                       try {
                         setLoad(true);
-                        if (name_concert == "") {
-                          window.alert(
-                            "ชื่อคอนเสิร์ตไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
-                          );
-                        } else {
-                          if (lineup == "") {
-                            window.alert(
-                              "ไลน์อัพไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
-                            );
-                          } else {
-                            if (show_schedule_concert == "") {
-                              window.alert(
-                                "วันที่ไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
-                              );
-                            } else {
-                              if (address_concert == "") {
-                                window.alert(
-                                  "ที่อยู่ไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
-                                );
-                              } else {
-                                if (province == "") {
-                                  window.alert(
-                                    "จังหวัดไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
-                                  );
-                                } else {
-                                  if (detail_concert == "") {
-                                    window.alert(
-                                      "รายละเอียดไม่ถูกต้อง โปรดเพิ่มข้อมูลใหม่"
-                                    );
-                                  } else {
-                                    console.log(name_concert);
-                                    console.log(lineup);
-                                    console.log(concert_type);
-                                    console.log(show_schedule_concert);
-                                    console.log(address_concert);
-                                    console.log(province);
-                                    console.log(detail_concert);
-                                    navigateToAddConcertP2Page();
-                                  }
-                                }
-                              }
-                            }
-                          }
+                        setValidate(true);
+                        if (
+                          name_concert != "" &&
+                          lineup != "" &&
+                          show_schedule_concert != "" &&
+                          address_concert != "" &&
+                          province != "" &&
+                          detail_concert != ""
+                        ) {
+                          console.log(name_concert);
+                          console.log(lineup);
+                          console.log(concert_type);
+                          console.log(show_schedule_concert);
+                          console.log(address_concert);
+                          console.log(province);
+                          console.log(detail_concert);
+                          navigateToAddConcertP2Page();
                         }
                         setLoad(false);
                       } catch (error) {

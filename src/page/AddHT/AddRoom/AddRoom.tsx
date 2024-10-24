@@ -8,15 +8,14 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import HeaderUserTypeManager2 from "../../../components/HeadUserTypeManager2";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { useNavigate } from "react-router-dom";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { HotelGetByIDRes } from "../../../model/Response/Hotel/HotelGetByIDRes";
 import { HotelService } from "../../../service/hotelService";
 import { RoomHotelService } from "../../../service/roomHotelService";
+import { toast, ToastContainer } from "react-toastify";
 
 function AddRoomPage() {
   const hotelService = new HotelService();
@@ -24,12 +23,13 @@ function AddRoomPage() {
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [hotels, setHotel] = useState<HotelGetByIDRes[]>([]);
   const navigate = useNavigate();
+  const [isValidate, setValidate] = useState(false);
   const [Room_Hotel_ID, setRoom_Hotel_ID] = useState("");
   const [Room_Type, setRoom_Type] = useState(1);
   const [Room_View_Type, setRoom_View_Type] = useState(1);
-  const [Price, setPrice] = useState("");
+  const [Price, setPrice] = useState("500");
   const [Number_of_guests, setNumber_of_guests] = useState(1);
-  const [Number_of_rooms, setNumber_of_rooms] = useState("");
+  const [Number_of_rooms, setNumber_of_rooms] = useState("1");
   const [Room_Status, setRoom_Status] = useState(1);
   const [isLoad, setLoad] = useState(false);
 
@@ -40,105 +40,52 @@ function AddRoomPage() {
       setHotel(data);
     };
     loadDataAsync();
-  }, []);
+  }, [hotelService, user?.uid]);
 
   // console.log(Room_Hotel_ID);
 
   function navigateToAddHotelDataPage() {
     navigate("/AddHotelData");
   }
-  // function navigateToAddRoomP2Page() {
-  //   navigate("/AddRoomP2", {
-  //     state: {
-  //       Room_Hotel_ID,
-  //       Room_Type,
-  //       Room_View_Type,
-  //       Price,
-  //       Number_of_guests,
-  //       Number_of_rooms,
-  //       Room_Status,
-  //     },
-  //   });
-  // }
-  function handlePrice(event: ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value;
-
-    if (value === "" || (Number(value) > 0 && !value.includes("-"))) {
-      setPrice(value);
-    } else {
-      window.alert("ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
-    }
-  }
-
-  function handleNumberRoom(event: ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value;
-
-    if (value === "" || (Number(value) >= 0 && !value.includes("-"))) {
-      setNumber_of_rooms(value);
-    } else {
-      window.alert("จำนวนของห้องไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
-    }
-  }
 
   return (
     <>
       <HeaderUserTypeManager2 />
-      <div className="addroom-cont">
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            marginTop: "50px",
-          }}
-        >
+      <div className="addroom-cont pt-20">
+        <div className="flex flex-col gap-3 px-14 py-8 rounded-xl shadow-[0_2px_6px_rgba(0,0,0,0.3)]">
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Typography
-              gutterBottom
               sx={{
                 display: "flex",
-                fontWeight: "bold",
                 color: "black",
-                fontFamily: "Mitr, sans-serif",
-                fontStyle: "normal",
+                fontSize: "25px",
               }}
-              variant="h4"
             >
               เพิ่มข้อมูลห้อง
             </Typography>
           </div>
+
           {hotels.length > 0 ? (
             <>
-              <Box
-                sx={{
-                  width: 650,
-                  height: 520,
-                  borderRadius: 3,
-                  bgcolor: "#D9D9D9",
-                  border: 2,
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <FormControl sx={{ width: "25pc", mt: 2 }}>
-                    <InputLabel
-                      id="demo-select-small-label"
-                      sx={{ marginTop: "-5px" }}
-                    >
+              <div className="flex gap-5 flex-row justify-between">
+                <div className="flex flex-col justify-center items-center">
+                  <FormControl sx={{ width: "100%" }}>
+                    <InputLabel id="demo-select-small-label" size="small">
                       เลือกโรมแรม
                     </InputLabel>
 
                     <Select
                       labelId="demo-select-small-label"
                       id="demo-select-small"
+                      size="small"
                       label="ชนิดห้อง"
                       // type="city"
                       onChange={(e) => setRoom_Hotel_ID(String(e.target.value))}
                       sx={{
-                        borderRadius: 20,
+                        borderRadius: "10px",
                         bgcolor: "white",
-                        height: "40px",
                       }}
+                      error={isValidate && !Room_Hotel_ID}
                     >
                       {hotels.map((hotel, index) => (
                         <MenuItem value={hotel.HID}>
@@ -146,25 +93,23 @@ function AddRoomPage() {
                         </MenuItem>
                       ))}
                     </Select>
+                    {isValidate && !Room_Hotel_ID ? <h5 className="ps-3 text-xs text-red-500">กรุณาเลือกโรงแรม</h5> : ""}
                   </FormControl>
                   <FormControl sx={{ width: "25pc", mt: 3 }}>
-                    <InputLabel
-                      id="demo-select-small-label"
-                      sx={{ marginTop: "-5px" }}
-                    >
+                    <InputLabel id="demo-select-small-label" size="small">
                       ชนิดห้อง
                     </InputLabel>
                     <Select
                       labelId="demo-select-small-label"
                       id="demo-select-small"
+                      size="small"
                       label="ชนิดห้อง"
                       // defaultValue={1}
                       value={Room_Type}
                       onChange={(e) => setRoom_Type(Number(e.target.value))}
                       sx={{
-                        borderRadius: 20,
+                        borderRadius: "10px",
                         bgcolor: "white",
-                        height: "40px",
                       }}
                     >
                       <MenuItem value={1}>ห้องธรรมดา (Standard Room)</MenuItem>
@@ -185,24 +130,21 @@ function AddRoomPage() {
                     </Select>
                   </FormControl>
                   <FormControl sx={{ width: "25pc", mt: 3 }}>
-                    <InputLabel
-                      id="demo-select-small-label"
-                      sx={{ marginTop: "-5px" }}
-                    >
+                    <InputLabel id="demo-select-small-label" size="small">
                       วิวห้อง
                     </InputLabel>
                     <Select
                       labelId="demo-select-small-label"
                       id="demo-select-small"
-                      // defaultValue={1}
+                      size="small"
+                      label="วิวห้อง"
                       value={Room_View_Type}
                       onChange={(e) =>
                         setRoom_View_Type(Number(e.target.value))
                       }
                       sx={{
-                        borderRadius: 20,
+                        borderRadius: "10px",
                         bgcolor: "white",
-                        height: "40px",
                       }}
                     >
                       <MenuItem value={1}>ทะเล</MenuItem>
@@ -214,16 +156,35 @@ function AddRoomPage() {
                     placeholder="ราคาห้อง"
                     type="number"
                     sx={{ mt: 3, width: "25pc" }}
-                    //   onChange={(e) => setName(e.target.value)}
-                    onChange={handlePrice}
+                    defaultValue={500}
+                    size="small"
+                    label="ราคาห้อง"
+                      onChange={(e) => setPrice(e.target.value)}
+                    // onChange={handlePrice}
+                    onKeyDown={(e) => {
+                      if (e.key === "-") {
+                        e.preventDefault();
+                      }
+                    }}
                     InputProps={{
                       sx: {
-                        borderRadius: "20px",
+                        borderRadius: "10px",
                         bgcolor: "white",
-                        height: "35px",
                       },
+                      inputProps: { min: 1 },
                       startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
                     }}
+                    required
+                    error={isValidate && (!Price || Number(Price) < 1)}
+                    helperText={
+                      isValidate
+                        ? !Price
+                          ? "กรุณากรอกราคาห้อง"
+                          : Number(Price) < 1
+                          ? "ราคาห้องไม่ถูกต้อง"
+                          : ""
+                        : ""
+                    }
                   />
                   <FormControl sx={{ width: "25pc", mt: 3 }}>
                     <InputLabel
@@ -235,15 +196,16 @@ function AddRoomPage() {
                     <Select
                       labelId="demo-select-small-label"
                       id="demo-select-small"
+                      size="small"
+                      label="จำนวนคนเข้าพัก"
                       // defaultValue={1}
                       value={Number_of_guests}
                       onChange={(e) =>
                         setNumber_of_guests(Number(e.target.value))
                       }
                       sx={{
-                        borderRadius: 20,
+                        borderRadius: "10px",
                         bgcolor: "white",
-                        height: "40px",
                       }}
                     >
                       <MenuItem value={1}>1</MenuItem>
@@ -257,16 +219,35 @@ function AddRoomPage() {
                     placeholder="จำนวนของห้อง"
                     type="number"
                     sx={{ mt: 3, width: "25pc" }}
-                    //   onChange={(e) => setName(e.target.value)}
-                    onChange={handleNumberRoom}
+                    size="small"
+                    defaultValue={1}
+                    label="จำนวนห้อง"
+                      onChange={(e) => setNumber_of_rooms(e.target.value)}
+                    // onChange={handleNumberRoom}
+                    onKeyDown={(e) => {
+                      if (e.key === "-") {
+                        e.preventDefault();
+                      }
+                    }}
                     InputProps={{
                       sx: {
-                        borderRadius: "20px",
+                        borderRadius: "10px",
                         bgcolor: "white",
-                        height: "35px",
                       },
+                      inputProps: { min: 1 },
                       startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
                     }}
+                    required
+                    error={isValidate && (!Number_of_rooms || Number(Number_of_rooms) < 1)}
+                    helperText={
+                      isValidate
+                        ? !Number_of_rooms
+                          ? "กรุณากรอกจำนวนห้อง"
+                          : Number(Number_of_rooms) < 1
+                          ? "จำนวนห้องไม่ถูกต้อง"
+                          : ""
+                        : ""
+                    }
                   />
                   <FormControl sx={{ width: "25pc", mt: 3 }}>
                     <InputLabel
@@ -278,27 +259,21 @@ function AddRoomPage() {
                     <Select
                       labelId="demo-select-small-label"
                       id="demo-select-small"
+                      size="small"
+                      label="สถานะของห้อง (ว่างหรือไม่ว่าง)"
                       // defaultValue={1}
                       value={Room_Status}
                       onChange={(e) => setRoom_Status(Number(e.target.value))}
                       sx={{
-                        borderRadius: 20,
+                        borderRadius: "10px",
                         bgcolor: "white",
-                        height: "40px",
                       }}
                     >
                       <MenuItem value={1}>ว่าง</MenuItem>
                       <MenuItem value={2}>ไม่ว่าง</MenuItem>
                     </Select>
                   </FormControl>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      marginTop: "30px",
-                    }}
-                  >
+                  <div className="w-full flex flex-row justify-between mt-5">
                     <Button
                       variant="contained"
                       style={{ backgroundColor: "#343434" }}
@@ -331,69 +306,53 @@ function AddRoomPage() {
                           width: "100px",
                           borderRadius: "10px",
                         }}
-                        startIcon={<ChevronRightIcon />}
                         // onClick={navigateToAddRoomP2Page}
                         onClick={async () => {
                           try {
                             setLoad(true);
-
+                            setValidate(true);
                             if (
-                              Price === "" ||
-                              (Number(Price) < 1 && !Price.includes("-"))
+                              (Price && Number(Price) > 0) &&
+                              (Number_of_rooms && Number(Number_of_rooms) > 0) &&
+                              Room_Hotel_ID
                             ) {
-                              window.alert("ราคาไม่ถูกต้อง โปรดกรอกข้อมูลใหม่");
-                            } else {
-                              if (
-                                Number_of_rooms === "" ||
-                                (Number(Number_of_rooms) == 0 &&
-                                  !Number_of_rooms.includes("-"))
-                              ) {
-                                window.alert(
-                                  "จำนวนห้องไม่ถูกต้อง โปรดกรอกข้อมูลใหม่"
-                                );
+                              const resroom = await roomHotelService.AddRoom(
+                                Room_Hotel_ID,
+                                Price,
+                                Number_of_guests,
+                                Number_of_rooms,
+                                Room_Type,
+                                Room_View_Type,
+                                Room_Status
+                              );
+                              console.log(resroom.status);
+                              if (resroom.status === 201) {
+                                toast.success("เพิ่มข้อมูลห้องในโรงแรมสำเร็จ!");
+                                setTimeout(() => {
+                                  setLoad(false);
+                                  navigateToAddHotelDataPage();
+                                }, 3000);
                               } else {
-                                if (Room_Hotel_ID === "") {
-                                  window.alert(
-                                    "ข้อมูลโรงแรมไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
-                                  );
-                                } else {
-                                  const resroom =
-                                    await roomHotelService.AddRoom(
-                                      Room_Hotel_ID,
-                                      Price,
-                                      Number_of_guests,
-                                      Number_of_rooms,
-                                      Room_Type,
-                                      Room_View_Type,
-                                      Room_Status
-                                    );
-                                  console.log(resroom.status);
-                                  if (resroom.status === 201) {
-                                    window.alert(
-                                      "ข้อมูลของห้อง ได้ลงทะเบียนแล้ว!!!"
-                                    );
-                                    navigateToAddHotelDataPage();
-                                  } else {
-                                    window.alert(
-                                      "ข้อมูลของห้อง ลงทะเบียนไม่สำเร็จ โปรดดำเนินการใหม่อีกครั้ง"
-                                    );
-                                  }
-                                }
+                                window.alert(
+                                  "ข้อมูลของห้อง ลงทะเบียนไม่สำเร็จ โปรดดำเนินการใหม่อีกครั้ง"
+                                );
                               }
+                            } else {
+                              setLoad(false);
                             }
-                            setLoad(false);
                           } catch (error) {
                             setLoad(false);
                             console.log(error);
                           }
                         }}
                       >
-                        ถัดไป
+                        เพิ่ม
                       </Button>
                     )}
                   </div>
                 </div>
-              </Box>
+              </div>
+              <ToastContainer />
             </>
           ) : (
             <div style={{ display: "flex", justifyContent: "center" }}>
