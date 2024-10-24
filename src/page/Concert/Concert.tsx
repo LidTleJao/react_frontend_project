@@ -114,178 +114,124 @@ function ConcertPage() {
           >
             <Box
               sx={{
-                display:"flex",
-                marginTop:"50px",
+                display: "flex",
+                marginTop: "50px",
                 width: 350,
-                // height: 400,
-                maxHeight:400,
-                borderRadius: 3,
+                maxHeight: 400,
+                borderRadius: 10,
                 bgcolor: "#D9D9D9",
                 border: 2,
+                padding: "20px",
               }}
-              display={"flex"}
               justifyContent={"start"}
               flexDirection={"column"}
             >
               <div
                 style={{
-                  marginTop: "10px",
                   display: "flex",
                   justifyContent: "center",
+                  marginBottom: "20px",
                 }}
               >
                 <Typography
                   gutterBottom
                   sx={{
-                    display: "flex",
                     fontWeight: "bold",
                     color: "black",
                     fontFamily: "Mitr, sans-serif",
-                    fontStyle: "normal",
                   }}
                   variant="h5"
                 >
                   ค้นหาข้อมูลคอนเสิร์ต
                 </Typography>
               </div>
-              <div style={{ marginLeft: "10px", marginTop: "20px" }}>
-                <Typography
-                  gutterBottom
+
+              <TextField
+                placeholder="ชื่อคอนเสิร์ต"
+                type="name"
+                sx={{ width: "100%", marginBottom: "25px" }} // เพิ่ม marginBottom
+                onChange={(e) => setSearchName(e.target.value)}
+                InputProps={{
+                  sx: {
+                    borderRadius: "20px",
+                    bgcolor: "white",
+                    height: "35px",
+                  },
+                }}
+              />
+
+              <FormControl sx={{ width: "100%", marginBottom: "25px" }}>
+                {" "}
+                {/* เพิ่ม marginBottom */}
+                <InputLabel id="concert-type-label" sx={{ top: "-8px" }}>
+                  ชนิดคอนเสิร์ต
+                </InputLabel>
+                <Select
+                  labelId="concert-type-label"
+                  id="concert-type-select"
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === "1") {
+                      setSearchType("Solo Concert");
+                    } else if (value === "2") {
+                      setSearchType("Music Festival");
+                    } else if (value === "3") {
+                      setSearchType("Charity Concert");
+                    } else {
+                      setSearchType("none"); // สำหรับ None
+                    }
+                  }}
                   sx={{
-                    display: "flex",
-                    fontWeight: "bold",
-                    color: "black",
-                    fontFamily: "Mitr, sans-serif",
-                    fontStyle: "normal",
+                    borderRadius: 20,
+                    bgcolor: "white",
+                    height: "40px",
                   }}
-                  variant="h5"
                 >
-                  ชื่อคอนเสิร์ต :
-                </Typography>
-                <TextField
-                  placeholder="ชื่อคอนเสิร์ต"
-                  type="name"
-                  sx={{ width: "19.5pc" }}
-                  onChange={(e) => setSearchName(e.target.value)}
-                  InputProps={{
-                    sx: {
-                      borderRadius: "20px",
-                      bgcolor: "white",
-                      height: "35px",
-                    },
-                    startAdornment: <></>,
-                  }}
-                />
-              </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
-                <Typography
-                  gutterBottom
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value="1">คอนเสิร์ตเดี่ยว (Solo Concert)</MenuItem>
+                  <MenuItem value="2">
+                    คอนเสิร์ตรวมศิลปิน (Music Festival/All-Star Concert)
+                  </MenuItem>
+                  <MenuItem value="3">
+                    คอนเสิร์ตการกุศล (Charity Concert)
+                  </MenuItem>
+                </Select>
+              </FormControl>
+
+              <Typography variant="h6" sx={{ marginBottom: "10px" }}>
+                วันที่การแสดง
+              </Typography>
+              <TextField
+                type="date"
+                sx={{ width: "100%", marginBottom: "25px" }} // เพิ่ม marginBottom
+                onChange={(e) => setSearchDate(e.target.value)}
+                InputProps={{
+                  sx: {
+                    borderRadius: "20px",
+                    bgcolor: "white",
+                    height: "35px",
+                  },
+                }}
+              />
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                  variant="contained"
                   sx={{
-                    display: "flex",
-                    fontWeight: "bold",
-                    color: "black",
-                    fontFamily: "Mitr, sans-serif",
-                    fontStyle: "normal",
+                    borderRadius: 20,
+                    bgcolor: "#4E6A97",
+                    color: "white",
+                    height: "40px",
+                    width: "150px",
                   }}
-                  variant="h5"
+                  onClick={handleSearchAdv}
                 >
-                  ชนิดของคอนเสิร์ต :
-                </Typography>
-                <FormControl sx={{ width: 315 }}>
-                  <InputLabel
-                    id="demo-select-small-label"
-                    sx={{ marginTop: "-5px" }}
-                  >
-                    ชนิดคอนเสิร์ต
-                  </InputLabel>
-                  <Select
-                    labelId="demo-select-small-label"
-                    id="demo-select-small"
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      if (value === "1") {
-                        setSearchType("Solo Concert");
-                      } else if (value === "2") {
-                        setSearchType("Music Festival");
-                      } else if (value === "3") {
-                        setSearchType("Charity Concert");
-                      } else {
-                        setSearchType("none"); // สำหรับ None
-                      }
-                    }}
-                    sx={{
-                      borderRadius: 20,
-                      bgcolor: "white",
-                      height: "40px",
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value="1">
-                      คอนเสิร์ตเดี่ยว (Solo Concert)
-                    </MenuItem>
-                    <MenuItem value="2">
-                      คอนเสิร์ตรวมศิลปิน (Music Festival/All-Star Concert)
-                    </MenuItem>
-                    <MenuItem value="3">
-                      คอนเสิร์ตการกุศล (Charity Concert)
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <div style={{ marginLeft: "10px", marginTop: "10px" }}>
-                <Typography
-                  gutterBottom
-                  sx={{
-                    display: "flex",
-                    fontWeight: "bold",
-                    color: "black",
-                    fontFamily: "Mitr, sans-serif",
-                    fontStyle: "normal",
-                  }}
-                  variant="h5"
-                >
-                  วันที่แสดง :
-                </Typography>
-                <TextField
-                  placeholder="วันที่ทำการแสดง"
-                  type="Date"
-                  sx={{ width: "20pc" }}
-                  // value={show_schedule_concert}
-                  onChange={(e) => setSearchDate(e.target.value)}
-                  InputProps={{
-                    sx: {
-                      borderRadius: "20px",
-                      bgcolor: "white",
-                      height: "35px",
-                    },
-                    startAdornment: <></>,
-                  }}
-                />
-                <div
-                  style={{
-                    display: "flex",
-                    marginTop: "20px",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    sx={{
-                      borderRadius: 20,
-                      bgcolor: "#4E6A97", // เปลี่ยนสีปุ่มได้ตามต้องการ
-                      color: "white",
-                      height: "40px",
-                      width: "150px",
-                    }}
-                    onClick={handleSearchAdv} // ฟังก์ชันสำหรับการค้นหา
-                  >
-                    ค้นหา
-                  </Button>
-                </div>
+                  ค้นหา
+                </Button>
               </div>
             </Box>
+
             <div>
               <Typography
                 gutterBottom
@@ -313,7 +259,7 @@ function ConcertPage() {
                   sx={{
                     width: 650,
                     height: 60,
-                    borderRadius: 3,
+                    borderRadius: 6,
                     bgcolor: "#D9D9D9",
                     border: 2,
                   }}
@@ -322,7 +268,7 @@ function ConcertPage() {
                     style={{
                       display: "flex",
                       justifyContent: "start",
-                      marginTop: "5px",
+                      marginTop: "3px",
                       marginLeft: "10px",
                     }}
                   >
@@ -350,84 +296,67 @@ function ConcertPage() {
                 </Box>
               </div>
               <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-                  gap: "20px",
-                  marginTop: "16px",
-                  marginLeft: "150px",
-                  marginBottom: "20px",
-                }}
+                className="grid grid-cols-2 gap-5 mt-4 mx-auto mb-5 max-w-6xl px-5"
+                style={{ marginTop: "25px", marginLeft: "145px" }}
               >
                 {filteredData.length > 0 ? (
                   filteredData.map((concert) => (
                     <Card
                       key={concert.CID}
-                      sx={{ maxWidth: 345, background: "#4E6A97", border: 2 }}
+                      className="bg-[#4E6A97] border-gray-400 shadow-lg transition-transform duration-200 hover:scale-105 max-w-80 flex flex-col"
                     >
                       <CardMedia
                         component="img"
                         alt={concert.name_concert}
                         height="140"
-                        sx={{ maxHeight: 140 }}
+                        className="object-cover rounded-t-lg"
                         image={concert.poster_concert}
                       />
-                      <CardContent>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            overflow: "auto",
-                            bgcolor: "white",
-                            borderRadius: 2,
-                          }}
+                      <CardContent className="flex flex-col p-4 bg-white rounded-b-lg flex-1">
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          className="text-black font-semibold mb-2"
                         >
-                          <div
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              marginLeft: "10px",
-                            }}
-                          >
-                            <Typography
-                              gutterBottom
-                              variant="h5"
-                              component="div"
-                              color="black"
-                            >
-                              {concert.name_concert}
-                            </Typography>
-                            <Typography variant="body1" color="black">
-                              รายละเอียด: {concert.detail_concert}
-                            </Typography>
-                            <Typography variant="body1" color="black">
-                              วันที่การแสดง:{" "}
-                              {concert.show_schedule_concert.toString()}
-                            </Typography>
-                          </div>
-                        </Box>
-                      </CardContent>
-                      <CardActions
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
+                          {concert.name_concert}
+                        </Typography>
+                        <Typography variant="body1" className="text-gray-700">
+                          รายละเอียด:{" "}
+                            {concert.detail_concert.length > 100
+                              ? `${concert.detail_concert.slice(0, 100)}...`
+                              : concert.detail_concert}
+                        </Typography>
                         <Typography
                           variant="body1"
-                          color="white"
-                          sx={{ marginLeft: "10px" }}
+                          className="text-gray-700 mb-2"
+                        >
+                          วันที่การแสดง:{" "}
+                          {concert.show_schedule_concert.toString()}
+                        </Typography>
+                        <Typography
+                          variant="body1"
+                          className="text-gray-700 mb-2"
+                          sx={{ marginTop: "10px" }}
                         >
                           ที่อยู่คอนเสิร์ต: {concert.province}
                         </Typography>
+                      </CardContent>
+                      <CardActions className="flex justify-between p-2">
+                        
                         <Button
                           variant="contained"
-                          style={{ backgroundColor: "#343434" }}
                           sx={{
-                            width: "110px",
-                            borderRadius: "10px",
+                            borderRadius: 8,
+                            bgcolor: "#4E6A97",
+                            color: "white",
+                            height: "40px",
+                            marginBottom: "10px",
                           }}
-                          onClick={() => navigateToConcertDetailPage(concert.CID.toString())}
+                          className="rounded-lg hover:bg-gray-800 transition-colors"
+                          onClick={() =>
+                            navigateToConcertDetailPage(concert.CID.toString())
+                          }
                         >
                           รายละเอียด
                         </Button>
@@ -436,7 +365,7 @@ function ConcertPage() {
                   ))
                 ) : (
                   <div className="pt-40 ml-40">
-                    <p>ไม่มีข้อมูล</p>
+                    <p className="text-gray-600">ไม่มีข้อมูล</p>
                   </div>
                 )}
               </div>
