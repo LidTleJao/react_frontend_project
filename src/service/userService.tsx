@@ -17,7 +17,7 @@ export class UserService {
     return response;
   }
 
-  async login(gmail_user: string, password_user: string){
+  async login(gmail_user: string, password_user: string) {
     const url = HOST + "/login";
     const body = {
       gmail_user: gmail_user,
@@ -40,7 +40,7 @@ export class UserService {
     const url = HOST + "/register";
     // const url = "http://localhost:3000/user/register"
     const body = {
-      
+
       image_user: "",
       name_user: name,
       nickname_user: nickname,
@@ -57,28 +57,31 @@ export class UserService {
 
   async update(
     uid: string,
-    image_user: File,
     name_user: string,
     nick_user: string,
     province: string,
     phone: string,
     facebook: string,
-    lineID: string
+    lineID: string,
+    image_user?: File 
   ) {
     const url = `${HOST}/update/${uid}`;
-    
-    // สร้าง FormData และเพิ่มข้อมูลลงไป
+
     const formData = new FormData();
-    formData.append("file", image_user); // ใช้ชื่อฟิลด์ 'file' ที่ตรงกับชื่อที่กำหนดใน multer
+
+    if (image_user) {
+      formData.append("file", image_user); 
+    }
+
     formData.append("name_user", name_user);
     formData.append("nickname_user", nick_user);
     formData.append("province", province);
     formData.append("phone", phone);
     formData.append("facebook", facebook);
     formData.append("lineID", lineID);
-    
+
     try {
-      // ส่งข้อมูลผ่าน axios
+      // Send data via axios
       const response = await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data"
@@ -87,8 +90,8 @@ export class UserService {
       return response;
     } catch (error) {
       console.error("Error updating user profile:", error);
-      throw error; // ขึ้นอยู่กับว่าคุณต้องการจัดการข้อผิดพลาดอย่างไร
+      throw error; // Handle error as needed
     }
   }
-  
+
 }

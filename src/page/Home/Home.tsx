@@ -7,15 +7,18 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { HotelGetAllRes } from "../../model/Response/Hotel/HotelGetAllRes";
+import { HotelImageGetByHotelIDRes } from "../../model/Response/Hotel/HotelImageGetByHotelIDRes";
+import { GetAllConcertRes } from "../../model/Response/Concert/GetAllConcertRes";
+import { HotelService } from "../../service/hotelService";
+import { ConcertService } from "../../service/concertService";
 import HeaderUserTypeGeneral from "../../components/HeaderUserTypeGeneral";
 import HeaderUserTypeManager from "../../components/HeaderUserTypeManager";
-import { useEffect, useState } from "react";
-import { HotelGetAllRes } from "../../model/Response/Hotel/HotelGetAllRes";
-import { useNavigate } from "react-router-dom";
-import { HotelService } from "../../service/hotelService";
-import { GetAllConcertRes } from "../../model/Response/Concert/GetAllConcertRes";
-import { ConcertService } from "../../service/concertService";
-import { HotelImageGetByHotelIDRes } from "../../model/Response/Hotel/HotelImageGetByHotelIDRes";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons/faChevronLeft";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -23,52 +26,65 @@ function HomePage() {
   const concertService = new ConcertService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [hotelAll, setHotelAll] = useState<HotelGetAllRes[]>([]);
-  const [hotelImageByHID, sethotelImageByHID] = useState<
+  const [hotelImageByHID] = useState<
     HotelImageGetByHotelIDRes[]
   >([]);
   const [concertAll, setConcertAll] = useState<GetAllConcertRes[]>([]);
+  const [banners, setBanners] = useState<string[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const loadDataAsync = async () => {
       try {
+        // ดึงข้อมูลโรงแรม
         const reshotel = await hotelService.getAll();
-        const data: HotelGetAllRes[] = reshotel.data;
-        setHotelAll(data);
+        const hotels: HotelGetAllRes[] = reshotel.data;
+        setHotelAll(hotels);
 
-        const hotelID = data.map((hotel) => hotel.HID);
-        await loadImage(hotelID);
+        // ดึงภาพโรงแรม
+        const hotelImages = await Promise.all(
+          hotels.map(async (hotel) => {
+            const resImage = await hotelService.getHotelImageByHid(hotel.HID.toString());
+            const images: HotelImageGetByHotelIDRes[] = resImage.data;
+            return images.length > 0 ? images[0].url_image : null;
+          })
+        );
+
+        // ดึงข้อมูลคอนเสิร์ต
+        const resConcert = await concertService.getAll();
+        const concerts: GetAllConcertRes[] = resConcert.data;
+        setConcertAll(concerts);
+
+        // ดึงภาพคอนเสิร์ต
+        const concertImages = concerts.map((concert) => concert.poster_concert);
+
+        // รวมภาพจากโรงแรมและคอนเสิร์ต
+        setBanners([...hotelImages.filter(Boolean) as string[], ...concertImages]);
       } catch (error) {
-        console.error("Error loading hotels or rooms:", error);
+        console.error("Error loading data:", error);
       }
     };
+
     loadDataAsync();
   }, []);
+
+  // การเลื่อนแบนเนอร์
+  const goToPrevious = () => {
+    const isFirstSlide = currentIndex === 0;
+    const newIndex = isFirstSlide ? banners.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+  };
+
+  const goToNext = () => {
+    const isLastSlide = currentIndex === banners.length - 1;
+    const newIndex = isLastSlide ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+  };
 
   useEffect(() => {
-    const loadDataAsync = async () => {
-      const resconcert = await concertService.getAll();
-      const data: GetAllConcertRes[] = resconcert.data;
-      setConcertAll(data);
-    };
-    loadDataAsync();
-  }, []);
-
-  const loadImage = async (numbers: number[]) => {
-    try {
-      const imagePromises = numbers.map(async (number) => {
-        const reshotel = await hotelService.getHotelImageByHid(
-          number.toString()
-        );
-        const data: HotelImageGetByHotelIDRes[] = reshotel.data;
-        return data.length > 0 ? data[0] : null;
-      });
-
-      const allImages = await Promise.all(imagePromises);
-      sethotelImageByHID(allImages.filter((image) => image !== null));
-    } catch (error) {
-      console.error("Error loading hotel images:", error);
-    }
-  };
+    const interval = setInterval(goToNext, 4000);
+    return () => clearInterval(interval);
+  }, [currentIndex]);
 
   function navigateToConcertDetailPage(cid: string) {
     navigate(`/ConcertDetail/${cid}`);
@@ -91,12 +107,46 @@ function HomePage() {
             justifyContent: "start",
           }}
         >
+
+          {/* Carousel แสดงแบนเนอร์ */}
+          <div className="relative overflow-hidden bg-gray-900">
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentIndex * 100}%)`, marginTop: "100px" }}
+            >
+              {banners.map((banner, index) => (
+                <div className="flex-shrink-0 w-full h-[400px] md:h-[600px] lg:h-[650px] relative" key={index}>
+                  <img
+                    src={banner}
+                    alt={`Banner ${index}`}
+                    className="banner-image"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* ปุ่มเลื่อนแบนเนอร์ */}
+            <button
+              onClick={goToPrevious}
+              className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-teal-700 text-white rounded-md p-3 shadow-md hover:bg-teal-600 transition-colors duration-300 z-10 opacity-75 hover:opacity-100"
+            >
+              <FontAwesomeIcon icon={faChevronLeft} className="h-6 w-6" />
+            </button>
+
+            <button
+              onClick={goToNext}
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-teal-700 text-white rounded-md p-3 shadow-md hover:bg-teal-600 transition-colors duration-300 z-10 opacity-75 hover:opacity-100"
+            >
+              <FontAwesomeIcon icon={faChevronRight} className="h-6 w-6" />
+            </button>
+          </div>
+
           <div
             style={{
               display: "flex",
               flexDirection: "row",
               justifyContent: "center",
-              marginTop: 100,
+              marginTop: 20,
             }}
           >
             <div
@@ -113,7 +163,6 @@ function HomePage() {
                   display: "flex",
                   fontWeight: "bold",
                   color: "black",
-                  fontFamily: "Mitr, sans-serif",
                   fontStyle: "normal",
                 }}
                 variant="h3"
@@ -121,7 +170,7 @@ function HomePage() {
               >
                 Welcome to Teemi
               </Typography>
-              <div style={{ display: "flex", justifyContent: "center" }}>
+              <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
                 <Box
                   sx={{
                     width: 550,
@@ -140,7 +189,6 @@ function HomePage() {
                       justifyContent: "center",
                       fontWeight: "bold",
                       color: "black",
-                      fontFamily: "Mitr, sans-serif",
                       fontStyle: "normal",
                     }}
                     variant="h4"
@@ -153,227 +201,173 @@ function HomePage() {
             </div>
           </div>
 
-          {/* Concert Section */}
           <div
             style={{
               display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
+              marginBottom: "40px",
+              width: "100%",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
+            <div style={{ display: "flex", justifyContent: "space-between", width: "90%" }}>
               <Typography
-                gutterBottom
+                variant="h4"
+                fontWeight="bold"
+                color="black"
                 sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontWeight: "bold",
-                  color: "black",
-                  fontFamily: "Mitr, sans-serif",
                   fontStyle: "normal",
+                  marginBottom: "20px",
+                  mt: 10,
                 }}
-                variant="h3"
-                marginTop={"25px"}
               >
-                คอนเสิร์ต
+                Concert
               </Typography>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                {concertAll.slice(0, 1).map((concert) => (
-                  <Card
-                    sx={{
-                      maxWidth: 345,
-                      width: 345,
-                      maxHeight: 320,
-                      height: 320,
-                      background: "#4E6A97",
-                      border: 2,
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      alt={concert.name_concert}
-                      height="140"
-                      sx={{ maxHeight: 140 }}
-                      image={concert.poster_concert}
-                    />
-                    <CardContent>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          overflow: "auto",
-                          height: 90,
-                          maxHeight: 90,
-                          bgcolor: "white",
-                          borderRadius: 2,
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            marginLeft: "10px",
-                          }}
-                        >
-                          <Typography
-                            gutterBottom
-                            variant="h5"
-                            component="div"
-                            color="black"
-                          >
-                            {concert.name_concert}
-                          </Typography>
-                          <Typography variant="body1" color="black">
-                            รายละเอียด: {concert.detail_concert}
-                          </Typography>
-                          <Typography variant="body1" color="black">
-                            วันที่การแสดง:{" "}
-                            {concert.show_schedule_concert.toString()}
-                          </Typography>
-                        </div>
-                      </Box>
-                    </CardContent>
-                    <CardActions
-                      sx={{ display: "flex", justifyContent: "space-between" }}
-                    >
-                      <Typography
-                        variant="body1"
-                        color="white"
-                        sx={{ marginLeft: "10px" }}
-                      >
-                        ที่อยู่คอนเสิร์ต: {concert.province}
-                      </Typography>
-                      <Button
-                        variant="contained"
-                        style={{ backgroundColor: "#343434" }}
-                        sx={{ width: "110px", borderRadius: "10px" }}
-                        onClick={() =>
-                          navigateToConcertDetailPage(concert.CID.toString())
-                        }
-                      >
-                        รายละเอียด
-                      </Button>
-                    </CardActions>
-                  </Card>
-                ))}
-              </div>
             </div>
+
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                marginLeft: "150px",
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gap: "20px",
+                width: "90%",
               }}
             >
-              <Typography
-                gutterBottom
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontWeight: "bold",
-                  color: "black",
-                  fontFamily: "Mitr, sans-serif",
-                  fontStyle: "normal",
-                }}
-                variant="h3"
-                marginTop={"25px"}
-              >
-                โรงแรม
-              </Typography>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  flexDirection: "column",
-                }}
-              >
-                {hotelAll.slice(0, 1).map((hotel) => (
-                  <Card
+              {concertAll.map((concert) => (
+                <Card
+                  key={concert.CID}
+                  sx={{
+                    background: "#f5f5f5",
+                    borderRadius: "15px",
+                    border: "1px solid #ddd",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    alt={concert.name_concert}
+                    height="180"
+                    image={concert.poster_concert}
+                    sx={{ borderTopLeftRadius: "15px", borderTopRightRadius: "15px" }}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" fontWeight="bold" color="black">
+                      {concert.name_concert}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {new Date(concert.show_schedule_concert).toLocaleDateString()}
+                    </Typography>
+                  </CardContent>
+                  <CardActions
                     sx={{
-                      maxWidth: 345,
-                      width: 345,
-                      maxHeight: 320,
-                      height: 320,
-                      background: "#A3A3AB",
-                      border: 2,
+                      display: "flex",
+                      justifyContent: "space-between",
+                      padding: "10px",
                     }}
                   >
-                    <CardMedia
-                      component="img"
-                      // alt={hotel.name_hotel}
-                      height="140"
-                      sx={{ maxHeight: 140 }}
-                      image={
-                        hotelImageByHID.length > 0
-                          ? hotelImageByHID[0]?.url_image
-                          : "src/img/webteemi.png"
-                      }
-                    />
-                    <CardContent>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          height: 90,
-                          maxHeight: 90,
-                          overflow: "auto",
-                          bgcolor: "white",
-                          borderRadius: 2,
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            marginLeft: "10px",
-                            flexDirection: "column",
-                          }}
-                        >
-                          <Typography gutterBottom variant="h5" component="div">
-                            {hotel.name}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            รายละเอียด: {hotel.detail}
-                          </Typography>
-                        </div>
-                      </Box>
-                    </CardContent>
-                    <CardActions
-                      sx={{ display: "flex", justifyContent: "space-between" }}
+                    <Typography variant="body2" color="black">
+                      {concert.province}
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        backgroundColor: "#007bff",
+                        borderRadius: "10px",
+                        textTransform: "none",
+                      }}
+                      onClick={() => navigateToConcertDetailPage(concert.CID.toString())}
                     >
-                      <Typography
-                        variant="body1"
-                        color="black"
-                        sx={{ marginLeft: "10px" }}
-                      >
-                        ที่อยู่โรงแรม: {hotel.province}
-                      </Typography>
-                      <Button
-                        variant="contained"
-                        style={{ backgroundColor: "#343434" }}
-                        sx={{ width: "110px", borderRadius: "10px" }}
-                        onClick={() =>
-                          navigateToHotelDetailPage(hotel.HID.toString())
-                        }
-                      >
-                        รายละเอียด
-                      </Button>
-                    </CardActions>
-                  </Card>
-                ))}
-              </div>
+                      รายละเอียด
+                    </Button>
+                  </CardActions>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginBottom: "40px",
+              width: "100%",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", width: "90%" }}>
+              <Typography
+                variant="h4"
+                fontWeight="bold"
+                color="black"
+                sx={{
+                  fontStyle: "normal",
+                  marginBottom: "20px",
+                  mt: 10,
+                }}
+              >
+                Hotel
+              </Typography>
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gap: "20px",
+                width: "90%",
+              }}
+            >
+              {hotelAll.map((hotel) => (
+                <Card
+                  key={hotel.HID}
+                  sx={{
+                    background: "#f5f5f5",
+                    borderRadius: "15px",
+                    border: "1px solid #ddd",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    alt={hotel.name}
+                    height="180"
+                    image={
+                      hotelImageByHID.length > 0
+                        ? hotelImageByHID[0]?.url_image
+                        : "src/img/webteemi.png"
+                    }
+                    sx={{ borderTopLeftRadius: "15px", borderTopRightRadius: "15px" }}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" fontWeight="bold" color="black">
+                      {hotel.name}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {hotel.detail}
+                    </Typography>
+                  </CardContent>
+                  <CardActions
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      padding: "10px",
+                    }}
+                  >
+                    <Typography variant="body2" color="black">
+                      {hotel.province}
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        backgroundColor: "#007bff",
+                        borderRadius: "10px",
+                        textTransform: "none",
+                      }}
+                      onClick={() => navigateToHotelDetailPage(hotel.HID.toString())}
+                    >
+                      รายละเอียด
+                    </Button>
+                  </CardActions>
+                </Card>
+              ))}
             </div>
           </div>
         </div>
