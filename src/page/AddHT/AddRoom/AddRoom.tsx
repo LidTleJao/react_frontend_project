@@ -364,6 +364,8 @@ function AddRoomPage() {
                                   if (resroom.status === 201) {
                                     window.alert("ข้อมูลของห้อง ได้ลงทะเบียนแล้ว!!!");
                                     navigateToAddHotelDataPage();
+                                  }else{
+                                    window.alert("ข้อมูลของห้อง ลงทะเบียนไม่สำเร็จ โปรดดำเนินการใหม่อีกครั้ง");
                                   }
                                 }
                               }
