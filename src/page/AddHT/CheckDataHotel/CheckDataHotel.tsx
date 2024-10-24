@@ -623,6 +623,9 @@ function CheckDataHotelPage() {
                                         srcSet={`${item?.url_image}`}
                                         src={`${item?.url_image}`}
                                         alt={item?.HIMGID.toString()}
+                                        onClick={() =>
+                                          handleOpen(item?.url_image)
+                                        }
                                         loading="lazy"
                                         className="object-cover w-full h-64"
                                       />
