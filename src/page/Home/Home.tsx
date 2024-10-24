@@ -266,7 +266,7 @@ function HomePage() {
                   mt: 10,
                 }}
               >
-                Concert
+                คอนเสิร์ต
               </Typography>
             </div>
 
@@ -367,7 +367,7 @@ function HomePage() {
                   mt: 10,
                 }}
               >
-                Hotel
+                โรงแรม
               </Typography>
             </div>
 
