@@ -126,7 +126,7 @@ function PackagePage() {
                   textAlign: "center",
                   fontWeight: "bold",
                   color: "black",
-                  fontFamily: "'Mitr', sans-serif", // ใช้ฟอนต์ Mitr
+                  marginTop:"10px",
                   fontStyle: "normal",
                   fontSize: "24px", // ปรับขนาดฟอนต์ตามต้องการ
                   lineHeight: "1.5", // เพิ่มความสูงบรรทัด

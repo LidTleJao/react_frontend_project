@@ -116,8 +116,7 @@ function ConcertPage() {
               sx={{
                 display: "flex",
                 marginTop: "50px",
-                display: "flex",
-                marginTop: "50px",
+                
                 width: 350,
                 maxHeight: 400,
                 borderRadius: 10,
@@ -140,7 +139,7 @@ function ConcertPage() {
                   sx={{
                     fontWeight: "bold",
                     color: "black",
-                    fontFamily: "Mitr, sans-serif",
+                    marginTop:"10px",
                   }}
                   variant="h5"
                 >

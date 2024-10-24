@@ -203,8 +203,6 @@ function HotelPage() {
               sx={{
                 display: "flex",
                 marginTop: "50px",
-                display: "flex",
-                marginTop: "50px",
                 width: 350,
                 height: 560,
                 borderRadius: 10,
@@ -227,7 +225,7 @@ function HotelPage() {
                     textAlign: "center",
                     fontWeight: "bold",
                     color: "black",
-                    fontFamily: "'Mitr', sans-serif", // ใช้ฟอนต์ Mitr
+                    marginTop:"10px",
                     fontStyle: "normal",
                     fontSize: "24px", // ปรับขนาดฟอนต์ตามต้องการ
                     lineHeight: "1.5", // เพิ่มความสูงบรรทัด
