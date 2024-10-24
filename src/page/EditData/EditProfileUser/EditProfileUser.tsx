@@ -607,13 +607,13 @@ function EditProfileUserPage() {
                               setLoad(true);
                               const res = await userService.update(
                                 user?.uid,
-                                selectedFile,
                                 name_userRef.current!.value,
                                 nick_userRef.current!.value,
                                 provinceRef.current!.value,
                                 phoneNumber, // ส่งเบอร์โทรที่ผ่านการตรวจสอบ
                                 facebookRef.current!.value,
-                                lineIDRef.current!.value
+                                lineIDRef.current!.value,
+                                selectedFile,
                               );
                               console.log(res.status);
                               setLoad(false);
