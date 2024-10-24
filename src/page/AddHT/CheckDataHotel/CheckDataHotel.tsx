@@ -56,7 +56,6 @@ function CheckDataHotelPage() {
   const addressHotelRef = useRef<HTMLInputElement>();
   const detailHotelRef = useRef<HTMLInputElement>();
   const [hotel_type, setHotel_type] = useState(1);
-  const [loadIndex, setLoadIndex] = useState(0);
   const [contact, setContact] = useState<HotelURLGetByHotelIDRes[]>([]);
   const [editingRow, setEditingRow] = useState<number | null>(null);
   const [editedData, setEditedData] = useState<RoomGetByHotelIDRes | null>(
@@ -97,7 +96,7 @@ function CheckDataHotelPage() {
 
   // ฟังก์ชันเริ่มแก้ไข
   const handleEditClick = (index: number) => {
-    setLoadIndex(index);
+    
     setEditingRow(index);
     setEditedData(rooms[index]);
   };
