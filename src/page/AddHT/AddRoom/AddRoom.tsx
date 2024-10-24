@@ -84,7 +84,13 @@ function AddRoomPage() {
     <>
       <HeaderUserTypeManager2 />
       <div className="addroom-cont">
-        <div style={{ display: "flex", flexDirection: "column",marginTop:"50px" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "50px",
+          }}
+        >
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Typography
               gutterBottom
@@ -351,19 +357,26 @@ function AddRoomPage() {
                                     "ข้อมูลโรงแรมไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
                                   );
                                 } else {
-                                  const resroom = await roomHotelService.AddRoom(
-                                    Room_Hotel_ID,
-                                    Price,
-                                    Number_of_guests,
-                                    Number_of_rooms,
-                                    Room_Type,
-                                    Room_View_Type,
-                                    Room_Status
-                                  );
+                                  const resroom =
+                                    await roomHotelService.AddRoom(
+                                      Room_Hotel_ID,
+                                      Price,
+                                      Number_of_guests,
+                                      Number_of_rooms,
+                                      Room_Type,
+                                      Room_View_Type,
+                                      Room_Status
+                                    );
                                   console.log(resroom.status);
                                   if (resroom.status === 201) {
-                                    window.alert("ข้อมูลของห้อง ได้ลงทะเบียนแล้ว!!!");
+                                    window.alert(
+                                      "ข้อมูลของห้อง ได้ลงทะเบียนแล้ว!!!"
+                                    );
                                     navigateToAddHotelDataPage();
+                                  } else {
+                                    window.alert(
+                                      "ข้อมูลของห้อง ลงทะเบียนไม่สำเร็จ โปรดดำเนินการใหม่อีกครั้ง"
+                                    );
                                   }
                                 }
                               }
