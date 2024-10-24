@@ -15,14 +15,49 @@ function ProfileUserPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleEditToggle = () => {
-    setIsEditing(!isEditing);
-    if (!isEditing) {
+    if (isEditing) {
       setEditedUser(user);
     }
+    setIsEditing(!isEditing);
   };
+  
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    if (name === "name_user" && value.length > 50) {
+      alert("ชื่อ-นามสกุลต้องไม่เกิน 50 ตัวอักษร");
+      return;
+    }
+
+    if (name === "nick_user" && value.length > 50) {
+      alert("ชื่อเล่นต้องไม่เกิน 50 ตัวอักษร");
+      return;
+    }
+
+    if (name === "facebook" && value.length > 50) {
+      alert("Facebook ต้องไม่เกิน 50 ตัวอักษร");
+      return;
+    }
+
+    if (name === "lineID" && value.length > 30) {
+      alert("LineID ต้องไม่เกิน 30 ตัวอักษร");
+      return;
+    }
+
+    if (name === "phone") {
+      // ให้เฉพาะตัวเลขในหมายเลขโทรศัพท์
+      const phonePattern = /^[0-9]*$/; // ตรวจสอบให้เป็นตัวเลขเท่านั้น
+      if (value.length > 10) {
+        alert("หมายเลขโทรศัพท์ไม่ควรเกิน 10 หลัก");
+        return;
+      }
+      if (!phonePattern.test(value)) {
+        alert("หมายเลขโทรศัพท์ต้องเป็นตัวเลขเท่านั้น");
+        return;
+      }
+    }
+
     setEditedUser((prev: typeof user) => ({ ...prev, [name]: value }));
   };
 
@@ -58,6 +93,10 @@ function ProfileUserPage() {
 
   const handleSave = async () => {
     try {
+      if (editedUser.phone.length !== 10 || !/^[0-9]+$/.test(editedUser.phone)) {
+        alert("หมายเลขโทรศัพท์ต้องมีความยาว 10 หลักและต้องเป็นตัวเลขเท่านั้น");
+        return;
+      }
       const { uid, name_user, nick_user, phone, facebook, lineID } = editedUser;
 
       await userService.update(uid, name_user, nick_user, editedUser.province, phone, facebook, lineID, selectedFile || undefined);
