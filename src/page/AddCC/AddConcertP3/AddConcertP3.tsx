@@ -94,7 +94,7 @@ function AddConcertP3Page() {
               width: 650,
               height: 370,
               borderRadius: 3,
-              bgcolor: "#D9D9D9",
+              // bgcolor: "#D9D9D9",
               border: 2,
               display: "flex",
               justifyContent: "center",
@@ -136,6 +136,7 @@ function AddConcertP3Page() {
                     InputProps={{
                       sx: {
                         borderRadius: "20px",
+                        border: "1px solid grey",
                         bgcolor: "white",
                         height: "35px",
                       },
@@ -174,6 +175,7 @@ function AddConcertP3Page() {
                     InputProps={{
                       sx: {
                         borderRadius: "20px",
+                        border: "1px solid grey",
                         bgcolor: "white",
                         height: "35px",
                       },
@@ -211,6 +213,7 @@ function AddConcertP3Page() {
                     InputProps={{
                       sx: {
                         borderRadius: "20px",
+                        border: "1px solid grey",
                         bgcolor: "white",
                         height: "35px",
                       },

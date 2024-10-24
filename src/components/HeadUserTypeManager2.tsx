@@ -142,7 +142,7 @@ function HeaderUserTypeManager2() {
               }}
               onClick={navigateToConcertPage}
             >
-              คอนเสิรต์
+              คอนเสิร์ต
             </Button>
           </div>
           <div style={{ flexGrow: 2, display: "flex", flexDirection: "row" }}>
@@ -261,7 +261,7 @@ function HeaderUserTypeManager2() {
                   }}
                   variant="h6"
                 >
-                  จัดการคอนเสิรต์
+                  จัดการคอนเสิร์ต
                 </Typography>
               </MenuItem>
 

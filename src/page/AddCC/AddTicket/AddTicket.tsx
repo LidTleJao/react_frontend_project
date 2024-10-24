@@ -88,19 +88,19 @@ function AddTicketPage() {
                   height: 350,
                   maxHeight: 350,
                   borderRadius: 3,
-                  bgcolor: "#D9D9D9",
+                  // bgcolor: "#D9D9D9",
                   border: 2,
                   display: "flex",
                   justifyContent: "center",
                 }}
               >
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <FormControl sx={{ width: "25pc", mt: 2 }}>
+                  <FormControl sx={{ width: "25pc", mt: 3 }}>
                     <InputLabel
                       id="demo-select-small-label"
                       sx={{ marginTop: "-5px" }}
                     >
-                      เลือกคอนเสิร์ต
+                      เลือกคอนเสิร์ต*
                     </InputLabel>
 
                     <Select
@@ -113,6 +113,7 @@ function AddTicketPage() {
                       }
                       sx={{
                         borderRadius: 20,
+                        border: "1px solid grey",
                         bgcolor: "white",
                         height: "40px",
                       }}
@@ -126,14 +127,15 @@ function AddTicketPage() {
                     </Select>
                   </FormControl>
                   <TextField
-                    placeholder="ชื่อชนิดของตั๋วโซนที่นั่ง"
+                    placeholder="ชื่อชนิดของตั๋วโซนที่นั่ง*"
                     // type="number"
-                    sx={{ mt: 2, width: "25pc" }}
+                    sx={{ mt: 3, width: "25pc" }}
                     onChange={(e) => setTicket_zone(e.target.value)}
                     value={ticket_zone}
                     InputProps={{
                       sx: {
                         borderRadius: "20px",
+                        border: "1px solid grey",
                         bgcolor: "white",
                         height: "35px",
                       },
@@ -141,24 +143,26 @@ function AddTicketPage() {
                     }}
                   />
                   <TextField
-                    placeholder="ราคาตั๋ว"
+                    placeholder="ราคาตั๋ว*"
                     type="number"
-                    sx={{ mt: 2, width: "25pc" }}
+                    sx={{ mt: 3, width: "25pc" }}
                     //   onChange={(e) => setName(e.target.value)}
                     onChange={handlePrice}
+                    inputProps={{ min: 1 }}
                     InputProps={{
                       sx: {
                         borderRadius: "20px",
+                        border: "1px solid grey",
                         bgcolor: "white",
                         height: "35px",
                       },
                       startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
                     }}
                   />
-                  <FormControl sx={{ width: "25pc", mt: 2 }}>
+                  <FormControl sx={{ width: "25pc", mt: 3 }}>
                     <InputLabel
                       id="demo-select-small-label"
-                      sx={{ marginTop: "-5px" }}
+                      sx={{ marginTop: "-10px" }}
                     >
                       ชนิดตั๋ว
                     </InputLabel>
@@ -171,6 +175,7 @@ function AddTicketPage() {
                       onChange={(e) => setTicket_type(Number(e.target.value))}
                       sx={{
                         borderRadius: 20,
+                        border: "1px solid grey",
                         bgcolor: "white",
                         height: "40px",
                       }}

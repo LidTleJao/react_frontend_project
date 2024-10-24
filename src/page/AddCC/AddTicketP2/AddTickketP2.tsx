@@ -85,7 +85,7 @@ function AddTicketP2Page() {
               height: 350,
               maxHeight: 350,
               borderRadius: 3,
-              bgcolor: "#D9D9D9",
+              // bgcolor: "#D9D9D9",
               border: 2,
               display: "flex",
               justifyContent: "center",
