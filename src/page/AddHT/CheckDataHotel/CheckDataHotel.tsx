@@ -627,7 +627,7 @@ function CheckDataHotelPage() {
                                           handleOpen(item?.url_image)
                                         }
                                         loading="lazy"
-                                        className="object-cover w-full h-64"
+                                        className="object-cover w-full h-64 transition-transform duration-300 ease-in-out transform hover:scale-110"
                                       />
                                     </ImageListItem>
                                   ))}
