@@ -202,67 +202,132 @@ function CheckDataHotelPage() {
                   </Select>
                 </FormControl>
               </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: "10px",
-                }}
-              >
-                {editing1 ? (
-                  <>
-                    <Box
-                      sx={{
-                        width: 1250,
-                        maxHeight: 900,
-                        borderRadius: 3,
-                        border: 2,
-                        display: "flex",
-                        justifyContent: "start",
-                        flexDirection: "column",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          marginLeft: "20px",
-                          marginTop: "10px",
-                          justifyContent: "space-between",
-                          flexDirection: "row",
-                        }}
-                      >
-                        {hotel.map((concertselect) => (
+              {hotel.length > 0 ? (
+                <>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginTop: "10px",
+                    }}
+                  >
+                    {editing1 ? (
+                      <>
+                        <Box
+                          sx={{
+                            width: 1250,
+                            maxHeight: 900,
+                            borderRadius: 3,
+                            border: 2,
+                            display: "flex",
+                            justifyContent: "start",
+                            flexDirection: "column",
+                          }}
+                        >
                           <div
                             style={{
                               display: "flex",
                               marginLeft: "20px",
-                              marginTop: "20px",
+                              marginTop: "10px",
+                              justifyContent: "space-between",
                               flexDirection: "row",
-                              alignItems: "center", // จัดแนว h1 ให้อยู่ตรงกลางในแนวแกน Y
-                              justifyContent: "space-between", // เว้นระยะห่างพอดีระหว่าง h1 กับ TextField
                             }}
                           >
-                            <h1 style={{ marginRight: "20px" }}>
-                              ชื่อโรงแรม :
-                            </h1>
-                            <TextField
-                              placeholder={concertselect?.name}
-                              className="w-[600px]"
-                              // label="ชื่อโรงแรม"
-                              variant="outlined"
-                              defaultValue={concertselect?.name}
-                              inputRef={nameHotelRef}
-                            />
-                          </div>
-                        ))}
-                        <div style={{ display: "flex", marginRight: "10px" }}>
-                          {editing1 ? (
-                            <>
-                              <Card
-                                className="mr-2"
-                                sx={{ height: 40, border: 1 }}
+                            {hotel.map((concertselect) => (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  marginLeft: "20px",
+                                  marginTop: "20px",
+                                  flexDirection: "row",
+                                  alignItems: "center", // จัดแนว h1 ให้อยู่ตรงกลางในแนวแกน Y
+                                  justifyContent: "space-between", // เว้นระยะห่างพอดีระหว่าง h1 กับ TextField
+                                }}
                               >
+                                <h1 style={{ marginRight: "20px" }}>
+                                  ชื่อโรงแรม :
+                                </h1>
+                                <TextField
+                                  placeholder={concertselect?.name}
+                                  className="w-[600px]"
+                                  // label="ชื่อโรงแรม"
+                                  variant="outlined"
+                                  defaultValue={concertselect?.name}
+                                  inputRef={nameHotelRef}
+                                />
+                              </div>
+                            ))}
+                            <div
+                              style={{ display: "flex", marginRight: "10px" }}
+                            >
+                              {editing1 ? (
+                                <>
+                                  <Card
+                                    className="mr-2"
+                                    sx={{ height: 40, border: 1 }}
+                                  >
+                                    <CardActionArea>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          justifyContent: "center",
+                                        }}
+                                      >
+                                        <SaveIcon
+                                          onClick={async () => {
+                                            try {
+                                              if (
+                                                Hotel_ID &&
+                                                hotel_type &&
+                                                nameHotelRef.current?.value &&
+                                                addressHotelRef.current
+                                                  ?.value &&
+                                                detailHotelRef.current?.value
+                                              ) {
+                                                const reshotel =
+                                                  await hotelService.updateHotel(
+                                                    Hotel_ID,
+                                                    nameHotelRef.current!.value,
+                                                    addressHotelRef.current!
+                                                      .value,
+                                                    hotel_type.toString(),
+                                                    detailHotelRef.current!
+                                                      .value
+                                                  );
+                                                console.log(reshotel.status);
+                                                if (reshotel.status === 200) {
+                                                  window.alert(
+                                                    "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                                  );
+                                                  console.log(reshotel.data);
+                                                }
+                                              } else {
+                                                window.alert(
+                                                  "โปรดทำการแก้ไขข้อมูลอีกครั้ง"
+                                                );
+                                              }
+                                              console.log(
+                                                "================================================================="
+                                              );
+                                              setEditing1(false);
+                                            } catch (error) {
+                                              setEditing1(false);
+                                              console.log(error);
+                                            }
+                                          }}
+                                          sx={{
+                                            fontSize: "40px",
+                                            color: "skyblue",
+                                          }}
+                                        />
+                                      </div>
+                                    </CardActionArea>
+                                  </Card>
+                                </>
+                              ) : (
+                                <> </>
+                              )}
+                              <Card sx={{ height: 40, border: 1 }}>
                                 <CardActionArea>
                                   <div
                                     style={{
@@ -270,562 +335,555 @@ function CheckDataHotelPage() {
                                       justifyContent: "center",
                                     }}
                                   >
-                                    <SaveIcon
-                                      onClick={async () => {
-                                        try {
-                                          // console.log("ข้อมูลส่วนแรก");
-                                          // console.log(nameHotelRef.current?.value);
-                                          // console.log(
-                                          //   addressHotelRef.current?.value
-                                          // );
-                                          if (
-                                            Hotel_ID &&
-                                            hotel_type &&
-                                            nameHotelRef.current?.value &&
-                                            addressHotelRef.current?.value &&
-                                            detailHotelRef.current?.value
-                                          ) {
-                                            // console.log(Hotel_ID);
-                                            // console.log(hotel_type);
-                                            // console.log(nameHotelRef.current!.value);
-                                            // console.log(addressHotelRef.current!.value);
-                                            // console.log(detailHotelRef.current!.value);
-                                            const reshotel =
-                                              await hotelService.updateHotel(
-                                                Hotel_ID,
-                                                nameHotelRef.current!.value,
-                                                addressHotelRef.current!.value,
-                                                hotel_type.toString(),
-                                                detailHotelRef.current!.value
-                                              );
-                                            console.log(reshotel.status);
-                                            if (reshotel.status === 200) {
-                                              window.alert(
-                                                "แก้ไขข้อมูลเสร็จสิ้น!!!"
-                                              );
-                                              console.log(reshotel.data);
-                                            }
-                                          } else {
-                                            window.alert(
-                                              "โปรดทำการแก้ไขข้อมูลอีกครั้ง"
-                                            );
-                                          }
-                                          console.log(
-                                            "================================================================="
-                                          );
-                                          setEditing1(false);
-                                        } catch (error) {
-                                          setEditing1(false);
-                                          console.log(error);
-                                        }
-                                      }}
-                                      sx={{
-                                        fontSize: "40px",
-                                        color: "skyblue",
-                                      }}
+                                    {editing1 ? (
+                                      <>
+                                        <HighlightOffIcon
+                                          onClick={() => setEditing1(false)}
+                                          sx={{
+                                            fontSize: "40px",
+                                            color: "red",
+                                          }}
+                                        />
+                                      </>
+                                    ) : (
+                                      <EditIcon
+                                        onClick={() => setEditing1(true)}
+                                        sx={{
+                                          fontSize: "40px",
+                                          color: "black",
+                                        }}
+                                      />
+                                    )}
+                                  </div>
+                                </CardActionArea>
+                              </Card>
+                            </div>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              marginLeft: "20px",
+                            }}
+                          >
+                            <Card
+                              sx={{
+                                maxWidth: 30,
+                                maxHeight: 30,
+                                marginTop: 2,
+                                borderBlockColor: "white",
+                              }}
+                            >
+                              <CardMedia
+                                component="img"
+                                alt="green iguana"
+                                image="https://firebasestorage.googleapis.com/v0/b/teemi-backend-projectcs.appspot.com/o/Logo%2Fplaceholder.png?alt=media&token=7928f28b-1307-49b6-ae06-36cb8123e5d5"
+                              />
+                            </Card>
+                            <div
+                              style={{
+                                display: "flex",
+                                marginLeft: "5px",
+                                paddingTop: "5px",
+                              }}
+                            >
+                              {/* ที่อยู่ */}
+                              {hotel.map((concertselect) => (
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    marginLeft: "20px",
+                                    // marginTop: "20px",
+                                    flexDirection: "row",
+                                    alignItems: "center", // จัดแนว h1 ให้อยู่ตรงกลางในแนวแกน Y
+                                    justifyContent: "space-between", // เว้นระยะห่างพอดีระหว่าง h1 กับ TextField
+                                  }}
+                                >
+                                  <h1 style={{ marginRight: "20px" }}>
+                                    ที่อยู่ :
+                                  </h1>
+                                  <TextField
+                                    placeholder={concertselect?.address}
+                                    className="w-[600px]"
+                                    // label="ชื่อโรงแรม"
+                                    variant="outlined"
+                                    defaultValue={concertselect?.address}
+                                    inputRef={addressHotelRef}
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              marginTop: "10px",
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                width: 520,
+                                height: 470,
+                                borderRadius: 3,
+                                // bgcolor: "#D9D9D9",
+                                border: 1,
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                // flexDirection: "column",
+                              }}
+                            >
+                              <ImageList
+                                sx={{
+                                  maxWidth: 500,
+                                  height: 455,
+                                  maxHeight: 455,
+                                  marginTop: "5px",
+                                  marginLeft: "5px",
+                                  borderRadius: 3,
+                                }}
+                                // variant="woven"
+                                cols={3}
+                                gap={6}
+                                // rowHeight={"auto"}
+                                rowHeight={200}
+                              >
+                                {hotelImage.map((item) => (
+                                  <ImageListItem key={item?.url_image}>
+                                    <img
+                                      srcSet={`${item?.url_image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                      src={`${item?.url_image}?w=164&h=164&fit=crop&auto=format`}
+                                      alt={item?.HIMGID.toString()}
+                                      loading="lazy"
+                                    />
+                                  </ImageListItem>
+                                ))}
+                              </ImageList>
+                            </Box>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginTop: "10px",
+                              marginLeft: "20px",
+                            }}
+                          >
+                            <Typography
+                              gutterBottom
+                              sx={{
+                                display: "flex",
+                                // fontWeight: "bold",
+                                color: "black",
+                                fontFamily: "Mitr, sans-serif",
+                                fontStyle: "normal",
+                              }}
+                              variant="h5"
+                            >
+                              ชนิดโรงแรม :{" "}
+                              <Select
+                                labelId="demo-select-small-label"
+                                id="demo-select-small"
+                                value={hotel_type}
+                                label="ประเภทของคอนเสิร์ต"
+                                onChange={(e) => {
+                                  setHotel_type(Number(e.target.value));
+                                }}
+                                sx={{
+                                  borderRadius: 20,
+                                  bgcolor: "white",
+                                  height: "40px",
+                                }}
+                              >
+                                <MenuItem value={1}>โรงแรม</MenuItem>
+                                <MenuItem value={2}>รีสอร์ท</MenuItem>
+                                <MenuItem value={3}>บังกะโล</MenuItem>
+                              </Select>
+                            </Typography>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginTop: "10px",
+                              marginLeft: "20px",
+                            }}
+                          >
+                            <Typography
+                              gutterBottom
+                              sx={{
+                                display: "flex",
+                                // fontWeight: "bold",
+                                color: "black",
+                                fontFamily: "Mitr, sans-serif",
+                                fontStyle: "normal",
+                              }}
+                              variant="h5"
+                            >
+                              รายละเอียดของโรงแรม
+                            </Typography>
+                            <Divider sx={{ width: "550px", border: 1 }} />
+                            {hotel.map((concertselect) => (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  marginLeft: "10px",
+                                  marginRight: "15px",
+                                  marginTop: "10px",
+                                  marginBottom: "30px",
+                                  flexDirection: "row",
+                                  alignItems: "center", // จัดแนว h1 ให้อยู่ตรงกลางในแนวแกน Y
+                                  // เว้นระยะห่างพอดีระหว่าง h1 กับ TextField
+                                }}
+                              >
+                                <TextField
+                                  placeholder={concertselect?.detail}
+                                  className="w-full"
+                                  // label="ชื่อโรงแรม"
+                                  variant="outlined"
+                                  defaultValue={concertselect?.detail}
+                                  inputRef={detailHotelRef}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </Box>
+                      </>
+                    ) : (
+                      <>
+                        <Box
+                          sx={{
+                            width: 1250,
+                            maxHeight: 900,
+                            borderRadius: 3,
+                            border: 2,
+                            display: "flex",
+                            justifyContent: "start",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              marginLeft: "20px",
+                              marginTop: "10px",
+                              justifyContent: "space-between",
+                              flexDirection: "row",
+                            }}
+                          >
+                            <Typography
+                              gutterBottom
+                              sx={{
+                                display: "flex",
+                                // fontWeight: "bold",
+                                color: "black",
+                                fontFamily: "Mitr, sans-serif",
+                                fontStyle: "normal",
+                              }}
+                              variant="h5"
+                            >
+                              {hotel.map((hotelselect) => (
+                                <>{hotelselect.name}</>
+                              ))}
+                            </Typography>
+                            <div
+                              style={{ display: "flex", marginRight: "10px" }}
+                            >
+                              <Card sx={{ height: 55, border: 1 }}>
+                                <CardActionArea>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "center",
+                                    }}
+                                  >
+                                    <EditIcon
+                                      sx={{ fontSize: "50px" }}
+                                      onClick={() => setEditing1(true)}
                                     />
                                   </div>
                                 </CardActionArea>
                               </Card>
-                            </>
-                          ) : (
-                            <> </>
-                          )}
-                          <Card sx={{ height: 40, border: 1 }}>
-                            <CardActionArea>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "center",
-                                }}
-                              >
-                                {editing1 ? (
-                                  <>
-                                    <HighlightOffIcon
-                                      onClick={() => setEditing1(false)}
-                                      sx={{ fontSize: "40px", color: "red" }}
-                                    />
-                                  </>
-                                ) : (
-                                  <EditIcon
-                                    onClick={() => setEditing1(true)}
-                                    sx={{ fontSize: "40px", color: "black" }}
-                                  />
-                                )}
-                              </div>
-                            </CardActionArea>
-                          </Card>
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          marginLeft: "20px",
-                        }}
-                      >
-                        <Card
-                          sx={{
-                            maxWidth: 30,
-                            maxHeight: 30,
-                            marginTop: 2,
-                            borderBlockColor: "white",
-                          }}
-                        >
-                          <CardMedia
-                            component="img"
-                            alt="green iguana"
-                            image="https://firebasestorage.googleapis.com/v0/b/teemi-backend-projectcs.appspot.com/o/Logo%2Fplaceholder.png?alt=media&token=7928f28b-1307-49b6-ae06-36cb8123e5d5"
-                          />
-                        </Card>
-                        <div
-                          style={{
-                            display: "flex",
-                            marginLeft: "5px",
-                            paddingTop: "5px",
-                          }}
-                        >
-                          {/* ที่อยู่ */}
-                          {hotel.map((concertselect) => (
+                            </div>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              marginLeft: "20px",
+                            }}
+                          >
+                            <Card
+                              sx={{
+                                maxWidth: 30,
+                                maxHeight: 30,
+                                borderBlockColor: "white",
+                              }}
+                            >
+                              <CardMedia
+                                component="img"
+                                alt="green iguana"
+                                image="https://firebasestorage.googleapis.com/v0/b/teemi-backend-projectcs.appspot.com/o/Logo%2Fplaceholder.png?alt=media&token=7928f28b-1307-49b6-ae06-36cb8123e5d5"
+                              />
+                            </Card>
                             <div
                               style={{
                                 display: "flex",
-                                marginLeft: "20px",
-                                // marginTop: "20px",
-                                flexDirection: "row",
-                                alignItems: "center", // จัดแนว h1 ให้อยู่ตรงกลางในแนวแกน Y
-                                justifyContent: "space-between", // เว้นระยะห่างพอดีระหว่าง h1 กับ TextField
+                                marginLeft: "5px",
+                                paddingTop: "5px",
                               }}
                             >
-                              <h1 style={{ marginRight: "20px" }}>ที่อยู่ :</h1>
-                              <TextField
-                                placeholder={concertselect?.address}
-                                className="w-[600px]"
-                                // label="ชื่อโรงแรม"
-                                variant="outlined"
-                                defaultValue={concertselect?.address}
-                                inputRef={addressHotelRef}
-                              />
+                              <Typography
+                                gutterBottom
+                                sx={{
+                                  display: "flex",
+                                  // fontWeight: "bold",
+                                  color: "#857878",
+                                  fontFamily: "Mitr, sans-serif",
+                                  fontStyle: "normal",
+                                }}
+                              >
+                                {/* ที่อยู่ */}
+                                {hotel.map((hotelselect) => (
+                                  <>{hotelselect.address}</>
+                                ))}
+                              </Typography>
                             </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          marginTop: "10px",
-                        }}
-                      >
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              marginTop: "10px",
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                width: 520,
+                                height: 470,
+                                borderRadius: 3,
+                                // bgcolor: "#D9D9D9",
+                                border: 1,
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                // flexDirection: "column",
+                              }}
+                            >
+                              <ImageList
+                                sx={{
+                                  maxWidth: 500,
+                                  height: 455,
+                                  maxHeight: 455,
+                                  marginTop: "5px",
+                                  marginLeft: "5px",
+                                  borderRadius: 3,
+                                }}
+                                // variant="woven"
+                                cols={3}
+                                gap={6}
+                                // rowHeight={"auto"}
+                                rowHeight={200}
+                              >
+                                {hotelImage.map((item) => (
+                                  <ImageListItem key={item?.url_image}>
+                                    <img
+                                      srcSet={`${item?.url_image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                                      src={`${item?.url_image}?w=164&h=164&fit=crop&auto=format`}
+                                      alt={item?.HIMGID.toString()}
+                                      loading="lazy"
+                                    />
+                                  </ImageListItem>
+                                ))}
+                              </ImageList>
+                            </Box>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginTop: "10px",
+                              marginLeft: "20px",
+                            }}
+                          >
+                            <Typography
+                              gutterBottom
+                              sx={{
+                                display: "flex",
+                                // fontWeight: "bold",
+                                color: "black",
+                                fontFamily: "Mitr, sans-serif",
+                                fontStyle: "normal",
+                              }}
+                              variant="h5"
+                            >
+                              ชนิดโรงแรม :{" "}
+                              {hotel.map((hotelselect) => (
+                                <>{hotelselect.typename_hotel}</>
+                              ))}
+                            </Typography>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginTop: "10px",
+                              marginLeft: "20px",
+                            }}
+                          >
+                            <Typography
+                              gutterBottom
+                              sx={{
+                                display: "flex",
+                                // fontWeight: "bold",
+                                color: "black",
+                                fontFamily: "Mitr, sans-serif",
+                                fontStyle: "normal",
+                              }}
+                              variant="h5"
+                            >
+                              รายละเอียดของโรงแรม
+                            </Typography>
+                            <Divider sx={{ width: "550px", border: 1 }} />
+                            <div style={{ display: "flex", marginTop: "5px" }}>
+                              <Typography
+                                gutterBottom
+                                sx={{
+                                  display: "flex",
+                                  fontWeight: "bold",
+                                  border: 2,
+                                  borderColor: "black",
+                                  borderRadius: 2,
+                                  color: "#857878",
+                                  fontFamily: "Mitr, sans-serif",
+                                  fontStyle: "normal",
+                                  overflow: "auto",
+                                  maxHeight: "200px",
+                                  maxWidth: "1200px",
+                                }}
+                              >
+                                {hotel.map((hotelselect) => (
+                                  <>{hotelselect.detail}</>
+                                ))}
+                              </Typography>
+                            </div>
+                          </div>
+                        </Box>
+                      </>
+                    )}
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      marginTop: "20px",
+                      marginRight: "700px",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {editing2 ? (
+                      <>
                         <Box
                           sx={{
-                            width: 520,
-                            height: 470,
+                            width: 550,
+                            // height: 300,
+                            maxHeight: 300,
                             borderRadius: 3,
                             // bgcolor: "#D9D9D9",
-                            border: 1,
+                            border: 2,
                             display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            // flexDirection: "column",
+                            justifyContent: "start",
+                            flexDirection: "column",
                           }}
                         >
-                          <ImageList
-                            sx={{
-                              maxWidth: 500,
-                              height: 455,
-                              maxHeight: 455,
-                              marginTop: "5px",
-                              marginLeft: "5px",
-                              borderRadius: 3,
-                            }}
-                            // variant="woven"
-                            cols={3}
-                            gap={6}
-                            // rowHeight={"auto"}
-                            rowHeight={200}
-                          >
-                            {hotelImage.map((item) => (
-                              <ImageListItem key={item?.url_image}>
-                                <img
-                                  srcSet={`${item?.url_image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                  src={`${item?.url_image}?w=164&h=164&fit=crop&auto=format`}
-                                  alt={item?.HIMGID.toString()}
-                                  loading="lazy"
-                                />
-                              </ImageListItem>
-                            ))}
-                          </ImageList>
-                        </Box>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          marginTop: "10px",
-                          marginLeft: "20px",
-                        }}
-                      >
-                        <Typography
-                          gutterBottom
-                          sx={{
-                            display: "flex",
-                            // fontWeight: "bold",
-                            color: "black",
-                            fontFamily: "Mitr, sans-serif",
-                            fontStyle: "normal",
-                          }}
-                          variant="h5"
-                        >
-                          ชนิดโรงแรม :{" "}
-                          <Select
-                            labelId="demo-select-small-label"
-                            id="demo-select-small"
-                            value={hotel_type}
-                            label="ประเภทของคอนเสิร์ต"
-                            onChange={(e) => {
-                              setHotel_type(Number(e.target.value));
-                            }}
-                            sx={{
-                              borderRadius: 20,
-                              bgcolor: "white",
-                              height: "40px",
-                            }}
-                          >
-                            <MenuItem value={1}>โรงแรม</MenuItem>
-                            <MenuItem value={2}>รีสอร์ท</MenuItem>
-                            <MenuItem value={3}>บังกะโล</MenuItem>
-                          </Select>
-                        </Typography>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          marginTop: "10px",
-                          marginLeft: "20px",
-                        }}
-                      >
-                        <Typography
-                          gutterBottom
-                          sx={{
-                            display: "flex",
-                            // fontWeight: "bold",
-                            color: "black",
-                            fontFamily: "Mitr, sans-serif",
-                            fontStyle: "normal",
-                          }}
-                          variant="h5"
-                        >
-                          รายละเอียดของโรงแรม
-                        </Typography>
-                        <Divider sx={{ width: "550px", border: 1 }} />
-                        {hotel.map((concertselect) => (
                           <div
                             style={{
                               display: "flex",
                               marginLeft: "10px",
-                              marginRight: "15px",
                               marginTop: "10px",
-                              marginBottom: "30px",
-                              flexDirection: "row",
-                              alignItems: "center", // จัดแนว h1 ให้อยู่ตรงกลางในแนวแกน Y
-                              // เว้นระยะห่างพอดีระหว่าง h1 กับ TextField
+                              justifyContent: "space-between",
                             }}
                           >
-                            <TextField
-                              placeholder={concertselect?.detail}
-                              className="w-full"
-                              // label="ชื่อโรงแรม"
-                              variant="outlined"
-                              defaultValue={concertselect?.detail}
-                              inputRef={detailHotelRef}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </Box>
-                  </>
-                ) : (
-                  <>
-                    <Box
-                      sx={{
-                        width: 1250,
-                        maxHeight: 900,
-                        borderRadius: 3,
-                        border: 2,
-                        display: "flex",
-                        justifyContent: "start",
-                        flexDirection: "column",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          marginLeft: "20px",
-                          marginTop: "10px",
-                          justifyContent: "space-between",
-                          flexDirection: "row",
-                        }}
-                      >
-                        <Typography
-                          gutterBottom
-                          sx={{
-                            display: "flex",
-                            // fontWeight: "bold",
-                            color: "black",
-                            fontFamily: "Mitr, sans-serif",
-                            fontStyle: "normal",
-                          }}
-                          variant="h5"
-                        >
-                          {hotel.map((hotelselect) => (
-                            <>{hotelselect.name}</>
-                          ))}
-                        </Typography>
-                        <div style={{ display: "flex", marginRight: "10px" }}>
-                          <Card sx={{ height: 55, border: 1 }}>
-                            <CardActionArea>
+                            <Typography
+                              gutterBottom
+                              sx={{
+                                display: "flex",
+                                fontWeight: "bold",
+                                color: "black",
+                                fontFamily: "Mitr, sans-serif",
+                                fontStyle: "normal",
+                              }}
+                              variant="h5"
+                            >
+                              ช่องทางการติดต่อ
+                            </Typography>
+                            <div
+                              style={{
+                                display: "flex",
+                                marginRight: "10px",
+                                marginBottom: "10px",
+                              }}
+                            >
                               <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "center",
-                                }}
+                                style={{ display: "flex", marginRight: "10px" }}
                               >
-                                <EditIcon
-                                  sx={{ fontSize: "50px" }}
-                                  onClick={() => setEditing1(true)}
-                                />
-                              </div>
-                              {/* <CardContent></CardContent> */}
-                            </CardActionArea>
-                          </Card>
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          marginLeft: "20px",
-                        }}
-                      >
-                        <Card
-                          sx={{
-                            maxWidth: 30,
-                            maxHeight: 30,
-                            borderBlockColor: "white",
-                          }}
-                        >
-                          <CardMedia
-                            component="img"
-                            alt="green iguana"
-                            image="https://firebasestorage.googleapis.com/v0/b/teemi-backend-projectcs.appspot.com/o/Logo%2Fplaceholder.png?alt=media&token=7928f28b-1307-49b6-ae06-36cb8123e5d5"
-                          />
-                        </Card>
-                        <div
-                          style={{
-                            display: "flex",
-                            marginLeft: "5px",
-                            paddingTop: "5px",
-                          }}
-                        >
-                          <Typography
-                            gutterBottom
-                            sx={{
-                              display: "flex",
-                              // fontWeight: "bold",
-                              color: "#857878",
-                              fontFamily: "Mitr, sans-serif",
-                              fontStyle: "normal",
-                            }}
-                          >
-                            {/* ที่อยู่ */}
-                            {hotel.map((hotelselect) => (
-                              <>{hotelselect.address}</>
-                            ))}
-                          </Typography>
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          marginTop: "10px",
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: 520,
-                            height: 470,
-                            borderRadius: 3,
-                            // bgcolor: "#D9D9D9",
-                            border: 1,
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            // flexDirection: "column",
-                          }}
-                        >
-                          <ImageList
-                            sx={{
-                              maxWidth: 500,
-                              height: 455,
-                              maxHeight: 455,
-                              marginTop: "5px",
-                              marginLeft: "5px",
-                              borderRadius: 3,
-                            }}
-                            // variant="woven"
-                            cols={3}
-                            gap={6}
-                            // rowHeight={"auto"}
-                            rowHeight={200}
-                          >
-                            {hotelImage.map((item) => (
-                              <ImageListItem key={item?.url_image}>
-                                <img
-                                  srcSet={`${item?.url_image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                  src={`${item?.url_image}?w=164&h=164&fit=crop&auto=format`}
-                                  alt={item?.HIMGID.toString()}
-                                  loading="lazy"
-                                />
-                              </ImageListItem>
-                            ))}
-                          </ImageList>
-                        </Box>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          marginTop: "10px",
-                          marginLeft: "20px",
-                        }}
-                      >
-                        <Typography
-                          gutterBottom
-                          sx={{
-                            display: "flex",
-                            // fontWeight: "bold",
-                            color: "black",
-                            fontFamily: "Mitr, sans-serif",
-                            fontStyle: "normal",
-                          }}
-                          variant="h5"
-                        >
-                          ชนิดโรงแรม :{" "}
-                          {hotel.map((hotelselect) => (
-                            <>{hotelselect.typename_hotel}</>
-                          ))}
-                        </Typography>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          marginTop: "10px",
-                          marginLeft: "20px",
-                        }}
-                      >
-                        <Typography
-                          gutterBottom
-                          sx={{
-                            display: "flex",
-                            // fontWeight: "bold",
-                            color: "black",
-                            fontFamily: "Mitr, sans-serif",
-                            fontStyle: "normal",
-                          }}
-                          variant="h5"
-                        >
-                          รายละเอียดของโรงแรม
-                        </Typography>
-                        <Divider sx={{ width: "550px", border: 1 }} />
-                        <div style={{ display: "flex", marginTop: "5px" }}>
-                          <Typography
-                            gutterBottom
-                            sx={{
-                              display: "flex",
-                              fontWeight: "bold",
-                              border: 2,
-                              borderColor: "black",
-                              borderRadius: 2,
-                              color: "#857878",
-                              fontFamily: "Mitr, sans-serif",
-                              fontStyle: "normal",
-                              overflow: "auto",
-                              maxHeight: "200px",
-                              maxWidth: "1200px",
-                            }}
-                          >
-                            {hotel.map((hotelselect) => (
-                              <>{hotelselect.detail}</>
-                            ))}
-                          </Typography>
-                        </div>
-                      </div>
-                    </Box>
-                  </>
-                )}
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  marginTop: "20px",
-                  marginRight: "700px",
-                  justifyContent: "center",
-                }}
-              >
-                {editing2 ? (
-                  <>
-                    <Box
-                      sx={{
-                        width: 550,
-                        // height: 300,
-                        maxHeight: 300,
-                        borderRadius: 3,
-                        // bgcolor: "#D9D9D9",
-                        border: 2,
-                        display: "flex",
-                        justifyContent: "start",
-                        flexDirection: "column",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          marginLeft: "10px",
-                          marginTop: "10px",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <Typography
-                          gutterBottom
-                          sx={{
-                            display: "flex",
-                            fontWeight: "bold",
-                            color: "black",
-                            fontFamily: "Mitr, sans-serif",
-                            fontStyle: "normal",
-                          }}
-                          variant="h5"
-                        >
-                          ช่องทางการติดต่อ
-                        </Typography>
-                        <div
-                          style={{
-                            display: "flex",
-                            marginRight: "10px",
-                            marginBottom: "10px",
-                          }}
-                        >
-                          <div style={{ display: "flex", marginRight: "10px" }}>
-                            {editing2 ? (
-                              <>
-                                <Card
-                                  className="mr-2"
-                                  sx={{ height: 40, border: 1 }}
-                                >
+                                {editing2 ? (
+                                  <>
+                                    <Card
+                                      className="mr-2"
+                                      sx={{ height: 40, border: 1 }}
+                                    >
+                                      <CardActionArea>
+                                        <div
+                                          style={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                          }}
+                                        >
+                                          <SaveIcon
+                                            onClick={async () => {
+                                              try {
+                                                // console.log("ข้อมูลส่วนที่สอง");
+                                                // console.log(contact.map((hotel) => hotel.HCID));
+                                                console.log(contact);
+                                                for (
+                                                  let index = 0;
+                                                  index < contact.length;
+                                                  index++
+                                                ) {
+                                                  const hotel = contact[index];
+                                                  console.log(hotel);
+
+                                                  const reshotel =
+                                                    await hotelService.updateHotelChannel(
+                                                      String(hotel.hotel_ID),
+                                                      String(hotel.HCID),
+                                                      hotel.url
+                                                    );
+                                                  console.log(reshotel.status);
+                                                }
+                                                window.alert(
+                                                  "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                                );
+                                                setEditing2(false);
+                                              } catch (error) {
+                                                setEditing2(false);
+                                                console.log(error);
+                                              }
+                                            }}
+                                            sx={{
+                                              fontSize: "40px",
+                                              color: "skyblue",
+                                            }}
+                                          />
+                                        </div>
+                                      </CardActionArea>
+                                    </Card>
+                                  </>
+                                ) : (
+                                  <> </>
+                                )}
+                                <Card sx={{ height: 40, border: 1 }}>
                                   <CardActionArea>
                                     <div
                                       style={{
@@ -833,242 +891,329 @@ function CheckDataHotelPage() {
                                         justifyContent: "center",
                                       }}
                                     >
-                                      <SaveIcon
-                                        onClick={async () => {
-                                          try {
-                                            // console.log("ข้อมูลส่วนที่สอง");
-                                            // console.log(contact.map((hotel) => hotel.HCID));
-                                            console.log(contact);
-                                            for (
-                                              let index = 0;
-                                              index < contact.length;
-                                              index++
-                                            ) {
-                                              const hotel = contact[index];
-                                              console.log(hotel);
-
-                                              const reshotel =
-                                                await hotelService.updateHotelChannel(
-                                                  String(hotel.hotel_ID),
-                                                  String(hotel.HCID),
-                                                  hotel.url
-                                                );
-                                              console.log(reshotel.status);
-                                            }
-                                            window.alert(
-                                              "แก้ไขข้อมูลเสร็จสิ้น!!!"
-                                            );
-                                            setEditing2(false);
-                                          } catch (error) {
-                                            setEditing2(false);
-                                            console.log(error);
-                                          }
-                                        }}
-                                        sx={{
-                                          fontSize: "40px",
-                                          color: "skyblue",
-                                        }}
-                                      />
+                                      {editing2 ? (
+                                        <>
+                                          <HighlightOffIcon
+                                            onClick={() => setEditing2(false)}
+                                            sx={{
+                                              fontSize: "40px",
+                                              color: "red",
+                                            }}
+                                          />
+                                        </>
+                                      ) : (
+                                        <EditIcon
+                                          onClick={() => setEditing2(true)}
+                                          sx={{
+                                            fontSize: "40px",
+                                            color: "black",
+                                          }}
+                                        />
+                                      )}
                                     </div>
                                   </CardActionArea>
                                 </Card>
-                              </>
-                            ) : (
-                              <> </>
-                            )}
-                            <Card sx={{ height: 40, border: 1 }}>
-                              <CardActionArea>
+                              </div>
+                            </div>
+                          </div>
+                          <div style={{ display: "flex", marginLeft: "10px" }}>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                width: 500,
+                                // height: 230,
+                                maxHeight: 230,
+                                borderRadius: 3,
+                                marginBottom: 1,
+                                // bgcolor: "#D9D9D9",
+                                border: 1,
+                                overflow: "auto",
+                                justifyContent: "start",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  display: "flex",
+                                  marginTop: "10px",
+                                  marginLeft: "10px",
+                                  marginBottom: 2,
+                                }}
+                              >
                                 <div
                                   style={{
                                     display: "flex",
-                                    justifyContent: "center",
+                                    flexDirection: "column",
                                   }}
                                 >
-                                  {editing2 ? (
+                                  {hotelUrl && hotelUrl.length > 0 ? (
                                     <>
-                                      <HighlightOffIcon
-                                        onClick={() => setEditing2(false)}
-                                        sx={{ fontSize: "40px", color: "red" }}
-                                      />
+                                      {/* ถ้ามีข้อมูลใน hotelUrl แสดงข้อมูลที่มี และสร้าง TextField ที่ขาดให้ครบ 3 */}
+                                      {hotelUrl.map((hotelselect, index) => (
+                                        <div
+                                          key={index}
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            marginBottom: 10,
+                                          }}
+                                        >
+                                          <TextField
+                                            placeholder={hotelselect.url}
+                                            className="w-[200px] mb-5"
+                                            label="Url"
+                                            variant="outlined"
+                                            value={contact[index]?.url || ""}
+                                            onChange={(e) => {
+                                              const newUrl = e.target.value;
+                                              const updatedHotelUrl = [
+                                                ...contact,
+                                              ];
+                                              updatedHotelUrl[index] = {
+                                                ...hotelselect,
+                                                url: newUrl,
+                                              };
+                                              setContact(updatedHotelUrl);
+                                            }}
+                                          />
+                                        </div>
+                                      ))}
+                                      {/* เติม TextField ให้ครบ 3 ถ้าข้อมูลไม่ถึง */}
+                                      {[...Array(3 - hotelUrl.length)].map(
+                                        (_, idx) => (
+                                          <div
+                                            key={hotelUrl.length + idx}
+                                            style={{
+                                              display: "flex",
+                                              flexDirection: "row",
+                                              marginBottom: 10,
+                                            }}
+                                          >
+                                            <TextField
+                                              className="w-[200px] mb-5"
+                                              label="Url"
+                                              variant="outlined"
+                                              value={
+                                                contact[hotelUrl.length + idx]
+                                                  ?.url || ""
+                                              }
+                                              onChange={(e) => {
+                                                const newUrl = e.target.value;
+                                                const updatedHotelUrl = [
+                                                  ...contact,
+                                                ];
+                                                updatedHotelUrl[
+                                                  hotelUrl.length + idx
+                                                ] = {
+                                                  url: newUrl,
+                                                  HCID: Number(
+                                                    hotelUrl.map(
+                                                      (hotel) => hotel.HCID
+                                                    )
+                                                  ),
+                                                  hotel_ID: Number(Hotel_ID),
+                                                };
+                                                setContact(updatedHotelUrl);
+                                              }}
+                                            />
+                                          </div>
+                                        )
+                                      )}
                                     </>
                                   ) : (
-                                    <EditIcon
-                                      onClick={() => setEditing2(true)}
-                                      sx={{ fontSize: "40px", color: "black" }}
-                                    />
+                                    <>
+                                      {/* ถ้าไม่มีข้อมูลใน hotelUrl ให้สร้าง TextField 3 ช่อง */}
+                                      {[...Array(3)].map((_, idx) => (
+                                        <div
+                                          key={idx}
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            marginBottom: 10,
+                                          }}
+                                        >
+                                          <TextField
+                                            className="w-[200px] mb-5"
+                                            label="Url"
+                                            variant="outlined"
+                                            value={contact[idx]?.url || ""}
+                                            onChange={(e) => {
+                                              const newUrl = e.target.value;
+                                              const updatedHotelUrl = [
+                                                ...contact,
+                                              ];
+                                              updatedHotelUrl[idx] = {
+                                                url: newUrl,
+                                                HCID: 0,
+                                                hotel_ID: Number(Hotel_ID),
+                                              };
+                                              setContact(updatedHotelUrl);
+                                            }}
+                                          />
+                                        </div>
+                                      ))}
+                                    </>
                                   )}
                                 </div>
-                              </CardActionArea>
-                            </Card>
+                              </div>
+                            </Box>
                           </div>
-                        </div>
-                      </div>
-                      <div style={{ display: "flex", marginLeft: "10px" }}>
+                        </Box>
+                      </>
+                    ) : (
+                      <>
                         <Box
                           sx={{
-                            display: "flex",
-                            width: 500,
-                            // height: 230,
-                            maxHeight: 230,
+                            width: 550,
+                            // height: 300,
+                            maxHeight: 300,
                             borderRadius: 3,
-                            marginBottom: 1,
                             // bgcolor: "#D9D9D9",
-                            border: 1,
-                            overflow: "auto",
+                            border: 2,
+                            display: "flex",
                             justifyContent: "start",
+                            flexDirection: "column",
                           }}
                         >
                           <div
                             style={{
                               display: "flex",
-                              marginTop: "10px",
                               marginLeft: "10px",
-                              marginBottom: 2,
+                              marginTop: "10px",
+                              justifyContent: "space-between",
                             }}
                           >
+                            <Typography
+                              gutterBottom
+                              sx={{
+                                display: "flex",
+                                fontWeight: "bold",
+                                color: "black",
+                                fontFamily: "Mitr, sans-serif",
+                                fontStyle: "normal",
+                              }}
+                              variant="h5"
+                            >
+                              ช่องทางการติดต่อ
+                            </Typography>
                             <div
                               style={{
                                 display: "flex",
-                                flexDirection: "column",
+                                marginRight: "10px",
+                                marginBottom: "10px",
                               }}
                             >
-                              {hotelUrl && hotelUrl.length > 0 ? (
-                                <>
-                                  {/* ถ้ามีข้อมูลใน hotelUrl แสดงข้อมูลที่มี และสร้าง TextField ที่ขาดให้ครบ 3 */}
-                                  {hotelUrl.map((hotelselect, index) => (
-                                    <div
-                                      key={index}
-                                      style={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        marginBottom: 10,
-                                      }}
-                                    >
-                                      <TextField
-                                        placeholder={hotelselect.url}
-                                        className="w-[200px] mb-5"
-                                        label="Url"
-                                        variant="outlined"
-                                        value={contact[index]?.url || ""}
-                                        onChange={(e) => {
-                                          const newUrl = e.target.value;
-                                          const updatedHotelUrl = [...contact];
-                                          updatedHotelUrl[index] = {
-                                            ...hotelselect,
-                                            url: newUrl,
-                                          };
-                                          setContact(updatedHotelUrl);
-                                        }}
-                                      />
-                                    </div>
-                                  ))}
-                                  {/* เติม TextField ให้ครบ 3 ถ้าข้อมูลไม่ถึง */}
-                                  {[...Array(3 - hotelUrl.length)].map(
-                                    (_, idx) => (
-                                      <div
-                                        key={hotelUrl.length + idx}
-                                        style={{
-                                          display: "flex",
-                                          flexDirection: "row",
-                                          marginBottom: 10,
-                                        }}
-                                      >
-                                        <TextField
-                                          className="w-[200px] mb-5"
-                                          label="Url"
-                                          variant="outlined"
-                                          value={
-                                            contact[hotelUrl.length + idx]
-                                              ?.url || ""
-                                          }
-                                          onChange={(e) => {
-                                            const newUrl = e.target.value;
-                                            const updatedHotelUrl = [
-                                              ...contact,
-                                            ];
-                                            updatedHotelUrl[
-                                              hotelUrl.length + idx
-                                            ] = {
-                                              url: newUrl,
-                                              HCID: Number(
-                                                hotelUrl.map(
-                                                  (hotel) => hotel.HCID
-                                                )
-                                              ),
-                                              hotel_ID: Number(Hotel_ID),
-                                            };
-                                            setContact(updatedHotelUrl);
-                                          }}
-                                        />
-                                      </div>
-                                    )
-                                  )}
-                                </>
-                              ) : (
-                                <>
-                                  {/* ถ้าไม่มีข้อมูลใน hotelUrl ให้สร้าง TextField 3 ช่อง */}
-                                  {[...Array(3)].map((_, idx) => (
-                                    <div
-                                      key={idx}
-                                      style={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        marginBottom: 10,
-                                      }}
-                                    >
-                                      <TextField
-                                        className="w-[200px] mb-5"
-                                        label="Url"
-                                        variant="outlined"
-                                        value={contact[idx]?.url || ""}
-                                        onChange={(e) => {
-                                          const newUrl = e.target.value;
-                                          const updatedHotelUrl = [...contact];
-                                          updatedHotelUrl[idx] = {
-                                            url: newUrl,
-                                            HCID: 0,
-                                            hotel_ID: Number(Hotel_ID),
-                                          };
-                                          setContact(updatedHotelUrl);
-                                        }}
-                                      />
-                                    </div>
-                                  ))}
-                                </>
-                              )}
+                              <Card sx={{ height: 40, border: 1 }}>
+                                <CardActionArea>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "center",
+                                    }}
+                                  >
+                                    <EditIcon
+                                      sx={{ fontSize: "40px" }}
+                                      onClick={() => setEditing2(true)}
+                                    />
+                                  </div>
+                                </CardActionArea>
+                              </Card>
                             </div>
                           </div>
+                          <div style={{ display: "flex", marginLeft: "10px" }}>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                width: 500,
+                                // height: 230,
+                                maxHeight: 230,
+                                borderRadius: 3,
+                                marginBottom: 1,
+                                // bgcolor: "#D9D9D9",
+                                border: 1,
+                                overflow: "auto",
+                                justifyContent: "start",
+                              }}
+                            >
+                              {hotelUrl.length > 0 ? (
+                                <>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      marginTop: "10px",
+                                      marginLeft: "10px",
+                                      marginBottom: 2,
+                                    }}
+                                  >
+                                    <Grid container spacing={2}>
+                                      {hotelUrl.map((hotelselect) => (
+                                        <>
+                                          <Grid item>
+                                            <Link
+                                              sx={{
+                                                color: "#3A3A3A",
+                                                "&:hover": {
+                                                  color: "#3A3A3A",
+                                                },
+                                              }}
+                                              underline="hover"
+                                            >
+                                              {hotelselect.url}
+                                            </Link>
+                                          </Grid>
+                                        </>
+                                      ))}
+                                    </Grid>
+                                  </div>
+                                </>
+                              ) : (
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    marginLeft: "150px",
+                                  }}
+                                >
+                                  <p>ยังไม่มีข้อมูลช่องการติดต่อ</p>
+                                </div>
+                              )}
+                            </Box>
+                          </div>
                         </Box>
-                      </div>
-                    </Box>
-                  </>
-                ) : (
-                  <>
+                      </>
+                    )}
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginTop: "20px",
+                    }}
+                  >
                     <Box
                       sx={{
-                        width: 550,
-                        // height: 300,
-                        maxHeight: 300,
+                        width: 1250,
+                        maxHeight: 400,
+                        paddingBottom: 1,
                         borderRadius: 3,
-                        // bgcolor: "#D9D9D9",
                         border: 2,
                         display: "flex",
                         justifyContent: "start",
                         flexDirection: "column",
+                        marginBottom: "20px",
                       }}
                     >
                       <div
                         style={{
                           display: "flex",
-                          marginLeft: "10px",
                           marginTop: "10px",
-                          justifyContent: "space-between",
+                          marginLeft: "10px",
                         }}
                       >
                         <Typography
                           gutterBottom
                           sx={{
                             display: "flex",
+                            marginTop: "5px",
                             fontWeight: "bold",
                             color: "black",
                             fontFamily: "Mitr, sans-serif",
@@ -1076,359 +1221,261 @@ function CheckDataHotelPage() {
                           }}
                           variant="h5"
                         >
-                          ช่องทางการติดต่อ
+                          ข้อมูลห้อง
                         </Typography>
-                        <div
-                          style={{
-                            display: "flex",
-                            marginRight: "10px",
-                            marginBottom: "10px",
-                          }}
-                        >
-                          <Card sx={{ height: 40, border: 1 }}>
-                            <CardActionArea>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "center",
-                                }}
-                              >
-                                <EditIcon
-                                  sx={{ fontSize: "40px" }}
-                                  onClick={() => setEditing2(true)}
-                                />
-                              </div>
-                            </CardActionArea>
-                          </Card>
-                        </div>
                       </div>
                       <div style={{ display: "flex", marginLeft: "10px" }}>
-                        <Box
+                        <TableContainer
+                          component={Paper}
                           sx={{
-                            display: "flex",
-                            width: 500,
-                            // height: 230,
-                            maxHeight: 230,
-                            borderRadius: 3,
-                            marginBottom: 1,
-                            // bgcolor: "#D9D9D9",
-                            border: 1,
-                            overflow: "auto",
-                            justifyContent: "start",
+                            marginTop: "10px",
+                            maxHeight: 300,
+                            width: 1200,
+                            maxWidth: 1200,
+                            border: 2,
+                            borderRadius: 2,
                           }}
                         >
-                          {hotelUrl.length > 0 ? (<>
-                          <div
-                            style={{
-                              display: "flex",
-                              marginTop: "10px",
-                              marginLeft: "10px",
-                              marginBottom: 2,
-                            }}
-                          >
-                            <Grid container spacing={2}>
-                              {hotelUrl.map((hotelselect) => (
-                                <>
-                                  <Grid item>
-                                    <Link
-                                      sx={{
-                                        color: "#3A3A3A",
-                                        "&:hover": {
-                                          color: "#3A3A3A",
-                                        },
-                                      }}
-                                      underline="hover"
-                                    >
-                                      {hotelselect.url}
-                                    </Link>
-                                  </Grid>
-                                </>
-                              ))}
-                            </Grid>
-                          </div>
-                          </>):(
+                          {rooms.length > 0 ? (
+                            <>
+                              <Table aria-label="room information table">
+                                <TableHead>
+                                  <TableRow>
+                                    <TableCell>ชนิดห้องพัก</TableCell>
+                                    <TableCell>วิวของห้อง</TableCell>
+                                    <TableCell>ราคาห้องต่อคืน</TableCell>
+                                    <TableCell>จำนวนคนเข้าพัก</TableCell>
+                                    <TableCell>จำนวนห้อง</TableCell>
+                                    <TableCell>สถานะของห้อง</TableCell>
+                                    <TableCell>แก้ไขข้อมูลห้อง</TableCell>
+                                  </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                  {rooms.map((hotelselect, index) => (
+                                    <TableRow key={index}>
+                                      <TableCell>
+                                        {editingRow === index ? (
+                                          <Select
+                                            value={editedData?.type_room}
+                                            onChange={(e) =>
+                                              setEditedData({
+                                                ...editedData!,
+                                                type_room: e.target.value,
+                                              })
+                                            }
+                                            label="ชนิดห้องพัก"
+                                          >
+                                            {/* แสดงรายการชนิดห้องพัก */}
+                                            <MenuItem value="Standard Room">
+                                              ห้องธรรมดา (Standard Room)
+                                            </MenuItem>
+                                            <MenuItem value="Deluxe Room">
+                                              ห้องดีลักซ์ (Deluxe Room)
+                                            </MenuItem>
+                                            <MenuItem value="Executive Room">
+                                              ห้องเอกซ์คลูซีฟ (Executive Room)
+                                            </MenuItem>
+                                            <MenuItem value="Connecting Rooms">
+                                              ห้องที่มีประตูเชื่อมต่อกัน
+                                              (Connecting Rooms)
+                                            </MenuItem>
+                                            <MenuItem value="Suite Room">
+                                              ห้องสวีท (Suite Room)
+                                            </MenuItem>
+                                            <MenuItem value="Superior Room">
+                                              ห้องสุพีเรียร์ (Superior Room)
+                                            </MenuItem>
+                                            <MenuItem value="Accessible Room">
+                                              ห้องพักพิเศษสำหรับผู้พิการ
+                                              (Accessible Room)
+                                            </MenuItem>
+                                          </Select>
+                                        ) : (
+                                          hotelselect.type_room
+                                        )}
+                                      </TableCell>
+                                      <TableCell>
+                                        {editingRow === index ? (
+                                          <Select
+                                            value={
+                                              editedData?.type_view_name_room ||
+                                              ""
+                                            }
+                                            onChange={(e) =>
+                                              setEditedData({
+                                                ...editedData!,
+                                                type_view_name_room:
+                                                  e.target.value,
+                                              })
+                                            }
+                                            label="วิวของห้อง"
+                                          >
+                                            {/* เพิ่มรายการสำหรับวิวห้อง */}
+                                            <MenuItem value="ทะเล">
+                                              ทะเล
+                                            </MenuItem>
+                                            <MenuItem value="ภูเขา">
+                                              ภูเขา
+                                            </MenuItem>
+                                            <MenuItem value="เมือง">
+                                              เมือง
+                                            </MenuItem>
+                                          </Select>
+                                        ) : (
+                                          hotelselect.type_view_name_room
+                                        )}
+                                      </TableCell>
+                                      <TableCell>
+                                        {editingRow === index ? (
+                                          <TextField
+                                            type="number"
+                                            value={editedData?.price || ""}
+                                            label="ราคาห้องต่อคืน"
+                                            onChange={(e) =>
+                                              setEditedData({
+                                                ...editedData!,
+                                                price: Number(e.target.value),
+                                              })
+                                            }
+                                          />
+                                        ) : (
+                                          hotelselect.price
+                                        )}
+                                      </TableCell>
+                                      <TableCell>
+                                        {editingRow === index ? (
+                                          <TextField
+                                            type="number"
+                                            value={
+                                              editedData?.Number_of_guests || ""
+                                            }
+                                            label="จำนวนคนเข้าพัก"
+                                            onChange={(e) =>
+                                              setEditedData({
+                                                ...editedData!,
+                                                Number_of_guests: Number(
+                                                  e.target.value
+                                                ),
+                                              })
+                                            }
+                                          />
+                                        ) : (
+                                          hotelselect.Number_of_guests
+                                        )}
+                                      </TableCell>
+                                      <TableCell>
+                                        {editingRow === index ? (
+                                          <TextField
+                                            type="number"
+                                            value={
+                                              editedData?.Number_of_rooms || ""
+                                            }
+                                            label="จำนวนห้อง"
+                                            onChange={(e) =>
+                                              setEditedData({
+                                                ...editedData!,
+                                                Number_of_rooms: Number(
+                                                  e.target.value
+                                                ),
+                                              })
+                                            }
+                                          />
+                                        ) : (
+                                          hotelselect.Number_of_rooms
+                                        )}
+                                      </TableCell>
+                                      <TableCell>
+                                        {editingRow === index ? (
+                                          <Select
+                                            value={
+                                              editedData?.status_name_room || ""
+                                            }
+                                            onChange={(e) =>
+                                              setEditedData({
+                                                ...editedData!,
+                                                status_name_room:
+                                                  e.target.value,
+                                              })
+                                            }
+                                            label="สถานะของห้อง"
+                                          >
+                                            {/* เพิ่มรายการสำหรับสถานะห้อง */}
+                                            <MenuItem value="ว่าง">
+                                              ว่าง
+                                            </MenuItem>
+                                            <MenuItem value="ไม่ว่าง">
+                                              ไม่ว่าง
+                                            </MenuItem>
+                                          </Select>
+                                        ) : (
+                                          hotelselect.status_name_room
+                                        )}
+                                      </TableCell>
+                                      <TableCell>
+                                        {editingRow === index ? (
+                                          <div>
+                                            <Button
+                                              variant="contained"
+                                              style={{
+                                                backgroundColor: "#343434",
+                                                marginRight: "10px",
+                                              }}
+                                              onClick={handleCancelClick}
+                                            >
+                                              ยกเลิก
+                                            </Button>
+                                            <Button
+                                              variant="contained"
+                                              style={{
+                                                backgroundColor: "#4CAF50",
+                                              }}
+                                              onClick={handleSaveClick}
+                                            >
+                                              บันทึก
+                                            </Button>
+                                          </div>
+                                        ) : (
+                                          <Button
+                                            variant="contained"
+                                            style={{
+                                              backgroundColor: "#343434",
+                                            }}
+                                            onClick={() =>
+                                              handleEditClick(index)
+                                            }
+                                            startIcon={<EditIcon />}
+                                          >
+                                            รายละเอียดของห้อง
+                                          </Button>
+                                        )}
+                                      </TableCell>
+                                    </TableRow>
+                                  ))}
+                                </TableBody>
+                              </Table>
+                            </>
+                          ) : (
                             <div
-                            style={{ display: "flex", justifyContent: "center",marginLeft:"150px" }}
-                          >
-                            <p>
-                              ยังไม่มีข้อมูลช่องการติดต่อ
-                            </p>
-                          </div>
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <p>
+                                ยังไม่มีข้อมูลห้อง โปรดดำเนินการเพิ่มข้อมูลห้อง
+                              </p>
+                            </div>
                           )}
-                        </Box>
+                        </TableContainer>
                       </div>
                     </Box>
-                  </>
-                )}
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: "20px",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: 1250,
-                    maxHeight: 400,
-                    paddingBottom: 1,
-                    borderRadius: 3,
-                    border: 2,
-                    display: "flex",
-                    justifyContent: "start",
-                    flexDirection: "column",
-                    marginBottom:"20px",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      marginTop: "10px",
-                      marginLeft: "10px",
-                    }}
-                  >
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        display: "flex",
-                        marginTop: "5px",
-                        fontWeight: "bold",
-                        color: "black",
-                        fontFamily: "Mitr, sans-serif",
-                        fontStyle: "normal",
-                      }}
-                      variant="h5"
-                    >
-                      ข้อมูลห้อง
-                    </Typography>
                   </div>
-                  <div style={{ display: "flex", marginLeft: "10px" }}>
-                    <TableContainer
-                      component={Paper}
-                      sx={{
-                        marginTop: "10px",
-                        maxHeight: 300,
-                        width: 1200,
-                        maxWidth: 1200,
-                        border: 2,
-                        borderRadius: 2,
-                      }}
-                    >
-                      {rooms.length > 0 ? (
-                        <>
-                          <Table aria-label="room information table">
-                            <TableHead>
-                              <TableRow>
-                                <TableCell>ชนิดห้องพัก</TableCell>
-                                <TableCell>วิวของห้อง</TableCell>
-                                <TableCell>ราคาห้องต่อคืน</TableCell>
-                                <TableCell>จำนวนคนเข้าพัก</TableCell>
-                                <TableCell>จำนวนห้อง</TableCell>
-                                <TableCell>สถานะของห้อง</TableCell>
-                                <TableCell>แก้ไขข้อมูลห้อง</TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              {rooms.map((hotelselect, index) => (
-                                <TableRow key={index}>
-                                  <TableCell>
-                                    {editingRow === index ? (
-                                      <Select
-                                        value={editedData?.type_room}
-                                        onChange={(e) =>
-                                          setEditedData({
-                                            ...editedData!,
-                                            type_room: e.target.value,
-                                          })
-                                        }
-                                        label="ชนิดห้องพัก"
-                                      >
-                                        {/* แสดงรายการชนิดห้องพัก */}
-                                        <MenuItem value="Standard Room">
-                                          ห้องธรรมดา (Standard Room)
-                                        </MenuItem>
-                                        <MenuItem value="Deluxe Room">
-                                          ห้องดีลักซ์ (Deluxe Room)
-                                        </MenuItem>
-                                        <MenuItem value="Executive Room">
-                                          ห้องเอกซ์คลูซีฟ (Executive Room)
-                                        </MenuItem>
-                                        <MenuItem value="Connecting Rooms">
-                                          ห้องที่มีประตูเชื่อมต่อกัน (Connecting
-                                          Rooms)
-                                        </MenuItem>
-                                        <MenuItem value="Suite Room">
-                                          ห้องสวีท (Suite Room)
-                                        </MenuItem>
-                                        <MenuItem value="Superior Room">
-                                          ห้องสุพีเรียร์ (Superior Room)
-                                        </MenuItem>
-                                        <MenuItem value="Accessible Room">
-                                          ห้องพักพิเศษสำหรับผู้พิการ (Accessible
-                                          Room)
-                                        </MenuItem>
-                                      </Select>
-                                    ) : (
-                                      hotelselect.type_room
-                                    )}
-                                  </TableCell>
-                                  <TableCell>
-                                    {editingRow === index ? (
-                                      <Select
-                                        value={
-                                          editedData?.type_view_name_room || ""
-                                        }
-                                        onChange={(e) =>
-                                          setEditedData({
-                                            ...editedData!,
-                                            type_view_name_room: e.target.value,
-                                          })
-                                        }
-                                        label="วิวของห้อง"
-                                      >
-                                        {/* เพิ่มรายการสำหรับวิวห้อง */}
-                                        <MenuItem value="ทะเล">ทะเล</MenuItem>
-                                        <MenuItem value="ภูเขา">ภูเขา</MenuItem>
-                                        <MenuItem value="เมือง">เมือง</MenuItem>
-                                      </Select>
-                                    ) : (
-                                      hotelselect.type_view_name_room
-                                    )}
-                                  </TableCell>
-                                  <TableCell>
-                                    {editingRow === index ? (
-                                      <TextField
-                                        type="number"
-                                        value={editedData?.price || ""}
-                                        label="ราคาห้องต่อคืน"
-                                        onChange={(e) =>
-                                          setEditedData({
-                                            ...editedData!,
-                                            price: Number(e.target.value),
-                                          })
-                                        }
-                                      />
-                                    ) : (
-                                      hotelselect.price
-                                    )}
-                                  </TableCell>
-                                  <TableCell>
-                                    {editingRow === index ? (
-                                      <TextField
-                                        type="number"
-                                        value={
-                                          editedData?.Number_of_guests || ""
-                                        }
-                                        label="จำนวนคนเข้าพัก"
-                                        onChange={(e) =>
-                                          setEditedData({
-                                            ...editedData!,
-                                            Number_of_guests: Number(
-                                              e.target.value
-                                            ),
-                                          })
-                                        }
-                                      />
-                                    ) : (
-                                      hotelselect.Number_of_guests
-                                    )}
-                                  </TableCell>
-                                  <TableCell>
-                                    {editingRow === index ? (
-                                      <TextField
-                                        type="number"
-                                        value={
-                                          editedData?.Number_of_rooms || ""
-                                        }
-                                        label="จำนวนห้อง"
-                                        onChange={(e) =>
-                                          setEditedData({
-                                            ...editedData!,
-                                            Number_of_rooms: Number(
-                                              e.target.value
-                                            ),
-                                          })
-                                        }
-                                      />
-                                    ) : (
-                                      hotelselect.Number_of_rooms
-                                    )}
-                                  </TableCell>
-                                  <TableCell>
-                                    {editingRow === index ? (
-                                      <Select
-                                        value={
-                                          editedData?.status_name_room || ""
-                                        }
-                                        onChange={(e) =>
-                                          setEditedData({
-                                            ...editedData!,
-                                            status_name_room: e.target.value,
-                                          })
-                                        }
-                                        label="สถานะของห้อง"
-                                      >
-                                        {/* เพิ่มรายการสำหรับสถานะห้อง */}
-                                        <MenuItem value="ว่าง">ว่าง</MenuItem>
-                                        <MenuItem value="ไม่ว่าง">
-                                          ไม่ว่าง
-                                        </MenuItem>
-                                      </Select>
-                                    ) : (
-                                      hotelselect.status_name_room
-                                    )}
-                                  </TableCell>
-                                  <TableCell>
-                                    {editingRow === index ? (
-                                      <div>
-                                        <Button
-                                          variant="contained"
-                                          style={{
-                                            backgroundColor: "#343434",
-                                            marginRight: "10px",
-                                          }}
-                                          onClick={handleCancelClick}
-                                        >
-                                          ยกเลิก
-                                        </Button>
-                                        <Button
-                                          variant="contained"
-                                          style={{ backgroundColor: "#4CAF50" }}
-                                          onClick={handleSaveClick}
-                                        >
-                                          บันทึก
-                                        </Button>
-                                      </div>
-                                    ) : (
-                                      <Button
-                                        variant="contained"
-                                        style={{ backgroundColor: "#343434" }}
-                                        onClick={() => handleEditClick(index)}
-                                        startIcon={<EditIcon />}
-                                      >
-                                        รายละเอียดของห้อง
-                                      </Button>
-                                    )}
-                                  </TableCell>
-                                </TableRow>
-                              ))}
-                            </TableBody>
-                          </Table>
-                        </>
-                      ) : (
-                        <div
-                          style={{ display: "flex", justifyContent: "center" }}
-                        >
-                          <p>
-                            ยังไม่มีข้อมูลห้อง โปรดดำเนินการเพิ่มข้อมูลห้อง
-                          </p>
-                        </div>
-                      )}
-                    </TableContainer>
-                  </div>
-                </Box>
-              </div>
+                </>
+              ) : (
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <p>ยังไม่มีข้อมูลโรงแรม โปรดดำเนินการเลือกข้อมูลโรงแรม</p>
+                </div>
+              )}
             </>
           ) : (
             <div style={{ display: "flex", justifyContent: "center" }}>

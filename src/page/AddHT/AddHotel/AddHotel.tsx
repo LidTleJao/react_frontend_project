@@ -17,6 +17,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import 'react-toastify/dist/ReactToastify.css';
 import HeaderUserTypeManager2 from "../../../components/HeadUserTypeManager2";
 import { useNavigate } from "react-router-dom";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
@@ -24,6 +25,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import HeaderUserTypeGeneral2 from "../../../components/HeadUserTypeGeneral2";
 import { useState } from "react";
 import { HotelService } from "../../../service/hotelService";
+import { toast, ToastContainer } from "react-toastify";
 
 function AddHotelPage() {
   const [hotelName, setHotelName] = useState("");
@@ -83,15 +85,15 @@ function AddHotelPage() {
 
   const [open, setOpen] = useState(false);
 
-  const handleClick = () => {
-    setOpen(true);
-  };
+  // const handleClick = () => {
+  //   setOpen(true);
+  // };
 
   const handleClose = (
-    event: React.SyntheticEvent | Event,
-    reason?: SnackbarCloseReason,
+    _event: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason
   ) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -567,14 +569,17 @@ function AddHotelPage() {
                           console.log(resimage.status);
                         }
                       }
-                      handleClick();
-                      navigateToAddHotelDataPage();
+                      toast("เพิ่มสำเร็จ!")
+                      setTimeout(() => {
+                        navigateToAddHotelDataPage();
+                      }, 2000);
+                 
                     }
-
-                    setLoad(false);
                   } catch (error) {
                     setLoad(false);
                     console.log(error);
+                  } finally {
+                    setLoad(false);
                   }
                 }}
               >
@@ -582,8 +587,10 @@ function AddHotelPage() {
               </Button>
             )}
           </div>
+          {/* <Button onClick={handleClick}>Open Snackbar</Button> */}
         </div>
       </div>
+      <ToastContainer />
       <Snackbar
         open={open}
         autoHideDuration={3000}

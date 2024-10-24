@@ -29,7 +29,6 @@ function RegisterPage() {
 
   const navigate = useNavigate();
 
-  // Loading
   const [isLoad, setLoad] = useState(false);
 
   function navigateToLoginPage() {
@@ -121,7 +120,6 @@ function RegisterPage() {
                       placeholder="ชื่อ-นามสกุล"
                       inputRef={nameRef}
                       sx={{ m: 1, width: "26pc" }}
-                      //   onChange={(e) => setName(e.target.value)}
                       InputProps={{
                         sx: {
                           borderRadius: "20px",
@@ -129,7 +127,7 @@ function RegisterPage() {
                           height: "35px",
                           fontFamily: "Kanit, sans-serif"
                         },
-                        startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                        startAdornment: <></>,
                       }}
                     />
                   </div>
@@ -139,7 +137,6 @@ function RegisterPage() {
                       inputRef={nicknameRef}
                       type="nickname"
                       sx={{ m: 1, width: "26pc" }}
-                      //   onChange={(e) => setNickname(e.target.value)}
                       InputProps={{
                         sx: {
                           borderRadius: "20px",
@@ -147,7 +144,7 @@ function RegisterPage() {
                           height: "35px",
                           fontFamily: "Kanit, sans-serif"
                         },
-                        startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                        startAdornment: <></>,
                       }}
                     />
                   </div>
@@ -155,9 +152,7 @@ function RegisterPage() {
                     <TextField
                       placeholder="Facebook"
                       inputRef={facebookRef}
-                      // type="link"
                       sx={{ m: 1, width: "26pc" }}
-                      //   onChange={(e) => setBirthday(e.target.value)}
                       InputProps={{
                         sx: {
                           borderRadius: "20px",
@@ -338,7 +333,6 @@ function RegisterPage() {
                       type="phone"
                       inputRef={phoneRef}
                       sx={{ m: 1, width: "26pc" }}
-                      //   onChange={(e) => setPhone(e.target.value)}
                       InputProps={{
                         sx: {
                           borderRadius: "20px",
@@ -346,7 +340,7 @@ function RegisterPage() {
                           height: "35px",
                           fontFamily: "Kanit, sans-serif"
                         },
-                        startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
+                        startAdornment: <></>,
                       }}
                     />
                   </div>
@@ -361,7 +355,6 @@ function RegisterPage() {
                       inputRef={emailRef}
                       type="email"
                       sx={{ m: 1, width: "26pc" }}
-                      //   onChange={(e) => setEmail(e.target.value)}
                       InputProps={{
                         sx: {
                           borderRadius: "20px",
@@ -379,7 +372,6 @@ function RegisterPage() {
                       type="password"
                       autoComplete="current-password"
                       sx={{ m: 1, width: "26pc" }}
-                      //   onChange={(e) => setPassword(e.target.value)}
                       InputProps={{
                         sx: {
                           borderRadius: "20px",
