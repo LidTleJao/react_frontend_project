@@ -1879,7 +1879,7 @@ function CheckDataConcertPage() {
                                                             200
                                                           ) {
                                                             window.alert(
-                                                              "แก้ไขข้อมูลเสร็จสิ้น!!!"
+                                                              "แก้ไขข้อมูลตั๋วเสร็จสิ้น!!!"
                                                             );
                                                             console.log(
                                                               resconcert.data
@@ -1887,7 +1887,7 @@ function CheckDataConcertPage() {
                                                             setEditing4(false);
                                                           } else {
                                                             window.alert(
-                                                              "โปรดทำการแก้ไขข้อมูลอีกครั้ง"
+                                                              "โปรดทำการแก้ไขข้อมูลตั๋วอีกครั้ง"
                                                             );
                                                           }
                                                         }
