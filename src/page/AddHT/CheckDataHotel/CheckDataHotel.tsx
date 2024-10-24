@@ -56,6 +56,7 @@ function CheckDataHotelPage() {
   const addressHotelRef = useRef<HTMLInputElement>();
   const detailHotelRef = useRef<HTMLInputElement>();
   const [hotel_type, setHotel_type] = useState(1);
+  const [loadIndex, setLoadIndex] = useState(0);
   const [contact, setContact] = useState<HotelURLGetByHotelIDRes[]>([]);
   const [editingRow, setEditingRow] = useState<number | null>(null);
   const [editedData, setEditedData] = useState<RoomGetByHotelIDRes | null>(
@@ -96,6 +97,7 @@ function CheckDataHotelPage() {
 
   // ฟังก์ชันเริ่มแก้ไข
   const handleEditClick = (index: number) => {
+    setLoadIndex(index);
     setEditingRow(index);
     setEditedData(rooms[index]);
   };
@@ -120,10 +122,16 @@ function CheckDataHotelPage() {
           String(editedData.Number_of_rooms),
           String(editedData.room_type_ID),
           String(editedData.room_view_type_ID),
-          String(editedData.room_status_ID)
+          String(editedData.room_status_ID),
+          
         );
 
-        if (reshotel.status === 200) {
+        if (reshotel.status === 200) { 
+          const resRoom = await roomHotelService.getRoomByHotelID(Hotel_ID);
+          const dataRoom: RoomGetByHotelIDRes[] = resRoom.data;
+          setRoom(dataRoom);
+          console.log(rooms);
+          console.log(editedData);
           window.alert("แก้ไขข้อมูลเสร็จสิ้น!!!");
           console.log(reshotel.data);
         }
@@ -1263,7 +1271,7 @@ function CheckDataHotelPage() {
                                                 type_room: e.target.value,
                                               })
                                             }
-                                            label="ชนิดห้องพัก"
+                                            // label="ชนิดห้องพัก"
                                           >
                                             {/* แสดงรายการชนิดห้องพัก */}
                                             <MenuItem value="Standard Room">
@@ -1308,7 +1316,7 @@ function CheckDataHotelPage() {
                                                   e.target.value,
                                               })
                                             }
-                                            label="วิวของห้อง"
+                                            // label="วิวของห้อง"
                                           >
                                             {/* เพิ่มรายการสำหรับวิวห้อง */}
                                             <MenuItem value="ทะเล">
@@ -1337,6 +1345,7 @@ function CheckDataHotelPage() {
                                                 price: Number(e.target.value),
                                               })
                                             }
+                                            inputProps={{ min: 1 }}
                                           />
                                         ) : (
                                           hotelselect.price
@@ -1358,6 +1367,7 @@ function CheckDataHotelPage() {
                                                 ),
                                               })
                                             }
+                                            inputProps={{ min: 1 }}
                                           />
                                         ) : (
                                           hotelselect.Number_of_guests
@@ -1379,6 +1389,7 @@ function CheckDataHotelPage() {
                                                 ),
                                               })
                                             }
+                                            inputProps={{ min: 1 }}
                                           />
                                         ) : (
                                           hotelselect.Number_of_rooms
@@ -1388,22 +1399,22 @@ function CheckDataHotelPage() {
                                         {editingRow === index ? (
                                           <Select
                                             value={
-                                              editedData?.status_name_room || ""
+                                              editedData?.room_status_ID || ""
                                             }
                                             onChange={(e) =>
                                               setEditedData({
                                                 ...editedData!,
-                                                status_name_room:
-                                                  e.target.value,
+                                                room_status_ID:
+                                                  Number(e.target.value),
                                               })
                                             }
-                                            label="สถานะของห้อง"
+                                            // label="สถานะของห้อง"
                                           >
                                             {/* เพิ่มรายการสำหรับสถานะห้อง */}
-                                            <MenuItem value="ว่าง">
+                                            <MenuItem value={1}>
                                               ว่าง
                                             </MenuItem>
-                                            <MenuItem value="ไม่ว่าง">
+                                            <MenuItem value={2}>
                                               ไม่ว่าง
                                             </MenuItem>
                                           </Select>
