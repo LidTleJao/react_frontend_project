@@ -11,13 +11,11 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Snackbar,
-  SnackbarCloseReason,
   TextareaAutosize,
   TextField,
   Typography,
 } from "@mui/material";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import HeaderUserTypeManager2 from "../../../components/HeadUserTypeManager2";
 import { useNavigate } from "react-router-dom";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
@@ -83,22 +81,22 @@ function AddHotelPage() {
     navigate("/AddHotelData");
   }
 
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
-  // const handleClick = () => {
-  //   setOpen(true);
+  // // const handleClick = () => {
+  // //   setOpen(true);
+  // // };
+
+  // const handleClose = (
+  //   _event: React.SyntheticEvent | Event,
+  //   reason?: SnackbarCloseReason
+  // ) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+
+  //   setOpen(false);
   // };
-
-  const handleClose = (
-    _event: React.SyntheticEvent | Event,
-    reason?: SnackbarCloseReason
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  };
 
   return (
     <>
@@ -150,49 +148,52 @@ function AddHotelPage() {
                   <div
                     style={{
                       display: "flex",
-                      flexDirection: "row",
+                      flexWrap: "wrap",
                       height: "100%",
                       width: "100%",
+                      overflowY: "auto", 
+                      maxHeight: "500px", 
                     }}
                   >
                     {images.map((image, index) => (
-                      <>
-                        <div
-                          style={{ display: "flex", flexDirection: "column" }}
+                      <div
+                        key={index} 
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          margin: "10px", 
+                        }}
+                      >
+                        <Card
+                          sx={{
+                            width: 120, 
+                            height: 120, 
+                            borderRadius: 3,
+                          }}
                         >
-                          <Card
-                            key={index}
-                            sx={{
-                              maxWidth: 380,
-                              maxHeight: 170,
-                              borderRadius: 3,
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "end",
                             }}
                           >
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "end",
+                            <IconButton
+                              color="error"
+                              onClick={async () => {
+                                setImageToDelete(index);
+                                setDialogDelete(true);
                               }}
                             >
-                              <IconButton
-                                color="error"
-                                onClick={async () => {
-                                  setImageToDelete(index);
-                                  setDialogDelete(true);
-                                }}
-                              >
-                                <ClearIcon fontSize="small" />
-                              </IconButton>
-                            </div>
-                            <CardMedia
-                              sx={{ maxHeight: 170, maxWidth: 380 }}
-                              component="img"
-                              height="300"
-                              image={URL.createObjectURL(image)}
-                            />
-                          </Card>
-                        </div>
-                      </>
+                              <ClearIcon fontSize="small" />
+                            </IconButton>
+                          </div>
+                          <CardMedia
+                            sx={{ height: 100, width: 100 }} 
+                            component="img"
+                            image={URL.createObjectURL(image)}
+                          />
+                        </Card>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -569,11 +570,10 @@ function AddHotelPage() {
                           console.log(resimage.status);
                         }
                       }
-                      toast("เพิ่มสำเร็จ!")
+                      toast.success("เพิ่มข้อมูลโรงแรมสำเร็จ!");
                       setTimeout(() => {
                         navigateToAddHotelDataPage();
-                      }, 2000);
-                 
+                      }, 3000);
                     }
                   } catch (error) {
                     setLoad(false);
@@ -591,12 +591,12 @@ function AddHotelPage() {
         </div>
       </div>
       <ToastContainer />
-      <Snackbar
+      {/* <Snackbar
         open={open}
         autoHideDuration={3000}
         onClose={handleClose}
         message="เพิ่มข้อมูลโรงแรมสำเร็จ"
-      />
+      /> */}
     </>
   );
 }
