@@ -16,11 +16,11 @@ import { useNavigate } from "react-router-dom";
 import { ChangeEvent, useEffect, useState } from "react";
 import { HotelGetByIDRes } from "../../../model/Response/Hotel/HotelGetByIDRes";
 import { HotelService } from "../../../service/hotelService";
-// import { RoomHotelService } from "../../../service/roomHotelService";
+import { RoomHotelService } from "../../../service/roomHotelService";
 
 function AddRoomPage() {
   const hotelService = new HotelService();
-  // const roomHotelService = new RoomHotelService();
+  const roomHotelService = new RoomHotelService();
   const user = JSON.parse(localStorage.getItem("objUser")!);
   const [hotels, setHotel] = useState<HotelGetByIDRes[]>([]);
   const navigate = useNavigate();
@@ -47,19 +47,19 @@ function AddRoomPage() {
   function navigateToAddHotelDataPage() {
     navigate("/AddHotelData");
   }
-  function navigateToAddRoomP2Page() {
-    navigate("/AddRoomP2", {
-      state: {
-        Room_Hotel_ID,
-        Room_Type,
-        Room_View_Type,
-        Price,
-        Number_of_guests,
-        Number_of_rooms,
-        Room_Status,
-      },
-    });
-  }
+  // function navigateToAddRoomP2Page() {
+  //   navigate("/AddRoomP2", {
+  //     state: {
+  //       Room_Hotel_ID,
+  //       Room_Type,
+  //       Room_View_Type,
+  //       Price,
+  //       Number_of_guests,
+  //       Number_of_rooms,
+  //       Room_Status,
+  //     },
+  //   });
+  // }
   function handlePrice(event: ChangeEvent<HTMLInputElement>) {
     const value = event.target.value;
 
@@ -84,7 +84,7 @@ function AddRoomPage() {
     <>
       <HeaderUserTypeManager2 />
       <div className="addroom-cont">
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", flexDirection: "column",marginTop:"50px" }}>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Typography
               gutterBottom
@@ -105,7 +105,7 @@ function AddRoomPage() {
               <Box
                 sx={{
                   width: 650,
-                  height: 470,
+                  height: 520,
                   borderRadius: 3,
                   bgcolor: "#D9D9D9",
                   border: 2,
@@ -141,7 +141,7 @@ function AddRoomPage() {
                       ))}
                     </Select>
                   </FormControl>
-                  <FormControl sx={{ width: "25pc", mt: 2 }}>
+                  <FormControl sx={{ width: "25pc", mt: 3 }}>
                     <InputLabel
                       id="demo-select-small-label"
                       sx={{ marginTop: "-5px" }}
@@ -178,7 +178,7 @@ function AddRoomPage() {
                       </MenuItem>
                     </Select>
                   </FormControl>
-                  <FormControl sx={{ width: "25pc", mt: 2 }}>
+                  <FormControl sx={{ width: "25pc", mt: 3 }}>
                     <InputLabel
                       id="demo-select-small-label"
                       sx={{ marginTop: "-5px" }}
@@ -207,7 +207,7 @@ function AddRoomPage() {
                   <TextField
                     placeholder="ราคาห้อง"
                     type="number"
-                    sx={{ mt: 2, width: "25pc" }}
+                    sx={{ mt: 3, width: "25pc" }}
                     //   onChange={(e) => setName(e.target.value)}
                     onChange={handlePrice}
                     InputProps={{
@@ -219,7 +219,7 @@ function AddRoomPage() {
                       startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
                     }}
                   />
-                  <FormControl sx={{ width: "25pc", mt: 2 }}>
+                  <FormControl sx={{ width: "25pc", mt: 3 }}>
                     <InputLabel
                       id="demo-select-small-label"
                       sx={{ marginTop: "-5px" }}
@@ -250,7 +250,7 @@ function AddRoomPage() {
                   <TextField
                     placeholder="จำนวนของห้อง"
                     type="number"
-                    sx={{ mt: 2, width: "25pc" }}
+                    sx={{ mt: 3, width: "25pc" }}
                     //   onChange={(e) => setName(e.target.value)}
                     onChange={handleNumberRoom}
                     InputProps={{
@@ -262,7 +262,7 @@ function AddRoomPage() {
                       startAdornment: <>{/* <h3>Prapanpong</h3> */}</>,
                     }}
                   />
-                  <FormControl sx={{ width: "25pc", mt: 2 }}>
+                  <FormControl sx={{ width: "25pc", mt: 3 }}>
                     <InputLabel
                       id="demo-select-small-label"
                       sx={{ marginTop: "-5px" }}
@@ -348,10 +348,23 @@ function AddRoomPage() {
                               } else {
                                 if (Room_Hotel_ID === "") {
                                   window.alert(
-                                    "ข้อมูลไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
+                                    "ข้อมูลโรงแรมไม่ถูกต้อง โปรดเลือกข้อมูลใหม่"
                                   );
                                 } else {
-                                  navigateToAddRoomP2Page();
+                                  const resroom = await roomHotelService.AddRoom(
+                                    Room_Hotel_ID,
+                                    Price,
+                                    Number_of_guests,
+                                    Number_of_rooms,
+                                    Room_Type,
+                                    Room_View_Type,
+                                    Room_Status
+                                  );
+                                  console.log(resroom.status);
+                                  if (resroom.status === 201) {
+                                    window.alert("ข้อมูลของห้อง ได้ลงทะเบียนแล้ว!!!");
+                                    navigateToAddHotelDataPage();
+                                  }
                                 }
                               }
                             }
