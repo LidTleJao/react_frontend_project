@@ -100,7 +100,7 @@ function HeaderUserTypeGeneral() {
               }}
               onClick={navigateToConcertPage}
             >
-              คอนเสิรต์
+              คอนเสิร์ต
             </Button>
           </div>
           <div style={{ flexGrow: 1.5, display: "flex", flexDirection: "row" }}>

@@ -148,14 +148,6 @@ function HotelPage() {
     const hotelImages = filtered.filter((hotel) =>
       uniqueHotelIDs.includes(hotel.HID)
     );
-    // console.log("sssssssssssssssssssssssssssssssssss");
-    // console.log(roomAll);
-    // console.log("sssssssssssssssssssssssssssssssssss");
-    // console.log(filtered_room);
-    // console.log("sssssssssssssssssssssssssssssssssss");
-    // console.log(hotelImages);
-    // console.log("sssssssssssssssssssssssssssssssssss");
-    // ตั้งค่าให้ state
     setFilteredData(hotelImages);
   };
   const isPriceInRange = (price: number, range: string) => {
@@ -168,8 +160,6 @@ function HotelPage() {
     }
     return false; // ไม่อยู่ในช่วงที่กำหนด
   };
-  // console.log(hotelAll);
-  // console.log(filteredData);
 
   return (
     <>

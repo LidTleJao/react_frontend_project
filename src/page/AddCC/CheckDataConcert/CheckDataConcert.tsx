@@ -25,7 +25,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import HeaderUserTypeManager2 from "../../../components/HeadUserTypeManager2";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { GetConcertByUserIDRes } from "../../../model/Response/Concert/GetConcertByUserIDRes";
 import { ConcertService } from "../../../service/concertService";
 import { Box } from "@mui/system";
@@ -555,7 +554,7 @@ function CheckDataConcertPage() {
                                 </div>
                                 <div className="flex flex-row pl-5 mt-5 items-center">
                                   <h1 className="text-2xl font-medium pr-3">
-                                    รายละเอียดของคอนเสิรต์ :
+                                    รายละเอียดของคอนเสิร์ต :
                                   </h1>
 
                                   {concert.map((concertselect) => (
@@ -567,7 +566,7 @@ function CheckDataConcertPage() {
                                         concertselect?.detail_concert
                                       }
                                       className="w-[400px]"
-                                      label="รายละเอียดของคอนเสิรต์"
+                                      label="รายละเอียดของคอนเสิร์ต"
                                       variant="outlined"
                                       inputRef={detail_concertRef}
                                     />
@@ -742,7 +741,7 @@ function CheckDataConcertPage() {
                                     }}
                                     variant="h5"
                                   >
-                                    รายละเอียดของคอนเสิรต์:
+                                    รายละเอียดของคอนเสิร์ต:
                                   </Typography>
                                   {concert.map((concertselect) => (
                                     <Typography
@@ -1735,9 +1734,9 @@ function CheckDataConcertPage() {
                                           <TableCell>วันที่การแสดง</TableCell>
                                           <TableCell>เวลา</TableCell>
                                           <TableCell>
-                                            บันทึกข้อมูลห้อง
+                                            บันทึกข้อมูลตั๋ว
                                           </TableCell>
-                                          <TableCell>แก้ไขข้อมูลห้อง</TableCell>
+                                          <TableCell>แก้ไขข้อมูลตั๋ว</TableCell>
                                         </TableRow>
                                       </TableHead>
                                     </>
@@ -1748,7 +1747,7 @@ function CheckDataConcertPage() {
                                       <TableCell>ชนิดตั๋ว</TableCell>
                                       <TableCell>วันที่การแสดง</TableCell>
                                       <TableCell>เวลา</TableCell>
-                                      <TableCell>แก้ไขข้อมูลห้อง</TableCell>
+                                      <TableCell>แก้ไขข้อมูลตั๋ว</TableCell>
                                     </>
                                   )}
                                   <TableBody>
