@@ -772,69 +772,6 @@ function CheckDataHotelPage() {
                                               fontSize: "40px",
                                               color: "#4CAF50",
                                             }}
-                                            // onClick={async () => {
-                                            //   // console.log(hotelUrl);
-
-                                            //   // console.log(contact);
-                                            //   try {
-                                            //     // console.log(contact);
-                                            //     for (
-                                            //       let index = 0;
-                                            //       index < contact.length;
-                                            //       index++
-                                            //     ) {
-                                            //       console.log(contact[index]);
-                                            //       if (
-                                            //         contact[index].HCID == 0
-                                            //       ) {
-                                            //         // เอา api ตัวเพิ่มลิงค์มาใส่ตรงนี้
-                                            //         console.log(contact[index]);
-                                            //         const hotel =
-                                            //         contact[index];
-                                            //         const reshotel =
-                                            //           await hotelService.updateHotelChannel(
-                                            //             String(hotel.hotel_ID),
-                                            //             String(hotel.HCID),
-                                            //             hotel.url
-                                            //           );
-                                            //         console.log(
-                                            //           reshotel.status
-                                            //         );
-                                            //         window.alert(
-                                            //           "แก้ไขข้อมูลช่องทางการติดต่อเสร็จสิ้น!!!"
-                                            //         );
-                                            //       } else {
-                                            //         const hotel =
-                                            //         hotelUrl[index];
-                                            //         const reshotel =
-                                            //           await hotelService.updateHotelChannel(
-                                            //             String(hotel.hotel_ID),
-                                            //             String(hotel.HCID),
-                                            //             hotel.url
-                                            //           );
-                                            //         console.log(
-                                            //           reshotel.status
-                                            //         );
-                                            //         window.alert(
-                                            //           "แก้ไขข้อมูลช่องทางการติดต่อเสร็จสิ้น!!!"
-                                            //         );
-                                            //       }
-                                            //     }
-                                            //     // const resUrl =
-                                            //     //   await hotelService.getHotelUrlByHid(
-                                            //     //     Hotel_ID
-                                            //     //   );
-                                            //     // const dataUrl: HotelURLGetByHotelIDRes[] =
-                                            //     //   resUrl.data;
-                                            //     // setHotelUrl(dataUrl);
-                                            //     // setContact([]);
-
-                                            //     setEditing2(false);
-                                            //   } catch (error) {
-                                            //     setEditing2(false);
-                                            //     console.log(error);
-                                            //   }
-                                            // }}
                                             onClick={async () => {
                                               console.log(hotelUrl);
 
@@ -852,6 +789,20 @@ function CheckDataHotelPage() {
                                                   ) {
                                                     // เอา api ตัวเพิ่มลิงค์มาใส่ตรงนี้
                                                     console.log(contact[index]);
+                                                    const hotel =
+                                                      contact[index];
+                                                    const reshotel =
+                                                      await hotelService.updateHotelChannel(
+                                                        String(hotel.hotel_ID),
+                                                        String(hotel.HCID),
+                                                        hotel.url
+                                                      );
+                                                    console.log(
+                                                      reshotel.status
+                                                    );
+                                                    window.alert(
+                                                      "แก้ไขข้อมูลช่องทางการติดต่อเสร็จสิ้น!!!"
+                                                    );
                                                   } else if (contact[index]) {
                                                     const hotel =
                                                       contact[index];
@@ -877,7 +828,7 @@ function CheckDataHotelPage() {
                                                   resUrl.data;
                                                 setHotelUrl(dataUrl);
                                                 setContact([]);
-                                                
+
                                                 setEditing2(false);
                                               } catch (error) {
                                                 setEditing2(false);
