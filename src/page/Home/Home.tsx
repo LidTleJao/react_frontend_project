@@ -32,6 +32,13 @@ function HomePage() {
   const [concertAll, setConcertAll] = useState<GetAllConcertRes[]>([]);
   const [banners, setBanners] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showAll] = useState(false);
+
+  const itemsPerRow = 6;
+  const initialDisplayLimit = itemsPerRow;
+
+  const navigateToConcertPage = () => navigate("/Concert");
+  const navigateToHotelPage = () => navigate("/Hotel");
 
   useEffect(() => {
     const loadDataAsync = async () => {
@@ -152,7 +159,7 @@ function HomePage() {
                   <img
                     src={banner}
                     alt={`Banner ${index}`}
-                    className="w-full h-full object-cover" 
+                    className="w-full h-full object-cover"
                   />
                 </div>
               ))}
@@ -268,6 +275,20 @@ function HomePage() {
               >
                 คอนเสิร์ต
               </Typography>
+
+              <Button
+                variant="contained"
+                onClick={navigateToConcertPage}
+                sx={{
+                  height: "40px",
+                  alignSelf: "flex-start",
+                  backgroundColor: "#007bff",
+                  textTransform: "none",
+                  mt: 10,
+                }}
+              >
+                ดูทั้งหมด
+              </Button>
             </div>
 
             <div
@@ -278,7 +299,7 @@ function HomePage() {
                 width: "90%",
               }}
             >
-              {concertAll.map((concert) => (
+              {(showAll ? concertAll : concertAll.slice(0, initialDisplayLimit)).map((concert) => (
                 <Card
                   key={concert.CID}
                   sx={{
@@ -303,12 +324,7 @@ function HomePage() {
                     }}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography
-                      gutterBottom
-                      variant="h6"
-                      fontWeight="bold"
-                      color="black"
-                    >
+                    <Typography gutterBottom variant="h6" fontWeight="bold" color="black">
                       {concert.name_concert}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
@@ -370,6 +386,20 @@ function HomePage() {
               >
                 โรงแรม
               </Typography>
+
+              <Button
+                variant="contained"
+                onClick={navigateToHotelPage}
+                sx={{
+                  height: "40px",
+                  alignSelf: "flex-start",
+                  backgroundColor: "#007bff",
+                  textTransform: "none",
+                  mt: 10,
+                }}
+              >
+                ดูทั้งหมด
+              </Button>
             </div>
 
             <div
@@ -380,7 +410,7 @@ function HomePage() {
                 width: "90%",
               }}
             >
-              {hotelAll.map((hotel) => {
+              {hotelAll.slice(0, itemsPerRow).map((hotel) => {
                 const hotelImage = hotelImageByHID.find(
                   (image) => image.hotel_ID === hotel.HID
                 );
