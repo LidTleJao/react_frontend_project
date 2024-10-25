@@ -3,6 +3,7 @@ import HeaderUserTypeManager2 from "../../components/HeadUserTypeManager2";
 import { Edit, Save } from '@mui/icons-material';
 import { useState } from "react";
 import { UserService } from "../../service/userService";
+import { toast, ToastContainer } from "react-toastify";
 
 function ProfileUserPage() {
   const user = JSON.parse(localStorage.getItem("objUser")!);
@@ -20,28 +21,27 @@ function ProfileUserPage() {
     }
     setIsEditing(!isEditing);
   };
-  
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === "name_user" && value.length > 50) {
-      alert("ชื่อ-นามสกุลต้องไม่เกิน 50 ตัวอักษร");
+      toast.error("ชื่อ-นามสกุลต้องไม่เกิน 50 ตัวอักษร");
       return;
     }
 
     if (name === "nick_user" && value.length > 50) {
-      alert("ชื่อเล่นต้องไม่เกิน 50 ตัวอักษร");
+      toast.error("ชื่อเล่นต้องไม่เกิน 50 ตัวอักษร");
       return;
     }
 
     if (name === "facebook" && value.length > 50) {
-      alert("Facebook ต้องไม่เกิน 50 ตัวอักษร");
+      toast.error("Facebook ต้องไม่เกิน 50 ตัวอักษร");
       return;
     }
 
     if (name === "lineID" && value.length > 30) {
-      alert("LineID ต้องไม่เกิน 30 ตัวอักษร");
+      toast.error("LineID ต้องไม่เกิน 30 ตัวอักษร");
       return;
     }
 
@@ -49,11 +49,11 @@ function ProfileUserPage() {
       // ให้เฉพาะตัวเลขในหมายเลขโทรศัพท์
       const phonePattern = /^[0-9]*$/; // ตรวจสอบให้เป็นตัวเลขเท่านั้น
       if (value.length > 10) {
-        alert("หมายเลขโทรศัพท์ไม่ควรเกิน 10 หลัก");
+        toast.error("หมายเลขโทรศัพท์ไม่ควรเกิน 10 หลัก");
         return;
       }
       if (!phonePattern.test(value)) {
-        alert("หมายเลขโทรศัพท์ต้องเป็นตัวเลขเท่านั้น");
+        toast.error("หมายเลขโทรศัพท์ต้องเป็นตัวเลขเท่านั้น");
         return;
       }
     }
@@ -70,7 +70,7 @@ function ProfileUserPage() {
     const file = event.target.files?.[0];
     if (file) {
       if (!file.type.startsWith("image/")) {
-        alert("กรุณาเลือกไฟล์รูปภาพเท่านั้น.");
+        toast.error("กรุณาเลือกไฟล์รูปภาพเท่านั้น.");
         return;
       }
 
@@ -82,30 +82,58 @@ function ProfileUserPage() {
       };
 
       reader.onerror = () => {
-        alert("เกิดข้อผิดพลาดในการอ่านไฟล์");
+        toast.error("เกิดข้อผิดพลาดในการอ่านไฟล์");
       };
 
       reader.readAsDataURL(file);
     } else {
-      alert("กรุณาเลือกไฟล์");
+      toast.error("กรุณาเลือกไฟล์");
     }
   };
 
   const handleSave = async () => {
+    const { name_user, nick_user, phone, facebook, lineID } = editedUser;
+
+    if (!name_user) {
+      toast.error("กรุณากรอกชื่อ-นามสกุล");
+      return;
+    }
+
+    if (!nick_user) {
+      toast.error("กรุณากรอกชื่อเล่น");
+      return;
+    }
+
+    if (!phone) {
+      toast.error("กรุณากรอกหมายเลขโทรศัพท์");
+      return;
+    }
+
+    if (!facebook) {
+      toast.error("กรุณากรอก Facebook");
+      return;
+    }
+
+    if (!lineID) {
+      toast.error("กรุณากรอก LineID");
+      return;
+    }
+
+    if (phone.length !== 10 || !/^[0-9]+$/.test(phone)) {
+      toast.error("หมายเลขโทรศัพท์ต้องมีความยาว 10 หลักและต้องเป็นตัวเลขเท่านั้น");
+      return;
+    }
+
     try {
-      if (editedUser.phone.length !== 10 || !/^[0-9]+$/.test(editedUser.phone)) {
-        alert("หมายเลขโทรศัพท์ต้องมีความยาว 10 หลักและต้องเป็นตัวเลขเท่านั้น");
-        return;
-      }
-      const { uid, name_user, nick_user, phone, facebook, lineID } = editedUser;
+      const { uid } = editedUser;
 
       await userService.update(uid, name_user, nick_user, editedUser.province, phone, facebook, lineID, selectedFile || undefined);
       localStorage.setItem("objUser", JSON.stringify(editedUser));
       setIsEditing(false);
-      alert("ข้อมูลส่วนตัวถูกบันทึกเรียบร้อยแล้ว!");
+      toast.success("ข้อมูลส่วนตัวถูกบันทึกเรียบร้อยแล้ว!");
     } catch (error) {
       console.error("Error updating user data:", error);
-      alert("เกิดข้อผิดพลาดในการบันทึกข้อมูล");
+      toast.error("เกิดข้อผิดพลาดในการบันทึกข้อมูล");
     }
   };
 
@@ -194,7 +222,7 @@ function ProfileUserPage() {
     <>
       {(user?.type_user === 2 && <HeaderUserTypeManager2 />) ||
         (user?.type_user === 1 && <HeaderUserTypeGeneral2 />)}
-
+      <ToastContainer />
       <div className="flex w-screen h-screen justify-center items-center">
         <div className="flex w-3/4">
           <div className="w-1/4 p-6 bg-white shadow-lg rounded-lg">
@@ -232,6 +260,7 @@ function ProfileUserPage() {
             <div className="grid grid-cols-2 gap-6">
               <div>
                 <label className="text-sm">ชื่อ-นามสกุล</label>
+                {isEditing && <span className="text-red-500"> *</span>}
                 <input
                   type="text"
                   name="name_user"
@@ -244,6 +273,7 @@ function ProfileUserPage() {
 
               <div>
                 <label className="text-sm">ชื่อเล่น</label>
+                {isEditing && <span className="text-red-500"> *</span>}
                 <input
                   type="text"
                   name="nick_user"
@@ -256,6 +286,7 @@ function ProfileUserPage() {
 
               <div>
                 <label className="text-sm">จังหวัด</label>
+                {isEditing && <span className="text-red-500"> *</span>}
                 <select
                   name="province"
                   value={editedUser?.province}
@@ -285,6 +316,7 @@ function ProfileUserPage() {
 
               <div>
                 <label className="text-sm">Facebook</label>
+                {isEditing && <span className="text-red-500"> *</span>}
                 <input
                   type="text"
                   name="facebook"
@@ -297,6 +329,7 @@ function ProfileUserPage() {
 
               <div>
                 <label className="text-sm">Line ID</label>
+                {isEditing && <span className="text-red-500"> *</span>}
                 <input
                   type="text"
                   name="lineID"
@@ -309,6 +342,7 @@ function ProfileUserPage() {
 
               <div className="col-span-2">
                 <label className="text-sm">หมายเลขโทรศัพท์</label>
+                {isEditing && <span className="text-red-500"> *</span>}
                 <input
                   type="text"
                   name="phone"
@@ -322,6 +356,7 @@ function ProfileUserPage() {
               {isEditing && (
                 <div className="col-span-2">
                   <label className="text-sm">อัปโหลดภาพโปรไฟล์</label>
+                  {isEditing && <span className="text-red-500"> *</span>}
                   <input
                     type="file"
                     accept="image/*"
