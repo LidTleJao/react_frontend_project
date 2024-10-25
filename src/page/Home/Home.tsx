@@ -152,7 +152,7 @@ function HomePage() {
                   <img
                     src={banner}
                     alt={`Banner ${index}`}
-                    className="banner-image"
+                    className="w-full h-full object-cover" 
                   />
                 </div>
               ))}
@@ -273,7 +273,7 @@ function HomePage() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
                 gap: "20px",
                 width: "90%",
               }}
@@ -282,6 +282,8 @@ function HomePage() {
                 <Card
                   key={concert.CID}
                   sx={{
+                    display: "flex",
+                    flexDirection: "column",
                     background: "#f5f5f5",
                     borderRadius: "15px",
                     border: "1px solid #ddd",
@@ -293,11 +295,14 @@ function HomePage() {
                     height="180"
                     image={concert.poster_concert}
                     sx={{
+                      width: "100%",
+                      height: "180",
+                      objectFit: "cover",
                       borderTopLeftRadius: "15px",
                       borderTopRightRadius: "15px",
                     }}
                   />
-                  <CardContent>
+                  <CardContent sx={{ flexGrow: 1 }}>
                     <Typography
                       gutterBottom
                       variant="h6"
@@ -307,9 +312,7 @@ function HomePage() {
                       {concert.name_concert}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {new Date(
-                        concert.show_schedule_concert
-                      ).toLocaleDateString()}
+                      {new Date(concert.show_schedule_concert).toLocaleDateString()}
                     </Typography>
                   </CardContent>
                   <CardActions
@@ -329,9 +332,7 @@ function HomePage() {
                         borderRadius: "10px",
                         textTransform: "none",
                       }}
-                      onClick={() =>
-                        navigateToConcertDetailPage(concert.CID.toString())
-                      }
+                      onClick={() => navigateToConcertDetailPage(concert.CID.toString())}
                     >
                       รายละเอียด
                     </Button>
@@ -374,7 +375,7 @@ function HomePage() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
                 gap: "20px",
                 width: "90%",
               }}
@@ -391,6 +392,8 @@ function HomePage() {
                       background: "#f5f5f5",
                       borderRadius: "15px",
                       border: "1px solid #ddd",
+                      display: "flex",
+                      flexDirection: "column",
                     }}
                   >
                     <CardMedia
@@ -403,6 +406,9 @@ function HomePage() {
                           : "src/img/webteemi.png"
                       }
                       sx={{
+                        width: "100%",
+                        height: "180px",
+                        objectFit: "cover",
                         borderTopLeftRadius: "15px",
                         borderTopRightRadius: "15px",
                       }}
@@ -416,7 +422,18 @@ function HomePage() {
                       >
                         {hotel.name}
                       </Typography>
-                      <Typography variant="body2" color="textSecondary">
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        sx={{
+                          display: "-webkit-box",
+                          WebkitBoxOrient: "vertical",
+                          WebkitLineClamp: 4,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "normal",
+                        }}
+                      >
                         {hotel.detail}
                       </Typography>
                     </CardContent>
@@ -425,6 +442,7 @@ function HomePage() {
                         display: "flex",
                         justifyContent: "space-between",
                         padding: "10px",
+                        marginTop: "auto",
                       }}
                     >
                       <Typography variant="body2" color="black">
@@ -437,9 +455,7 @@ function HomePage() {
                           borderRadius: "10px",
                           textTransform: "none",
                         }}
-                        onClick={() =>
-                          navigateToHotelDetailPage(hotel.HID.toString())
-                        }
+                        onClick={() => navigateToHotelDetailPage(hotel.HID.toString())}
                       >
                         รายละเอียด
                       </Button>
@@ -448,6 +464,7 @@ function HomePage() {
                 );
               })}
             </div>
+
           </div>
         </div>
       </div>
