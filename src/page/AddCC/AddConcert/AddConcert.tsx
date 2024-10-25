@@ -63,7 +63,7 @@ function AddConcertPage() {
           style={{
             display: "flex",
             flexDirection: "column",
-            marginTop: "50px",
+            marginTop: "100px",
           }}
         >
           <div style={{ display: "flex", justifyContent: "center" }}>
@@ -84,8 +84,9 @@ function AddConcertPage() {
           <Box
             sx={{
               width: 650,
-              // height: 570,
-              maxHeight: 600,
+              height: "auto",
+              maxHeight: "100%",
+              overflow: "auto",
               paddingBottom: 5,
               borderRadius: 3,
               border: 1,
@@ -308,6 +309,7 @@ function AddConcertPage() {
                 value={detail_concert}
                 onChange={(e) => setDetail_concert(e.target.value)}
                 style={{
+                  // maxHeight:"150px",
                   marginTop: "20px",
                   borderRadius: "10px",
                   backgroundColor: "white",
